@@ -1,0 +1,5 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AssetProject
+@using AssetProject.Data
+@namespace AssetProject.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
