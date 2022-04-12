@@ -13,5 +13,6 @@ namespace AssetProject.Data
         public DbSet<Country> Countries { set; get; }
         public DbSet<Location> Locations { set; get; }
         public DbSet<Tenant> Tenants { set; get; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
