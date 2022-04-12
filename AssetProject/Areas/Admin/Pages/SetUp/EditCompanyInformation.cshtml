@@ -1,0 +1,83 @@
+﻿@page "{id:int?}"
+@model AssetProject.Pages.EditCompanyInformationModel
+@{
+     Layout = "~/Pages/Shared/Admin/_AdminLayoutSlim.cshtml";
+ 
+}
+
+ <div class="section-wrapper">
+          <label class="section-title">Top Label Layout</label>
+          <p class="mg-b-20 mg-sm-b-40">A form with a label on top of each form control.</p>
+
+          <div class="form-layout">
+              <form  method="post">
+            <div class="row mg-b-25">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Company Name: <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.CompanyName" class="form-control"  placeholder="Enter Company name">
+                </div>
+              </div><!-- col-4 -->
+              
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label"> Address: <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.Address" class="form-control" placeholder="Enter Address">
+                </div>
+              </div><!-- col-4 -->
+              <div class="col-lg-8">
+                <div class="form-group mg-b-10-force">
+                  <label class="form-control-label">City: <span class="tx-danger">*</span></label>
+                  <input  asp-for="@Model.tenant.City" class="form-control" placeholder="Enter City">
+                </div>
+              </div><!-- col-8 -->
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">State : <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.State" class="form-control" placeholder="Enter State">
+                </div>
+              </div><!-- col-4 -->
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">PostalCode : <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.PostalCode" class="form-control" placeholder="Enter Postol Code">
+                </div>
+              </div><!-- col-4 -->
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Logo : <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.Logo" class="form-control" placeholder="Enter Logo">
+                </div>
+              </div><!-- col-4 -->
+              <div class="form-group">
+                <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
+                <select asp-for="@Model.tenant.CountryId" class ="form-control" asp-items="@Model.countries">
+                    <option value="0">Please select</option>
+       
+                </select>
+            </div>
+
+            @*  <div class="col-lg-4">
+                <div class="form-group mg-b-10-force">
+                  <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
+                  <select class="form-control select2" data-placeholder="Choose country">
+                    <option label="Choose country"></option>
+                    <option value="USA">United States of America</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="China">China</option>
+                    <option value="Japan">Japan</option>
+                  </select>
+                </div>
+              </div><!-- col-4 -->*@
+            </div><!-- row -->
+
+            <div class="form-layout-footer">
+              <button class="btn btn-primary bd-0">Submit Form</button>
+              <button class="btn btn-secondary bd-0">Cancel</button>
+            </div><!-- form-layout-footer -->
+            </form>
+          </div><!-- form-layout -->
+        </div><!-- section-wrapper -->

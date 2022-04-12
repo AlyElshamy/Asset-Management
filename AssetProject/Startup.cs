@@ -41,7 +41,12 @@ namespace AssetProject
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddIdentity<ApplicationUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders(); 
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);

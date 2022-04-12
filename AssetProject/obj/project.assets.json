@@ -10488,17 +10488,17 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NoteBook\\Desktop\\AssetProject\\AssetProject.csproj",
+      "projectUniqueName": "C:\\Users\\NoteBook\\Desktop\\cmder\\Asset\\AssetTracking\\AssetProject\\AssetProject.csproj",
       "projectName": "AssetProject",
-      "projectPath": "C:\\Users\\NoteBook\\Desktop\\AssetProject\\AssetProject.csproj",
+      "projectPath": "C:\\Users\\NoteBook\\Desktop\\cmder\\Asset\\AssetTracking\\AssetProject\\AssetProject.csproj",
       "packagesPath": "C:\\Users\\NoteBook\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\NoteBook\\Desktop\\AssetProject\\obj\\",
+      "outputPath": "C:\\Users\\NoteBook\\Desktop\\cmder\\Asset\\AssetTracking\\AssetProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\DevExpress 21.2\\Components\\Offline Packages"
       ],
       "configFilePaths": [
-        "C:\\Users\\NoteBook\\Desktop\\AssetProject\\NuGet.Config",
+        "C:\\Users\\NoteBook\\Desktop\\cmder\\Asset\\AssetTracking\\AssetProject\\NuGet.Config",
         "C:\\Users\\NoteBook\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
