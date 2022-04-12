@@ -372,3 +372,8 @@ C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\bin\Debug\net5.
 C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\AssetProject.Views.pdb
 C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\AssetProject.csproj.CopyComplete
 C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\AssetProject.genruntimeconfig.cache
+C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\Razor\Areas\Admin\Pages\ContractManagment\AddContract.cshtml.g.cs
+C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\Razor\Areas\Admin\Pages\ContractManagment\ContractList.cshtml.g.cs
+C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\Razor\Areas\Admin\Pages\ContractManagment\DeleteContract.cshtml.g.cs
+C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\Razor\Areas\Admin\Pages\ContractManagment\DetailsContract.cshtml.g.cs
+C:\Users\NoteBook\Desktop\cmder\Asset\AssetTracking\AssetProject\obj\Debug\net5.0\Razor\Areas\Admin\Pages\ContractManagment\EditContract.cshtml.g.cs

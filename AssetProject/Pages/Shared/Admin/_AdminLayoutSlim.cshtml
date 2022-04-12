@@ -45,10 +45,10 @@
 
     @* Predefined themes: https://js.devexpress.com/DevExtreme/Guide/Themes_and_Styles/Predefined_Themes/ *@
     <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
-    <script src="~/Admin/lib/jquery/js/jquery.js"></script>
-    <script src="~/Admin/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/Admin/js/devextreme/dx.all.js"></script>
-    <script src="~/Admin/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
     <script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
 
 
@@ -74,9 +74,9 @@
     </div><!-- slim-footer -->
 
 
-    <script src="~/Admin/lib/jquery/js/jquery.js"></script>
+   @* <script src="~/Admin/lib/jquery/js/jquery.js"></script>*@
     <script src="~/Admin/lib/popper/js/popper.js"></script>
-    <script src="~/Admin/lib/bootstrap/js/bootstrap.js"></script>
+   @* <script src="~/Admin/lib/bootstrap/js/bootstrap.js"></script>*@
     
     @await RenderSectionAsync("Scripts", required: false)
     <script src="~/Admin/lib/jquery.cookie/js/jquery.cookie.js"></script>

@@ -1,0 +1,42 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.ContractManagment.ContractListModel
+@{
+}
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+            </ol>
+            <h6 class="slim-pagetitle">Data Tables</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+            <label class="section-title">Contract List</label>
+            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Department>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("Departments")
+        .LoadAction("Get")
+        .Key("DepartmentId")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+        columns.AddFor(m => m.DepartmentId);
+
+        columns.AddFor(m => m.DepartmentTitle);
+    })
+)
+                
+                </div>
+            </div><!-- table-wrapper -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>

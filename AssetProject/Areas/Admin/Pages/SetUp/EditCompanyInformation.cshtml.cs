@@ -1,10 +1,14 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,42 +19,66 @@ namespace AssetProject.Pages
     public class EditCompanyInformationModel : PageModel
     {
         AssetContext Context;
-        ApplicationDbContext AppContext;
         UserManager<ApplicationUser> UserManger;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-          [BindProperty]
+        [BindProperty]
          public  Tenant tenant { set; get; }
         public SelectList countries { get; set; }
 
         public EditCompanyInformationModel(AssetContext context,
-            ApplicationDbContext appcontext,
+           
+             IWebHostEnvironment webHostEnvironment,
             UserManager<ApplicationUser> userManager)
         {
             Context = context;
-            AppContext = appcontext;
             UserManger = userManager;
+           _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> OnGet()
         {
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await  UserManger.FindByIdAsync(userid);
-           var countrieslist= Context.Countries.ToList();
-            var countries1 = countrieslist.OfType<Country>();
-            countries = new SelectList(countries1, "CountryId", "CountryTitle");
              tenant = Context.Tenants.Find(user.TenantId);
             return Page();
         }
 
-        public  IActionResult OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile file)
         {
-            if (ModelState.IsValid)
+            if (tenant.CountryId == 0)
             {
+               
+                ModelState.AddModelError("", "Please select country");
+                return Page();
+            }
+            if (ModelState.IsValid)
+
+            {
+                if(file != null)
+                {
+                    string folder = "Images/Logo/";
+                    tenant.Logo = await UploadImage(folder, file);
+                }
                 var Updatedtenant = Context.Tenants.Attach(tenant);
                 Updatedtenant.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 Context.SaveChanges();
+                return RedirectToPage("/Index");
             }
-            return RedirectToPage("Index");
+            return Page();
         }
-       
+
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return "/" + folderPath;
+        }
+
     }
 }
+
