@@ -19,18 +19,53 @@
 
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Department>()
+                   <a asp-area="Admin" asp-page="/ContractManagment/AddContract"> Add New Contract   </a>
+                   @(Html.DevExtreme().DataGrid<AssetProject.Models.Contract>()
     .DataSource(ds => ds.Mvc()
-        .Controller("Departments")
+        .Controller("Contracts")
         .LoadAction("Get")
-        .Key("DepartmentId")
+        .Key("ContractId")
     )
     .RemoteOperations(true)
+     .ShowBorders(true)
+    .Paging(p=>p.PageSize(10))
+    .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+      .HeaderFilter(headerFilter => headerFilter.Visible(true))
+        .Columns(columns => {
+      
+            columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/ContractManagment/EditContract?id=<%- data.ContractId %>"> Edit |  </a>
+                <a href="/Admin/ContractManagment/DeleteContract?id=<%- data.ContractId %>"> Delete | </a>
+                <a href="/Admin/ContractManagment/DetailsContract?id=<%- data.ContractId %>"> Details </a>
+            </text>).Width(150);
+        })
+
     .Columns(columns => {
 
-        columns.AddFor(m => m.DepartmentId);
+        columns.AddFor(m => m.ContractId);
 
-        columns.AddFor(m => m.DepartmentTitle);
+        columns.AddFor(m => m.Title);
+
+        columns.AddFor(m => m.Description);
+
+        columns.AddFor(m => m.ContractNo);
+
+        columns.AddFor(m => m.Cost);
+
+        columns.AddFor(m => m.StartDate);
+
+        columns.AddFor(m => m.EndDate);
+
+        columns.AddFor(m => m.VendorId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
     })
 )
                 

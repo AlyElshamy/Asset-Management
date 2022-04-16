@@ -10,15 +10,11 @@
             <li class="breadcrumb-item"><a href="#">Forms</a></li>
             <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
           </ol>
-          <h6 class="slim-pagetitle">Company Information</h6>
+          <h6 class="slim-pagetitle">Contract Information</h6>
         </div><!-- slim-pageheader -->
 
-     
-
-
-
  <div class="section-wrapper">
-          <label class="section-title">Please fill your company information</label>
+          <label class="section-title">Please fill your contract information</label>
           @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
           <div class="form-layout">
@@ -27,65 +23,65 @@
             <div class="row mg-b-25">
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Company Name: <span class="tx-danger">*</span></label>
-                  <input @*asp-for="@Model.tenant.CompanyName"*@ class="form-control"  placeholder="Enter Company name">
+                  <label class="form-control-label">Contact Title: <span class="tx-danger">*</span></label>
+                  <input asp-for="Contract.Title" class="form-control"  placeholder="Enter Contract Title">
+                   <span asp-validation-for="Contract.Title" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
               
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label"> Address: <span class="tx-danger">*</span></label>
-                  <input @*asp-for="@Model.tenant.Address"*@ class="form-control" placeholder="Enter Address">
+                  <label class="form-control-label"> Description: <span class="tx-danger">*</span></label>
+                  <input  asp-for="Contract.Description" class="form-control" placeholder="Enter Contract Description">
+                   
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group mg-b-10-force">
-                  <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                  <input  @*asp-for="@Model.tenant.City"*@ class="form-control" placeholder="Enter City">
-                </div>
-              </div><!-- col-8 -->
-
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <label class="form-control-label">State : <span class="tx-danger">*</span></label>
-                  <input @*asp-for="@Model.tenant.State"*@ class="form-control" placeholder="Enter State">
+                  <label class="form-control-label">Contract No: <span class="tx-danger">*</span></label>
+                  <input  asp-for="Contract.ContractNo" class="form-control" placeholder="Enter Contract No">
+                   <span asp-validation-for="Contract.ContractNo" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">PostalCode : <span class="tx-danger">*</span></label>
-                  <input @*asp-for="@Model.tenant.PostalCode"*@ class="form-control" placeholder="Enter Postol Code">
+                  <label class="form-control-label">Cost: <span class="tx-danger">*</span></label>
+                  <input asp-for="Contract.Cost" class="form-control" placeholder="Enter Cost" value="">
+                   <span asp-validation-for="Contract.Cost" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
 
-          <div class="col-lg-4">
-        <div class="form-group">
-          <label class="form-control-label">Logo: <span class="tx-danger">*</span></label>
-        <div class="custom-file">
-            <input  type="file" name="file"  accept=".png, .jpg, .jpeg"  class="custom-file-input" id="text"  >
-            <label class="custom-file-label" for="File">Choose New logo</label>
-        </div>
-    </div>
-    </div>  
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Start Date : <span class="tx-danger">*</span></label>
+                  <input asp-for="Contract.StartDate" type="date" class="form-control date" value="">
+                   <span asp-validation-for="Contract.StartDate" class="text-danger"></span>
+                </div>
+              </div><!-- col-4 -->
 
+                <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">End Date : <span class="tx-danger">*</span></label>
+                  <input asp-for="Contract.EndDate" type="date"   class="form-control date" value="">
+                   <span asp-validation-for="Contract.EndDate" class="text-danger"></span>
+                </div>
+              </div><!-- col-4 -->
       <div class="col-lg-4">
     <div class="form-group">
-                <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
-                @*<select asp-for="@Model.tenant.CountryId" class ="form-control" asp-items="@Model.countries">
-                    <option value="0">Please select</option>
-       
-                </select>*@       
-       @* @(Html.DevExtreme().LookupFor(c=>c.tenant.CountryId)
-            .DataSource(d => d.Mvc()
+                <label class="form-control-label">Vendor: <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.Contract.VendorId)
+            .DataSource(d => d.WebApi()
                 .Controller("Lookups")
-                .LoadAction("CountriesLookup")
-                .Key("CountryId")
+                .LoadAction("VendorsLookup")
+                .Key("Value")
             )
-            .ValueExpr("CountryId")
-            .DisplayExpr("CountryTitle")
-        )*@
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+          <span asp-validation-for="Contract.VendorId" class="text-danger"></span>
             </div>
         </div>
 
@@ -94,8 +90,10 @@
             </div><!-- row -->
 
             <div class="form-layout-footer">
-              <button class="btn btn-primary bd-0">Submit Form</button>
-              <button class="btn btn-secondary bd-0">Cancel</button>
+              <button class="btn btn-primary bd-0">Submit </button>
+             <a  asp-area="Admin" asp-page="/ContractManagment/ContractList">
+                 <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+              </a>
             </div><!-- form-layout-footer -->
             </form>
           </div><!-- form-layout -->
@@ -103,3 +101,21 @@
         
       </div><!-- container -->
     </div>
+
+    
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ <script>
+
+ $(function(){
+    var date = new Date().toISOString().slice(0,10);
+
+//To restrict past date
+
+$('.date').attr('min', date);
+
+
+});
+    </script>
+}

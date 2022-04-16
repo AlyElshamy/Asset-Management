@@ -1,0 +1,48 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.SetUp.LocationTreeModel
+@{
+}
+@(Html.DevExtreme().TreeList<AssetProject.Models.Location>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("Locations")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("LocationId")
+    )
+    .RootValue(null)
+    .KeyExpr("LocationId")
+    .ParentIdExpr("LocationParentId")
+     .SearchPanel(seachPanel => seachPanel.Visible(true))
+    @*.RemoteOperations(o => o.Filtering(true).Grouping(true).Sorting(true))*@
+    .Columns(columns => {
+
+      @*  columns.AddFor(m => m.LocationId);*@
+
+      @*  columns.AddFor(m => m.LocationParentId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+*@
+        columns.AddFor(m => m.LocationTitle);
+
+      @*  columns.AddFor(m => m.CountryId);
+
+        columns.AddFor(m => m.Address);
+
+        columns.AddFor(m => m.City);
+
+        columns.AddFor(m => m.State);
+
+        columns.AddFor(m => m.PostalCode);*@
+    })
+    .Editing(e => e
+        .AllowAdding(true)
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+    )
+        .Selection(s => s.Mode(SelectionMode.Single))
+
+)

@@ -56,6 +56,11 @@ namespace AssetProject.Pages
             {
                 if(file != null)
                 {
+                    var ImagePath = Path.Combine(_webHostEnvironment.WebRootPath,tenant.Logo);
+                    if (System.IO.File.Exists(ImagePath))
+                    {
+                        System.IO.File.Delete(ImagePath);
+                    }
                     string folder = "Images/Logo/";
                     tenant.Logo = await UploadImage(folder, file);
                 }

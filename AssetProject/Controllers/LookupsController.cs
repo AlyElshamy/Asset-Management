@@ -32,5 +32,32 @@ namespace AssetProject.Controllers
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> VendorsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Vendors
+                         orderby i.VendorTitle
+                         select new
+                         {
+                             Value = i.VendorId,
+                             Text = i.VendorTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LocationsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Locations
+                         orderby i.LocationTitle
+                         select new
+                         {
+                             Value = i.LocationId,
+                             Text = i.LocationTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
     }
 }

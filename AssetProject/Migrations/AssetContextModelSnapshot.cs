@@ -19,6 +19,58 @@ namespace AssetProject.Migrations
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("AssetProject.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryTIAR")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("AssetProject.Models.Contract", b =>
+                {
+                    b.Property<int>("ContractId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContractNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("VendorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContractId");
+
+                    b.HasIndex("VendorId");
+
+                    b.ToTable("Contracts");
+                });
+
             modelBuilder.Entity("AssetProject.Models.Country", b =>
                 {
                     b.Property<int>("CountryId")
@@ -119,6 +171,51 @@ namespace AssetProject.Migrations
                     b.ToTable("Tenants");
                 });
 
+            modelBuilder.Entity("AssetProject.Models.Vendor", b =>
+                {
+                    b.Property<int>("VendorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContactPersonEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPersonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPersonPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VendorTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VendorId");
+
+                    b.ToTable("Vendors");
+                });
+
+            modelBuilder.Entity("AssetProject.Models.Contract", b =>
+                {
+                    b.HasOne("AssetProject.Models.Vendor", "Vendor")
+                        .WithMany("Cotracts")
+                        .HasForeignKey("VendorId");
+
+                    b.Navigation("Vendor");
+                });
+
             modelBuilder.Entity("AssetProject.Models.Location", b =>
                 {
                     b.HasOne("AssetProject.Models.Location", "LocationParent")
@@ -145,6 +242,11 @@ namespace AssetProject.Migrations
             modelBuilder.Entity("AssetProject.Models.Location", b =>
                 {
                     b.Navigation("InverseLocationParent");
+                });
+
+            modelBuilder.Entity("AssetProject.Models.Vendor", b =>
+                {
+                    b.Navigation("Cotracts");
                 });
 #pragma warning restore 612, 618
         }
