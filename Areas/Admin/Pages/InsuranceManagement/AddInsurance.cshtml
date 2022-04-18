@@ -1,0 +1,137 @@
+﻿@page 
+@model AssetProject.Areas.Admin.Pages.InsuranceManagement.AddInsuranceModel
+@{
+    
+}
+<div class="slim-mainpanel">
+      <div class="container">
+        <div class="slim-pageheader">
+          <ol class="breadcrumb slim-breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
+          </ol>
+          <h6 class="slim-pagetitle">Insurance Policy Information</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+
+              <label class="section-title">Please fill your Insurance  Policy information</label>
+          <div class="form-layout">
+                <form  method="post" enctype="multipart/form-data" >
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row mg-b-25">
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Insurance Title : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.Title" class="form-control"  placeholder="Enter Insurance Title">
+                           <span asp-validation-for="@Model.insurance.Title" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+              
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label"> Description : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.insurance.Description"  class="form-control" placeholder="Enter Insurance Description">
+                           <span asp-validation-for="@Model.insurance.Description" class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label"> Insurance Company : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.insurance.InsuranceCompany"  class="form-control" placeholder="Enter Insurance Company">
+                           <span asp-validation-for="@Model.insurance.InsuranceCompany"  class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                    </div><!--End Row-->
+                    <div class="row mg-b-20">
+                      <div class="col-lg-4">
+                        <div class="form-group mg-b-10-force">
+                          <label class="form-control-label">Contact Person : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.insurance.ContactPerson"  class="form-control" placeholder="Enter Contact Person">
+                           <span asp-validation-for="@Model.insurance.ContactPerson" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Phone : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.Phone"  class="form-control"  placeholder="Enter Phone">
+                           <span asp-validation-for="@Model.insurance.Phone" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+              
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Policy Number: <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.PolicyNo"  class="form-control" placeholder="Enter Policy Number">
+                           <span asp-validation-for="@Model.insurance.PolicyNo" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                    </div><!--End Row-->
+                    <div class="row mg-b-15">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label">Start Date : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.StartDate" type="date"  class="form-control date" >
+                           <span asp-validation-for="@Model.insurance.StartDate" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-6 -->
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label">End Date : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.EndDate" type="date"  class="form-control date">
+                           <span asp-validation-for="@Model.insurance.EndDate" class="text-danger"></span>
+                        </div>
+                       
+                      </div><!-- col-6 -->
+                    </div><!--End Row-->
+                    <div class="row mg-b-15">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label class="form-control-label">Deductible : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.Deductible"  class="form-control" placeholder="Enter Deductible ">
+                           <span asp-validation-for="@Model.insurance.Deductible" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-6 -->
+                      <div class="col-lg-6">
+                         <div class="form-group">
+                          <label class="form-control-label">Permium : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.insurance.Permium" class="form-control"  placeholder="Enter Permium" >
+                           <span asp-validation-for="@Model.insurance.Permium" class="text-danger"></span>
+                         </div>
+                      </div><!-- col-6 -->   
+                    </div ><!-- End row -->
+                    <div class="form-check">
+                            <input  asp-for="@Model.insurance.IsActive" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" asp-for="@Model.insurance.IsActive">  Active  </label>                 
+                    </div>
+                       
+                    <div class="form-layout-footer mt-4 ">
+                      <button class="btn btn-primary bd-0">Submit</button>
+                      <a asp-area="admin" class="btn btn-secondary " asp-page="InsuranceList">Cancel</a>
+                     </div><!-- form-layout-footer -->
+                </form>
+          </div><!-- form-layout -->
+        </div><!-- section-wrapper --> 
+  </div><!-- container -->
+</div>
+
+    
+ @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  
+    </script>
+ <script>
+
+$(function(){
+    var date = new Date().toISOString().slice(0,10);
+  
+}
+
+$('.date').attr('min', date);
+
+
+});
+    </script>*@
+}
+

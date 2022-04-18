@@ -19,6 +19,22 @@ namespace AssetProject.Migrations
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("AssetProject.Models.Brand", b =>
+                {
+                    b.Property<int>("BrandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BrandTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BrandId");
+
+                    b.ToTable("Brands");
+                });
+
             modelBuilder.Entity("AssetProject.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -32,43 +48,6 @@ namespace AssetProject.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.Contract", b =>
-                {
-                    b.Property<int>("ContractId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContractNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("VendorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ContractId");
-
-                    b.HasIndex("VendorId");
-
-                    b.ToTable("Contracts");
                 });
 
             modelBuilder.Entity("AssetProject.Models.Country", b =>
@@ -99,6 +78,94 @@ namespace AssetProject.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("AssetProject.Models.Employee", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("AssetProject.Models.Insurance", b =>
+                {
+                    b.Property<int>("InsuranceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContactPerson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Deductible")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("InsuranceCompany")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Permium")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PolicyNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("InsuranceId");
+
+                    b.ToTable("Insurances");
                 });
 
             modelBuilder.Entity("AssetProject.Models.Location", b =>
@@ -234,6 +301,20 @@ namespace AssetProject.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("AssetProject.Models.Type", b =>
+                {
+                    b.HasOne("AssetProject.Models.Brand", "Brand")
+                        .WithMany("Types")
+                        .HasForeignKey("BrandId");
+
+                    b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("AssetProject.Models.Brand", b =>
+                {
+                    b.Navigation("Types");
+                });
+
             modelBuilder.Entity("AssetProject.Models.Country", b =>
                 {
                     b.Navigation("Tenants");
@@ -242,11 +323,6 @@ namespace AssetProject.Migrations
             modelBuilder.Entity("AssetProject.Models.Location", b =>
                 {
                     b.Navigation("InverseLocationParent");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.Vendor", b =>
-                {
-                    b.Navigation("Cotracts");
                 });
 #pragma warning restore 612, 618
         }

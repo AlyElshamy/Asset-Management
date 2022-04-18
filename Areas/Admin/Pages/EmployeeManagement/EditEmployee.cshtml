@@ -1,0 +1,94 @@
+﻿@page "{id:int?}"
+@model AssetProject.Areas.Admin.Pages.EmployeeManagement.EditEmployeeModel
+@{
+}
+<div class="slim-mainpanel">
+      <div class="container">
+        <div class="slim-pageheader">
+          <ol class="breadcrumb slim-breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
+          </ol>
+          <h6 class="slim-pagetitle">Employee Information</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+
+              <label class="section-title">Please fill your Employee information</label>
+          <div class="form-layout">
+                <form  method="post" enctype="multipart/form-data" >
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="text" asp-for="@Model.employee.ID" hidden>
+                    <div class="row mg-b-25">
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Full Name : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.employee.FullName" class="form-control"  placeholder="Enter Full Name">
+                           <span asp-validation-for="@Model.employee.FullName" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+              
+                       <div class="col-lg-4">
+                        <div class="form-group mg-b-10-force">
+                          <label class="form-control-label">Employee ID : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.employee.EmployeeId"  class="form-control" placeholder="Enter Employee ID">
+                           <span asp-validation-for="@Model.employee.EmployeeId" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                     
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label"> Title : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.employee.Title"  class="form-control" placeholder="Enter Title">
+                           <span asp-validation-for="@Model.employee.Title"  class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                    </div><!--End Row-->
+                    <div class="row mg-b-10">
+                      <div class="col-lg-4">
+                        <div class="form-group mg-b-10-force">
+                          <label class="form-control-label">Phone : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.employee.Phone"  class="form-control" placeholder="Enter Phone Number">
+                           <span asp-validation-for="@Model.employee.Phone" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Email : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.employee.Email"  class="form-control"  placeholder="Enter Email">
+                           <span asp-validation-for="@Model.employee.Email" class="text-danger"></span>
+                        </div>
+                      </div><!-- col-4 -->
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label">Remark : <span class="tx-danger">*</span></label>
+                          <input asp-for="@Model.employee.Remark" type="text"  class="form-control" placeholder="Enter Remark">
+                           <span asp-validation-for="@Model.employee.Remark" class="text-danger"></span>
+                        </div>
+                        </div>
+                    </div><!--End Row-->
+                    <div class="row mg-b-10">
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Notes</label>
+                             <textarea asp-for="@Model.employee.Notes" class="form-control" placeholder="Enter Notes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                             <span asp-validation-for="@Model.employee.Notes" class="text-danger"></span>
+                         </div>                   
+                      </div><!-- col-6 -->
+                    </div><!--End Row-->
+             
+                    <div class="form-layout-footer mt-4 ">
+                      <button class="btn btn-primary bd-0">Save</button>
+                      <a asp-area="admin" class="btn btn-secondary " asp-page="EmployeeList">Cancel</a>
+                     </div><!-- form-layout-footer -->
+                </form>
+          </div><!-- form-layout -->
+        </div><!-- section-wrapper --> 
+  </div><!-- container -->
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  
+    </script>
+}

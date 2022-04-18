@@ -21,10 +21,19 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             Context = context;
             _toastNotification = toastNotification;
         }
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
             Contract = Context.Contracts.Where(c => c.ContractId == id).Include(c => c.Vendor).FirstOrDefault();
-            VendorName = Contract.Vendor.VendorTitle;
+            if(Contract==null)
+            {
+                return Redirect("../../Error");
+            }
+            if (Contract.Vendor != null)
+            {
+                VendorName = Contract.Vendor.VendorTitle;
+            }
+          
+            return Page();
         }
 
         public IActionResult OnPost(int id)
@@ -47,7 +56,7 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
                 }
             }
 
-            return Redirect("../Error");
+            return Redirect("../../Error");
 
 
         }

@@ -1,0 +1,67 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.TypeManagment.AddTypeModel
+@{
+}
+
+<div class="slim-mainpanel">
+      <div class="container">
+        <div class="slim-pageheader">
+          <ol class="breadcrumb slim-breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
+          </ol>
+          <h6 class="slim-pagetitle">Type Information</h6>
+        </div><!-- slim-pageheader -->
+
+ <div class="section-wrapper">
+          <label class="section-title">Please fill your Type information</label>
+          @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
+
+          <div class="form-layout">
+              <form  method="post" enctype="multipart/form-data">
+              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row mg-b-25">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Type Title: <span class="tx-danger">*</span></label>
+                  <input asp-for="Type.TypeTitle" class="form-control"  placeholder="Enter Type Title">
+                   <span asp-validation-for="Type.TypeTitle" class="text-danger"></span>
+                </div>
+              </div><!-- col-4 -->
+
+               <div class="col-lg-4">
+    <div class="form-group">
+                <label class="form-control-label">Brand: <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.Type.BrandId)
+            .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("BrandsLookup")
+                .Key("Value")
+            )
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+          <span asp-validation-for="Type.BrandId" class="text-danger"></span>
+            </div>
+        </div>
+            </div><!-- row -->
+
+            <div class="form-layout-footer">
+              <button class="btn btn-primary bd-0">Create Type </button>
+             <a  asp-area="Admin" asp-page="/BrandManagment/BrandList">
+                 <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+              </a>
+            </div><!-- form-layout-footer -->
+            </form>
+          </div><!-- form-layout -->
+        </div><!-- section-wrapper -->
+        
+      </div><!-- container -->
+    </div>
+
+    
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

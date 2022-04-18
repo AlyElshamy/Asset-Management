@@ -28,7 +28,7 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             {
                 if (Contract.VendorId == null)
                 {
-                    ModelState.AddModelError("", "Please Select Vendor");
+                    ModelState.AddModelError("VendorId", "Please Select Vendor");
                     return Page();
                 }
                 Context.Contracts.Add(Contract);

@@ -1,0 +1,78 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.InsuranceManagement.InsuranceListModel
+@{
+    
+  }
+  
+
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+            </ol>
+            <h6 class="slim-pagetitle">Data Tables</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+            <label class="section-title">Insurance Policy List</label>
+            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+    <a  asp-area="Admin" asp-page="/InsuranceManagement/AddInsurance">Add new Insurance Policy</a>
+    @(Html.DevExtreme().DataGrid<AssetProject.Models.Insurance>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("Insurances")
+        .LoadAction("Get")
+        .Key("InsuranceId")
+    )
+    .RemoteOperations(true)
+     .ShowBorders(true)
+    .Paging(p=>p.PageSize(10))
+    .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+      .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .Columns(columns => {
+
+            columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/InsuranceManagement/EditInsurance?id=<%- data.InsuranceId %>"> Edit |  </a>
+                <a href="/Admin/InsuranceManagement/DeleteInsurance?id=<%- data.InsuranceId %>"> Delete | </a>
+                <a href="/Admin/InsuranceManagement/DetailsInsurance?id=<%- data.InsuranceId %>"> Details </a>
+            </text>).Width(150);
+        columns.AddFor(m => m.Title);
+
+        columns.AddFor(m => m.Description);
+
+        columns.AddFor(m => m.InsuranceCompany);
+
+        columns.AddFor(m => m.ContactPerson);
+
+        columns.AddFor(m => m.PolicyNo);
+
+        columns.AddFor(m => m.Phone);
+
+        columns.AddFor(m => m.StartDate);
+
+        columns.AddFor(m => m.EndDate);
+
+        columns.AddFor(m => m.Deductible);
+
+        columns.AddFor(m => m.Permium);
+
+        columns.AddFor(m => m.IsActive);
+    })
+)
+                </div>
+            </div><!-- table-wrapper -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>
+
