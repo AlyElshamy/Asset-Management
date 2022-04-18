@@ -143,7 +143,9 @@
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                            <a asp-area="Identity" asp-page="/Account/Logout" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
+                            <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
+                                <a href="#" class="nav-link" onclick="document.getElementById('form1').submit();"><i class="icon ion-forward"></i> Sign Out</a>
+                             </form>
                         </nav>
                     </div><!-- dropdown-menu -->
                 </div><!-- dropdown -->
