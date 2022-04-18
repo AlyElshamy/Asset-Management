@@ -1,18 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AssetProject.Models
 {
     public class Vendor
     {
        public int VendorId { set; get; }
+        [Required]
        public string VendorTitle { set; get; }
-       public string Phone { set; get; }
-       public string Mobile { set; get; }
-       public  string Email { set; get; }
-       public string Website { set; get; }
-       public  string ContactPersonName { set; get; }
-       public  string ContactPersonEmail { set; get; }
-       public string ContactPersonPhone { set; get; }
+        [Required]
+        public string Phone { set; get; }
+        [Required]
+        public string Mobile { set; get; }
+        [Required]
+        [EmailAddress]
+        public  string Email { set; get; }
+        [Required]
+        [Url]
+        public string Website { set; get; }
+        [Required]
+        public  string ContactPersonName { set; get; }
+        [Required]
+        public  string ContactPersonEmail { set; get; }
+        [Required]
+        public string ContactPersonPhone { set; get; }
        public virtual ICollection<Contract> Cotracts { get; set; }
 
     }
