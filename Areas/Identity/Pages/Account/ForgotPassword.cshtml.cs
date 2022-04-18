@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using NToastNotify;
 
 namespace AssetProject.Areas.Identity.Pages.Account
 {
@@ -19,11 +20,13 @@ namespace AssetProject.Areas.Identity.Pages.Account
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IToastNotification _toastNotififcation;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender,IToastNotification toastNotififcation)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _toastNotififcation = toastNotififcation;
         }
 
         [BindProperty]
@@ -45,6 +48,7 @@ namespace AssetProject.Areas.Identity.Pages.Account
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return RedirectToPage("./ForgotPasswordConfirmation");
+                    //_toastNotififcation.AddSuccessToastMessage(" Please check your email to reset your password. ");
                 }
 
                 // For more information on how to enable account confirmation and password reset please 
@@ -63,6 +67,7 @@ namespace AssetProject.Areas.Identity.Pages.Account
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
+                //_toastNotififcation.AddSuccessToastMessage(" Please check your email to reset your password.
             }
 
             return Page();
