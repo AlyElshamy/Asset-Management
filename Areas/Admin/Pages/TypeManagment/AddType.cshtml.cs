@@ -27,7 +27,7 @@ namespace AssetProject.Areas.Admin.Pages.TypeManagment
             if (Type.BrandId == null)
             {
 
-                ModelState.AddModelError("BrandId", "Please Select Type");
+                ModelState.AddModelError("", "Please Select Brand");
                 return Page();
             }
             if (ModelState.IsValid)

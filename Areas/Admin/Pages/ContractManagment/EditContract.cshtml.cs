@@ -33,7 +33,7 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             if (Contract.VendorId==null)
             {
 
-                ModelState.AddModelError("VendorId", "Please select Vendor");
+                ModelState.AddModelError("", "Please select Vendor");
                 return Page();
             }
             if (ModelState.IsValid)
