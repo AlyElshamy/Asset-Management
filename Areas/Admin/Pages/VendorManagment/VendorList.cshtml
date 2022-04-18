@@ -15,11 +15,11 @@
 
         <div class="section-wrapper">
             <label class="section-title">Vendor List</label>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
 
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                   <a asp-area="Admin" asp-page="/VendorManagment/AddVendor"> Add New Contract   </a>
+                   <a asp-area="Admin" asp-page="/VendorManagment/AddVendor"> Add New Vendor   </a>
                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Vendor>()
     .DataSource(ds => ds.Mvc()
         .Controller("Vendors")
