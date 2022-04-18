@@ -59,5 +59,19 @@ namespace AssetProject.Controllers
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> BrandsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Brands
+                         orderby i.BrandTitle
+                         select new
+                         {
+                             Value = i.BrandId,
+                             Text = i.BrandTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+
     }
 }

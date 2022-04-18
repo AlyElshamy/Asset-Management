@@ -4,52 +4,50 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
-using System;
 using System.Linq;
 
-namespace AssetProject.Areas.Admin.Pages.ContractManagment
+
+namespace AssetProject.Areas.Admin.Pages.TypeManagment
 {
-    public class DeleteContractModel : PageModel
+    public class DeleteTypeModel : PageModel
     {
-     
-        public Contract Contract { set; get; }
+        public Type Type { set; get; }
         AssetContext Context;
-        public string VendorName;
+        public string BrandName;
         private readonly IToastNotification _toastNotification;
-        public DeleteContractModel(AssetContext context, IToastNotification toastNotification)
+        public DeleteTypeModel(AssetContext context, IToastNotification toastNotification)
         {
             Context = context;
             _toastNotification = toastNotification;
         }
         public IActionResult OnGet(int id)
         {
-            Contract = Context.Contracts.Where(c => c.ContractId == id).Include(c => c.Vendor).FirstOrDefault();
-            if(Contract==null)
+           Type= Context.Types.Where(c => c.TypeId == id).Include(c => c.Brand).FirstOrDefault();
+            if (Type == null)
             {
                 return Redirect("../../Error");
             }
-            if (Contract.Vendor != null)
+            if (Type.Brand != null)
             {
-                VendorName = Contract.Vendor.VendorTitle;
+                BrandName = Type.Brand.BrandTitle;
             }
-          
             return Page();
         }
 
         public IActionResult OnPost(int id)
         {
-            Contract = Context.Contracts.Find(id);
-            if(Contract != null)
+           Type = Context.Types.Find(id);
+            if (Type != null)
             {
-            
-                    Context.Contracts.Remove(Contract);
+
+                Context.Types.Remove(Type);
                 try
                 {
                     Context.SaveChanges();
-                    _toastNotification.AddSuccessToastMessage("Contract Deleted successfully");
-                    return RedirectToPage("/ContractManagment/ContractList");
+                    _toastNotification.AddSuccessToastMessage("Type Deleted successfully");
+                    return RedirectToPage("/TypeManagment/TypeList");
                 }
-                catch (Exception e)
+                catch (System.Exception e)
                 {
                     _toastNotification.AddErrorToastMessage("Something went wrong");
                     return Page();

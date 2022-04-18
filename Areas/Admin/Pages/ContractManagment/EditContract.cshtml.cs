@@ -18,9 +18,14 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             Context = context;
            _toastNotification = toastNotification;
         }
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
            Contract =Context.Contracts.Find(id);
+            if(Contract==null)
+            {
+                return Redirect("../../Error");
+            }
+            return Page();
         }
 
         public IActionResult OnPost()
@@ -28,7 +33,7 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             if (Contract.VendorId==null)
             {
 
-                ModelState.AddModelError("", "Please select Vendor");
+                ModelState.AddModelError("VendorId", "Please select Vendor");
                 return Page();
             }
             if (ModelState.IsValid)

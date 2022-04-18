@@ -2,52 +2,44 @@ using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System;
-using System.Linq;
 
-namespace AssetProject.Areas.Admin.Pages.ContractManagment
+namespace AssetProject.Areas.Admin.Pages.BrandManagment
 {
-    public class DeleteContractModel : PageModel
+    public class DeleteBrandModel : PageModel
     {
-     
-        public Contract Contract { set; get; }
+        public Brand Brand { set; get; }
         AssetContext Context;
-        public string VendorName;
+      
         private readonly IToastNotification _toastNotification;
-        public DeleteContractModel(AssetContext context, IToastNotification toastNotification)
+        public DeleteBrandModel(AssetContext context, IToastNotification toastNotification)
         {
             Context = context;
             _toastNotification = toastNotification;
         }
         public IActionResult OnGet(int id)
         {
-            Contract = Context.Contracts.Where(c => c.ContractId == id).Include(c => c.Vendor).FirstOrDefault();
-            if(Contract==null)
+            Brand = Context.Brands.Find(id);
+            if (Brand == null)
             {
                 return Redirect("../../Error");
             }
-            if (Contract.Vendor != null)
-            {
-                VendorName = Contract.Vendor.VendorTitle;
-            }
-          
             return Page();
         }
 
         public IActionResult OnPost(int id)
         {
-            Contract = Context.Contracts.Find(id);
-            if(Contract != null)
+           Brand = Context.Brands.Find(id);
+            if (Brand != null)
             {
-            
-                    Context.Contracts.Remove(Contract);
+
+                Context.Brands.Remove(Brand);
                 try
                 {
                     Context.SaveChanges();
-                    _toastNotification.AddSuccessToastMessage("Contract Deleted successfully");
-                    return RedirectToPage("/ContractManagment/ContractList");
+                    _toastNotification.AddSuccessToastMessage("Brand Deleted successfully");
+                    return RedirectToPage("/BrandManagment/BrandList");
                 }
                 catch (Exception e)
                 {
@@ -57,8 +49,6 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             }
 
             return Redirect("../../Error");
-
-
         }
     }
 }
