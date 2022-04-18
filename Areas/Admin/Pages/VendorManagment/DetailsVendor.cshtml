@@ -1,0 +1,83 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.VendorManagment.DetailsVendorModel
+@{
+}
+
+
+<div class="slim-mainpanel">
+      <div class="container">
+        <div class="slim-pageheader">
+          <ol class="breadcrumb slim-breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
+          </ol>
+          <h6 class="slim-pagetitle">Contract Information</h6>
+        </div><!-- slim-pageheader -->
+
+ <div class="section-wrapper">
+         @* <label class="section-title">Please fill your company information</label>*@
+          @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
+
+          <div class="form-layout">  
+            <div class="row mg-b-25">
+              <div class="col-lg-4">
+                  <label class="form-control-label">Vendor Title: <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.VendorTitle</div>
+              </div><!-- col-4 -->
+
+              <div class="col-lg-4">
+                  <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.Phone</div>
+              </div><!-- col-4 -->
+
+            
+                 <div class="col-lg-4">
+                  <label class="form-control-label">Mobile : <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.Mobile</div>
+              </div><!-- col-4 -->
+             
+
+                 <div class="col-lg-4">
+                  <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.Website</div>
+              </div><!-- col-4 -->
+
+                 <div class="col-lg-4">
+                  <label class="form-control-label">Contract Person Name: <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.ContactPersonName</div>
+              </div><!-- col-4 -->
+
+               
+                 <div class="col-lg-4">
+                     <label class="form-control-label">Contract Person Email: <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.ContactPersonEmail</div>
+              </div><!-- col-4 -->
+   
+                 <div class="col-lg-4">
+                     <label class="form-control-label">Contract Person Phone: <span class="tx-danger">*</span></label>
+                  <div style="font-size:large">@Model.Vendor.ContactPersonPhone</div>
+              </div><!-- col-4 -->
+
+         
+            </div><!-- row -->
+
+            <div class="form-layout-footer">
+        <a  asp-area="Admin" asp-page="/VendorManagment/VendorList">
+                 <input type='button' class="btn btn-secondary bd-0" value='Back to List' />
+              </a>
+            </div><!-- form-layout-footer -->
+       
+          </div><!-- form-layout -->
+        </div><!-- section-wrapper -->
+        
+      </div><!-- container -->
+    </div>
+
+    
+@section Scripts {
+ <script>
+
+ 
+    </script>
+}
