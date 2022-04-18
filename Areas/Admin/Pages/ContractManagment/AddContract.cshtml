@@ -48,7 +48,7 @@
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label">Cost: <span class="tx-danger">*</span></label>
-                  <input asp-for="Contract.Cost" class="form-control" placeholder="Enter Cost" value="">
+                  <input asp-for="Contract.Cost" class="form-control" placeholder="Enter Cost" value="@(Model.Contract.Cost > 0 ? Model.Contract.Cost :string.Empty)">
                    <span asp-validation-for="Contract.Cost" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
@@ -56,7 +56,7 @@
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label">Start Date : <span class="tx-danger">*</span></label>
-                  <input asp-for="Contract.StartDate" type="date" class="form-control date" value="">
+                  <input asp-for="Contract.StartDate" type="date" class="form-control date" value="@(Model.Contract.StartDate >= DateTime.Now ? Model.Contract.StartDate :string.Empty)">
                    <span asp-validation-for="Contract.StartDate" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
@@ -64,7 +64,7 @@
                 <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label">End Date : <span class="tx-danger">*</span></label>
-                  <input asp-for="Contract.EndDate" type="date"   class="form-control date" value="">
+                  <input asp-for="Contract.EndDate" type="date"   class="form-control date" value="@(Model.Contract.EndDate >=DateTime.Now ? Model.Contract.EndDate :string.Empty)">
                    <span asp-validation-for="Contract.EndDate" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
