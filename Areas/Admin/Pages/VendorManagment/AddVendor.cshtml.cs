@@ -3,6 +3,7 @@ using AssetProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.VendorManagment
 {
@@ -18,25 +19,41 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
            _toastNotification = toastNotification;
             Vendor = new Vendor();
         }
-        public void OnGet()
-        {
-        }
+        //public void OnGet()
+        //{
+        //}
 
-        public IActionResult OnPost()
+        public IActionResult OnGet()
         {
-            if (ModelState.IsValid)
-            {
-                if (Vendor.VendorId == null)
-                {
-                    ModelState.AddModelError("", "Please Select Vendor");
-                    return Page();
-                }
-                Context.Vendors.Add(Vendor);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Vendor Added successfully");
-                return RedirectToPage("/VendorManagment/VendorList");
-            }
             return Page();
+        }
+        //public IActionResult OnPost()
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (Vendor.VendorId == null)
+        //        {
+        //            ModelState.AddModelError("", "Please Select Vendor");
+        //            return Page();
+        //        }
+
+        //        Context.Vendors.Add(Vendor);
+        //        Context.SaveChanges();
+        //        _toastNotification.AddSuccessToastMessage("Vendor Added successfully");
+        //        return RedirectToPage("/VendorManagment/VendorList");
+        //    }
+        //    return Page();
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            Context.Vendors.Add(Vendor);
+            await Context.SaveChangesAsync();
+            _toastNotification.AddSuccessToastMessage("Vendor Added successfully");
+            return RedirectToPage("/VendorManagment/VendorList");
         }
     }
 }

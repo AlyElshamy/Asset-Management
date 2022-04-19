@@ -11,8 +11,7 @@ namespace AssetProject.Models
         public int PurchaseId { get; set; }
         [MaxLength(50)]
         public string PurchaseSerial { get; set; }
-        [Column(TypeName ="date")]
-        public DateTime? date { get; set; }
+        public DateTime? Purchasedate { get; set; }
         public int? StoreId { get; set; }
         public virtual Store Store { get; set; }
         public int? VendorId { get; set; }
@@ -20,7 +19,6 @@ namespace AssetProject.Models
         public double? Total { get; set; }
         public double? Discount { get; set; }
         public double? Net { get; set; }
-        [MaxLength(50)]
         public string Remarks { get; set; }
         public virtual ICollection<PurchaseAsset> PurchaseAssets { get; set; }
 

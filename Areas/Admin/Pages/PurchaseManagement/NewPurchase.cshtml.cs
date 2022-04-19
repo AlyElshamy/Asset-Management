@@ -14,13 +14,15 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
         private readonly IToastNotification _toastNotification;
         [BindProperty]
         public Purchase purchase { get; set; }
-        public List<PurchaseAsset> ltDetails  { get; set; }
+        [BindProperty]
+        public List<PurchaseAsset> PurchaseAssetsList  { get; set; }
 
         public NewPurchaseModel(AssetContext context, IToastNotification toastNotification)
         {
             _context = context;
             _toastNotification = toastNotification;
             //purchase = new Purchase();
+            PurchaseAssetsList = new List<PurchaseAsset>();
         }
         public void OnGet()
         {
@@ -32,6 +34,7 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
                 return Page();
             try
             {
+                purchase.PurchaseAssets = PurchaseAssetsList;
                 _context.Purchases.Add(purchase);
                 _context.SaveChanges();
                 //Save Detials
