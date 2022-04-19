@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AssetProject.Models
 {
@@ -10,5 +11,6 @@ namespace AssetProject.Models
         public virtual Brand Brand { get; set; }
     
         public int? BrandId { set; get; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

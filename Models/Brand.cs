@@ -9,5 +9,6 @@ namespace AssetProject.Models
         [Required]
         public string BrandTitle { set; get; }
         public virtual ICollection<Type> Types { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

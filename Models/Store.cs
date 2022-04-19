@@ -21,6 +21,7 @@ namespace AssetProject.Models
         [DataType(DataType.PhoneNumber)]
         public string Mobile { get; set; }
         public string Fax { get; set; }
+        public virtual ICollection<Purchase> Purchases { get; set; }
 
     }
 }
