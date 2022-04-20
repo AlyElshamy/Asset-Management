@@ -1,59 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using AssetProject.Data;
-using NToastNotify;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
-namespace AssetProject.Areas.Identity.Pages.Account
+namespace AssetProject.Areas.Identity.Pages.UserManagment
 {
-    [AllowAnonymous]
-    public class RegisterModel : PageModel
+    public class AddUserModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        public AssetContext _context;
-        private readonly IToastNotification _toastNotification;
-        public RegisterModel(
+    
+
+        public AddUserModel(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            AssetContext context,
-             IToastNotification toastNotification)
+            IEmailSender emailSender
+           )
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _logger = logger;
             _emailSender = emailSender;
-            _context = context;
-            _toastNotification = toastNotification;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
-
-        public string ReturnUrl { get; set; }
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
         public class InputModel
         {
             [Required]
@@ -86,67 +67,37 @@ namespace AssetProject.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
-            [Required]
-            [Display(Name = "Company Name")]
-            public string CompanyName { set; get; }
+        }
+        public void OnGet()
+        {
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
-        {
-            ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync()
         {
-            returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+           
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,FirstName=Input.FirstName,LastName=Input.LastName,PhoneNumber=Input.Phone };
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var LoginedUser = await _userManager.FindByIdAsync(userid);
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.Phone,TenantId=LoginedUser.TenantId };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
 
-                    if (!await _roleManager.RoleExistsAsync("Company"))
+                    if (!await _roleManager.RoleExistsAsync("User"))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole("Company"));
+                        await _roleManager.CreateAsync(new IdentityRole("User"));
                     }
 
-                    await _userManager.AddToRoleAsync(user, "Company");
-
-
-                    Tenant tenant = new Tenant()
-                    {
-                        CompanyName = Input.CompanyName
-                    };
-                    try
-                    {
-                        _context.Tenants.Add(tenant);
-                        _context.SaveChanges();
-                    }
-                    catch(Exception e)
-                    {
-                        _toastNotification.AddErrorToastMessage("Error Saving Company Information");
-                        return Page();
-                    }
-                    //Saving tenant id for user
-                   user.TenantId = tenant.TenantId;
-                   var res= await _userManager.UpdateAsync(user);
-                    if (!res.Succeeded)
-                    {
-                        return Redirect("../../Error");
-                    }
-                  
-                    _logger.LogInformation("User created a new account with password.");
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -154,12 +105,13 @@ namespace AssetProject.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("/Account/RegisterConfirmation", new { area = "Identity" , email = Input.Email });
+                        
                     }
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return RedirectToPage("/Index");
                     }
                 }
                 foreach (var error in result.Errors)

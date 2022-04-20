@@ -1,17 +1,14 @@
 ﻿@page
-@model RegisterModel
+@model AssetProject.Areas.Identity.Pages.UserManagment.AddUserModel
 @{
     ViewData["Title"] = "Register";
      Layout = "~/Pages/Shared/Admin/_AdminLayoutSlimEmpty.cshtml";
 }
 
-
-<br />
-<br />
 <div class="d-md-flex flex-row-reverse">
     <div class="signin-right">
              <div class="signin-box signup">
-                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                 <form method="post">
                      <h3 class="signin-title-primary">Get Started!</h3>
                      <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
                      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -55,12 +52,6 @@
                      </div>
 
 
-
-                     <div class="form-group">
-
-                         <input asp-for="Input.CompanyName" class="form-control" placeholder="Company Name" />
-                         <span asp-validation-for="Input.CompanyName" class="text-danger"></span>
-                     </div>
 
                      <button class="btn btn-primary btn-block btn-signin">Sign Up</button>
 
