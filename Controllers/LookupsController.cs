@@ -45,6 +45,18 @@ namespace AssetProject.Controllers
                          };
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
+        [HttpGet]
+        public async Task<IActionResult> ItemsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Items
+                         orderby i.ItemTitle
+                         select new
+                         {
+                             Value = i.ItemId,
+                             Text = i.ItemTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
 
         [HttpGet]
         public async Task<IActionResult> LocationsLookup(DataSourceLoadOptions loadOptions)
