@@ -144,6 +144,8 @@
                             <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
+                            <a asp-area="Identity" asp-page="/Account/ChangePassword" class="nav-link"><i class="icon ion-ios-bolt"></i> Change Password</a>
+
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
                          
                             <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
