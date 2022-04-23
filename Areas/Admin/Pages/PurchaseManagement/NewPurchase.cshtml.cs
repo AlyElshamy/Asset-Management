@@ -1,16 +1,18 @@
 using AssetProject.Data;
 using AssetProject.Models;
-using DevExpress.Xpo;
-using Microsoft.AspNetCore.Http;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NToastNotify;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
@@ -21,15 +23,14 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
         private readonly IToastNotification _toastNotification;
         [BindProperty]
         public Purchase purchase { get; set; }
-        [BindProperty]
-        public List<PurchaseAsset> PurchaseAssetsList  { get; set; }
+        public static int count = 0;
+        public static List<PurchaseAsset> PurchaseAssetsList = new List<PurchaseAsset>();
 
         public NewPurchaseModel(AssetContext context, IToastNotification toastNotification)
         {
             _context = context;
             _toastNotification = toastNotification;
-            //purchase = new Purchase();
-            PurchaseAssetsList = new List<PurchaseAsset>();
+        
         }
         public void OnGet()
         {
@@ -37,6 +38,10 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
         }
         public IActionResult OnPost()
         {
+            foreach (var item in PurchaseAssetsList)
+            {
+                item.PurchaseAssetId = 0;
+            }
             if (!ModelState.IsValid)
                 return Page();
             try
@@ -45,7 +50,6 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
                 _context.Purchases.Add(purchase);
                 _context.SaveChanges();
                 //Save Detials
-
                 _toastNotification.AddSuccessToastMessage("Purchase Created Successfully");
             }
             catch (Exception)
@@ -56,26 +60,32 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
             return RedirectToPage("PurchaseList");
         }
 
-
+       
         
-        public async Task<IActionResult> Post(string values)
+        public IActionResult OnPostGridInsert(string values)
         {
             var model = new PurchaseAsset();
+            model.PurchaseAssetId = count;
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
+            
+ 
             PopulateModel(model, valuesDict);
 
             if (!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
-
-            var result = _context.PurchaseAssets.Add(model);
-            await _context.SaveChangesAsync();
-
+            PurchaseAssetsList.Add(model);
+            count++;
             return new OkResult();
         }
-
-        public async Task<IActionResult> Put(int key, string values)
+        
+        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
         {
-            var model = await _context.PurchaseAssets.FirstOrDefaultAsync(item => item.PurchaseAssetId == key);
+           
+            return new JsonResult(DataSourceLoader.Load(PurchaseAssetsList, loadOptions));
+        }
+        public IActionResult OnPutGridUpdate(int key, string values)
+        {
+            var model = PurchaseAssetsList.Find(k => k.PurchaseAssetId == key);
             if (model == null)
                 return StatusCode(409, "Object not found");
 
@@ -85,16 +95,16 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
             if (!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
 
-            await _context.SaveChangesAsync();
+            PurchaseAssetsList.RemoveAt(key);
+            PurchaseAssetsList.Add(model);
             return new OkResult();
         }
 
-        public async Task Delete(int key)
+        public IActionResult OnDeleteGridDelete(int key)
         {
-            var model = await _context.PurchaseAssets.FirstOrDefaultAsync(item => item.PurchaseAssetId == key);
-
-            _context.PurchaseAssets.Remove(model);
-            await _context.SaveChangesAsync();
+            
+            PurchaseAssetsList.RemoveAt(key);
+            return new OkResult();
         }
 
 
