@@ -108,6 +108,19 @@ namespace AssetProject.Controllers
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DepreciationMethodsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.DepreciationMethods
+                         orderby i.DepreciationMethodTitle
+                         select new
+                         {
+                             Value = i.DepreciationMethodId,
+                             Text = i.DepreciationMethodTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
 
     }
 }
