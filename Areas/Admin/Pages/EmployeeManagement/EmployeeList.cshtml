@@ -8,10 +8,10 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Employee List</li>
             </ol>
-            <h6 class="slim-pagetitle">Data Tables</h6>
+            <h6 class="slim-pagetitle">Employee List</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
@@ -45,7 +45,7 @@
                 <a href="/Admin/EmployeeManagement/DetailsEmployee?id=<%- data.ID %>"> Details </a>
             </text>).Width(150);
 
-        columns.AddFor(m => m.EmployeeId);
+    @*    columns.AddFor(m => m.EmployeeId);*@
 
         columns.AddFor(m => m.FullName);
 

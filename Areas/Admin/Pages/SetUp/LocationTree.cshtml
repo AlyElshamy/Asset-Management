@@ -2,7 +2,27 @@
 @model AssetProject.Areas.Admin.Pages.SetUp.LocationTreeModel
 @{
 }
-@(Html.DevExtreme().TreeList<AssetProject.Models.Location>()
+
+
+
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Location List</a></li>
+@*                <li class="breadcrumb-item active" aria-current="page">SubCategories List</li>*@
+            </ol>
+            <h6 class="slim-pagetitle">Location List</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+            <label class="section-title">Location List</label>
+            
+
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
+ @(Html.DevExtreme().TreeList<AssetProject.Models.Location>()
     .DataSource(ds => ds.Mvc()
         .Controller("Locations")
         .LoadAction("Get")
@@ -46,3 +66,9 @@
         .Selection(s => s.Mode(SelectionMode.Single))
 
 )
+                </div>
+            </div><!-- table-wrapper -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>

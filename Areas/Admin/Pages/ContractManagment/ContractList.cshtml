@@ -7,10 +7,10 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contract List</li>
             </ol>
-            <h6 class="slim-pagetitle">Data Tables</h6>
+            <h6 class="slim-pagetitle">Contract List</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
@@ -61,7 +61,7 @@
 
         columns.AddFor(m => m.EndDate);
 
-        columns.AddFor(m => m.VendorId).Lookup(lookup => lookup
+        columns.AddFor(m => m.VendorId).Caption("Vendor").Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")

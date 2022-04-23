@@ -3,6 +3,26 @@
 @{
     ViewData["Title"] = "Department List";
 }
+
+
+
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Department List</a></li>
+              @*  <li class="breadcrumb-item active" aria-current="page">SubCategories List</li>*@
+            </ol>
+            <h6 class="slim-pagetitle">Department List</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+            <label class="section-title">Department List</label>
+            
+
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
 @(Html.DevExtreme().DataGrid<AssetProject.Models.Department>()
     .DataSource(ds => ds.Mvc()
         .Controller("Departments")
@@ -23,3 +43,9 @@
         .AllowDeleting(true)
     )
 )
+                </div>
+            </div><!-- table-wrapper -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>
