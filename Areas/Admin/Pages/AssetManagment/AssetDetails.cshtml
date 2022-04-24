@@ -1,0 +1,202 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.AssetManagment.AssetDetailsModel
+@{
+}
+@{
+    var longTabs = new[] {
+        "Events" , "Photos", "Docs", "Depreciation", "Warranty", "Linking", "Maintainance", "Contracts", "Insurances","Reserve","Audit","History"
+    };
+}
+<div class="slim-mainpanel">
+    <div class="container">
+
+        <br />
+        <br />
+        <div class="section-wrapper">
+            @* <label class="section-title">Please fill your company information</label>*@
+            @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
+
+            <div class="form-layout">
+                <div class="slim-pageheader">
+
+                    <ol class="breadcrumb slim-breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Print</a></li>
+                        <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/AssetManagment/EditAsset" asp-route-id="@Model.Asset.AssetId">Edit Asset</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">More Actions</li>
+                    </ol>
+                    <h3>
+                        @Model.Asset.AssetDescription
+                    </h3>
+                </div><!-- slim-pageheader -->
+                <div class="row mg-b-25">
+
+                    <div class="col-lg-4">
+                        <img src="@Model.Asset.Photo" width="250" height="250" />
+                    </div><!-- col-4 -->
+
+                    <div class="col-lg-4">
+                        <table class="table table-bordered table-hover table-striped">
+
+                            <tr>
+                                <td>
+                                    Asset Tag Id
+                                </td>
+                                <td>
+                                    @Model.Asset.AssetTagId
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Asset Purchase Date
+                                </td>
+                                <td>
+                                    @Model.Asset.AssetPurchaseDate.ToShortDateString()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Asset Cost
+                                </td>
+                                <td>
+                                    @Model.Asset.AssetCost
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Asset Serial No
+                                </td>
+                                <td>
+                                    @Model.Asset.AssetSerialNo
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Item
+
+                                </td>
+                                <td>
+                                    @Model.Asset.Item.ItemTitle
+                                </td>
+                            </tr>
+
+
+                        </table>
+                    </div><!-- col-4 -->
+                    @if (@Model.Asset.DepreciableAsset)
+                    {
+                        <div class="col-lg-4">
+                            <table class="table table-bordered table-hover table-striped">
+                                <tr>
+                                    <td>
+                                        Depreciable Cost
+                                    </td>
+                                    <td>
+                                        @Model.Asset.DepreciableCost
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Salvage Value
+                                    </td>
+                                    <td>
+                                        @Model.Asset.SalvageValue
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Asset Life
+                                    </td>
+                                    <td>
+                                        @Model.Asset.AssetLife
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Date Acquired
+                                    </td>
+                                    <td>
+                                        @Model.Asset.DateAcquired
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        Depreciation Method
+                                    </td>
+                                    <td>
+                                        @Model.Asset.DepreciationMethod.DepreciationMethodTitle
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                        </div>
+
+                        <!-- col-4 -->
+                    }
+
+
+                </div><!-- row -->
+
+
+            </div><!-- form-layout -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>
+<br />
+<br />
+
+<div class="slim-mainpanel">
+    <div class="container">
+
+        <br />
+        <br />
+        <div class="section-wrapper">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active show" href="#popular" data-toggle="tab">Popular</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#recent" data-toggle="tab">Recent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#toprated" data-toggle="tab">Top Rated</a>
+                        </li>
+                    </ul>
+                </div><!-- card-header -->
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="popular">
+                            First Tab // Content
+
+                        </div><!-- tab-pane -->
+                        <div class="tab-pane" id="recent">
+                            Second Tab // Content
+                        </div><!-- tab-pane -->
+                        <div class="tab-pane" id="toprated">
+                            Third Tab // Content
+                        </div><!-- tab-pane -->
+                    </div><!-- tab-content -->
+                </div><!-- card-body -->
+            </div>
+
+
+
+            </div><!-- form-layout -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>
+
+@section Scripts {
+<script>
+
+
+</script>
+}

@@ -96,24 +96,19 @@
                   <div class="row mg-b-25">
                       <div class="col-lg-4">
                           <label class="form-control-label">Depreciable Asset </label>
-                          @*<div class="col-md-10" id="radiobtn">
-                    Yes
-                    @Html.RadioButtonFor(model => model.Asset.DepreciableAsset, "Yes")
-                    No
-                    @Html.RadioButtonFor(model => model.Asset.DepreciableAsset, "No")
-                </div>*@
+                 
                           <div class="col-md-10" id="radiobtn">
-                              <label for="ch1"> yes</label><input asp-for="Asset.DepreciableAsset" value="true" type="radio" id="ch1"  onclick="myFunction()" checked/>
+                              <label for="ch1"> yes</label><input asp-for="Asset.DepreciableAsset" value="true" checked="checked" type="radio" id="ch1"  onclick="myFunction()" />
                                <label for="ch2"> no</label> <input asp-for="Asset.DepreciableAsset"   value="false" type="radio" id="ch2"  onclick="myFunction()" />
                           </div>
                       </div>
                   </div>
 
-                  <div id="depreciable" class="row mg-b-25">
+                  <div id="depreciable" class="row mg-b-25" style="display: none;">
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">Depreciable Cost: <span class="tx-danger">*</span></label>
-                              <input asp-for="Asset.DepreciableCost" class="form-control" placeholder="Enter Depreciable Cost " value="@(Model.Asset.DepreciableCost > 0 ? Model.Asset.DepreciableCost :string.Empty)">
+                              <input asp-for="Asset.DepreciableCost"  class="form-control required" placeholder="Enter Depreciable Cost " value="@(Model.Asset.DepreciableCost > 0 ? Model.Asset.DepreciableCost :string.Empty)">
                               <span asp-validation-for="Asset.DepreciableCost" class="text-danger"></span>
                           </div>
                       </div><!-- col-4 -->
@@ -121,21 +116,21 @@
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">Salvage Value: <span class="tx-danger">*</span></label>
-                              <input asp-for="Asset.SalvageValue" class="form-control" placeholder="Enter salvage Value " value="@(Model.Asset.SalvageValue > 0 ? Model.Asset.SalvageValue :string.Empty)">
+                              <input asp-for="Asset.SalvageValue" class="form-control required" placeholder="Enter salvage Value " value="@(Model.Asset.SalvageValue > 0 ? Model.Asset.SalvageValue :string.Empty)">
                               <span asp-validation-for="Asset.SalvageValue" class="text-danger"></span>
                           </div>
                       </div><!-- col-4 -->
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">Asset Life (Months): <span class="tx-danger">*</span></label>
-                              <input asp-for="Asset.AssetLife" class="form-control" placeholder="Enter Asset Life " value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
+                              <input asp-for="Asset.AssetLife" class="form-control required" placeholder="Enter Asset Life " value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
                               <span asp-validation-for="Asset.AssetLife" class="text-danger"></span>
                           </div>
                       </div><!-- col-4 -->
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">Date Acquired: <span class="tx-danger">*</span></label>
-                              <input asp-for="Asset.DateAcquired" type="date" class="form-control date" placeholder="Enter Date Acquired" value="@(Model.Asset.DateAcquired >= DateTime.Now ? Model.Asset.DateAcquired :string.Empty)">
+                              <input asp-for="Asset.DateAcquired" type="date" class="form-control required" placeholder="Enter Date Acquired" value="@(Model.Asset.DateAcquired >= DateTime.Now ? Model.Asset.DateAcquired :string.Empty)">
                               <span asp-validation-for="Asset.DateAcquired" class="text-danger"></span>
                           </div>
                       </div><!-- col-4 -->
@@ -187,6 +182,7 @@
                     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
 
+           
 
                  function myFunction() {
                      var btn1 = document.getElementById('ch1');
@@ -197,7 +193,10 @@
                      if (btn1.checked == true) {
                          // 👇 this SHOWS the form
                          form.style.display = 'flex';
-                     } else if (btn2.checked == true)
+                       document.getElementsByClassName("required").setAttribute("required", "");
+
+                     } 
+                     else if (btn2.checked == true)
                      {
                          // 👇 this HIDES the form
                          form.style.display = 'none';

@@ -43,6 +43,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
                
             }
+            
             if (ModelState.IsValid)
             {
                 if (file != null)

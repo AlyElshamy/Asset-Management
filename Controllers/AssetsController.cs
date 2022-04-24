@@ -66,8 +66,10 @@ namespace AssetProject.Controllers
 
             return Json(new { result.Entity.AssetId });
         }
+   
 
-        [HttpPut]
+
+    [HttpPut]
         public async Task<IActionResult> Put(int key, string values) {
             var model = await _context.Assets.FirstOrDefaultAsync(item => item.AssetId == key);
             if(model == null)

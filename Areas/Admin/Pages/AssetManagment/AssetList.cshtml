@@ -3,10 +3,35 @@
 @{
 }
 
-@(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
+
+
+
+
+      <div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Brand List</li>
+            </ol>
+            <h6 class="slim-pagetitle">Brand List</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="section-wrapper">
+            <label class="section-title">Brand List</label>
+          
+
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
+            <a asp-area="Admin" asp-page="/AssetManagment/AddAsset"> Add New Asset   </a>
+            @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
 .DataSource(ds => ds.Mvc()
 .Controller("Assets")
 .LoadAction("Get")
+.UpdateAction(true)
+.InsertAction(true)
+.DeleteAction(true)
 .Key("AssetId")
 )
 .HeaderFilter(headerFilter => headerFilter.Visible(true))
@@ -17,6 +42,12 @@
 .ColumnAutoWidth(true)
 .WordWrapEnabled(true)
 .ShowBorders(true)
+.Columns(columns => {
+      
+            columns.Add().Caption("Action").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/AssetManagment/AssetDetails?id=<%- data.AssetId %>"> View </a>
+            </text>).Width(150);
+        })
 .Columns(columns => {
 
 
@@ -38,7 +69,7 @@ columns.AddFor(m => m.AssetSerialNo);
 
 columns.AddFor(m => m.AssetPurchaseDate);
 
-columns.AddFor(m => m.ItemId).Lookup(lookup => lookup
+columns.AddFor(m => m.ItemId).Caption("Item").Lookup(lookup => lookup
         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
@@ -65,11 +96,91 @@ columns.AddFor(m => m.ItemId).Lookup(lookup => lookup
 })
 .RemoteOperations(true).Columns(columns =>
     {
-
-    columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/BrandManagment/EditBrand?id=<%- data.BrandId %>"> View  </a>
-
-            </text>).Width(150);
+       columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
+        .CellTemplate(@<text>
+            @Html.DevExtreme().Button().Text("Edit").OnClick("function (e) { editButtonClick(data) }")
+            @Html.DevExtreme().Button().Text("Delete").OnClick("function (e) { deleteButtonClick(data) }")
+            @Html.DevExtreme().Button().Text("View").OnClick("function (e) { viewButtonClick(data) }")
+        </text>);
+  
         })
 
 )
+
+
+    @(Html.DevExtreme().Popup().ID("customPopup").Title("Custom popup edit").Visible(false)
+        .ContentTemplate(@<text>
+            @Html.Label("CustomText")
+            @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
+            @Html.DevExtreme().Button().Text("Save").OnClick("function (e) { saveButtonClick() }")
+            @Html.DevExtreme().Button().Text("Cancel").OnClick("function (e) { cancelButtonClick() }")
+        </text>))
+
+                
+                </div>
+            </div><!-- table-wrapper -->
+        </div><!-- section-wrapper -->
+
+    </div><!-- container -->
+</div>
+
+<script>
+    var currentKey;
+function editButtonClick(data) {
+    $('#customPopup').dxPopup('instance').option('visible', true);
+    var textBox = $('#TxtAssetTagId').dxTextBox('instance');
+    textBox.option('value', data.AssetTagId);
+    currentKey = data.AssetId;
+}
+function deleteButtonClick(data) {
+    var grid = $('#gridContainer').dxDataGrid('instance');
+    var rowIndex = grid.getRowIndexByKey(data.OrderID);
+    grid.deleteRow(rowIndex);
+}
+function saveButtonClick() {
+    var grid = $('#gridContainer').dxDataGrid('instance');
+    var textBox = $('#TxtAssetTagId').dxTextBox('instance');
+    var value = textBox.option('value');
+    console.log(value)
+    console.log(currentKey)
+    //var rowIndex = grid.getRowIndexByKey(currentKey);
+    //grid.cellValue(rowIndex, "AssetTagId", value);
+    //var values = $("#editForm").dxForm("instance").option('formData');
+    grid.getDataSource().store().update(value).done(function(){ grid.refresh() })
+        //$.ajax({
+        //    type: "PUT",
+        //    traditional: true,
+        //    contentType: 'application/json; charset=utf-8',
+        //    url: "@Url.Action("Put", "Assets")",
+        //    data: JSON.stringify(value),
+        //    success: function (data) {
+        //        if (data == "OK") {
+        //            $("#GridView").dxDataGrid("instance").refresh();
+        //            $("#editFormPopup").dxPopup("instance").hide();
+        //        }
+        //        else
+        //            alert(data);
+        //    }
+        //});
+    //grid.saveEditData()
+    //grid.refersh()
+    $('#customPopup').dxPopup('instance').option('visible', false);
+    currentKey = -1;
+}
+function cancelButtonClick() {
+    $('#customPopup').dxPopup('instance').option('visible', false);
+    currentKey = -1;
+}
+function viewButtonClick(data) {
+    alert (data);
+    var pop=    $('#customPopup').dxPopup('instance');
+    @*pop.show();*@
+    pop.option('visible', true);
+    var textBox = $('#TxtAssetTagId').dxTextBox('instance');
+    textBox.option('value', data.AssetTagId);
+    currentKey = data.AssetId;
+}
+
+
+</script>
+
