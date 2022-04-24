@@ -104,6 +104,7 @@ namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
         {
             
             PurchaseAssetsList.RemoveAt(key);
+            count--;
             return new OkResult();
         }
 
