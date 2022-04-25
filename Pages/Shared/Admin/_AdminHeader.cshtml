@@ -19,10 +19,23 @@
            @*<partial name="_LoginPartial" />*@
             </div><!-- slim-header-left -->
             <div class="slim-header-right">
+                <div class="dropdown dropdown-c">
+                    <a class="header-notification " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fa fa-language" aria-hidden="true" ></i>
+                    </a>
+                    <div class="dropdown-menu " aria-labelledby="dropdownMenu2">
+                        <a asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="dropdown-item notify-item">english</a>
+                        
+                        <a asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()" class="dropdown-item notify-item"> arabic
+                        </a>
+                        
+                    </div>
+                </div>
                 <div class="dropdown dropdown-a">
                     <a href="#" class="header-notification" data-toggle="dropdown">
                         <i class="icon ion-ios-bolt-outline"></i>
                     </a>
+
                     <div class="dropdown-menu">
                         <div class="dropdown-menu-header">
                             <h6 class="dropdown-menu-title">Activity Logs</h6>
@@ -145,15 +158,18 @@
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
                             <a asp-area="Identity" asp-page="/Account/ChangePassword" class="nav-link"><i class="icon ion-ios-bolt"></i> Change Password</a>
-
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                         
-                            <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
+
+                            <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                                 <a href="#" class="nav-link" onclick="document.getElementById('form1').submit();"><i class="icon ion-forward"></i> Sign Out</a>
-                             </form>
+                            </form>
                         </nav>
+
+
                     </div><!-- dropdown-menu -->
+
                 </div><!-- dropdown -->
+
             </div><!-- header-right -->
         </div><!-- container -->
     </div><!-- slim-header -->

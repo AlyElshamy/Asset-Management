@@ -7,14 +7,18 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
 using NToastNotify;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace AssetProject
@@ -31,6 +35,8 @@ namespace AssetProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -58,6 +64,41 @@ namespace AssetProject
                 PreventDuplicates = true,
                 CloseButton = true
             });
+
+            services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null).AddDataAnnotationsLocalization(
+                options =>
+                {
+                    var type = typeof(SharedResource);
+                    var assembblyName = new AssemblyName(type.GetTypeInfo().Assembly.FullName);
+                    var factory = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    var localizer = factory.Create("SharedResource", assembblyName.Name);
+                    options.DataAnnotationLocalizerProvider = (t, f) => localizer;
+                }
+                );
+
+            services.AddControllers().AddDataAnnotationsLocalization(
+                options =>
+                {
+                    var type = typeof(SharedResource);
+                    var assembblyName = new AssemblyName(type.GetTypeInfo().Assembly.FullName);
+                    var factory = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    var localizer = factory.Create("SharedResource", assembblyName.Name);
+                    options.DataAnnotationLocalizerProvider = (t, f) => localizer;
+                }
+
+
+                );
+            services.AddControllersWithViews().AddDataAnnotationsLocalization(
+                options =>
+                {
+                    var type = typeof(SharedResource);
+                    var assembblyName = new AssemblyName(type.GetTypeInfo().Assembly.FullName);
+                    var factory = services.BuildServiceProvider().GetService<IStringLocalizerFactory>();
+                    var localizer = factory.Create("SharedResource", assembblyName.Name);
+                    options.DataAnnotationLocalizerProvider = (t, f) => localizer;
+                }
+                );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +115,20 @@ namespace AssetProject
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            var supportedCultures = new[]
+           {
+                new CultureInfo("en-US"),
 
+                new CultureInfo("ar-EG")
+
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en-Us"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
