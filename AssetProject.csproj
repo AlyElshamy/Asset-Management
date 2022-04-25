@@ -10,11 +10,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.6" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.5" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
     <PackageReference Include="NToastNotify" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\Migrations\" />
     <Folder Include="wwwroot\Images\Logo\" />
   </ItemGroup>
 </Project>
