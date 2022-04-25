@@ -66,19 +66,20 @@ namespace AssetProject.Controllers
 
             return Json(new { result.Entity.AssetId });
         }
-   
 
 
-    [HttpPut]
-        public async Task<IActionResult> Put(int key, string values) {
+
+        [HttpPut]
+        public async Task<IActionResult> Put(int key, string values)
+        {
             var model = await _context.Assets.FirstOrDefaultAsync(item => item.AssetId == key);
-            if(model == null)
+            if (model == null)
                 return StatusCode(409, "Object not found");
 
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
 
-            if(!TryValidateModel(model))
+            if (!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
 
             await _context.SaveChangesAsync();
