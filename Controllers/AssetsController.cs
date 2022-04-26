@@ -12,6 +12,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace AssetProject.Controllers
 {
@@ -19,9 +22,10 @@ namespace AssetProject.Controllers
     public class AssetsController : Controller
     {
         private AssetContext _context;
-
-        public AssetsController(AssetContext context) {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public AssetsController(AssetContext context, IWebHostEnvironment webHostEnvironment) {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -40,6 +44,7 @@ namespace AssetProject.Controllers
                 i.SalvageValue,
                 i.AssetLife,
                 i.DateAcquired,
+                i.Item.ItemTitle,
                 i.DepreciationMethodId
             });
 
@@ -125,6 +130,7 @@ namespace AssetProject.Controllers
             string ASSET_PURCHASE_DATE = nameof(Asset.AssetPurchaseDate);
             string ITEM_ID = nameof(Asset.ItemId);
             string PHOTO = nameof(Asset.Photo);
+            string AssetPHOTO = nameof(Asset.AssetPhoto);
             string DEPRECIABLE_ASSET = nameof(Asset.DepreciableAsset);
             string DEPRECIABLE_COST = nameof(Asset.DepreciableCost);
             string SALVAGE_VALUE = nameof(Asset.SalvageValue);
@@ -132,7 +138,12 @@ namespace AssetProject.Controllers
             string DATE_ACQUIRED = nameof(Asset.DateAcquired);
             string DEPRECIATION_METHOD_ID = nameof(Asset.DepreciationMethodId);
 
-            if(values.Contains(ASSET_ID)) {
+            //if (values.Contains(AssetPHOTO))
+            //{
+            //    model.AssetPhoto = Convert.(values[AssetPHOTO]);
+            //}
+
+            if (values.Contains(ASSET_ID)) {
                 model.AssetId = Convert.ToInt32(values[ASSET_ID]);
             }
 
@@ -161,6 +172,17 @@ namespace AssetProject.Controllers
             }
 
             if(values.Contains(PHOTO)) {
+                if (model.Photo != null)
+                {
+                    var ImagePath = Path.Combine(_webHostEnvironment.WebRootPath, model.Photo);
+                    if (System.IO.File.Exists(ImagePath))
+                    {
+                        System.IO.File.Delete(ImagePath);
+                    }
+                }
+               
+                string folder = "Images/AssetPhotos/";
+                //model.Photo =  UploadImage(folder, values[PHOTO]);
                 model.Photo = Convert.ToString(values[PHOTO]);
             }
 
@@ -199,5 +221,18 @@ namespace AssetProject.Controllers
 
             return String.Join(" ", messages);
         }
+
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return "/" + folderPath;
+        }
+
     }
 }

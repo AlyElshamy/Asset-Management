@@ -8,5 +8,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public void OnGet()
         {
         }
+
+       
+        public void OnPostGrid()
+        {
+
+        }
     }
 }
