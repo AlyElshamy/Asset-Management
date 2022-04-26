@@ -7,25 +7,27 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Inventory</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Stores List</li>
+                <li class="breadcrumb-item"><a href="#">INVENTORY</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Store Management</li>
             </ol>
-            <h6 class="slim-pagetitle">Stores List</h6>
+            <h6 class="slim-pagetitle">Store List</h6>
         </div><!-- slim-pageheader -->
-
         <div class="section-wrapper">
-            <label class="section-title">Store List</label>
+            <label class="section-title d-inline">Store List</label>
+            <a asp-area="Admin" asp-page="/StoreManagment/Create" class="btn btn-primary" style="float:right"> Add New Store</a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
-
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                    <a asp-area="Admin" asp-page="/StoreManagment/Create"> Add New Store</a>
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Store>()
     .DataSource(ds => ds.Mvc()
         .Controller("Stores")
         .LoadAction("Get")
         .Key("StoreId")
     )
+    .ColumnChooser(cc => cc.Enabled(true))
+                    .ColumnAutoWidth(true)
+                    .WordWrapEnabled(true)
+                     .ShowBorders(true)
     .RemoteOperations(true)
      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))

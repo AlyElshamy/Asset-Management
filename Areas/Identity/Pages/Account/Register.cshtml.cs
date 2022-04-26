@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using AssetProject.Data;
 using NToastNotify;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AssetProject.Areas.Identity.Pages.Account
 {
@@ -27,6 +30,8 @@ namespace AssetProject.Areas.Identity.Pages.Account
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
         public AssetContext _context;
         private readonly IToastNotification _toastNotification;
         public RegisterModel(
@@ -36,7 +41,9 @@ namespace AssetProject.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             AssetContext context,
-             IToastNotification toastNotification)
+             IToastNotification toastNotification,
+             IWebHostEnvironment webHostEnvironment
+             )
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -45,6 +52,7 @@ namespace AssetProject.Areas.Identity.Pages.Account
             _emailSender = emailSender;
             _context = context;
             _toastNotification = toastNotification;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [BindProperty]
@@ -90,6 +98,7 @@ namespace AssetProject.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Company Name")]
             public string CompanyName { set; get; }
+            
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -98,14 +107,19 @@ namespace AssetProject.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(IFormFile file,string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,FirstName=Input.FirstName,LastName=Input.LastName,PhoneNumber=Input.Phone };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,FirstName=Input.FirstName,LastName=Input.LastName,PhoneNumber=Input.Phone};
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                if (file != null)
+                {
+                    string folder = "Images/UserPict/";
+                    user.Pic = await UploadImage(folder, file);
+                }
                 if (result.Succeeded)
                 {
 
@@ -170,6 +184,17 @@ namespace AssetProject.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folderPath);
+
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return "/" + folderPath;
         }
     }
 }

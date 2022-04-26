@@ -1,4 +1,7 @@
 ﻿@using AssetProject.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -146,15 +149,21 @@
                         </div><!-- dropdown-list -->
                     </div><!-- dropdown-menu-right -->
                 </div><!-- dropdown -->
-                <div class="dropdown dropdown-c">
+                 <div class="dropdown dropdown-c">
+                    
+                        @if (SignInManager.IsSignedIn(User))
+                    {
+                        var user = await UserManager.GetUserAsync(User);
+                    string userImage = user.Pic != null ? user.Pic : "/Images/UserPict/defaultUser.png";
                     <a href="#" class="logged-user" data-toggle="dropdown">
-                        <img src="~/Admin/img/img1.jpg" alt="">
-                        <span>Katherine</span>
+                    <img src="@userImage" alt="">
+                        <span>@User.Identity.Name</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
+                    }
                     <div class="dropdown-menu dropdown-menu-right">
                         <nav class="nav">
-                            <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
+                      @*      <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
                             <a asp-area="Identity" asp-page="/Account/ChangePassword" class="nav-link"><i class="icon ion-ios-bolt"></i> Change Password</a>
@@ -162,7 +171,7 @@
 
                             <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                                 <a href="#" class="nav-link" onclick="document.getElementById('form1').submit();"><i class="icon ion-forward"></i> Sign Out</a>
-                            </form>
+                            </form>*@
                         </nav>
 
 

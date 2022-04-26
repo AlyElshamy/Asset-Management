@@ -7,30 +7,31 @@
 
      <div class="slim-mainpanel">
     <div class="container">
-        <div class="slim-pageheader">
+           <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Brand List</li>
+                 <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">SETUP</a></li>
+                 <li class="breadcrumb-item active" aria-current="page">Brand Management</li>
+              
             </ol>
-            <h6 class="slim-pagetitle">Brand List</h6>
+             <h6 class="slim-pagetitle">Brand List</h6>
         </div><!-- slim-pageheader -->
-
         <div class="section-wrapper">
-            <label class="section-title">Brand List</label>
-          
-
+            <label class="section-title d-inline">Brand List</label>
+            <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary" style="float:right"> Add New Brand   </a>
+            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
-                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
-            <a asp-area="Admin" asp-page="/BrandManagment/AddBrand"> Add New Brand   </a>
- @(Html.DevExtreme().DataGrid<AssetProject.Models.Brand>()
-    .DataSource(ds => ds.Mvc()
-        .Controller("Brands")
-        .LoadAction("Get")
-        .Key("BrandId")
-    )
-    .RemoteOperations(true)
-      .ShowBorders(true)
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Brand>()
+                    .DataSource(ds => ds.Mvc()
+                    .Controller("Brands")
+                    .LoadAction("Get")
+                    .Key("BrandId")
+                    )
+                    .ColumnChooser(cc => cc.Enabled(true))
+                    .ColumnAutoWidth(true)
+                    .WordWrapEnabled(true)
+                     .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
     .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
@@ -38,6 +39,7 @@
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
+       
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
         .Columns(columns => {
       
