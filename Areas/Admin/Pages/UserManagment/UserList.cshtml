@@ -8,20 +8,18 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">UI Elements</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+                <li class="breadcrumb-item"><a href="#">SETUP</a></li>
+                <li class="breadcrumb-item active" aria-current="page">User List</li>
             </ol>
-            <h6 class="slim-pagetitle">Data Tables</h6>
+            <h6 class="slim-pagetitle">User List</h6>
         </div><!-- slim-pageheader -->
-
         <div class="section-wrapper">
-            <label class="section-title">Brand List</label>
+            <label class="section-title d-inline">User List</label>
+            <a asp-area="Admin" asp-page="/UserManagment/AddUser" class="btn btn-primary" style="float:right"> Add New User</a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
-
             <div class="table-wrapper">
-                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
-            <a asp-area="Admin" asp-page="/UserManagment/AddUser"> Add New User </a>
- @(Html.DevExtreme().DataGrid<AssetProject.Models.ApplicationUser>()
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+                   @(Html. DevExtreme().DataGrid<AssetProject.Models.ApplicationUser>()
     .DataSource(Model.Users,"Id")
     .RemoteOperations(true)
       .ShowBorders(true)

@@ -5,28 +5,31 @@
 }
 <div class="slim-mainpanel">
     <div class="container">
-        <div class="slim-pageheader">
+        <<div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Employee List</li>
+                <li class="breadcrumb-item"><a href="#">SETUP</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Employee Management</li>
             </ol>
             <h6 class="slim-pagetitle">Employee List</h6>
         </div><!-- slim-pageheader -->
-
         <div class="section-wrapper">
-            <label class="section-title">Employee List</label>
+            <label class="section-title d-inline">Employee List</label>
+            <a asp-area="Admin" asp-page="/EmployeeManagement/AddEmployee" class="btn btn-primary" style="float:right"> Add New Employee   </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
-
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-    <a  asp-area="Admin" asp-page="/EmployeeManagement/AddEmployee">Add new Employee</a>
+         
 @(Html.DevExtreme().DataGrid<AssetProject.Models.Employee>()
     .DataSource(ds => ds.Mvc()
         .Controller("Employees")
         .LoadAction("Get")
         .Key("EmployeeId", "ID")
     )
+    .ColumnChooser(cc => cc.Enabled(true))
+                    .ColumnAutoWidth(true)
+                    .WordWrapEnabled(true)
+                     .ShowBorders(true)
     .RemoteOperations(true)
      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
