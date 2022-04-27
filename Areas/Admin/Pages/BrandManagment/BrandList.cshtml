@@ -11,14 +11,14 @@
             <ol class="breadcrumb slim-breadcrumb">
                  <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-                 <li class="breadcrumb-item active" aria-current="page">Brand Management</li>
+                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["BrandManagement"]</li>
               
             </ol>
-             <h6 class="slim-pagetitle">Brand List</h6>
+             <h6 class="slim-pagetitle">@sharedResource["BrandList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Brand List</label>
-            <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary" style="float:right"> Add New Brand   </a>
+            <label class="section-title d-inline">@sharedResource["BrandList"]</label>
+            <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary" style="float:right"> @sharedResource["AddNewBrand"]  </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
@@ -43,15 +43,15 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
         .Columns(columns => {
       
-            columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/BrandManagment/EditBrand?id=<%- data.BrandId %>"> Edit |  </a>
-                <a href="/Admin/BrandManagment/DeleteBrand?id=<%- data.BrandId %>"> Delete | </a>
-                <a href="/Admin/BrandManagment/BrandDetails?id=<%- data.BrandId %>"> Details </a>
+            columns.Add().Caption("Actions").Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/BrandManagment/EditBrand?id=<%- data.BrandId %>"> @sharedResource["Edit"] |  </a>
+                <a href="/Admin/BrandManagment/DeleteBrand?id=<%- data.BrandId %>"> @sharedResource["Delete"] | </a>
+                <a href="/Admin/BrandManagment/BrandDetails?id=<%- data.BrandId %>"> @sharedResource["Details"] | </a>
             </text>).Width(150);
         })
     .Columns(columns => {
 
-        columns.AddFor(m => m.BrandTitle);
+        columns.AddFor(m => m.BrandTitle).Caption(@sharedResource["BrandTitle"]);
     })
 )
                 

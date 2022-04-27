@@ -9,18 +9,22 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-                <li class="breadcrumb-item active" aria-current="page">User List</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["UserManagment"]</li>
             </ol>
-            <h6 class="slim-pagetitle">User List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["UserList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">User List</label>
-            <a asp-area="Admin" asp-page="/UserManagment/AddUser" class="btn btn-primary" style="float:right"> Add New User</a>
+            <label class="section-title d-inline">@sharedResource["UserList"]</label>
+            <a asp-area="Admin" asp-page="/UserManagment/AddUser" class="btn btn-primary" style="float:right">@sharedResource["AddNewUser"] </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                    @(Html. DevExtreme().DataGrid<AssetProject.Models.ApplicationUser>()
     .DataSource(Model.Users,"Id")
+    .ColumnChooser(cc => cc.Enabled(true))
+                    .ColumnAutoWidth(true)
+                    .WordWrapEnabled(true)
+                     .ShowBorders(true)
     .RemoteOperations(true)
       .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
@@ -33,10 +37,10 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
 
-        columns.AddFor(m => m.FirstName);
-        columns.AddFor(m => m.LastName);
-        columns.AddFor(m => m.Email);
-        columns.AddFor(m => m.PhoneNumber);
+        columns.AddFor(m => m.FirstName).Caption(@sharedResource["FirstName"]);
+        columns.AddFor(m => m.LastName).Caption(@sharedResource["LastName"]);
+        columns.AddFor(m => m.Email).Caption(@sharedResource["Email"]);
+        columns.AddFor(m => m.PhoneNumber).Caption(@sharedResource["PhoneNumber"]);
     })
 )
                 

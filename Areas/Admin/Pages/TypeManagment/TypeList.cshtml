@@ -9,13 +9,13 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Type Managment</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["TypeManagement"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Type List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["TypeList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Type List</label>
-            <a asp-area="Admin" asp-page="/TypeManagment/AddType" class="btn btn-primary" style="float:right"> Add New Type</a>
+            <label class="section-title d-inline">@sharedResource["TypeList"]</label>
+            <a asp-area="Admin" asp-page="/TypeManagment/AddType" class="btn btn-primary" style="float:right">@sharedResource["AddNewType"] </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
@@ -42,18 +42,18 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
         .Columns(columns => {
       
-            columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/TypeManagment/EditType?id=<%- data.TypeId %>"> Edit |  </a>
-                <a href="/Admin/TypeManagment/DeleteType?id=<%- data.TypeId %>"> Delete | </a>
-                <a href="/Admin/TypeManagment/TypeDetails?id=<%- data.TypeId %>"> Details </a>
+            columns.Add().Caption("Actions").Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/TypeManagment/EditType?id=<%- data.TypeId %>"> @sharedResource["Edit"] |  </a>
+                <a href="/Admin/TypeManagment/DeleteType?id=<%- data.TypeId %>"> @sharedResource["Delete"] | </a>
+                <a href="/Admin/TypeManagment/TypeDetails?id=<%- data.TypeId %>">  @sharedResource["Details"] </a>
             </text>).Width(150);
         })
     .Columns(columns => {
 
        @*columns.AddFor(m => m.TypeId);*@
-        columns.AddFor(m => m.TypeTitle);
+        columns.AddFor(m => m.TypeTitle).Caption(@sharedResource["TypeTitle"]);
 
-        columns.AddFor(m => m.BrandId).Lookup(lookup => lookup
+        columns.AddFor(m => m.BrandId).Caption(@sharedResource["BrandTitle"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("BrandsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")

@@ -7,10 +7,10 @@
         <div class="slim-pageheader">
           <ol class="breadcrumb slim-breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Insurance Details</li>
+            <li class="breadcrumb-item"><a href="#">Assets</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["InsuranceDetails"]Insurance Details</li>
           </ol>
-          <h6 class="slim-pagetitle">Insurance Policy Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["InsurancePolicyInformation"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
@@ -19,7 +19,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Insurance Title : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["InsuranceTitle"]: <span class="tx-danger">*</span></label>
                           <div>
                                <label ><h4>@Model.insurance.Title</h4></label>
                           </div>
@@ -29,7 +29,7 @@
               
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label"> Description : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label"> @sharedResource["Description"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4>@Model.insurance.Description</h4></label>
                           </div>
@@ -37,7 +37,7 @@
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label"> Insurance Company : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label"> @sharedResource["InsuranceCompany"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4>@Model.insurance.InsuranceCompany</h4></label>
                           </div>
@@ -47,7 +47,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">Contact Person : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["ContactPerson"] : <span class="tx-danger">*</span></label>
                            <div  >
                                <label ><h4>@Model.insurance.ContactPerson</h4></label>
                           </div>
@@ -55,7 +55,7 @@
                       </div><!-- col-4 -->
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Phone : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Phone"]  : <span class="tx-danger">*</span></label>
                            <div >
                                <label><h4 >@Model.insurance.Phone</h4></label>
                           </div>
@@ -64,7 +64,7 @@
               
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Policy Number: <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["PolicyNumber"]: <span class="tx-danger">*</span></label>
                            <div >
                                <label><h4>@Model.insurance.PolicyNo</h4></label>
                           </div>
@@ -74,7 +74,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label class="form-control-label">Start Date : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["StartDate"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4 >@Model.StartDate</h4></label>
                           </div>
@@ -82,7 +82,7 @@
                       </div><!-- col-6 -->
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label class="form-control-label">End Date : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["EndDate"] : <span class="tx-danger">*</span></label>
                           <div>
                                <label ><h4>@Model.EndDate</h4></label>
                           </div>
@@ -92,7 +92,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label class="form-control-label">Deductible : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Deductible"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4>@Model.insurance.Deductible</h4></label>
                           </div>
@@ -100,7 +100,7 @@
                       </div><!-- col-6 -->
                       <div class="col-lg-6">
                          <div class="form-group">
-                          <label class="form-control-label">Permium : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Permium"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4>@Model.insurance.Permium</h4></label>
                           </div>
@@ -109,11 +109,11 @@
                     </div ><!-- End row -->
                     <div class="form-check">
                             <input  asp-for="@Model.insurance.IsActive" class="form-check-input" disabled>
-                            <label class="form-check-label" asp-for="@Model.insurance.IsActive" >  Active  </label>                 
+                            <label class="form-check-label" asp-for="@Model.insurance.IsActive" >  @sharedResource["IsActive"]  </label>                 
                     </div>
                        
                     <div class="form-layout-footer mt-4 ">
-                      <a asp-area="admin" class="btn btn-secondary " asp-page="InsuranceList">Back</a>
+                      <a asp-area="admin" class="btn btn-secondary " asp-page="InsuranceList">@sharedResource["BacktoList"]</a>
                      </div><!-- form-layout-footer -->
           </div><!-- form-layout -->
         </div><!-- section-wrapper --> 

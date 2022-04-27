@@ -8,11 +8,11 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Inventory</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Delete Store</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Inventory"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Delete Store"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Store Information</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Store Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
@@ -22,29 +22,29 @@
             <div class="form-layout">
                 <div class="row mg-b-25">
                     <div class="col-lg-4">
-                        <label class="form-control-label">Store Title: <span class="tx-danger">*</span></label>
+                        <label class="form-control-label">@sharedResource["Store Title"]: <span class="tx-danger">*</span></label>
                         <div style="font-size:xx-large">@Model.Store.StoreTitle</div>
                     </div><!-- col-4 -->
 
                     <div class="col-lg-4">
-                        <label class="form-control-label">Address: <span class="tx-danger">*</span></label>
+                        <label class="form-control-label">@sharedResource["Store Address"]: <span class="tx-danger">*</span></label>
                         <div style="font-size:xx-large">@Model.Store.Address</div>
                     </div><!-- col-4 -->
 
 
                     <div class="col-lg-4">
-                        <label class="form-control-label">Mobile No: <span class="tx-danger">*</span></label>
+                        <label class="form-control-label">@sharedResource["Mobile Number"]: <span class="tx-danger">*</span></label>
                         <div style="font-size:xx-large">@Model.Store.Mobile</div>
                     </div><!-- col-4 -->
 
 
                     <div class="col-lg-4">
-                        <label class="form-control-label">Telephone: <span class="tx-danger">*</span></label>
+                        <label class="form-control-label">@sharedResource["Telephone Number"]: <span class="tx-danger">*</span></label>
                         <div style="font-size:xx-large">@Model.Store.Tele</div>
                     </div><!-- col-4 -->
 
                     <div class="col-lg-4">
-                        <label class="form-control-label">Fax: <span class="tx-danger">*</span></label>
+                        <label class="form-control-label">@sharedResource["Fax"]: <span class="tx-danger">*</span></label>
                         <div style="font-size:xx-large">@Model.Store.Fax</div>
                     </div><!-- col-4 -->
 
@@ -54,10 +54,10 @@
 
                 <div class="form-layout-footer">
                     <form method="post" asp-route-id="@Model.Store.StoreId">
-                        <input type="submit" value='Delete' class="btn btn-primary bd-0">
+                        <input type="submit" value='@sharedResource["Delete Store"]' class="btn btn-primary bd-0">
 
                         <a asp-area="Admin" asp-page="/StoreManagment/List">
-                            <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                            <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
                         </a>
                     </form>
 

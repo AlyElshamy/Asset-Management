@@ -6,26 +6,25 @@
     <div class="container">
          <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">ASSETS</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Contract Managment</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Contract"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Contract"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Contract List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Contract List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Contract List</label>
-            <a asp-area="Admin" asp-page="/ContractManagment/AddContract" class="btn btn-primary" style="float:right"> Add New Contract   </a>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            <a asp-area="Admin" asp-page="/ContractManagment/AddContract" class="btn btn-primary" style="float:right"> @sharedResource["Create Contract"]</a>
+            <p class="mg-b-20 mg-sm-b-40"> @sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                
+
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Contract>()
                     .DataSource(ds => ds.Mvc()
                     .Controller("Contracts")
                     .LoadAction("Get")
                     .Key("ContractId")
                     )
-                   
+
                     .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
@@ -42,34 +41,34 @@
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
                     .Columns(columns => {
 
-                    columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                            <a href="/Admin/ContractManagment/EditContract?id=<%- data.ContractId %>"> Edit |  </a>
-                            <a href="/Admin/ContractManagment/DeleteContract?id=<%- data.ContractId %>"> Delete | </a>
-                            <a href="/Admin/ContractManagment/DetailsContract?id=<%- data.ContractId %>"> Details </a>
+                    columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                            <a href="/Admin/ContractManagment/EditContract?id=<%- data.ContractId %>"> @sharedResource["Edit"] |  </a>
+                            <a href="/Admin/ContractManagment/DeleteContract?id=<%- data.ContractId %>"> @sharedResource["Delete"] | </a>
+                            <a href="/Admin/ContractManagment/DetailsContract?id=<%- data.ContractId %>">@sharedResource["Details"]  </a>
                         </text>).Width(150);
                     })
 
                     .Columns(columns => {
 
-                    columns.AddFor(m => m.ContractId);
+                        columns.AddFor(m => m.ContractId).Caption(sharedResource["ContractId"]);
 
-                    columns.AddFor(m => m.Title);
+                        columns.AddFor(m => m.Title).Caption(sharedResource["Contact Title"]);
 
-                    columns.AddFor(m => m.Description);
+                        columns.AddFor(m => m.Description).Caption(sharedResource["Contract Description"]);
 
-                    columns.AddFor(m => m.ContractNo);
+                        columns.AddFor(m => m.ContractNo).Caption(sharedResource["Contract No"]);
 
-                    columns.AddFor(m => m.Cost);
+                        columns.AddFor(m => m.Cost).Caption(sharedResource["Cost"]);
 
-                    columns.AddFor(m => m.StartDate);
+                        columns.AddFor(m => m.StartDate).Caption(sharedResource["StartDate"]);
 
-                    columns.AddFor(m => m.EndDate);
+                        columns.AddFor(m => m.EndDate).Caption(sharedResource["EndDate"]);
 
-                    columns.AddFor(m => m.VendorId).Caption("Vendor").Lookup(lookup => lookup
-                    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
-                    .ValueExpr("Value")
-                    .DisplayExpr("Text")
-                    );
+                        columns.AddFor(m => m.VendorId).Caption(sharedResource["Vendor"]).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                        );
                     })
                     )
 

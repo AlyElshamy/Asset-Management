@@ -8,9 +8,9 @@
           <ol class="breadcrumb slim-breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Delete Empolyee</li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["DeleteEmpolyee"]</li>
           </ol>
-          <h6 class="slim-pagetitle">Employee Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["EmployeeInformation"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
@@ -19,7 +19,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Full Name : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["FullName"] : <span class="tx-danger">*</span></label>
                           <div>
                                <label ><h4>@Model.employee.FullName</h4></label>
                           </div>
@@ -29,7 +29,7 @@
               
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label"> Employee ID  : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label"> @sharedResource["EmployeeID"]  : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4>@Model.employee.EmployeeId</h4></label>
                           </div>
@@ -37,7 +37,7 @@
                       </div>
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label"> Title : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label"> @sharedResource["Title"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4>@Model.employee.Title</h4></label>
                           </div>
@@ -47,7 +47,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">Phone : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Phone"] : <span class="tx-danger">*</span></label>
                            <div  >
                                <label ><h4>@Model.employee.Phone</h4></label>
                           </div>
@@ -55,7 +55,7 @@
                       </div><!-- col-4 -->
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Email : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Email"] : <span class="tx-danger">*</span></label>
                            <div >
                                <label><h4 >@Model.employee.Email</h4></label>
                           </div>
@@ -64,7 +64,7 @@
               
                       <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Remark <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Remark"] <span class="tx-danger">*</span></label>
                            <div >
                                <label><h4>@Model.employee.Remark</h4></label>
                           </div>
@@ -74,7 +74,7 @@
                     <div class="row mg-b-20">
                       <div class="col-lg-6">
                         <div class="form-group">
-                          <label class="form-control-label">Notes : <span class="tx-danger">*</span></label>
+                          <label class="form-control-label">@sharedResource["Notes"] : <span class="tx-danger">*</span></label>
                            <div>
                                <label ><h4 >@Model.employee.Notes</h4></label>
                           </div>
@@ -84,8 +84,8 @@
                     <div class="form-layout-footer mt-4 ">
                            <form  method="post" enctype="multipart/form-data" >
                                <input type="text" asp-for="@Model.employee.ID" hidden>
-                                <input type="submit" value="Delete" class="btn btn-danger" >
-                                 <a asp-area="admin" class="btn btn-secondary " asp-page="EmployeeList">Back</a>
+                                <input type="submit" value="@sharedResource["Delete"] " class="btn btn-danger" >
+                                 <a asp-area="admin" class="btn btn-secondary " asp-page="EmployeeList">@sharedResource["BacktoList"]</a>
                             </form>
                      
                      </div><!-- form-layout-footer -->

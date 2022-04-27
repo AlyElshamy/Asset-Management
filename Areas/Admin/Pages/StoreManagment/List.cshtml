@@ -6,16 +6,16 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">INVENTORY</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Store Management</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Inventory"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Store Management"]</li>
             </ol>
             <h6 class="slim-pagetitle">Store List</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <label class="section-title d-inline">Store List</label>
-            <a asp-area="Admin" asp-page="/StoreManagment/Create" class="btn btn-primary" style="float:right"> Add New Store</a>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            <a asp-area="Admin" asp-page="/StoreManagment/Create" class="btn btn-primary" style="float:right"> @sharedResource["Add New Store"]</a>
+            <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Store>()
@@ -40,10 +40,10 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
         .Columns(columns => {
 
-            columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/StoreManagment/Edit?id=<%- data.StoreId %>"> Edit |  </a>
-                <a href="/Admin/StoreManagment/Delete?id=<%- data.StoreId %>"> Delete | </a>
-                <a href="/Admin/StoreManagment/Details?id=<%- data.StoreId %>"> Details </a>
+            columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/StoreManagment/Edit?id=<%- data.StoreId %>"> @sharedResource["Edit"] |  </a>
+                <a href="/Admin/StoreManagment/Delete?id=<%- data.StoreId %>"> @sharedResource["Delete"] | </a>
+                <a href="/Admin/StoreManagment/Details?id=<%- data.StoreId %>">@sharedResource["Details"]  </a>
             </text>).Width(150);
         })
 
@@ -51,13 +51,14 @@
 
  @*       columns.AddFor(m => m.StoreId);*@
 
-        columns.AddFor(m => m.StoreTitle);
+        columns.AddFor(m => m.StoreTitle).Caption(sharedResource["Store Title"]);
 
-        columns.AddFor(m => m.Address);
+        columns.AddFor(m => m.Address).Caption(sharedResource["Store Address"]);
 
-        columns.AddFor(m => m.Tele);
+        columns.AddFor(m => m.Tele).Caption(sharedResource["Telephone Number"]);
 
-        columns.AddFor(m => m.Mobile);
+        columns.AddFor(m => m.Mobile).Caption(sharedResource["Mobile Number"]);
+        columns.AddFor(m => m.Fax).Caption(sharedResource["Fax"]);
     })
 )
 

@@ -9,13 +9,13 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Employee Management</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["EmployeeManagement"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Employee List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["EmployeeList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Employee List</label>
-            <a asp-area="Admin" asp-page="/EmployeeManagement/AddEmployee" class="btn btn-primary" style="float:right"> Add New Employee   </a>
+            <label class="section-title d-inline">@sharedResource["EmployeeList"]</label>
+            <a asp-area="Admin" asp-page="/EmployeeManagement/AddEmployee" class="btn btn-primary" style="float:right"> @sharedResource["AddNewEmployee"]   </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
@@ -42,25 +42,25 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
 
-       columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/EmployeeManagement/EditEmployee?id=<%- data.ID %>"> Edit |  </a>
-                <a href="/Admin/EmployeeManagement/DeleteEmployee?id=<%- data.ID %>"> Delete | </a>
-                <a href="/Admin/EmployeeManagement/DetailsEmployee?id=<%- data.ID %>"> Details </a>
+       columns.Add().Caption("Actions").Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/EmployeeManagement/EditEmployee?id=<%- data.ID %>"> @sharedResource["Edit"] |  </a>
+                <a href="/Admin/EmployeeManagement/DeleteEmployee?id=<%- data.ID %>"> @sharedResource["Delete"] | </a>
+                <a href="/Admin/EmployeeManagement/DetailsEmployee?id=<%- data.ID %>"> @sharedResource["Details"] </a>
             </text>).Width(150);
 
     @*    columns.AddFor(m => m.EmployeeId);*@
 
-        columns.AddFor(m => m.FullName);
+        columns.AddFor(m => m.FullName).Caption(@sharedResource["FullName"]);
 
-        columns.AddFor(m => m.Title);
+        columns.AddFor(m => m.Title).Caption(@sharedResource["Title"]);
 
-        columns.AddFor(m => m.Phone);
+        columns.AddFor(m => m.Phone).Caption(@sharedResource["Phone"]);
 
-        columns.AddFor(m => m.Email);
+        columns.AddFor(m => m.Email).Caption(@sharedResource["Email"]);
 
-        columns.AddFor(m => m.Notes);
+        columns.AddFor(m => m.Notes).Caption(@sharedResource["Notes"]);
 
-        columns.AddFor(m => m.Remark);
+        columns.AddFor(m => m.Remark).Caption(@sharedResource["Remark"]);
   
    })
 )

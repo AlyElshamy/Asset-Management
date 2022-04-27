@@ -11,13 +11,13 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">ASSETS</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Insurance Managment</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["InsuranceManagment"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Insurance List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["InsurancePolicyList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Insurance List</label>
-            <a asp-area="Admin" asp-page="/InsuranceManagement/AddInsurance" class="btn btn-primary" style="float:right"> Add New Insurance</a>
+            <label class="section-title d-inline">@sharedResource["InsurancePolicyList"]</label>
+            <a asp-area="Admin" asp-page="/InsuranceManagement/AddInsurance" class="btn btn-primary" style="float:right">@sharedResource["AddNewInsurance"] </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
@@ -43,32 +43,32 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
 
-            columns.Add().Caption("Actions").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/InsuranceManagement/EditInsurance?id=<%- data.InsuranceId %>"> Edit |  </a>
-                <a href="/Admin/InsuranceManagement/DeleteInsurance?id=<%- data.InsuranceId %>"> Delete | </a>
-                <a href="/Admin/InsuranceManagement/DetailsInsurance?id=<%- data.InsuranceId %>"> Details </a>
+            columns.Add().Caption("Actions").Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Admin/InsuranceManagement/EditInsurance?id=<%- data.InsuranceId %>"> @sharedResource["Edit"] |  </a>
+                <a href="/Admin/InsuranceManagement/DeleteInsurance?id=<%- data.InsuranceId %>"> @sharedResource["Delete"] | </a>
+                <a href="/Admin/InsuranceManagement/DetailsInsurance?id=<%- data.InsuranceId %>"> @sharedResource["Details"] </a>
             </text>).Width(150);
-        columns.AddFor(m => m.Title);
+        columns.AddFor(m => m.Title).Caption(@sharedResource["Title"]);
 
-        columns.AddFor(m => m.Description);
+        columns.AddFor(m => m.Description).Caption(@sharedResource["Description"]);
 
-        columns.AddFor(m => m.InsuranceCompany);
+        columns.AddFor(m => m.InsuranceCompany).Caption(@sharedResource["InsuranceCompany"]);
 
-        columns.AddFor(m => m.ContactPerson);
+        columns.AddFor(m => m.ContactPerson).Caption(@sharedResource["ContactPerson"]);
 
-        columns.AddFor(m => m.PolicyNo);
+        columns.AddFor(m => m.PolicyNo).Caption(@sharedResource["PolicyNumber"]);
 
-        columns.AddFor(m => m.Phone);
+        columns.AddFor(m => m.Phone).Caption(@sharedResource["Phone"]);
 
-        columns.AddFor(m => m.StartDate);
+        columns.AddFor(m => m.StartDate).Caption(@sharedResource["StartDate"]);
 
-        columns.AddFor(m => m.EndDate);
+        columns.AddFor(m => m.EndDate).Caption(@sharedResource["EndDate"]);
 
-        columns.AddFor(m => m.Deductible);
+        columns.AddFor(m => m.Deductible).Caption(@sharedResource["Deductible"]);
 
-        columns.AddFor(m => m.Permium);
+        columns.AddFor(m => m.Permium).Caption(@sharedResource["Permium"]);
 
-        columns.AddFor(m => m.IsActive);
+        columns.AddFor(m => m.IsActive).Caption(@sharedResource["IsActive"]);
     })
 )
                 </div>
