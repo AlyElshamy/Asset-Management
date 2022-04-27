@@ -3,16 +3,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
-    public class AssetListModel : PageModel
+    public class AssetProfileModel : PageModel
     {
         public void OnGet()
         {
-        }
-
-       
-        public void OnPostGrid()
-        {
-
         }
     }
 }

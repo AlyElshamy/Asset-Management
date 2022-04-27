@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AssetProject.Models
 {
@@ -17,7 +19,8 @@ namespace AssetProject.Models
         public Item Item { set; get; }
         public int ItemId { set; get; }
         public string Photo { set; get; }
-        
+        [NotMapped]
+        public IFormFile AssetPhoto { set; get; }
         public bool DepreciableAsset { set; get; }
         public double? DepreciableCost { set; get; }
         public double? SalvageValue { set; get; }

@@ -82,7 +82,7 @@
         </div><!-- container -->
     </div><!-- slim-footer -->
 
-      @await RenderSectionAsync("Scripts", required: false)
+    
 
     <script src="~/Admin/lib/jquery.cookie/js/jquery.cookie.js"></script>
     <script src="~/Admin/lib/chartist/js/chartist.js"></script>
@@ -94,6 +94,7 @@
     <script src="~/Admin/js/ResizeSensor.js"></script>
     <script src="~/Admin/js/dashboard.js"></script>
     <script src="~/Admin/js/slim.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")
 </body>
 

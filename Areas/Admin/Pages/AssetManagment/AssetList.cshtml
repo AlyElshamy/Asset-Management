@@ -30,10 +30,10 @@
                     .Key("AssetId")
                     )
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                    .Selection(s => s
+                    @*.Selection(s => s
                     .Mode(SelectionMode.Multiple)
-                    )
-                    .ColumnChooser(cc => cc.Enabled(true))
+                    )*@
+                    @*.ColumnChooser(cc => cc.Enabled(true))*@
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -45,12 +45,7 @@
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                    .Columns(columns => {
-
-                    columns.Add().Caption("Action").Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                            <a href="/Admin/AssetManagment/AssetDetails?id=<%- data.AssetId %>"> View </a>
-                        </text>).Width(150);
-                    })
+                  
                     .Columns(columns => {
 
 
@@ -80,7 +75,7 @@
 
 
 
-                    //columns.AddFor(m => m.DepreciableAsset);
+             @*       columns.AddFor(m => m.AssetPhoto);*@
 
                     //columns.AddFor(m => m.DepreciableCost);
 
@@ -111,24 +106,61 @@
                     )
 
 
-                    @(Html.DevExtreme().Popup().ID("customPopup").Title("Custom popup edit").Height(500).Visible(false)
+                    @(Html.DevExtreme().Popup().ID("customPopup").Width(700)
+        .MaxHeight(700)
+        .Container(".dx-viewport").Title("Custom popup edit").Visible(false)
                     .ContentTemplate(@<text>
+
+                        <div class="row">
+
+  @*  <form asp-area="Admin" asp-page="/AssetManagment/AssetList" asp-page-handler="Grid" enctype="multipart/form-data">
+
+                            @(Html.DevExtreme().Form<AssetProject.Models.Asset>()
+                            .ID("frmEdit")
+                            .Items(items =>
+                            {
+                            items.AddSimpleFor(m => m.AssetId).Visible(false);
+                            items.AddSimpleFor(m => m.AssetDescription).Label(k => k.Text("Description")).IsRequired(true);
+                            items.AddSimpleFor(m => m.Photo).Label(k => k.Text("Photo")).Template(@<text>
+
+
+                                    @(Html.DevExtreme().FileUploader()
+                                .Name("Photo")
+                                .SelectButtonText("Sample")
+                                .LabelText("")
+                                .Accept("image/*")
+                                .UploadMode(FileUploadMode.UseForm)
+                                .Height(70)
+                                    )
+                                </text> );
+                            items.AddButton()
+                            .ColSpan(3)
+                            .ButtonOptions(b => b.Text(sharedResource["Save"])
+                            .Type(ButtonType.Success)
+                            .UseSubmitBehavior(true)).CssClass("invers");
+                            })
+                            )
+                        </form>*@
+                        </div>
+
+
                        <div class="row mg-b-25">
-                             <div class="col-lg-4">
+                             <div class="col-lg-5">
                                  <div class="form-group">
                          @Html.Label("Asset Description")
                             @Html.DevExtreme().TextBox().ID("TxtAssetDescription")
                             </div>
                             </div>
                             <br>
-                        <div class="col-lg-4">
+                            
+                        <div class="col-lg-5">
                                  <div class="form-group">
                             @Html.Label("Asset Tag Id")
                             @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
                             </div>
                             </div>
                             <br>
-                              <div class="col-lg-4">
+                              <div class="col-lg-5">
                                  <div class="form-group">
                            @Html.Label("Asset Cost ")
                             @Html.DevExtreme().TextBox().ID("TxtAssetCost")
@@ -136,7 +168,7 @@
                             </div>
                             <br>
 
-                              <div class="col-lg-4">
+                              <div class="col-lg-5">
                                  <div class="form-group">
                            @Html.Label("Asset Serial No")
                             @Html.DevExtreme().TextBox().ID("TxtAssetSerialNo")
@@ -144,7 +176,7 @@
                             </div>
                             <br>
 
-                              <div class="col-lg-4">
+                              <div class="col-lg-5">
                                  <div class="form-group">
                                  @Html.Label("AssetPurchaseDate")
                             @Html.DevExtreme().DateBox().ID("AssetPurchaseDate")
@@ -152,7 +184,7 @@
                             </div>
                             <br>
 
-                                     <div class="col-lg-4">
+                                     <div class="col-lg-5">
                                  <div class="form-group">
                                  @Html.Label("Item")
                                   @(Html.DevExtreme().Lookup()
@@ -169,12 +201,12 @@
                             </div>
                             <br>
 
-                               <div class="col-lg-4">
+                               <div class="col-lg-5">
                           <div class="form-group">
                               @Html.Label("Asset Photo")
                               <div class="custom-file">
-                                  <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" id="Photo" required>
-                                  <label class="custom-file-label" for="File">Choose New Photo</label>
+                                  <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" onchange="changephotoname()" id="Photo" required>
+                                  <label class="custom-file-label" for="File" id="photolabel">Choose New Photo</label>
                               </div>
                           </div>
                       </div>
@@ -192,41 +224,59 @@
 
                         </text>))
 
-                         @(Html.DevExtreme().Popup().ID("viewPopup").Title("Custom popup View").Visible(false)
+         @*         @Html.PartialAsync("_AssetEditPopup",Model);
+*@
+@(Html.DevExtreme().Popup().ID("viewPopup").Width(600).Visible(false)
                     .ContentTemplate(@<text>
+                 <div class="col-lg-4">
+                   
+                    <h3 id="AssetDescription">
+                    </h3>
+                      </div>
+
                         <div class="row mg-b-25">
 
                     <div class="col-lg-4">
                         <img src="" width="250" height="250" id="img" />
                     </div><!-- col-4 -->
-                      <div class="col-lg-4">
+                      <div class="col-lg-4 offset-2">
                           <table class="table table-bordered table-hover table-striped">
+                              <tr>
+                                <td>
+                                    Asset Cost
+                                </td>
+                                 <td id="AssetCost">
+                                </td>
+                                  <tr />
+                              <tr>
+                                  <td>
+                                      Asset SerialNo
+                                  </td>
+                                  <td id="AssetSerialNo">
+                                  </td>
+                              </tr>
                             <tr>
                                 <td>
-                                    Asset Tag Id
+                                    Asset Purchase Date
                                 </td>
-                                <td id="TxtAssetTagId">
-
-                                </td>
+                                <td id="TxtAssetPurchaseDate"></td>
                             </tr>
-                             <tr>
-                                <td>
-                                    Asset Tag Id
-                                </td>
-                                <td id="TxtAssetTagId">
-
-                                </td>
-                            </tr>
+                              <tr>
+                                  <td>
+                                      Asset Item
+                                  </td>
+                                  <td id="AssetItem"></td>
+                              </tr>
                             </table>
-
                                 </div>
                             </div>
-                            @Html.Label("Asset Description")
-                            @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
-                            @Html.DevExtreme().Button().Text("Save").OnClick("function (e) { saveButtonClick() }")
-                            @Html.DevExtreme().Button().Text("Cancel").OnClick("function (e) { cancelButtonClick() }")
-                        </text>))
 
+                <a id="btn" href=""> 
+                 <input type='button' class="btn btn-secondary bd-0" value='More Details' />
+              </a>
+
+                            @Html.DevExtreme().Button().Text("Close").OnClick("function (e) { closeButtonClick() }")
+                        </text>))
 
 
                 </div>
@@ -237,9 +287,12 @@
 </div>
 
 <script>
-        var currentKey;
+
+            var currentKey;
     function editButtonClick(data) {
         $('#customPopup').dxPopup('instance').option('visible', true);
+        $('#frmEdit').dxForm('instance').option('formData', data);
+
                 var AssetDescription = $('#TxtAssetDescription').dxTextBox('instance');
         AssetDescription.option('value', data.AssetDescription);
           var AssetTagId = $('#TxtAssetTagId').dxTextBox('instance');
@@ -296,28 +349,45 @@
         $('#customPopup').dxPopup('instance').option('visible', false);
         currentKey = -1;
     }
+
+    function closeButtonClick() {
+        $('#viewPopup').dxPopup('instance').option('visible', false);
+        currentKey = -1;
+    }
+
     function viewButtonClick(data) {
-        var pop=    $('#viewPopup').dxPopup('instance');
-    @*pop.show();*@
+   var pop = $('#viewPopup').dxPopup('instance');
         pop.option('visible', true);
-        var textBox = $('#TxtAssetTagId').dxTextBox('instance');
-        textBox.option('value', data.AssetTagId);
+        $("#viewPopup").dxPopup({
+            title: data.AssetTagId,
+        //    visible: true,
+        //    resizeEnabled: true
+        });
+
+       document.getElementById("img").src= data.Photo;
+        document.getElementById("AssetDescription").innerText = data.AssetDescription;
+        document.getElementById("AssetCost").innerText = data.AssetCost;
+        document.getElementById("AssetSerialNo").innerText = data.AssetSerialNo;
+        document.getElementById("TxtAssetPurchaseDate").innerText = new Date(data.AssetPurchaseDate).toDateString()
+            ;
+        document.getElementById("AssetItem").innerText = data.ItemTitle;
+        document.getElementById("btn").href= "/Admin/AssetManagment/AssetDetails?id="+data.AssetId;
         currentKey = data.AssetId;
     }
 
+  function changephotoname() {
+         console.log("in photo")
+                var fileName = document.getElementById("Photo").value.split("\\").pop();;
+                    document.getElementById("photolabel").innerHTML=fileName;
+                    
+            }
 
 </script>
 
-        @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
+    
              <script type="text/javascript">
-
+           
                 // Add the following code if you want the name of the file appear on select
-                $("#Photo").on("change", function () {
-         console.log("in photo")
-                var fileName = $(this).val().split("\\").pop();
-                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            });
-
+         
             </script>
-        }
+       

@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div id="AssetEditPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
+        <form asp-area="Admin" asp-page="/AssetManagment/Index" asp-page-handler="EditAsset" enctype="multipart/form-data">
+        <div class="modal-content bd-0 tx-14">
+            <div class="modal-header pd-y-20 pd-x-25">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Message Preview</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pd-25">
+                @(Html.DevExtreme().Form<AssetProject.Models.Asset>()
+                .ID("frmEdit")
+                .ColCount(2)
+                    @*.OnContentReady("function(e){   getData(e,data)  }")  *@
+                .Items(items => {
+                items.AddSimpleFor(m => m.AssetId);
+                items.AddSimpleFor(m => m.AssetDescription);
+                items.AddSimpleFor(m => m.AssetTagId);
+                items.AddSimpleFor(m => m.AssetCost);
+                items.AddSimpleFor(m => m.AssetSerialNo);
+                items.AddSimpleFor(m => m.AssetPurchaseDate);
+                items.AddSimpleFor(m => m.ItemId)
+                .Editor(e => e
+                .Lookup()
+                .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("ItemsLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+                );
+
+                items.AddSimpleFor(m => m.Photo);
+
+                items.AddSimpleFor(m => m.DepreciableAsset);
+
+                items.AddSimpleFor(m => m.DepreciableCost);
+
+                items.AddSimpleFor(m => m.SalvageValue);
+
+                items.AddSimpleFor(m => m.AssetLife);
+
+                items.AddSimpleFor(m => m.DateAcquired);
+
+                items.AddSimpleFor(m => m.DepreciationMethodId)
+                .Editor(e => e
+                .Lookup()
+                .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("DepreciationMethodsLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+                );
+
+                items.AddSimpleFor(m => m.Photo).Label(k => k.Text("Photo")).Template(@<text>
+
+
+                                    @(Html.DevExtreme().FileUploader()
+                                .Name("Photo")
+                                .SelectButtonText("Browse")
+                                .LabelText("Select Picture")
+                                .Accept("image/*")
+                                .UploadMode(FileUploadMode.UseForm)
+                                .Height(70)
+                                    )
+                                </text> );
+                })
+                )  
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </form>
+    </div><!-- modal-dialog -->
+</div>
