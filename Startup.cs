@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json.Serialization;
 using NToastNotify;
 using System;
 using System.Collections.Generic;
@@ -97,8 +99,11 @@ namespace AssetProject
                     var localizer = factory.Create("SharedResource", assembblyName.Name);
                     options.DataAnnotationLocalizerProvider = (t, f) => localizer;
                 }
-                );
 
+                );
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+         
+            //services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -142,6 +147,14 @@ namespace AssetProject
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
         }
     }
 }
