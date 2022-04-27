@@ -2,3 +2,175 @@
 @model AssetProject.Areas.Admin.Pages.AssetManagment.AssetProfileModel
 @{
 }
+
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Asset Information</li>
+            </ol>
+            <h6 class="slim-pagetitle">Asset Information</h6>
+        </div><!-- slim-pageheader -->
+
+        <div class="row row-sm">
+            <div class="col-lg-12">
+                <div class="card card-profile">
+                    <div class="card-body">
+                        <div class="media">
+                            <img src="http://via.placeholder.com/500x500" alt="">
+                            <div class="media-body">
+                                <h3 class="card-profile-name">Asset Description</h3>
+                                <p class="card-profile-position">Asset Tag Id <a href="">2025887428995</a></p>
+                                <p>Serial <a href="">687874854854</a></p>
+                                <div class="row mg-t-20">
+                                    <div class="col-md">
+                                        <label class="section-label-sm tx-gray-500">General Information</label>
+                                        <p class="invoice-info-row">
+                                            <span>Invoice No</span>
+                                            <span>GHT-673-00</span>
+                                        </p>
+                                        <p class="invoice-info-row">
+                                            <span>Project ID</span>
+                                            <span>32334300</span>
+                                        </p>
+                                        <p class="invoice-info-row">
+                                            <span>Issue Date:</span>
+                                            <span>November 21, 2017</span>
+                                        </p>
+                                        <p class="invoice-info-row">
+                                            <span>Due Date:</span>
+                                            <span>November 30, 2017</span>
+                                        </p>
+                                    </div><!-- col -->
+                                    <div class="col-md">
+                                        <label class="section-label-sm tx-gray-500">Depreciation Information</label>
+                                        <p class="invoice-info-row">
+                                            <span>Invoice No</span>
+                                            <span>GHT-673-00</span>
+                                        </p>
+                                        <p class="invoice-info-row">
+                                            <span>Project ID</span>
+                                            <span>32334300</span>
+                                        </p>
+                                        <p class="invoice-info-row">
+                                            <span>Issue Date:</span>
+                                            <span>November 21, 2017</span>
+                                        </p>
+                                        <p class="invoice-info-row">
+                                            <span>Due Date:</span>
+                                            <span>November 30, 2017</span>
+                                        </p>
+                                    </div><!-- col -->
+                                </div>
+                            </div><!-- media-body -->
+                        </div><!-- media -->
+                    </div><!-- card-body -->
+                    <div class="card-footer">
+                        <a href="" class="card-profile-direct">http://thmpxls.me/profile?id=katherine</a>
+                        <div>
+                            <a href="">Edit Information</a>
+                            <a href="">Profile Settings</a>
+
+
+                        </div>
+                    </div><!-- card-footer -->
+                </div><!-- card -->
+
+                <div class="section-wrapper mg-t-20">
+                    <label class="slim-card-title">LATEST ACTIVITY</label>
+                    @*<p class="mg-b-20 mg-sm-b-40">Add a tab navigation in header of a card.</p>*@
+
+                    <div class="row">
+                        <div class="col-md">
+                            <div class="card">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#Details" data-toggle="tab">Details</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Events" data-toggle="tab">Events</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Photos" data-toggle="tab">Photos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Docs" data-toggle="tab">Docs</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Depreciation" data-toggle="tab">Depreciation</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Warranty" data-toggle="tab">Warranty</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Linking" data-toggle="tab">Linking</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Maint" data-toggle="tab">Maint</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Contracts" data-toggle="tab">Contracts</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#Insurances" data-toggle="tab">Insurances</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#History" data-toggle="tab">History</a>
+                                        </li>
+
+                                    </ul>
+                                </div><!-- card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="Details">
+                                            <partial name="_AssetDetailsTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                        <div class="tab-pane" id="Events">
+                                            <partial name="_AssetEventTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                        <div class="tab-pane" id="Photos">
+                                            <partial name="_AssetPhotosTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                        <div class="tab-pane" id="Docs">
+                                            <partial name="_AssetDocsTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                         <div class="tab-pane" id="Depreciation">
+                                            <partial name="_AssetDepreciationTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                         <div class="tab-pane" id="Warranty">
+                                            <partial name="_AssetWarrantyTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                         <div class="tab-pane" id="Linking">
+                                            <partial name="_AssetLinkingTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                           <div class="tab-pane" id="Maint">
+                                            <partial name="_AssetMaintTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                           <div class="tab-pane" id="Contracts">
+                                            <partial name="_AssetContractTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                          <div class="tab-pane" id="Insurances">
+                                            <partial name="_AssetInsuranceTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                             <div class="tab-pane" id="History">
+                                            <partial name="_AssetHistoryTab" model=Model />
+                                        </div><!-- tab-pane -->
+                                    </div><!-- tab-content -->
+                                </div><!-- card-body -->
+                            </div><!-- card -->
+                        </div><!-- col -->
+
+                    </div><!-- row -->
+                </div>
+
+
+            </div><!-- col-8 -->
+
+
+        </div><!-- row -->
+
+    </div><!-- container -->
+</div>
