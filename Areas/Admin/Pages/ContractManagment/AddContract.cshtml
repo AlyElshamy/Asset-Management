@@ -6,15 +6,15 @@
       <div class="container">
         <div class="slim-pageheader">
           <ol class="breadcrumb slim-breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add Contract</li>
+            <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+            <li class="breadcrumb-item"><a href="#">@sharedResource["Contract"]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["Contract Details"]</li>
           </ol>
-          <h6 class="slim-pagetitle">Contract Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["Contract Information"]</h6>
         </div><!-- slim-pageheader -->
 
  <div class="section-wrapper">
-          <label class="section-title">Please fill your contract information</label>
+     <label class="section-title">@sharedResource["Please fill your contract information"]</label>
           @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
           <div class="form-layout">
@@ -23,39 +23,39 @@
             <div class="row mg-b-25">
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Contact Title: <span class="tx-danger">*</span></label>
-                  <input asp-for="Contract.Title" class="form-control"  placeholder="Enter Contract Title">
+                    <label class="form-control-label">@sharedResource["Contact Title"]: <span class="tx-danger">*</span></label>
+                  <input asp-for="Contract.Title" class="form-control"  placeholder="@sharedResource["Enter Contract Title"]">
                    <span asp-validation-for="Contract.Title" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
               
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label"> Description: <span class="tx-danger">*</span></label>
-                  <input  asp-for="Contract.Description" class="form-control" placeholder="Enter Contract Description">
+                    <label class="form-control-label"> @sharedResource["Description"]: <span class="tx-danger">*</span></label>
+                  <input  asp-for="Contract.Description" class="form-control" placeholder="@sharedResource["Enter Contract Description"]">
                    
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group mg-b-10-force">
-                  <label class="form-control-label">Contract No: <span class="tx-danger">*</span></label>
-                  <input  asp-for="Contract.ContractNo" class="form-control" placeholder="Enter Contract No">
+                    <label class="form-control-label">@sharedResource["Contract No"]: <span class="tx-danger">*</span></label>
+                  <input  asp-for="Contract.ContractNo" class="form-control" placeholder="@sharedResource["Enter Contract No"]">
                    <span asp-validation-for="Contract.ContractNo" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Cost: <span class="tx-danger">*</span></label>
-                  <input asp-for="Contract.Cost" class="form-control" placeholder="Enter Cost" value="@(Model.Contract.Cost > 0 ? Model.Contract.Cost :string.Empty)">
+                    <label class="form-control-label">@sharedResource["Cost"]: <span class="tx-danger">*</span></label>
+                  <input asp-for="Contract.Cost" class="form-control" placeholder="@sharedResource["Enter Cost"]" value="@(Model.Contract.Cost > 0 ? Model.Contract.Cost :string.Empty)">
                    <span asp-validation-for="Contract.Cost" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Start Date : <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Start Date"] : <span class="tx-danger">*</span></label>
                   <input asp-for="Contract.StartDate" type="date" class="form-control date" value="@(Model.Contract.StartDate >= DateTime.Now ? Model.Contract.StartDate :string.Empty)">
                    <span asp-validation-for="Contract.StartDate" class="text-danger"></span>
                 </div>
@@ -63,14 +63,14 @@
 
                 <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">End Date : <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["End Date"] : <span class="tx-danger">*</span></label>
                   <input asp-for="Contract.EndDate" type="date"   class="form-control date" value="@(Model.Contract.EndDate >=DateTime.Now ? Model.Contract.EndDate :string.Empty)">
                    <span asp-validation-for="Contract.EndDate" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
       <div class="col-lg-4">
     <div class="form-group">
-                <label class="form-control-label">Vendor: <span class="tx-danger">*</span></label>
+        <label class="form-control-label">@sharedResource["Vendor"]: <span class="tx-danger">*</span></label>
               
         @(Html.DevExtreme().LookupFor(c=>c.Contract.VendorId)
             .DataSource(d => d.WebApi()
@@ -90,9 +90,9 @@
             </div><!-- row -->
 
             <div class="form-layout-footer">
-              <button class="btn btn-primary bd-0">Submit </button>
+              <button class="btn btn-primary bd-0">@sharedResource["Add Contract"] </button>
              <a  asp-area="Admin" asp-page="/ContractManagment/ContractList">
-                 <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                 <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
               </a>
             </div><!-- form-layout-footer -->
             </form>

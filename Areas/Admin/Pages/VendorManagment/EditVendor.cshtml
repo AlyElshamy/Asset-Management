@@ -8,15 +8,15 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Vendor</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Inventory"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Edit Vendor"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Vendor Information</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Vendor Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
-            <label class="section-title">Please fill your information</label>
+            <label class="section-title">@sharedResource["Please fill Vendor information"]</label>
             @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
             <div class="form-layout">
@@ -25,62 +25,62 @@
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Vendor Title: <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.VendorTitle" class="form-control" placeholder="Enter Contract Title">
+                                <label class="form-control-label">@sharedResource["Vendor Title"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.VendorTitle" class="form-control" placeholder="@sharedResource["Enter Vendor Title"]">
                                 <span asp-validation-for="Vendor.VendorTitle" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label"> Phone: <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.Phone" class="form-control" placeholder="Enter your Phone">
+                                <label class="form-control-label"> @sharedResource["Vendor Phone"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.Phone" class="form-control" placeholder="@sharedResource["Enter Phone Number"]">
 
                             </div>
                         </div><!-- col-4 -->
 
                         <div class="col-lg-4">
                             <div class="form-group mg-b-10-force">
-                                <label class="form-control-label"> Mobile: <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.Mobile" class="form-control" placeholder="Enter Contract No">
+                                <label class="form-control-label"> @sharedResource["Mobile Number"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.Mobile" class="form-control" placeholder="@sharedResource["Enter Mobile Number"]">
                                 <span asp-validation-for="Vendor.Mobile" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.Email" type="email" class="form-control" placeholder="Enter your Email">
+                                <label class="form-control-label">@sharedResource["Vendor Email"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.Email" type="email" class="form-control" placeholder="@sharedResource["Enter Vendor Email"]">
                                 <span asp-validation-for="Vendor.Email" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">WebSite : <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.Website" type="url" class="form-control date">
+                                <label class="form-control-label">@sharedResource["Vendor WebSite"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.Website" type="url" class="form-control date" placeholder="@sharedResource["Enter Vendor WebSite"]">
                                 <span asp-validation-for="Vendor.Website" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Contact Person Name : <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.ContactPersonName" class="form-control date">
+                                <label class="form-control-label">@sharedResource["Contact Personal Name"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.ContactPersonName" class="form-control date" placeholder="@sharedResource["Enter Personal Name"]">
                                 <span asp-validation-for="Vendor.ContactPersonName" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Contact Person Email : <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.ContactPersonEmail" type="email" class="form-control date">
+                                <label class="form-control-label">@sharedResource["Contact Personal Email"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.ContactPersonEmail" type="email" class="form-control date" placeholder="@sharedResource["Enter Personal Email"]">
                                 <span asp-validation-for="Vendor.ContactPersonEmail" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Contact Person Phone : <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.ContactPersonPhone" class="form-control date">
+                                <label class="form-control-label">@sharedResource["Contact Personal Phone"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="Vendor.ContactPersonPhone" class="form-control date"placeholder="@sharedResource["Enter Personal Phone"]">
                                 <span asp-validation-for="Vendor.ContactPersonPhone" class="text-danger"></span>
                             </div>
                         </div>
@@ -106,9 +106,9 @@
                     </div><!-- row -->
 
                     <div class="form-layout-footer">
-                        <button class="btn btn-primary bd-0">Edit </button>
+                        <button class="btn btn-primary bd-0">@sharedResource["Edit"] </button>
                         <a asp-area="Admin" asp-page="/VendorManagment/VendorList">
-                            <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                            <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
                         </a>
                     </div><!-- form-layout-footer -->
                 </form>

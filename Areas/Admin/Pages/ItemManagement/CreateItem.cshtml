@@ -6,15 +6,15 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add Item</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Item"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Add Item"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Item Information</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Item Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
-            <label class="section-title">Please fill your Item information</label>
+            <label class="section-title"></label>
             @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
             <div class="form-layout">
@@ -23,15 +23,15 @@
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Item Title: <span class="tx-danger">*</span></label>
-                                <input asp-for="Item.ItemTitle" class="form-control" placeholder="Enter Item Title">
+                                <label class="form-control-label">@sharedResource["Item Title"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Item.ItemTitle" class="form-control" placeholder="@sharedResource["Enter Item Title"]">
                                 <span asp-validation-for="Item.ItemTitle" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Category"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.Item.CategoryId)
             .DataSource(d => d.WebApi()
@@ -49,7 +49,7 @@
                     
                     <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Brand: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Brand"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.Item.BrandId)
             .DataSource(d => d.WebApi()
@@ -68,8 +68,8 @@
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Description:</label>
-                            <textarea asp-for="Item.Description" class="form-control" placeholder="Enter Description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <label for="exampleFormControlTextarea1">@sharedResource["Description"]:</label>
+                            <textarea asp-for="Item.Description" class="form-control" placeholder="@sharedResource["Enter Item Description"]" id="exampleFormControlTextarea1" rows="3"></textarea>
                             <span asp-validation-for="Item.Description" class="text-danger"></span>
                         </div>
                     </div><!-- col-4 -->
@@ -77,9 +77,9 @@
                     </div><!-- row -->
 
                     <div class="form-layout-footer">
-                        <button class="btn btn-primary bd-0">Submit </button>
+                        <button class="btn btn-primary bd-0">@sharedResource["Add Item"] </button>
                         <a asp-area="Admin" asp-page="/ItemManagement/ItemList">
-                            <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                            <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]Cancel' />
                         </a>
                     </div><!-- form-layout-footer -->
                 </form>
