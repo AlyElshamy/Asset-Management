@@ -67,7 +67,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
             await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
-            return "/" + folderPath;
+            return  folderPath;
         }
 
     }

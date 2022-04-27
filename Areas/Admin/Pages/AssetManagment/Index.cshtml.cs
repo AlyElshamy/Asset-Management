@@ -3,8 +3,10 @@ using AssetProject.Models;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System;
 using System.Collections.Generic;
@@ -36,7 +38,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         }
         public IActionResult OnGetSingleAssetForView(int AssetId)
         {
-            var Result = _context.Assets.Where(c=>c.AssetId==AssetId).FirstOrDefault();
+            var Result = _context.Assets.Where(c=>c.AssetId==AssetId).Include(a=>a.Item).Include(a=>a.DepreciationMethod).FirstOrDefault();
             return new JsonResult(Result);
         }
         public IActionResult OnGetSingleAssetForEdit(int AssetId)
@@ -45,33 +47,46 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             return new JsonResult(Result);
         }
 
-        public IActionResult OnPostEditAsset(Asset instance)
+        public async Task<IActionResult> OnPostEditAsset(Asset instance,IFormFile file)
         {
-            var uniqeFileName = "";
-            if (Response.HttpContext.Request.Form.Files.Count() > 0)
+
+            if (ModelState.IsValid)
             {
-
-                var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, "Images/Brand/" + instance.Photo);
-                if (System.IO.File.Exists(ImagePath))
+                if (file != null)
                 {
-                    System.IO.File.Delete(ImagePath);
+                    if (instance.Photo != null)
+                    {
+                        var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, instance.Photo);
+                        if (System.IO.File.Exists(ImagePath))
+                        {
+                            System.IO.File.Delete(ImagePath);
+                        }
+                    }
+
+                    string folder = "Images/AssetPhotos/";
+                    instance.Photo = await UploadImage(folder, file);
                 }
-                string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "Images/AssetPhotos");
-
-                string ext = Path.GetExtension(Response.HttpContext.Request.Form.Files[0].FileName);
-
-                uniqeFileName = Guid.NewGuid().ToString("N") + ext;
-
-                string uploadedImagePath = Path.Combine(uploadFolder, uniqeFileName);
-
-                using (FileStream fileStream = new FileStream(uploadedImagePath, FileMode.Create))
-                {
-                    Response.HttpContext.Request.Form.Files[0].CopyTo(fileStream);
-                }
-                instance.Photo = uniqeFileName;
+                var UpdatedAsset = _context.Assets.Attach(instance);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                _context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Edited successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
             }
+            return Page();
 
-            return new JsonResult(instance);
+            //return new JsonResult(instance);
+        }
+
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folderPath);
+
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return  folderPath;
         }
     }
 }

@@ -14,52 +14,72 @@
                 </button>
             </div>
             <div class="modal-body pd-25">
-                @(Html.DevExtreme().Form<AssetProject.Models.Asset>()
-                .ID("frmView")
-                .ColCount(2)
-                    @*.OnContentReady("function(e){   getData(e,data)  }")  *@
-                .Items(items => {
-                items.AddSimpleFor(m => m.AssetId);
-                items.AddSimpleFor(m => m.AssetDescription);
-                items.AddSimpleFor(m => m.AssetTagId);
-                items.AddSimpleFor(m => m.AssetCost);
-                items.AddSimpleFor(m => m.AssetSerialNo);
-                items.AddSimpleFor(m => m.AssetPurchaseDate);
-                items.AddSimpleFor(m => m.ItemId)
-                .Editor(e => e
-                .Lookup()
-                .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("ItemsLookup").Key("Value"))
-                .ValueExpr("Value")
-                .DisplayExpr("Text")
-                );
-
-                items.AddSimpleFor(m => m.Photo);
-
-                items.AddSimpleFor(m => m.DepreciableAsset);
-
-                items.AddSimpleFor(m => m.DepreciableCost);
-
-                items.AddSimpleFor(m => m.SalvageValue);
-
-                items.AddSimpleFor(m => m.AssetLife);
-
-                items.AddSimpleFor(m => m.DateAcquired);
-
-                items.AddSimpleFor(m => m.DepreciationMethodId)
-                .Editor(e => e
-                .Lookup()
-                .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("DepreciationMethodsLookup").Key("Value"))
-                .ValueExpr("Value")
-                .DisplayExpr("Text")
-                );
-                })
-                )
-
+                <div class="row row-sm">
+                <div class="col-lg-12">
+                    <div class="card card-profile">
+                        <div class="card-body">
+                            <div class="media">
+                                <img src="" id="img" alt="" class="img-fluid" >
+                                <div class="media-body">
+                                    <h3 class="card-profile-name">Asset Description</h3>
+                                    <p class="card-profile-position" >  Asset Tag Id <a href="" id="AssetTagId"></a></p>
+                                    <p >Serial <a href="" id="AssetSerial"></a></p>
+                                    <div class="row mg-t-20">
+                                        <div class="col-md">
+                                            <label class="section-label-sm tx-gray-500">General Information</label>
+                                            <p class="invoice-info-row">
+                                                <span>Description</span>
+                                                <span id="AssetDescription"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Asset Cost</span>
+                                                <span id="AssetCost"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Asset PurchaseDate:</span>
+                                                <span id="AssetPurchaseDate"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Item:</span>
+                                                <span id="AssetItem"></span>
+                                            </p>
+                                            
+                                        </div><!-- col -->
+                                        <div class="col-md">
+                                            <label class="section-label-sm tx-gray-500">Depreciation Information</label>
+                                            <p class="invoice-info-row">
+                                                <span>Depreciable Cost</span>
+                                                <span id="DepreciableCost"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Salvage Value</span>
+                                                <span id="SalvageValue"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Asset Life:</span>
+                                                <span id="AssetLife"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Date Acquired:</span>
+                                                <span id="DateAcquired"></span>
+                                            </p>
+                                            <p class="invoice-info-row">
+                                                <span>Depreciation Method:</span>
+                                                <span id="DepreciationMethod"></span>
+                                            </p>
+                                        </div><!-- col -->
+                                    </div>
+                                </div><!-- media-body -->
+                            </div><!-- media -->
+                        </div><!-- card-body -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div><!-- modal-dialog -->
 </div>
+</div>
+</div>
+</div>
+

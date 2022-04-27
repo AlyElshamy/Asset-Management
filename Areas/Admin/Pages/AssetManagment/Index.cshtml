@@ -111,11 +111,20 @@
         contentType: "application/json",
         dataType: "json",
         success: function (response) {
-
-               $('#frmView').dxForm('instance').option('formData', response);
-               $('#AssetQuickViewPoup').modal('show');
-
-
+            document.getElementById("img").src ="/"+response.Photo
+            document.getElementById("AssetTagId").innerHTML = response.AssetTagId
+            document.getElementById("AssetSerial").innerHTML = response.AssetSerialNo
+            document.getElementById("AssetDescription").innerHTML = response.AssetDescription
+            document.getElementById("AssetCost").innerHTML = response.AssetCost
+            document.getElementById("AssetPurchaseDate").innerHTML = response.AssetPurchaseDate
+            document.getElementById("AssetItem").innerHTML = response.Item.ItemTitle
+            document.getElementById("DepreciableCost").innerHTML = response.DepreciableCost
+            document.getElementById("SalvageValue").innerHTML = response.SalvageValue
+            document.getElementById("AssetLife").innerHTML = response.AssetLife
+            document.getElementById("DateAcquired").innerHTML = response.DateAcquired
+            document.getElementById("DepreciationMethod").innerHTML = response.DepreciationMethod.DepreciationMethodTitle
+             $('#AssetQuickViewPoup').modal('show');
+            
         },
         failure: function (response) {
             alert(response);
@@ -129,10 +138,6 @@
     function editButtonClick(e) {
        //alert("Come on edit")
         console.log(e.row.data);
-
-
-
-
     $.ajax({
         type: "GET",
         url: "/admin/assetmanagment/Index?handler=SingleAssetForEdit",
@@ -141,10 +146,11 @@
         dataType: "json",
         success: function (response) {
 
-               $('#frmEdit').dxForm('instance').option('formData', response);
+               $('#frmEdit').dxForm('instance').option('formData',response);
+                document.getElementById("AssetDescriptiontxt").innerHTML = response.AssetDescription
                $('#AssetEditPoup').modal('show');
-
-
+               console.log("Elemnt"+document.getElementsByClassName("AssetClass")[0].nodeValue)
+                
         },
         failure: function (response) {
             alert(response);
@@ -167,5 +173,6 @@
 
     }
 
+      
 
 </script>

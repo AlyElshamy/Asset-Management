@@ -19,48 +19,69 @@
                 <div class="card card-profile">
                     <div class="card-body">
                         <div class="media">
-                            <img src="http://via.placeholder.com/500x500" alt="">
+                            <img src="@Model.AssetPhoto" alt="">
                             <div class="media-body">
                                 <h3 class="card-profile-name">Asset Description</h3>
-                                <p class="card-profile-position">Asset Tag Id <a href="">2025887428995</a></p>
-                                <p>Serial <a href="">687874854854</a></p>
+                                <p class="card-profile-position">Asset Tag Id <a href="">@Model.Asset.AssetTagId</a></p>
+                                <p>Serial <a href="">@Model.Asset.AssetSerialNo</a></p>
                                 <div class="row mg-t-20">
                                     <div class="col-md">
                                         <label class="section-label-sm tx-gray-500">General Information</label>
-                                        <p class="invoice-info-row">
+                                       @* <p class="invoice-info-row">
                                             <span>Invoice No</span>
                                             <span>GHT-673-00</span>
                                         </p>
                                         <p class="invoice-info-row">
                                             <span>Project ID</span>
                                             <span>32334300</span>
-                                        </p>
-                                        <p class="invoice-info-row">
+                                        </p>*@
+                                        @*<p class="invoice-info-row">
                                             <span>Issue Date:</span>
                                             <span>November 21, 2017</span>
                                         </p>
                                         <p class="invoice-info-row">
                                             <span>Due Date:</span>
                                             <span>November 30, 2017</span>
+                                        </p>*@
+                                           <p class="invoice-info-row">
+                                            <span>Asset Description</span>
+                                            <span>@Model.Asset.AssetDescription</span>
+                                        </p>
+                                           <p class="invoice-info-row">
+                                            <span>Asset Cost</span>
+                                            <span>@Model.Asset.AssetCost</span>
+                                        </p>
+                                          <p class="invoice-info-row">
+                                            <span>Asset Item</span>
+                                            <span>@Model.Asset.Item.ItemTitle</span>
+                                        </p>
+                                          <p class="invoice-info-row">
+                                            <span>Asset Purchase Date</span>
+                                            <span>@Model.Asset.AssetPurchaseDate</span>
                                         </p>
                                     </div><!-- col -->
                                     <div class="col-md">
                                         <label class="section-label-sm tx-gray-500">Depreciation Information</label>
                                         <p class="invoice-info-row">
-                                            <span>Invoice No</span>
-                                            <span>GHT-673-00</span>
+                                            <span>Depreciable Cost</span>
+                                            <span>@Model.Asset.DepreciableCost</span>
                                         </p>
                                         <p class="invoice-info-row">
-                                            <span>Project ID</span>
-                                            <span>32334300</span>
+                                            <span>Salvage Value</span>
+                                            <span>@Model.Asset.SalvageValue</span>
                                         </p>
                                         <p class="invoice-info-row">
-                                            <span>Issue Date:</span>
-                                            <span>November 21, 2017</span>
+                                            <span>Asset Life</span>
+                                            <span>@Model.Asset.AssetLife</span>
                                         </p>
                                         <p class="invoice-info-row">
-                                            <span>Due Date:</span>
-                                            <span>November 30, 2017</span>
+                                            <span>Date Acquired</span>
+                                            <span>@Model.Asset.DateAcquired</span>
+                                        </p>
+
+                                        <p class="invoice-info-row">
+                                            <span>Depreciation Method</span>
+                                            <span>@Model.Asset.DepreciationMethod.DepreciationMethodTitle</span>
                                         </p>
                                     </div><!-- col -->
                                 </div>
@@ -70,7 +91,7 @@
                     <div class="card-footer">
                         <a href="" class="card-profile-direct">http://thmpxls.me/profile?id=katherine</a>
                         <div>
-                            <a href="">Edit Information</a>
+                            <a href="javascript:void(0)" onclick="editButtonClick(@Model.Asset.AssetId)">Edit Information</a>
                             <a href="">Profile Settings</a>
 
 
@@ -174,3 +195,25 @@
 
     </div><!-- container -->
 </div>
+
+<partial name="_AssetEditPopup" />
+<script>
+       function editButtonClick(AssetId) {
+    $.ajax({
+        type: "GET",
+        url: "/admin/assetmanagment/Index?handler=SingleAssetForEdit",
+        data: { "AssetId":AssetId },
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+               $('#frmEdit').dxForm('instance').option('formData',response);
+                document.getElementById("AssetDescriptiontxt").innerHTML = response.AssetDescription
+               $('#AssetEditPoup').modal('show');
+                
+        },
+        failure: function (response) {
+            alert(response);
+        }
+    });
+    }
+</script>

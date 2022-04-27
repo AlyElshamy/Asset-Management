@@ -9,7 +9,7 @@
         <form asp-area="Admin" asp-page="/AssetManagment/Index" asp-page-handler="EditAsset" enctype="multipart/form-data">
         <div class="modal-content bd-0 tx-14">
             <div class="modal-header pd-y-20 pd-x-25">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Message Preview</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" id="AssetDescriptiontxt"></h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -18,9 +18,10 @@
                 @(Html.DevExtreme().Form<AssetProject.Models.Asset>()
                 .ID("frmEdit")
                 .ColCount(2)
+                
                     @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
-                items.AddSimpleFor(m => m.AssetId);
+                items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
                 items.AddSimpleFor(m => m.AssetDescription);
                 items.AddSimpleFor(m => m.AssetTagId);
                 items.AddSimpleFor(m => m.AssetCost);
@@ -34,19 +35,20 @@
                 .DisplayExpr("Text")
                 );
 
-                items.AddSimpleFor(m => m.Photo);
+                items.AddSimpleFor(m => m.Photo).Editor(e => e.TextBox().ReadOnly(true));
+             
+                
+                items.AddSimpleFor(m => m.DepreciableAsset).Editor(e => e.TextBox().ReadOnly(true)).CssClass("AssetClass");
 
-                items.AddSimpleFor(m => m.DepreciableAsset);
+                items.AddSimpleFor(m => m.DepreciableCost).IsRequired(true);
 
-                items.AddSimpleFor(m => m.DepreciableCost);
+                items.AddSimpleFor(m => m.SalvageValue).IsRequired(true);
 
-                items.AddSimpleFor(m => m.SalvageValue);
+                items.AddSimpleFor(m => m.AssetLife).IsRequired(true);
 
-                items.AddSimpleFor(m => m.AssetLife);
+                items.AddSimpleFor(m => m.DateAcquired).IsRequired(true);
 
-                items.AddSimpleFor(m => m.DateAcquired);
-
-                items.AddSimpleFor(m => m.DepreciationMethodId)
+                items.AddSimpleFor(m => m.DepreciationMethodId).IsRequired(true)
                 .Editor(e => e
                 .Lookup()
                 .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("DepreciationMethodsLookup").Key("Value"))
@@ -55,21 +57,19 @@
                 );
 
                 items.AddSimpleFor(m => m.Photo).Label(k => k.Text("Photo")).Template(@<text>
-
-
-                                    @(Html.DevExtreme().FileUploader()
-                                .Name("Photo")
-                                .SelectButtonText("Browse")
-                                .LabelText("Select Picture")
-                                .Accept("image/*")
-                                .UploadMode(FileUploadMode.UseForm)
-                                .Height(70)
-                                    )
+                     <div class="form-group">
+                            @* <span> Asset Photo</span>*@
+                              <div class="custom-file">
+                                  <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" onchange="changephotoname()" id="Photo">
+                                  <label class="custom-file-label" for="File" id="photolabel">Choose New Photo</label>
+                              </div>
+                          </div>
                                 </text> );
+
                 })
                 )  
+                <br />
                 
-
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -79,3 +79,15 @@
         </form>
     </div><!-- modal-dialog -->
 </div>
+
+<script>
+     function changephotoname() {
+         console.log("in photo")
+                var fileName = document.getElementById("Photo").value.split("\\").pop();;
+                    document.getElementById("photolabel").innerHTML=fileName;
+                  
+            }
+ 
+
+
+</script>
