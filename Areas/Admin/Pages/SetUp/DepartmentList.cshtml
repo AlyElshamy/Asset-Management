@@ -12,12 +12,12 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Department List</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["DepartmentList"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Department List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["DepartmentList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Department List</label>
+            <label class="section-title d-inline">@sharedResource["DepartmentList"]</label>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer"> 
@@ -37,7 +37,7 @@
     .RemoteOperations(true)
     .Columns(columns => {
 
-        columns.AddFor(m => m.DepartmentTitle);
+        columns.AddFor(m => m.DepartmentTitle).Caption(@sharedResource["DepartmentTitle"]);
     })
     .Editing(e => e
         .AllowAdding(true)

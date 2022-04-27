@@ -8,14 +8,14 @@
         <div class="slim-pageheader">
           <ol class="breadcrumb slim-breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Set Up</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add Brand</li>
+            <li class="breadcrumb-item"><a href="#">SETUP</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["AddBrand"]</li>
           </ol>
-          <h6 class="slim-pagetitle">Brand Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["BrandInformation"]</h6>
         </div><!-- slim-pageheader -->
 
  <div class="section-wrapper">
-          <label class="section-title">Please fill your Brand information</label>
+          <label class="section-title">@sharedResource["plzFBI"]</label>
           @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
           <div class="form-layout">
@@ -24,17 +24,17 @@
             <div class="row mg-b-25">
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Brand Title: <span class="tx-danger">*</span></label>
-                  <input asp-for="Brand.BrandTitle" class="form-control"  placeholder="Enter Brand Title">
+                  <label class="form-control-label">@sharedResource["BrandTitle"]: <span class="tx-danger">*</span></label>
+                  <input asp-for="Brand.BrandTitle" class="form-control"  placeholder="@sharedResource["EnterBrandTitle"]">
                    <span asp-validation-for="Brand.BrandTitle" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
             </div><!-- row -->
 
             <div class="form-layout-footer">
-              <button class="btn btn-primary bd-0">Create Brand </button>
+              <button class="btn btn-primary bd-0">@sharedResource["CreateBrand"]</button>
              <a  asp-area="Admin" asp-page="/BrandManagment/BrandList">
-                 <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                 <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
               </a>
             </div><!-- form-layout-footer -->
             </form>

@@ -11,9 +11,9 @@
           <ol class="breadcrumb slim-breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Forms</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["EditCompanyInformation"]</li>
           </ol>
-          <h6 class="slim-pagetitle">Company Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["CompanyInformation"]</h6>
         </div><!-- slim-pageheader -->
 
      
@@ -21,7 +21,7 @@
 
 
  <div class="section-wrapper">
-          <label class="section-title">Please fill your company information</label>
+          <label class="section-title">@sharedResource["plzFCI"]</label>
           @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
           <div class="form-layout">
@@ -30,52 +30,52 @@
             <div class="row mg-b-25">
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Company Name: <span class="tx-danger">*</span></label>
-                  <input asp-for="@Model.tenant.CompanyName" class="form-control"  placeholder="Enter Company name">
+                  <label class="form-control-label">@sharedResource["CompanyName"]: <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.CompanyName" class="form-control"  placeholder="@sharedResource["EnterCompanyname"]">
                 </div>
               </div><!-- col-4 -->
               
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label"> Address: <span class="tx-danger">*</span></label>
-                  <input asp-for="@Model.tenant.Address" class="form-control" placeholder="Enter Address">
+                  <label class="form-control-label"> @sharedResource["Address"]: <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.Address" class="form-control" placeholder="@sharedResource["EnterAddress"]">
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group mg-b-10-force">
-                  <label class="form-control-label">City: <span class="tx-danger">*</span></label>
-                  <input  asp-for="@Model.tenant.City" class="form-control" placeholder="Enter City">
+                  <label class="form-control-label">@sharedResource["City"]: <span class="tx-danger">*</span></label>
+                  <input  asp-for="@Model.tenant.City" class="form-control" placeholder="@sharedResource["EnterCityName"]">
                 </div>
               </div><!-- col-8 -->
 
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">State : <span class="tx-danger">*</span></label>
-                  <input asp-for="@Model.tenant.State" class="form-control" placeholder="Enter State">
+                  <label class="form-control-label">@sharedResource["State"] : <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.State" class="form-control" placeholder="@sharedResource["EnterStateName"]">
                 </div>
               </div><!-- col-4 -->
 
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">PostalCode : <span class="tx-danger">*</span></label>
-                  <input asp-for="@Model.tenant.PostalCode" class="form-control" placeholder="Enter Postol Code">
+                  <label class="form-control-label">@sharedResource["PostalCode"] : <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.tenant.PostalCode" class="form-control" placeholder="@sharedResource["EnterPostolCode"]">
                 </div>
               </div><!-- col-4 -->
 
           <div class="col-lg-4">
         <div class="form-group">
-          <label class="form-control-label">Logo: <span class="tx-danger">*</span></label>
+          <label class="form-control-label">@sharedResource["Logo"]: <span class="tx-danger">*</span></label>
         <div class="custom-file">
             <input  type="file" name="file"  accept=".png, .jpg, .jpeg"  class="custom-file-input" id="text"  >
-            <label class="custom-file-label" for="File">Choose New logo</label>
+            <label class="custom-file-label" for="File">@sharedResource["ChooseNewlogo"]</label>
         </div>
     </div>
     </div>  
 
       <div class="col-lg-4">
     <div class="form-group">
-                <label class="form-control-label">Country: <span class="tx-danger">*</span></label>
+                <label class="form-control-label">@sharedResource["Country"]: <span class="tx-danger">*</span></label>
                 @*<select asp-for="@Model.tenant.CountryId" class ="form-control" asp-items="@Model.countries">
                     <option value="0">Please select</option>
        
@@ -97,8 +97,8 @@
             </div><!-- row -->
 
             <div class="form-layout-footer">
-              <button class="btn btn-primary bd-0">Submit Form</button>
-              <button class="btn btn-secondary bd-0">Cancel</button>
+              <button class="btn btn-primary bd-0">@sharedResource["Save"]</button>
+              <button class="btn btn-secondary bd-0">@sharedResource["Cancel"]</button>
             </div><!-- form-layout-footer -->
             </form>
           </div><!-- form-layout -->

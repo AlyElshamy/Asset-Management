@@ -8,14 +8,14 @@
         <div class="slim-pageheader">
           <ol class="breadcrumb slim-breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Forms</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Form Layouts</li>
+            <li class="breadcrumb-item"><a href="#">SETUP</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["AddType"]</li>
           </ol>
-          <h6 class="slim-pagetitle">Type Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["TypeInformation"]</h6>
         </div><!-- slim-pageheader -->
 
  <div class="section-wrapper">
-          <label class="section-title">Please fill your Type information</label>
+          <label class="section-title">@sharedResource["plzFTI"]</label>
           @*<p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
           <div class="form-layout">
@@ -24,15 +24,15 @@
             <div class="row mg-b-25">
               <div class="col-lg-4">
                 <div class="form-group">
-                  <label class="form-control-label">Type Title: <span class="tx-danger">*</span></label>
-                  <input asp-for="Type.TypeTitle" class="form-control"  placeholder="Enter Type Title">
+                  <label class="form-control-label">@sharedResource["TypeTitle"]: <span class="tx-danger">*</span></label>
+                  <input asp-for="Type.TypeTitle" class="form-control"  placeholder="@sharedResource["EnterTypeTitle"]">
                    <span asp-validation-for="Type.TypeTitle" class="text-danger"></span>
                 </div>
               </div><!-- col-4 -->
 
                <div class="col-lg-4">
     <div class="form-group">
-                <label class="form-control-label">Brand: <span class="tx-danger">*</span></label>
+                <label class="form-control-label">@sharedResource["BrandTitle"]: <span class="tx-danger">*</span></label>
               
         @(Html.DevExtreme().LookupFor(c=>c.Type.BrandId)
             .DataSource(d => d.WebApi()
@@ -49,9 +49,9 @@
             </div><!-- row -->
 
             <div class="form-layout-footer">
-              <button class="btn btn-primary bd-0">Create Type </button>
+              <button class="btn btn-primary bd-0">@sharedResource["CreateType"] </button>
              <a  asp-area="Admin" asp-page="/BrandManagment/BrandList">
-                 <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                 <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
               </a>
             </div><!-- form-layout-footer -->
             </form>

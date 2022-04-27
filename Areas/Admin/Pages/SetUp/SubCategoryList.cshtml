@@ -9,13 +9,13 @@
               <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Category List</a></li>
-                <li class="breadcrumb-item active" aria-current="page">SubCategory List</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["CategoryList"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["SubCategoryList"]</li>
             </ol>
-            <h6 class="slim-pagetitle">SubCategory List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["SubCategoryList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">SubCategory List</label>
+            <label class="section-title d-inline">@sharedResource["SubCategoryList"]</label>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">  
@@ -38,11 +38,11 @@
 
     @*    columns.AddFor(m => m.SubCategoryId);*@
 
-        columns.AddFor(m => m.SubCategoryTitle);
+        columns.AddFor(m => m.SubCategoryTitle).Caption(@sharedResource["SubCategoryTitle"]);
 
-        columns.AddFor(m => m.SubCategoryDescription);
+        columns.AddFor(m => m.SubCategoryDescription).Caption(@sharedResource["Description"]);
 
-        columns.AddFor(m => m.CategoryId).Caption("Category").Lookup(lookup => lookup
+        columns.AddFor(m => m.CategoryId).Caption(@sharedResource["CategoryTIAR"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("SubCategories").LoadAction("CategoriesLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
