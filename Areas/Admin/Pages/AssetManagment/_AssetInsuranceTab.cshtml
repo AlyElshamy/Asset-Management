@@ -31,7 +31,7 @@
 
             columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
                         .CellTemplate(@<text>
-                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { deleteButtonClickContract(data) }")
+                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { deleteButtonClickInsurance(data) }")
                         </text>);
         })
 
@@ -93,8 +93,8 @@
         document.getElementById("photolabel").innerHTML = fileName;
 
     }
-    function deleteButtonClick(data) {
-        var grid = $('#deleteButtonClickContract').dxDataGrid('instance');
+    function deleteButtonClickInsurance(data) {
+        var grid = $('#gridInsuranceContainer').dxDataGrid('instance');
         var rowIndex = grid.getRowIndexByKey(data.AssetsInsuranceId)
         grid.deleteRow(rowIndex);
     }
