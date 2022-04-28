@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,5 +32,12 @@ namespace AssetProject.Models
         public DateTime? DateAcquired { set; get; }
         public DepreciationMethod DepreciationMethod { set; get; }
         public int? DepreciationMethodId { set; get; }
+        public ICollection<AssetPhotos> AssetPhotos { set; get; }
+        public ICollection<AssetMovement> AssetMovements { set; get; }
+        public ICollection<AssetContract> AssetContracts { get; set; }
+        public ICollection<AssetsInsurance> AssetsInsurances { get; set; }
+        public ICollection<AssetDocument> documents { get; set; }
+
+
     }
 }

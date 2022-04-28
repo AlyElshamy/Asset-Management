@@ -60,7 +60,9 @@
                                             <span>@Model.Asset.AssetPurchaseDate</span>
                                         </p>
                                     </div><!-- col -->
-                                    <div class="col-md">
+                                    @if (Model.Asset.DepreciableAsset)
+                                    {
+                                           <div class="col-md">
                                         <label class="section-label-sm tx-gray-500">Depreciation Information</label>
                                         <p class="invoice-info-row">
                                             <span>Depreciable Cost</span>
@@ -84,6 +86,8 @@
                                             <span>@Model.Asset.DepreciationMethod.DepreciationMethodTitle</span>
                                         </p>
                                     </div><!-- col -->
+                                    }
+                                 
                                 </div>
                             </div><!-- media-body -->
                         </div><!-- media -->
@@ -147,37 +151,37 @@
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="Details">
-                                            <partial name="_AssetDetailsTab" model=Model />
+                                            <partial name="_AssetDetailsTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                         <div class="tab-pane" id="Events">
-                                            <partial name="_AssetEventTab" model=Model />
+                                            <partial name="_AssetEventTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                         <div class="tab-pane" id="Photos">
-                                            <partial name="_AssetPhotosTab" model=Model />
+                                            <partial name="_AssetPhotosTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                         <div class="tab-pane" id="Docs">
-                                            <partial name="_AssetDocsTab" model=Model />
+                                            <partial name="_AssetDocsTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                          <div class="tab-pane" id="Depreciation">
-                                            <partial name="_AssetDepreciationTab" model=Model />
+                                            <partial name="_AssetDepreciationTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                          <div class="tab-pane" id="Warranty">
-                                            <partial name="_AssetWarrantyTab" model=Model />
+                                            <partial name="_AssetWarrantyTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                          <div class="tab-pane" id="Linking">
-                                            <partial name="_AssetLinkingTab" model=Model />
+                                            <partial name="_AssetLinkingTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                            <div class="tab-pane" id="Maint">
-                                            <partial name="_AssetMaintTab" model=Model />
+                                            <partial name="_AssetMaintTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                            <div class="tab-pane" id="Contracts">
-                                            <partial name="_AssetContractTab" model=Model />
+                                            <partial name="_AssetContractTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                           <div class="tab-pane" id="Insurances">
-                                            <partial name="_AssetInsuranceTab" model=Model />
+                                            <partial name="_AssetInsuranceTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                              <div class="tab-pane" id="History">
-                                            <partial name="_AssetHistoryTab" model=Model />
+                                            <partial name="_AssetHistoryTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                     </div><!-- tab-content -->
                                 </div><!-- card-body -->
@@ -216,4 +220,40 @@
         }
     });
     }
+
+     function ShowAddAssetPhotoPopUp(){
+                     $('#AssetPhotoPoup').modal('show');
+            }
+function DeletePhoto(AssetId,AssetPhotoId)
+ {
+    $.ajax({
+        type: "GET",
+        url: "/admin/assetmanagment/AssetProfile?handler=DeletePhoto",
+        data: { "AssetId": AssetId,"AssetPhotoId":AssetPhotoId },
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+       document.location = '/Admin/AssetManagment/AssetProfile?AssetId='+response.AssetId;
+       document.getElementById("Deletephotot").innerHTML = "Photo Deleted Successfully";
+        },
+        failure: function (response) {
+            alert(response);
+        }
+    });
+
+
+ }
+
+ function ShowAssetcontractPopUp() {
+        $('#AssetContractEditPoup').modal('show');
+    }
+    function ShowAssetInsurancePopUp() {
+        $('#AssetInsuranceEditPoup').modal('show');
+    }
+
+    function ShowAssetDocumentPopup() {
+        $('#AssetDocumentEditPoup').modal('show');
+    }
+
+
 </script>
