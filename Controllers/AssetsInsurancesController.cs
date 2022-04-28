@@ -25,8 +25,8 @@ namespace AssetProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var assetsinsurances = _context.AssetsInsurances.Select(i => new {
+        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions, int AssetId) {
+            var assetsinsurances = _context.AssetsInsurances.Where(e => e.AssetId == AssetId).Select(i => new {
                 i.AssetsInsuranceId,
                 i.AssetId,
                 i.Insurance,i.InsuranceId
