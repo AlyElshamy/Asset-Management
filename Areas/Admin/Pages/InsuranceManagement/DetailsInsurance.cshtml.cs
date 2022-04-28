@@ -1,10 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
 using System.Globalization;
+using System.Linq;
 
 namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
 {
@@ -40,6 +43,15 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
                 _toastNotification.AddErrorToastMessage("Something went error");
             }
             return Page();
+        }
+
+        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions, int InsuranceId)
+        {
+            var assetcontracts = _context.AssetContracts.Where(e => e.ContractId == InsuranceId).Select(e => new
+            {
+                e.Asset
+            });
+            return new JsonResult(DataSourceLoader.Load(assetcontracts, loadOptions));
         }
     }
 }

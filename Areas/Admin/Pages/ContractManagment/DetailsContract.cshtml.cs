@@ -1,5 +1,7 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +33,14 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             }
            
             return Page();
+        }
+        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions,int ContractId)
+        {
+            var assetcontracts = Context.AssetContracts.Where(e => e.ContractId == ContractId).Select(e => new
+            {
+                e.Asset
+            });
+            return new JsonResult(DataSourceLoader.Load(assetcontracts, loadOptions));
         }
     }
 }
