@@ -3,6 +3,99 @@
 *@
 @{
 }
+<a href="javascript:void(0)" onclick="ShowAssetInsurancePopUp('<%- data.AssetId %>')" class="btn btn-success" style="float:right">Link Insurance </a>
+<label class="section-title d-inline">Insurances</label>
+@(Html.DevExtreme().DataGrid<AssetProject.Models.AssetsInsurance>()
+        .ID("gridInsuranceContainer")
+         .DataSource(ds => ds.Mvc()
+        .Controller("AssetsInsurances")
+        .LoadAction("Get")
+        .DeleteAction("Delete")
+        .LoadParams(new { AssetId = Model })
+        .Key("AssetsInsuranceId")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+        columns.AddFor(m => m.Insurance.Description);
+        columns.AddFor(m => m.Insurance.InsuranceCompany);
+        columns.AddFor(m => m.Insurance.ContactPerson);
+        columns.AddFor(m => m.Insurance.StartDate);
+        columns.AddFor(m => m.Insurance.EndDate);
+        columns.AddFor(m => m.InsuranceId).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("AssetsInsurances").LoadAction("InsurancesLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+    })
+    .Columns(columns => {
 
+            columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
+                        .CellTemplate(@<text>
+                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { deleteButtonClick(data) }")
+                        </text>);
+        })
 
-Details Content
+    )
+<div class="slim-mainpanel">
+    <div class="container">
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+                    <div id="AssetInsuranceEditPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
+                            <form asp-area="Admin" asp-page="/AssetManagment/assetprofile" asp-page-handler="AddAssetInsurance" asp-route-AssetId="@Model" enctype="multipart/form-data">
+                                <div class="modal-content bd-0 tx-14">
+                                    <div class="modal-header pd-y-20 pd-x-25">
+                                        <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" id="AssetDescriptiontxt"></h6>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <div class="modal-body pd-25">
+                                        @(Html.DevExtreme().Form<AssetProject.Models.AssetsInsurance>()
+                .ID("addassetInsurance")
+                .ColCount(2)
+                .Width(300)
+                .Height(280)
+                .Items(items =>
+                {
+                    items.AddSimpleFor(m => m.InsuranceId)
+                    .IsRequired(true)
+                    .Editor(e => e
+                    .Lookup()
+                    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("InsurancesLookup").Key("Value"))
+                    .ValueExpr("Value")
+                    .DisplayExpr("Text").Width(150)
+                    );
+                })
+                )
+                                        <br />
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- modal-dialog -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function changephotoname() {
+        console.log("in photo")
+        var fileName = document.getElementById("Photo").value.split("\\").pop();;
+        document.getElementById("photolabel").innerHTML = fileName;
+
+    }
+    function deleteButtonClick(data) {
+        var grid = $('#gridInsuranceContainer').dxDataGrid('instance');
+        var rowIndex = grid.getRowIndexByKey(data.AssetsInsuranceId)
+        grid.deleteRow(rowIndex);
+    }
+</script>

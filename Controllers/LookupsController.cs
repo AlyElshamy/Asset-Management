@@ -120,6 +120,31 @@ namespace AssetProject.Controllers
                          };
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> ContractsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Contracts
+                         orderby i.ContractId
+                         select new
+                         {
+                             Value = i.ContractId,
+                             Text = i.Title
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+        [HttpGet]
+        public async Task<IActionResult> InsurancesLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Insurances
+                         orderby i.InsuranceId
+                         select new
+                         {
+                             Value = i.InsuranceId,
+                             Text = i.Title
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
 
 
     }
