@@ -84,14 +84,14 @@
     .Columns(columns =>
     {
 
-                    columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
+                   @* columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
                     .AllowFiltering(false)
                     .AllowSorting(false)
                     .CellTemplate(@<text>
                             <div>
                                 <img src="<%- value %>" alt="" width="35" height="35" />
                             </div>
-                        </text>);
+                        </text>);*@
         columns.AddFor(m => m.Asset.AssetDescription).Caption("Description");
         columns.AddFor(m => m.Asset.AssetTagId).Caption("TagId");
                     columns.AddFor(m => m.Asset.AssetCost).Caption("Cost");
