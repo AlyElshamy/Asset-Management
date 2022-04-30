@@ -53,7 +53,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
                 Context.Assets.Add(Asset);
                 Context.SaveChanges();
-                return RedirectToPage("AssetList");
+                return RedirectToPage("Index");
             }
             return Page();
         }

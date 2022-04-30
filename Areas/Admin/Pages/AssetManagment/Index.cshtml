@@ -18,7 +18,7 @@
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <label class="section-title d-inline">Assets List</label>
-            <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary" style="float:right"> Add New Asset </a>
+            <a asp-area="Admin" asp-page="/AssetManagment/AddAsset" class="btn btn-primary" style="float:right"> Add New Asset </a>
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
@@ -176,3 +176,9 @@
       
 
 </script>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

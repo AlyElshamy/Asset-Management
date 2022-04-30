@@ -1,0 +1,161 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@if (ViewData["AssetId"]!=null)
+{
+    var AssetId = ViewData["AssetId"];
+}
+@model AssetProject.Models.AssetMovement
+
+<div id="AssetCheckOutPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
+        <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="AddAssetMovement" enctype="multipart/form-data">
+        <div class="modal-content bd-0 tx-14">
+            <div class="modal-header pd-y-20 pd-x-25">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > Asset Movement</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body pd-25">
+             
+              <div class="row mg-b-25">
+              <div class="col-lg-4">
+                <div class="form-group">
+                    <label class="form-control-label">Transaction Date <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.TransactionDate" type="date" class="form-control date" value=" " >
+                   <span asp-validation-for="@Model.TransactionDate" class="text-danger"></span>
+                </div>
+              </div><!-- col-4 -->
+
+              
+      <div class="col-lg-4">
+    <div class="form-group">
+        <label class="form-control-label">Action Type: <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.ActionTypeId)
+        .ID("ActionTypeLookup")
+            .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("ActionTypesLookup")
+                .Key("Value")
+            )
+            .OnSelectionChanged("AcionTypeLookuP")
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+         <span asp-validation-for="@Model.ActionTypeId" class="text-danger"></span>
+            </div>
+        </div>
+
+
+ 
+             <div class="col-lg-4" id="AssetToEmpolyee" style="display:none">
+    <div class="form-group">
+        <label class="form-control-label">Empolyee: <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.EmpolyeeID)
+            .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("EmpolyeesLookup")
+                .Key("Value")
+            )
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+          <span asp-validation-for="@Model.EmpolyeeID" class="text-danger"></span>
+            </div>
+        </div>
+     
+
+          <div class="col-lg-4" id="AssetToLocation" style="display:none">
+    <div class="form-group">
+        <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.LocationId)
+            .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("LocationsLookup")
+                .Key("Value")
+            )
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+          <span asp-validation-for="@Model.LocationId" class="text-danger"></span>
+            </div>
+        </div>
+    
+
+     <div class="col-lg-4" id="AssetToDepartment" style="display:none">
+    <div class="form-group">
+        <label class="form-control-label">Department <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.DepartmentId)
+            .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("DepartmentsLookup")
+                .Key("Value")
+            )
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+          <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+                
+    
+      
+          <div class="col-lg-4">
+                <div class="form-group">
+                    <label class="form-control-label">Remarks <span class="tx-danger">*</span></label>
+                  <input asp-for="@Model.Remarks" class="form-control"  placeholder="">
+                   <span asp-validation-for="@Model.Remarks" class="text-danger"></span>
+                </div>
+              </div><!-- col-4 -->
+
+               <input name="AssetId" hidden id="checkoutAssetIdField"/>
+            </div><!-- row -->
+                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Add Asset Movement</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </form>
+    </div><!-- modal-dialog -->
+</div>
+
+<script>
+ function AcionTypeLookuP(){
+     console.log("inside the funcion")
+     var ActionType = $("#ActionTypeLookup").dxLookup("instance");
+      console.log(ActionType)
+    var ActionTypeValue = ActionType.option("selectedItem");
+    console.log(ActionTypeValue)
+        if( ActionTypeValue.Text=="To Empolyee")
+        {
+            console.log("In TO Empolyee ")
+             document.getElementById("AssetToEmpolyee").style.display='block'
+              document.getElementById("AssetToLocation").style.display='block'
+              document.getElementById("AssetToDepartment").style.display='block'
+        }
+        else if (ActionTypeValue.Text=="To Department"){
+              console.log("In TO Department ")
+               document.getElementById("AssetToDepartment").style.display='block'
+               document.getElementById("AssetToEmpolyee").style.display='none'
+              document.getElementById("AssetToLocation").style.display='block'
+        }
+    }
+
+        $(function(){
+        $("#ActionTypeLookup").dxLookup({
+            // ...
+            inputAttr: {
+                required:true
+            }
+        });
+    });
+</script>

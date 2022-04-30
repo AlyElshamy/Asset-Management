@@ -1,6 +1,7 @@
 ﻿@page
 @model AssetProject.Areas.Admin.Pages.AssetManagment.AssetProfileModel
 @{
+  
 }
 
 <div class="slim-mainpanel">
@@ -96,7 +97,25 @@
                         <a href="" class="card-profile-direct">http://thmpxls.me/profile?id=katherine</a>
                         <div>
                             <a href="javascript:void(0)" onclick="editButtonClick(@Model.Asset.AssetId)">Edit Information</a>
-                            <a href="">Profile Settings</a>
+                            <a href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">Check Out</a>
+                            <a href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">Repair Asset</a>
+                            <a href="javascript:void(0)" onclick="ShowAssetLostPopUp()"  style="float:right">Link Asset Lost  </a>
+                            <a href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()"  style="float:right">Link Asset Dispose  </a>
+                            <a href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()"  style="float:right">lease Asset </a>
+                            <a href="javascript:void(0)" onclick="ShowAssetSellPopUp()" style="float:right">Asset Sell </a>
+                            <a href="javascript:void(0)" onclick="ShowAssetBrokenPopup()"  style="float:right">Link AssetBroken  </a>
+                           
+                            @{ 
+                              ViewData["AssetId"] = Model.Asset.AssetId;
+                              <partial name="_AssetCHeckOut" model=@Model.AssetCheckOutModel view-data=" ViewData" />
+                             }
+                               <partial name="_AssetRepair" model=@Model.AssetrepairModel />
+                               <partial name="_AddAssetLostPopup" model=Model.Asset.AssetId />
+                              <partial name="_DisposeAssetPopup" model=Model.Asset.AssetId />
+                              <partial name="_AssetLeasingTab" model=Model.Asset.AssetId />
+                              <partial name="_AssetSellTab" model=Model.Asset.AssetId />
+                              <partial name="_AssetBroken" model=Model.Asset.AssetId />
+                            
 
 
                         </div>
@@ -211,7 +230,8 @@
         dataType: "json",
         success: function (response) {
                $('#frmEdit').dxForm('instance').option('formData',response);
-                document.getElementById("AssetDescriptiontxt").innerHTML = response.AssetDescription
+                document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
+                console.log(document.getElementById("EditAssetDescriptiontxt"))
                $('#AssetEditPoup').modal('show');
                 
         },
@@ -255,5 +275,44 @@ function DeletePhoto(AssetId,AssetPhotoId)
         $('#AssetDocumentEditPoup').modal('show');
     }
 
+    function AssetCheckOutPopUp(AssetId){
+    $('#AssetCheckOutPoup').modal('show');
+    console.log( document.getElementById("checkoutAssetIdField"))
+     document.getElementById("AssetIdField").value =AssetId;
+        console.log( document.getElementById("AssetIdField").value)
+   
+    }
 
+    
+    function AssetRepairPopUp(AssetId){
+    $('#AssetRepairPoup').modal('show');
+    console.log( document.getElementById("RepairAssetIdField"))
+     document.getElementById("RepairAssetIdField").value =AssetId;
+     console.log( document.getElementById("RepairAssetIdField").value)
+   
+    }
+
+    function ShowAssetLostPopUp() {
+        $('#AssetLostPoup').modal('show');
+    }
+
+    function ShowDisposeAssetPopUp() {
+        $('#DisposeAssetPoup').modal('show');
+    }
+
+    function ShowAssetLeasingPopUp() {
+        $('#AssetLeasingPoup').modal('show');
+    }
+    function ShowAssetSellPopUp() {
+        $('#AssetSellPoup').modal('show');
+    }
+
+    function ShowAssetBrokenPopup() {
+        $('#AssetBrokenPoup').modal('show');
+    }
 </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+}

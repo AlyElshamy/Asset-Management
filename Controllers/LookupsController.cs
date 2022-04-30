@@ -146,6 +146,69 @@ namespace AssetProject.Controllers
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ActionTypesLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.ActionTypes
+                         orderby i.ActionTypeId
+                         select new
+                         {
+                             Value = i.ActionTypeId,
+                             Text = i.ActionTypeTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> EmpolyeesLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Employees
+                         orderby i.ID
+                         select new
+                         {
+                             Value = i.ID,
+                             Text = i.FullName
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DepartmentsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Departments
+                         orderby i.DepartmentId
+                         select new
+                         {
+                             Value = i.DepartmentId,
+                             Text = i.DepartmentTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TechniciansLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Technicians
+                         orderby i.TechnicianId
+                         select new
+                         {
+                             Value = i.TechnicianId,
+                             Text = i.FullName
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CustomersLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Customers
+                         orderby i.CustomerId
+                         select new
+                         {
+                             Value = i.CustomerId,
+                             Text = i.FullName
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
     }
 }

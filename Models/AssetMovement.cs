@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AssetProject.Models
 {
@@ -10,7 +11,8 @@ namespace AssetProject.Models
         public int AssetId { set; get; }
         public Asset Asset { set; get; }
         public DateTime TransactionDate { set; get; }
-        public int EmpolyeeId { set; get; }
+        [ForeignKey("Employee")]
+        public int? EmpolyeeID { set; get; }
         public Employee Employee { set; get; }
         public int LocationId{ set; get; }
         public Location Location { set; get; }
