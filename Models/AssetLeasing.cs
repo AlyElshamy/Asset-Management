@@ -12,5 +12,10 @@ namespace AssetProject.Models
         public string Notes { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+        public int AssetId { get; set; }
+        public virtual Asset Asset { get; set; }
+
+
+
     }
 }
