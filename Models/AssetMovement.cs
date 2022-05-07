@@ -18,8 +18,12 @@ namespace AssetProject.Models
         public Location Location { set; get; }
         public int DepartmentId { set; get; }
         public Department Department { set; get; }
+        public int? StoreId { set; get; }
+        public Store Store { set; get; }
         public int ActionTypeId { set; get; }
         public ActionType ActionType { set; get; }
+        public AssetMovementDirection AssetMovementDirection { set; get; }
+        public int? AssetMovementDirectionId { set; get; }
         public string Remarks { set; get; }
 
     }

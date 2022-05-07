@@ -32,6 +32,15 @@ namespace AssetProject.Models
         public DateTime? DateAcquired { set; get; }
         public DepreciationMethod DepreciationMethod { set; get; }
         public int? DepreciationMethodId { set; get; }
+        public AssetStatus AssetStatus { set; get; }
+        public int? AssetStatusId { set; get; }
+
+        public int? VendorId { get; set; }
+        public virtual Vendor Vendor { get; set; }
+
+
+        public int? StoreId { get; set; }
+        public virtual Store Store { get; set; }
         public ICollection<AssetPhotos> AssetPhotos { set; get; }
         public ICollection<AssetMovement> AssetMovements { set; get; }
         public ICollection<AssetContract> AssetContracts { get; set; }

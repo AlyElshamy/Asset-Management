@@ -210,5 +210,97 @@ namespace AssetProject.Controllers
                          };
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MaintainanceStatusesLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.MaintainanceStatuses
+                         orderby i.MaintainanceStatusId
+                         select new
+                         {
+                             Value = i.MaintainanceStatusId,
+                             Text = i.MaintainanceStatusTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> AssetMaintainanceFrequenciesLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.AssetMaintainanceFrequencies
+                         orderby i.AssetMaintainanceFrequencyId
+                         select new
+                         {
+                             Value = i.AssetMaintainanceFrequencyId,
+                             Text = i.AssetMaintainanceFrequencyTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> WeekDaysLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.WeekDays
+                         orderby i.WeekDayId
+                         select new
+                         {
+                             Value = i.WeekDayId,
+                             Text = i.WeekDayTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MonthsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.Months
+                         orderby i.MonthId
+                         select new
+                         {
+                             Value = i.MonthId,
+                             Text = i.MonthTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssetMovementDirectionsLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.AssetMovementDirections
+                         orderby i.AssetMovementDirectionId
+                         select new
+                         {
+                             Value = i.AssetMovementDirectionId,
+                             Text = i.AssetMovementDirectionTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AssetStatusesLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.AssetStatuses
+                         orderby i.AssetStatusId
+                         select new
+                         {
+                             Value = i.AssetStatusId,
+                             Text = i.AssetStatusTitle
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> ActionLogsLookup(DataSourceLoadOptions loadOptions)
+        //{
+        //    var lookup = from i in _context.ActionLogs
+        //                 orderby i.ActionLogTitle
+        //                 select new
+        //                 {
+        //                     Value = i.ActionLogId,
+        //                     Text = i.ActionLogTitle
+        //                 };
+        //    return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        //}
     }
 }

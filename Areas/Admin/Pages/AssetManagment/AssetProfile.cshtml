@@ -22,28 +22,17 @@
                         <div class="media">
                             <img src="@Model.AssetPhoto" alt="">
                             <div class="media-body">
-                                <h3 class="card-profile-name">Asset Description</h3>
+                                  <div class="card-profile-name" style="font-size:x-large;display:inline-block">Asset Description</div>
+                                <div style="display:inline-block; position: absolute;top: 40px;right:20px;color:#10ea55">
+                               
+                              Status :@Model.Asset.AssetStatus.AssetStatusTitle
+                                </div>
+                               
                                 <p class="card-profile-position">Asset Tag Id <a href="">@Model.Asset.AssetTagId</a></p>
                                 <p>Serial <a href="">@Model.Asset.AssetSerialNo</a></p>
                                 <div class="row mg-t-20">
                                     <div class="col-md">
                                         <label class="section-label-sm tx-gray-500">General Information</label>
-                                       @* <p class="invoice-info-row">
-                                            <span>Invoice No</span>
-                                            <span>GHT-673-00</span>
-                                        </p>
-                                        <p class="invoice-info-row">
-                                            <span>Project ID</span>
-                                            <span>32334300</span>
-                                        </p>*@
-                                        @*<p class="invoice-info-row">
-                                            <span>Issue Date:</span>
-                                            <span>November 21, 2017</span>
-                                        </p>
-                                        <p class="invoice-info-row">
-                                            <span>Due Date:</span>
-                                            <span>November 30, 2017</span>
-                                        </p>*@
                                            <p class="invoice-info-row">
                                             <span>Asset Description</span>
                                             <span>@Model.Asset.AssetDescription</span>
@@ -94,32 +83,32 @@
                         </div><!-- media -->
                     </div><!-- card-body -->
                     <div class="card-footer">
-                        <a href="" class="card-profile-direct">http://thmpxls.me/profile?id=katherine</a>
-                        <div>
-                            <a href="javascript:void(0)" onclick="editButtonClick(@Model.Asset.AssetId)">Edit Information</a>
-                            <a href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">Check Out</a>
-                            <a href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">Repair Asset</a>
-                            <a href="javascript:void(0)" onclick="ShowAssetLostPopUp()"  style="float:right">Link Asset Lost  </a>
-                            <a href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()"  style="float:right">Link Asset Dispose  </a>
-                            <a href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()"  style="float:right">lease Asset </a>
-                            <a href="javascript:void(0)" onclick="ShowAssetSellPopUp()" style="float:right">Asset Sell </a>
-                            <a href="javascript:void(0)" onclick="ShowAssetBrokenPopup()"  style="float:right">Link AssetBroken  </a>
-                           
-                            @{ 
-                              ViewData["AssetId"] = Model.Asset.AssetId;
-                              <partial name="_AssetCHeckOut" model=@Model.AssetCheckOutModel view-data=" ViewData" />
-                             }
-                               <partial name="_AssetRepair" model=@Model.AssetrepairModel />
-                               <partial name="_AddAssetLostPopup" model=Model.Asset.AssetId />
-                              <partial name="_DisposeAssetPopup" model=Model.Asset.AssetId />
-                              <partial name="_AssetLeasingTab" model=Model.Asset.AssetId />
-                              <partial name="_AssetSellTab" model=Model.Asset.AssetId />
-                              <partial name="_AssetBroken" model=Model.Asset.AssetId />
-                            
+              
+     <a href="javascript:void(0)" onclick="editButtonClick(@Model.Asset.AssetId)">Edit Information</a> 
+   <div class="dropdown show">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   More Actions
+  </a>
 
-
-                        </div>
-                    </div><!-- card-footer -->
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        @if (Model.Asset.AssetStatusId == 1)
+    {
+        <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">Check Out</a>
+    }
+       @if (Model.Asset.AssetStatusId == 2)
+      {
+    <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">Check In</a>
+      }
+                   
+       <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">Repair Asset</a> 
+      <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">Link Asset Lost  </a>
+     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()">Link Asset Dispose  </a>
+     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()">lease Asset </a>
+     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetSellPopUp()">Asset Sell </a>
+    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">Link AssetBroken  </a> 
+    <a asp-area="Admin" asp-page="/PrintAssetProfile/PrintAsset" asp-route-AssetId="@Model.Asset.AssetId">Print Asset</a>
+  </div>
+</div>
                 </div><!-- card -->
 
                 <div class="section-wrapper mg-t-20">
@@ -191,7 +180,7 @@
                                             <partial name="_AssetLinkingTab" model=Model.Asset.AssetId />
                                         </div><!-- tab-pane -->
                                            <div class="tab-pane" id="Maint">
-                                            <partial name="_AssetMaintTab" model=Model.Asset.AssetId />
+                                            <partial name="_AssetMaintTab" model=Model.AssetMaintainance view-data="ViewData" />
                                         </div><!-- tab-pane -->
                                            <div class="tab-pane" id="Contracts">
                                             <partial name="_AssetContractTab" model=Model.Asset.AssetId />
@@ -220,6 +209,19 @@
 </div>
 
 <partial name="_AssetEditPopup" />
+   @{ 
+      ViewData["AssetId"] = Model.Asset.AssetId;
+     <partial name="_AssetCHeckOut" model=@Model.AssetMovementModel view-data=" ViewData" />
+  }
+ <partial name="_AssetRepair" model=@Model.AssetrepairModel />
+ <partial name="_AddAssetLostPopup" model=Model.Asset.AssetId />
+ <partial name="_DisposeAssetPopup" model=Model.Asset.AssetId />
+ <partial name="_AssetLeasingTab" model=Model.Asset.AssetId />
+ <partial name="_AssetSellTab" model=Model.Asset.AssetId />
+ <partial name="_AssetBroken" model=Model.Asset.AssetId />
+ <partial name="_AssetCheckInPopUp" model=@Model.AssetMovementModel />
+
+  </div><!-- card-footer -->
 <script>
        function editButtonClick(AssetId) {
     $.ajax({
@@ -276,10 +278,12 @@ function DeletePhoto(AssetId,AssetPhotoId)
     }
 
     function AssetCheckOutPopUp(AssetId){
+        console.log("check out")
+        console.log(AssetId)
     $('#AssetCheckOutPoup').modal('show');
     console.log( document.getElementById("checkoutAssetIdField"))
-     document.getElementById("AssetIdField").value =AssetId;
-        console.log( document.getElementById("AssetIdField").value)
+     document.getElementById("checkoutAssetIdField").value =AssetId;
+        console.log( document.getElementById("checkoutAssetIdField").value)
    
     }
 
@@ -309,6 +313,25 @@ function DeletePhoto(AssetId,AssetPhotoId)
 
     function ShowAssetBrokenPopup() {
         $('#AssetBrokenPoup').modal('show');
+    }
+
+    function ShowAddAssetMiantainancePopUp(AssetId)
+    {
+        console.log(AssetId)
+         $('#AssetMiantainancePoup').modal('show');
+          console.log( document.getElementById("MaintainanceAssetIdField"))
+     document.getElementById("MaintainanceAssetIdField").value =AssetId;
+        console.log( document.getElementById("MaintainanceAssetIdField").value)
+    }
+
+    function AssetCheckInPopUp(AssetId)
+    {
+          console.log("check in")
+         console.log(AssetId)
+    $('#AssetCheckInPoup').modal('show');
+    console.log( document.getElementById("checkInAssetIdField"))
+     document.getElementById("checkInAssetIdField").value =AssetId;
+        console.log( document.getElementById("checkInAssetIdField").value)
     }
 </script>
 
