@@ -17,6 +17,7 @@ namespace AssetProject.ReportModels
         public string AssetSerialNo { set; get; }
         public DateTime? AssetPurchaseDate { set; get; }
         public Item Item { set; get; }
+        public string PurchaseSerial { get; set; }
         public int? ItemId { set; get; }
         public DepreciationMethod DepreciationMethod { set; get; }
         public int? DepreciationMethodId { set; get; }
