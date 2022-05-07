@@ -1,5 +1,7 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using DevExpress.AspNetCore;
+using DevExpress.AspNetCore.Reporting;
 using Email;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -101,7 +103,14 @@ namespace AssetProject
                 }
 
                 );
-            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddDevExpressControls();
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            services.ConfigureReportingServices(configurator => {
+                configurator.ConfigureWebDocumentViewer(viewerConfigurator => {
+                    viewerConfigurator.UseCachedReportSourceBuilder();
+                });
+            }); 
          
             //services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
@@ -109,6 +118,8 @@ namespace AssetProject
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseDevExpressControls();
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
