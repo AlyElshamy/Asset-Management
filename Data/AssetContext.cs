@@ -35,12 +35,14 @@ namespace AssetProject.Data
         public DbSet<AssetDocument> assetDocuments { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<AssetLeasing> AssetLeasings { get; set; }
+        public DbSet<SellAsset> sellAssets{ get; set; }
         public DbSet<AssetBroken> assetBrokens { get; set; }
+
         public DbSet<AssetRepair> AssetRepairs { get; set; }
         public DbSet<Technician> Technicians { get; set; }
         public DbSet<AssetLost> AssetLosts { get; set; }
         public DbSet<DisposeAsset> DisposeAssets { get; set; }
-        public DbSet<SellAsset> sellAssets { get; set; }
+
         public DbSet<AssetMaintainance> AssetMaintainances { get; set; }
         public DbSet<AssetMaintainanceFrequency> AssetMaintainanceFrequencies { get; set; }
         public DbSet<MaintainanceStatus> MaintainanceStatuses { get; set; }
@@ -50,5 +52,6 @@ namespace AssetProject.Data
         public DbSet<AssetStatus> AssetStatuses { get; set; }
         public DbSet<AssetLog> AssetLogs { get; set; }
         public DbSet<ActionLog> ActionLogs { get; set; }
+
     }
 }

@@ -4,22 +4,39 @@
     <UserSecretsId>aspnet-AssetProject-06054881-DD46-479E-84EE-27AF0B7A3B95</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Data\Migrations\**" />
+    <Content Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <None Remove="Data\Migrations\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="21.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.6" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
     <PackageReference Include="NToastNotify" Version="7.0.0" />
-	<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
 	  <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
 	  <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="21.2.6" />
-	  <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.6" />
+	  <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
 
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\Images\Logo\" />
+    <Folder Include="wwwroot\Images\AssetPhotos\" />
     <Folder Include="wwwroot\Documents\AssetDocuments\" />
   </ItemGroup>
+  <!--<ItemGroup>
+    <Content Update="wwwroot\js\viewer.part.bundle.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>-->
 </Project>
