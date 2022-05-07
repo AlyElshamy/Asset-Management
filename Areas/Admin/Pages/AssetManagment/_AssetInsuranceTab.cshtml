@@ -31,7 +31,7 @@
 
             columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
                         .CellTemplate(@<text>
-                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { deleteButtonClickInsurance(data) }")
+                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { DeattachInsuranceButtonClick(data)}")
                         </text>);
         })
 
@@ -86,6 +86,7 @@
         </div>
     </div>
 
+     <partial name="_DeattachAssetInsurancePopup"   />
 <script>
     function changephotoname() {
         console.log("in photo")
@@ -98,4 +99,12 @@
         var rowIndex = grid.getRowIndexByKey(data.AssetsInsuranceId)
         grid.deleteRow(rowIndex);
     }
+    function DeattachInsuranceButtonClick(data) {
+
+        $('#DeattacheAssetInsurancePoup').modal('show');
+      document.getElementById("AssetInsuranceIdFaild").value=data.AssetsInsuranceId;
+      document.getElementById("InsuranceIdFaild").value=data.Insurance.Title;
+      document.getElementById("InsuranceIdFaildHidden").value=data.InsuranceId;
+
+     }
 </script>

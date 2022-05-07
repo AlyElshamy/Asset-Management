@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
 }
 
@@ -36,12 +37,12 @@
         {
             columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
                         .CellTemplate(@<text>
-                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { deleteButtonClickcontract(data) }")
+                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { DeattachButtonClick(data)}")
                         </text>);
 
         })
                     )
-    
+    <partial name="_DeattachAssetContractPopup"   />
 <div class="slim-mainpanel">
     <div class="container">
             <div class="table-wrapper">
@@ -65,6 +66,7 @@
                 .ColCount(2).Width(300).Height(280)
                 .Items(items =>
                 {
+                    
                     items.AddSimpleFor(m => m.ContractId)
                     .IsRequired(true)
                     .Editor(e => e
@@ -86,11 +88,13 @@
                                 </div>
                             </form>
                         </div><!-- modal-dialog -->
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
 <script>
     function changephotoname() {
         console.log("in photo")
@@ -103,4 +107,24 @@
         var rowIndex = grid.getRowIndexByKey(data.AssetContractID)
         grid.deleteRow(rowIndex);
     }
+     function DeattachButtonClick(data) {
+
+        $('#DeattacheAssetContractPoup').modal('show');
+
+           
+        //$('#frmDeattachContract').dxForm('instance').option('formData', data);
+      document.getElementById("AssetContractIdFaild").value=data.AssetContractID;
+      document.getElementById("ContractIdFaild").value=data.Contract.Title;
+      document.getElementById("ContractIdFaildHidden").value=data.ContractId;
+      
+
+   //var pop = $('#DeattacheAssetContractPoup').dxPopup('instance');
+   //     pop.option('visible', true);
+   //     $("#DeattacheAssetContractPoup").dxPopup({
+   //         title: data.AssetContractID,
+       
+   //     });
+   //$('#DeattacheAssetContractPoup').modal('show');
+
+     }
 </script>

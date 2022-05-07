@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -34,6 +35,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 ModelState.AddModelError("", "Please Select Item");
                 return Page();
             }
+            //if (Asset.StoreId == 0)
+            //{
+            //    ModelState.AddModelError("", "Please Select Store");
+            //    return Page();
+            //}
+            //if (Asset.VendorId == 0)
+            //{
+            //    ModelState.AddModelError("", "Please Select Vendor");
+            //    return Page();
+            //}
             if (Asset.DepreciableAsset )
             {
                 if(Asset.DepreciationMethodId==0)
@@ -51,7 +62,20 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     string folder = "Images/AssetPhotos/";
                     Asset.Photo = await UploadImage(folder, file);
                 }
+                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Asset Purchase" };
+                //Asset.AssetStatusId = 1;
                 Context.Assets.Add(Asset);
+                string Str = "purchase Date : "; 
+                string AssetPurchaseDate = Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLog = actionLog,
+                    Asset = Asset,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"{Str}{AssetPurchaseDate}")
+                };
+                Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
                 return RedirectToPage("Index");
             }

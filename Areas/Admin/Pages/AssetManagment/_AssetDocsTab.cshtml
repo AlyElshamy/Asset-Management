@@ -3,6 +3,7 @@
 *@
 @{
 }
+ <partial name="_DeattachAssetDocumentPopup"   />
 <div class="slim-mainpanel">
     <div class="container">
         <div class="table-wrapper">
@@ -37,7 +38,7 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
 .CellTemplate(@<text>
 
                             @*@Html.DevExtreme().Button().Text("Edit").OnClick("function (e) { editButtonClick(data) }")*@
-                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { deleteButtonClick(data) }")
+                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { DeattachDocumentButtonClick(data)}")
   </text>);
     })
     //.Editing(e => e
@@ -103,6 +104,13 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
         }
 
         function deleteButtonClick(data) {            var grid = $('#gridDocumentContainer').dxDataGrid('instance');            var rowIndex = grid.getRowIndexByKey(data.AssetDocumentId)            grid.deleteRow(rowIndex);        }
+        function DeattachDocumentButtonClick(data) {
 
+        $('#DeattacheAssetDocumentPoup').modal('show');
+      document.getElementById("AssetDocumentIdFaild").value=data.AssetDocumentId;
+      document.getElementById("DocumentNameFaild").value=data.DocumentName;
+      document.getElementById("DocumentDescriptionFaild").value=data.Description;
+
+     }
 
     </script>
