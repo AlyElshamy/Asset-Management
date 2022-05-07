@@ -4,35 +4,22 @@ using AssetProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AssetProject.Migrations.Asset
 {
     [DbContext(typeof(AssetContext))]
-    partial class AssetContextModelSnapshot : ModelSnapshot
+    [Migration("20220505131955_AssetUpdate")]
+    partial class AssetUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AssetProject.Models.ActionLog", b =>
-                {
-                    b.Property<int>("ActionLogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ActionLogTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ActionLogId");
-
-                    b.ToTable("ActionLogs");
-                });
 
             modelBuilder.Entity("AssetProject.Models.ActionType", b =>
                 {
@@ -225,34 +212,6 @@ namespace AssetProject.Migrations.Asset
                     b.ToTable("AssetLeasings");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.AssetLog", b =>
-                {
-                    b.Property<int>("AssetLogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ActionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ActionLogId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AssetLogId");
-
-                    b.HasIndex("ActionLogId");
-
-                    b.HasIndex("AssetId");
-
-                    b.ToTable("AssetLogs");
-                });
-
             modelBuilder.Entity("AssetProject.Models.AssetLost", b =>
                 {
                     b.Property<int>("AssetLostId")
@@ -392,7 +351,7 @@ namespace AssetProject.Migrations.Asset
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StoreId")
+                    b.Property<int>("StoreId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TransactionDate")
@@ -1305,25 +1264,6 @@ namespace AssetProject.Migrations.Asset
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.AssetLog", b =>
-                {
-                    b.HasOne("AssetProject.Models.ActionLog", "ActionLog")
-                        .WithMany()
-                        .HasForeignKey("ActionLogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ActionLog");
-
-                    b.Navigation("Asset");
-                });
-
             modelBuilder.Entity("AssetProject.Models.AssetLost", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
@@ -1416,7 +1356,9 @@ namespace AssetProject.Migrations.Asset
 
                     b.HasOne("AssetProject.Models.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId");
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ActionType");
 
