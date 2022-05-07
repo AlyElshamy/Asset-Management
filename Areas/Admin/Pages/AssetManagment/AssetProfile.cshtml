@@ -8,11 +8,11 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Asset Information</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Pages"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Asset Information"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Asset Information</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Asset Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm">
@@ -22,60 +22,60 @@
                         <div class="media">
                             <img src="@Model.AssetPhoto" alt="">
                             <div class="media-body">
-                                  <div class="card-profile-name" style="font-size:x-large;display:inline-block">Asset Description</div>
+                                <div class="card-profile-name" style="font-size:x-large;display:inline-block">@sharedResource["Asset Description"]</div>
                                 <div style="display:inline-block; position: absolute;top: 40px;right:20px;color:#10ea55">
                                
-                              Status :@Model.Asset.AssetStatus.AssetStatusTitle
+                              @*Status :@Model.Asset.AssetStatus.AssetStatusTitle*@
                                 </div>
                                
-                                <p class="card-profile-position">Asset Tag Id <a href="">@Model.Asset.AssetTagId</a></p>
-                                <p>Serial <a href="">@Model.Asset.AssetSerialNo</a></p>
+                                <p class="card-profile-position">@sharedResource["Assettagid"] <a href="">@Model.Asset.AssetTagId</a></p>
+                                <p>@sharedResource["Serial"] <a href="">@Model.Asset.AssetSerialNo</a></p>
                                 <div class="row mg-t-20">
                                     <div class="col-md">
-                                        <label class="section-label-sm tx-gray-500">General Information</label>
-                                           <p class="invoice-info-row">
-                                            <span>Asset Description</span>
+                                        <label class="section-label-sm tx-gray-500">@sharedResource["General Information"]</label>
+                                        <p class="invoice-info-row">
+                                            <span>@sharedResource["Asset Description"]</span>
                                             <span>@Model.Asset.AssetDescription</span>
                                         </p>
-                                           <p class="invoice-info-row">
-                                            <span>Asset Cost</span>
+                                        <p class="invoice-info-row">
+                                            <span>@sharedResource["AssetCost"]</span>
                                             <span>@Model.Asset.AssetCost</span>
                                         </p>
-                                          <p class="invoice-info-row">
-                                            <span>Asset Item</span>
+                                        <p class="invoice-info-row">
+                                            <span>@sharedResource["Item"]</span>
                                             <span>@Model.Asset.Item.ItemTitle</span>
                                         </p>
-                                          <p class="invoice-info-row">
-                                            <span>Asset Purchase Date</span>
+                                        <p class="invoice-info-row">
+                                            <span>@sharedResource["AssetPurchaseDate"]</span>
                                             <span>@Model.Asset.AssetPurchaseDate</span>
                                         </p>
                                     </div><!-- col -->
                                     @if (Model.Asset.DepreciableAsset)
                                     {
-                                           <div class="col-md">
-                                        <label class="section-label-sm tx-gray-500">Depreciation Information</label>
-                                        <p class="invoice-info-row">
-                                            <span>Depreciable Cost</span>
-                                            <span>@Model.Asset.DepreciableCost</span>
-                                        </p>
-                                        <p class="invoice-info-row">
-                                            <span>Salvage Value</span>
-                                            <span>@Model.Asset.SalvageValue</span>
-                                        </p>
-                                        <p class="invoice-info-row">
-                                            <span>Asset Life</span>
-                                            <span>@Model.Asset.AssetLife</span>
-                                        </p>
-                                        <p class="invoice-info-row">
-                                            <span>Date Acquired</span>
-                                            <span>@Model.Asset.DateAcquired</span>
-                                        </p>
+                                <div class="col-md">
+                                    <label class="section-label-sm tx-gray-500">@sharedResource["Depreciation Information"]</label>
+                                    <p class="invoice-info-row">
+                                        <span>@sharedResource["Depreciable Cost"]</span>
+                                        <span>@Model.Asset.DepreciableCost</span>
+                                    </p>
+                                    <p class="invoice-info-row">
+                                        <span>@sharedResource["Salvage Value"]</span>
+                                        <span>@Model.Asset.SalvageValue</span>
+                                    </p>
+                                    <p class="invoice-info-row">
+                                        <span>@sharedResource["Asset Life"]</span>
+                                        <span>@Model.Asset.AssetLife</span>
+                                    </p>
+                                    <p class="invoice-info-row">
+                                        <span>@sharedResource["Date Acquired"]</span>
+                                        <span>@Model.Asset.DateAcquired</span>
+                                    </p>
 
-                                        <p class="invoice-info-row">
-                                            <span>Depreciation Method</span>
-                                            <span>@Model.Asset.DepreciationMethod.DepreciationMethodTitle</span>
-                                        </p>
-                                    </div><!-- col -->
+                                    <p class="invoice-info-row">
+                                        <span>@sharedResource["Depreciation Method"]</span>
+                                        <span>@Model.Asset.DepreciationMethod.DepreciationMethodTitle</span>
+                                    </p>
+                                </div><!-- col -->
                                     }
                                  
                                 </div>
@@ -97,16 +97,16 @@
     }
        @if (Model.Asset.AssetStatusId == 2)
       {
-    <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">Check In</a>
+  <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
       }
                    
-       <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">Repair Asset</a> 
-      <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">Link Asset Lost  </a>
-     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()">Link Asset Dispose  </a>
-     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()">lease Asset </a>
-     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetSellPopUp()">Asset Sell </a>
-    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">Link AssetBroken  </a> 
-    <a asp-area="Admin" asp-page="/PrintAssetProfile/PrintAsset" asp-route-AssetId="@Model.Asset.AssetId">Print Asset</a>
+  <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">@sharedResource["Repair Asset"]</a> 
+  <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">@sharedResource["Link Asset Lost"]  </a>
+  <a class="dropdown-item" href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()">@sharedResource["Link Asset Dispose"]  </a>
+  <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()">@sharedResource["lease Asset"] </a>
+  <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetSellPopUp()">@sharedResource["Asset Sell"] </a>
+  <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">@sharedResource["Link AssetBroken"]  </a> 
+  <a asp-area="Admin" asp-page="/PrintAssetProfile/PrintAsset" asp-route-AssetId="@Model.Asset.AssetId">@sharedResource["Print Asset"]</a>
   </div>
 </div>
                 </div><!-- card -->
@@ -121,37 +121,37 @@
                                 <div class="card-header">
                                     <ul class="nav nav-tabs card-header-tabs">
                                         <li class="nav-item">
-                                            <a class="nav-link active" href="#Details" data-toggle="tab">Details</a>
+                                            <a class="nav-link active" href="#Details" data-toggle="tab">@sharedResource["Details"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Events" data-toggle="tab">Events</a>
+                                            <a class="nav-link" href="#Events" data-toggle="tab">@sharedResource["Events"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Photos" data-toggle="tab">Photos</a>
+                                            <a class="nav-link" href="#Photos" data-toggle="tab">@sharedResource["Photos"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Docs" data-toggle="tab">Docs</a>
+                                            <a class="nav-link" href="#Docs" data-toggle="tab">@sharedResource["Docs"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Depreciation" data-toggle="tab">Depreciation</a>
+                                            <a class="nav-link" href="#Depreciation" data-toggle="tab">@sharedResource["Depreciation"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Warranty" data-toggle="tab">Warranty</a>
+                                            <a class="nav-link" href="#Warranty" data-toggle="tab">@sharedResource["Warranty"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Linking" data-toggle="tab">Linking</a>
+                                            <a class="nav-link" href="#Linking" data-toggle="tab">@sharedResource["Linking"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Maint" data-toggle="tab">Maint</a>
+                                            <a class="nav-link" href="#Maint" data-toggle="tab">@sharedResource["Maintenance"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Contracts" data-toggle="tab">Contracts</a>
+                                            <a class="nav-link" href="#Contracts" data-toggle="tab">@sharedResource["Contracts"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#Insurances" data-toggle="tab">Insurances</a>
+                                            <a class="nav-link" href="#Insurances" data-toggle="tab">@sharedResource["Insurances"]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#History" data-toggle="tab">History</a>
+                                            <a class="nav-link" href="#History" data-toggle="tab">@sharedResource["History"]</a>
                                         </li>
 
                                     </ul>

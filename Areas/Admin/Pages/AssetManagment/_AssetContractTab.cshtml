@@ -7,37 +7,37 @@
 
 
 <a href="javascript:void(0)" onclick="ShowAssetcontractPopUp('<%- data.AssetId %>')" class="btn btn-success" style="float:right">Link Contract  </a>
-<label class="section-title d-inline">Contracts</label>
+<label class="section-title d-inline">@sharedResource["Contracts"]</label>
 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetContract>()
-        .ID("gridContractContainer")
-        .DataSource(ds => ds.Mvc()
-            .Controller("AssetContracts")
-            .LoadAction("Get")
-            .LoadParams(new { AssetId = Model })
-            .DeleteAction("Delete")
-            .Key("AssetContractID")
-        )
-        .RemoteOperations(true)
-        .Columns(columns =>
-        {
+    .ID("gridContractContainer")
+    .DataSource(ds => ds.Mvc()
+        .Controller("AssetContracts")
+        .LoadAction("Get")
+        .LoadParams(new { AssetId = Model })
+        .DeleteAction("Delete")
+        .Key("AssetContractID")
+    )
+    .RemoteOperations(true)
+    .Columns(columns =>
+    {
 
-            columns.AddFor(m => m.Contract.Title);
-            columns.AddFor(m => m.Contract.Vendor.VendorTitle);
-            columns.AddFor(m => m.Contract.StartDate);
-            columns.AddFor(m => m.Contract.EndDate);
-            columns.AddFor(m => m.Contract.Description);
-            columns.AddFor(m => m.ContractId).Lookup(lookup => lookup
-                .DataSource(ds => ds.WebApi().Controller("AssetContracts").LoadAction("ContractsLookup").Key("Value"))
-                .ValueExpr("Value")
-                .DisplayExpr("Text")
-            );
-        })
+        columns.AddFor(m => m.Contract.Title).Caption(sharedResource["Contract Title"]);
+        columns.AddFor(m => m.Contract.Vendor.VendorTitle).Caption(sharedResource["Vendor Title"]);
+        columns.AddFor(m => m.Contract.StartDate).Caption(sharedResource["StartDate"]);
+        columns.AddFor(m => m.Contract.EndDate).Caption(sharedResource["EndDate"]);
+        columns.AddFor(m => m.Contract.Description).Caption(sharedResource["Contract Description"]);
+        columns.AddFor(m => m.ContractId).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().Controller("AssetContracts").LoadAction("ContractsLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+    })
 
-        .Columns(columns =>
-        {
-            columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
-                        .CellTemplate(@<text>
-                            @Html.DevExtreme().Button().Text("Detach").OnClick("function (e) { DeattachButtonClick(data)}")
+    .Columns(columns =>
+    {
+    columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
+                    .CellTemplate(@<text>
+                            @Html.DevExtreme().Button().Text(sharedResource["Detach"]).OnClick("function (e) { DeattachButtonClick(data)}")
                         </text>);
 
         })
@@ -82,8 +82,8 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
                                     </div>
                                 </div>
                             </form>

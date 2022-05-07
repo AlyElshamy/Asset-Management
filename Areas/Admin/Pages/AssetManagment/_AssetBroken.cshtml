@@ -27,23 +27,23 @@
                 .ColCount(1).Width(300).Height(280)
                 .Items(items =>
                 {
-                items.AddSimpleFor(m => m.DateBroken).IsRequired(true);
-;
-                items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e=>e.TextArea());
+                items.AddSimpleFor(m => m.DateBroken).IsRequired(true).Label(l => l.Text(sharedResource["Date Broken"]));
+                ;
+                items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e=>e.TextArea()).Label(l => l.Text(sharedResource["Notes"]));
 
                 items.AddEmpty().CssClass("modal-footer");
-                 items.AddGroup().ColCount(2)
-                .Items(groupItems => {
-                    groupItems.AddButton()
-                    .HorizontalAlignment(HorizontalAlignment.Left)
-                    .ButtonOptions(b => b.Text("Save Changes")
-                        .Type(ButtonType.Default)
-                        .UseSubmitBehavior(true)
-                );
-                    groupItems.AddButton()
-                    .HorizontalAlignment(HorizontalAlignment.Left)
-                    .ButtonOptions(b => b.Text("Close").ElementAttr("data-dismiss","modal")
-                       
+                items.AddGroup().ColCount(2)
+               .Items(groupItems => {
+               groupItems.AddButton()
+                .HorizontalAlignment(HorizontalAlignment.Left)
+                .ButtonOptions(b => b.Text(@sharedResource["Save"])
+                    .Type(ButtonType.Default)
+                    .UseSubmitBehavior(true)
+            );
+               groupItems.AddButton()
+                .HorizontalAlignment(HorizontalAlignment.Left)
+                .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss","modal")
+
                         @*.UseSubmitBehavior(true)*@
                 );
                    

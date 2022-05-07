@@ -11,7 +11,7 @@
         <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="AddAssetRepair" enctype="multipart/form-data"  >
         <div class="modal-content bd-0 tx-14">
             <div class="modal-header pd-y-20 pd-x-25" >
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Asset Repair</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">@sharedResource["Asset Repair"]</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -20,7 +20,7 @@
               <div class="row mg-b-25" >
               <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Schedule Date <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Schedule Date"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.ScheduleDate" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.ScheduleDate" class="text-danger"></span>
                 </div>
@@ -28,7 +28,7 @@
 
                  <div class="col-lg-6">
     <div class="form-group">
-        <label class="form-control-label">Assigned To: <span class="tx-danger">*</span></label>   
+        <label class="form-control-label">@sharedResource["Assigned To"]: <span class="tx-danger">*</span></label>   
         @(Html.DevExtreme().LookupFor(c=>c.TechnicianId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -43,7 +43,7 @@
         </div>
                     <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Completed Date <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Completed Date"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.CompletedDate" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.CompletedDate" class="text-danger"></span>
                 </div>
@@ -51,7 +51,7 @@
 
                 <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Repair Cost <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Repair Cost"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.RepairCost" class="form-control"  placeholder="">
                    <span asp-validation-for="@Model.RepairCost" class="text-danger"></span>
                 </div>
@@ -59,7 +59,7 @@
       
           <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Notes <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Notes"] <span class="tx-danger">*</span></label>
                   <textarea asp-for="@Model.Notes" class="form-control"  placeholder=""></textarea>
                    <span asp-validation-for="@Model.Notes" class="text-danger"></span>
                 </div>
@@ -71,8 +71,8 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Add Asset Repair</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Add Asset Repair"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
             </div>
         </div>
         </form>

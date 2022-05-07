@@ -14,7 +14,7 @@
         <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="AddAssetCheckOut" enctype="multipart/form-data">
         <div class="modal-content bd-0 tx-14">
             <div class="modal-header pd-y-20 pd-x-25">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > Asset Movement</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold"> @sharedResource["Asset Movement"]</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -24,7 +24,7 @@
               <div class="row mg-b-25">
               <div class="col-lg-4">
                 <div class="form-group">
-                    <label class="form-control-label">Transaction Date <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.TransactionDate" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.TransactionDate" class="text-danger"></span>
                 </div>
@@ -32,7 +32,7 @@
               
       <div class="col-lg-4">
     <div class="form-group">
-        <label class="form-control-label">Action Type: <span class="tx-danger">*</span></label>
+        <label class="form-control-label">@sharedResource["Action Type"]: <span class="tx-danger">*</span></label>
               
         @(Html.DevExtreme().LookupFor(c=>c.ActionTypeId)
         .ID("ActionTypeLookup")
@@ -53,7 +53,7 @@
  
              <div class="col-lg-4" id="AssetToEmpolyee" style="display:none">
     <div class="form-group">
-        <label class="form-control-label">Empolyee: <span class="tx-danger">*</span></label>
+        <label class="form-control-label">@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
               
         @(Html.DevExtreme().LookupFor(c=>c.EmpolyeeID)
             .DataSource(d => d.WebApi()
@@ -71,7 +71,7 @@
 
           <div class="col-lg-4" id="AssetToLocation" style="display:none">
     <div class="form-group">
-        <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+        <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
               
       @*  @(Html.DevExtreme().LookupFor(c=>c.LocationId)
             .DataSource(d => d.WebApi()
@@ -137,7 +137,7 @@
 
      <div class="col-lg-4" id="AssetToDepartment" style="display:none">
     <div class="form-group">
-        <label class="form-control-label">Department <span class="tx-danger">*</span></label>
+        <label class="form-control-label">@sharedResource["Department"] <span class="tx-danger">*</span></label>
               
         @(Html.DevExtreme().LookupFor(c=>c.DepartmentId)
             .DataSource(d => d.WebApi()
@@ -156,7 +156,7 @@
       
           <div class="col-lg-4">
                 <div class="form-group">
-                    <label class="form-control-label">Remarks <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Remarks"] <span class="tx-danger">*</span></label>
                   <textarea asp-for="@Model.Remarks" class="form-control"  placeholder=""></textarea>
                    <span asp-validation-for="@Model.Remarks" class="text-danger"></span>
                 </div>
@@ -167,8 +167,8 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Check Out</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Check Out"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
             </div>
         </div>
         </form>
