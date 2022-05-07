@@ -1,0 +1,40 @@
+﻿@page
+@model AssetProject.Areas.Admin.Pages.Reports.IndexModel
+@{
+}
+@using AssetProject.Reports
+
+<link rel="stylesheet" href="~/css/viewer.part.bundle.css" />
+
+<script src="~/js/viewer.part.bundle.js"></script>
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken() ;
+
+<div class="dx-fieldset">
+
+    <div class="dx-field">
+        <div class="dx-field-label">Day Date</div>
+        <div class="dx-field-value">
+            @(Html.DevExtreme().NumberBoxFor(Model=>Model.DepartmentId)
+            
+
+            )
+        </div>
+    </div>
+
+
+    <div class="dx-field">
+        <div class="dx-field-value">
+            @(Html.DevExtreme().Button()
+            .Text("Show")
+            .Type(ButtonType.Normal)
+            .StylingMode(ButtonStylingMode.Contained)
+            .Width(120).UseSubmitBehavior(true)
+            )
+        </div>
+    </div>
+
+</div>}
+
+@Html.DevExpress().WebDocumentViewer("DocumentViewer").Height("1000px").Bind(Model.Report)

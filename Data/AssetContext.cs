@@ -27,6 +27,32 @@ namespace AssetProject.Data
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<DepreciationMethod> DepreciationMethods { get; set; }
         public DbSet<Asset> Assets { get; set; }
+        public DbSet<AssetPhotos> AssetPhotos { get; set; }
+        public DbSet<AssetMovement> AssetMovements { get; set; }
+        public DbSet<ActionType> ActionTypes { get; set; }
+        public DbSet<AssetsInsurance> AssetsInsurances { get; set; }
+        public DbSet<AssetContract> AssetContracts { get; set; }
+        public DbSet<AssetDocument> assetDocuments { get; set; }
+        public DbSet<AssetLost> AssetLosts { get; set; }
+        public DbSet<DisposeAsset> DisposeAssets { get; set; }
+        public DbSet<AssetRepair> AssetRepairs { get; set; }
+        public DbSet<Technician> Technicians { get; set; }
+       
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<AssetLeasing> AssetLeasings { get; set; }
+        public DbSet<SellAsset> sellAssets { get; set; }
+        public DbSet<AssetBroken> assetBrokens { get; set; }
+        public DbSet<AssetLog> AssetLogs { get; set; }
+        public DbSet<ActionLog> ActionLogs { get; set; }
+        public DbSet<AssetMaintainance> AssetMaintainances { get; set; }
+        public DbSet<AssetMaintainanceFrequency> AssetMaintainanceFrequencies { get; set; }
+        public DbSet<MaintainanceStatus> MaintainanceStatuses { get; set; }
+        public DbSet<WeekDay> WeekDays { get; set; }
+        public DbSet<Month> Months { get; set; }
+        public DbSet<AssetMovementDirection> AssetMovementDirections { get; set; }
+        public DbSet<AssetStatus> AssetStatuses { get; set; }
+       
+
 
     }
 }

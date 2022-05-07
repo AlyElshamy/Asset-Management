@@ -20,6 +20,7 @@ namespace AssetProject.Models
         public double? Discount { get; set; }
         public double? Net { get; set; }
         public string Remarks { get; set; }
+        
         public virtual ICollection<PurchaseAsset> PurchaseAssets { get; set; }
 
 

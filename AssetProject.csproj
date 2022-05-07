@@ -4,18 +4,23 @@
     <UserSecretsId>aspnet-AssetProject-06054881-DD46-479E-84EE-27AF0B7A3B95</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="21.2.6" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.15" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.5" />
+    <PackageReference Include="DevExtreme.AspNet.Core" Version="21.2.6" />
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
     <PackageReference Include="NToastNotify" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\Documents\AssetDocuments\" />
     <Folder Include="wwwroot\Images\Logo\" />
+    <Folder Include="wwwroot\Images\AssetPhotos\" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-using DevExtreme.AspNet.Data;
+﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -16,57 +16,56 @@ using AssetProject.Models;
 namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class PurchaseAssetsController : Controller
+    public class PurchasesController : Controller
     {
         private AssetContext _context;
 
-        public PurchaseAssetsController(AssetContext context) {
+        public PurchasesController(AssetContext context) {
             _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var purchaseassets = _context.PurchaseAssets.Select(i => new {
-                i.PurchaseAssetId,
+            var purchases = _context.Purchases.Select(i => new {
                 i.PurchaseId,
-                i.ItemId,
-                i.Quantity,
-                i.Price,
+                i.PurchaseSerial,
+                i.Purchasedate,
+                i.StoreId,
+                i.VendorId,
                 i.Total,
                 i.Discount,
                 i.Net,
                 i.Remarks,
-                i.Item
-
+                i.PurchaseAssets,
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
             // This can make SQL execution plans more efficient.
             // For more detailed information, please refer to this discussion: https://github.com/DevExpress/DevExtreme.AspNet.Data/issues/336.
-            // loadOptions.PrimaryKey = new[] { "PurchaseAssetId" };
+            // loadOptions.PrimaryKey = new[] { "PurchaseId" };
             // loadOptions.PaginateViaPrimaryKey = true;
 
-            return Json(await DataSourceLoader.LoadAsync(purchaseassets, loadOptions));
+            return Json(await DataSourceLoader.LoadAsync(purchases, loadOptions));
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(string values) {
-            var model = new PurchaseAsset();
+            var model = new Purchase();
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
 
             if(!TryValidateModel(model))
                 return BadRequest(GetFullErrorMessage(ModelState));
 
-            var result = _context.PurchaseAssets.Add(model);
+            var result = _context.Purchases.Add(model);
             await _context.SaveChangesAsync();
 
-            return Json(new { result.Entity.PurchaseAssetId });
+            return Json(new { result.Entity.PurchaseId });
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(int key, string values) {
-            var model = await _context.PurchaseAssets.FirstOrDefaultAsync(item => item.PurchaseAssetId == key);
+            var model = await _context.Purchases.FirstOrDefaultAsync(item => item.PurchaseId == key);
             if(model == null)
                 return StatusCode(409, "Object not found");
 
@@ -82,64 +81,64 @@ namespace AssetProject.Controllers
 
         [HttpDelete]
         public async Task Delete(int key) {
-            var model = await _context.PurchaseAssets.FirstOrDefaultAsync(item => item.PurchaseAssetId == key);
+            var model = await _context.Purchases.FirstOrDefaultAsync(item => item.PurchaseId == key);
 
-            _context.PurchaseAssets.Remove(model);
+            _context.Purchases.Remove(model);
             await _context.SaveChangesAsync();
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> PurchasesLookup(DataSourceLoadOptions loadOptions) {
-            var lookup = from i in _context.Purchases
-                         orderby i.PurchaseSerial
+        public async Task<IActionResult> StoresLookup(DataSourceLoadOptions loadOptions) {
+            var lookup = from i in _context.Stores
+                         orderby i.StoreTitle
                          select new {
-                             Value = i.PurchaseId,
-                             Text = i.PurchaseSerial
+                             Value = i.StoreId,
+                             Text = i.StoreTitle
                          };
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
         [HttpGet]
-        public async Task<IActionResult> ItemsLookup(DataSourceLoadOptions loadOptions) {
-            var lookup = from i in _context.Items
-                         orderby i.ItemTitle
+        public async Task<IActionResult> VendorsLookup(DataSourceLoadOptions loadOptions) {
+            var lookup = from i in _context.Vendors
+                         orderby i.VendorTitle
                          select new {
-                             Value = i.ItemId,
-                             Text = i.ItemTitle
+                             Value = i.VendorId,
+                             Text = i.VendorTitle
                          };
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
-        private void PopulateModel(PurchaseAsset model, IDictionary values) {
-            string PURCHASE_ASSET_ID = nameof(PurchaseAsset.PurchaseAssetId);
-            string PURCHASE_ID = nameof(PurchaseAsset.PurchaseId);
-            string ITEM_ID = nameof(PurchaseAsset.ItemId);
-            string QUANTITY = nameof(PurchaseAsset.Quantity);
-            string PRICE = nameof(PurchaseAsset.Price);
-            string TOTAL = nameof(PurchaseAsset.Total);
-            string DISCOUNT = nameof(PurchaseAsset.Discount);
-            string NET = nameof(PurchaseAsset.Net);
-            string REMARKS = nameof(PurchaseAsset.Remarks);
-
-            if(values.Contains(PURCHASE_ASSET_ID)) {
-                model.PurchaseAssetId = Convert.ToInt32(values[PURCHASE_ASSET_ID]);
-            }
+        private void PopulateModel(Purchase model, IDictionary values) {
+            string PURCHASE_ID = nameof(Purchase.PurchaseId);
+            string PURCHASE_SERIAL = nameof(Purchase.PurchaseSerial);
+            string PURCHASEDATE = nameof(Purchase.Purchasedate);
+            string STORE_ID = nameof(Purchase.StoreId);
+            string VENDOR_ID = nameof(Purchase.VendorId);
+            string TOTAL = nameof(Purchase.Total);
+            string DISCOUNT = nameof(Purchase.Discount);
+            string NET = nameof(Purchase.Net);
+            string REMARKS = nameof(Purchase.Remarks);
 
             if(values.Contains(PURCHASE_ID)) {
                 model.PurchaseId = Convert.ToInt32(values[PURCHASE_ID]);
             }
 
-            if(values.Contains(ITEM_ID)) {
-                model.ItemId = Convert.ToInt32(values[ITEM_ID]);
+            if(values.Contains(PURCHASE_SERIAL)) {
+                model.PurchaseSerial = Convert.ToString(values[PURCHASE_SERIAL]);
             }
 
-            if(values.Contains(QUANTITY)) {
-                model.Quantity = values[QUANTITY] != null ? Convert.ToDouble(values[QUANTITY], CultureInfo.InvariantCulture) : (double?)null;
+            if(values.Contains(PURCHASEDATE)) {
+                model.Purchasedate = values[PURCHASEDATE] != null ? Convert.ToDateTime(values[PURCHASEDATE]) : (DateTime?)null;
             }
 
-            if(values.Contains(PRICE)) {
-                model.Price = values[PRICE] != null ? Convert.ToDouble(values[PRICE], CultureInfo.InvariantCulture) : (double?)null;
+            if(values.Contains(STORE_ID)) {
+                model.StoreId = values[STORE_ID] != null ? Convert.ToInt32(values[STORE_ID]) : (int?)null;
+            }
+
+            if(values.Contains(VENDOR_ID)) {
+                model.VendorId = values[VENDOR_ID] != null ? Convert.ToInt32(values[VENDOR_ID]) : (int?)null;
             }
 
             if(values.Contains(TOTAL)) {
