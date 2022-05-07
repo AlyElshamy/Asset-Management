@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace AssetProject.Pages
 {
+    //[Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;

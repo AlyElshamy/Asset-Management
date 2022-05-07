@@ -36,7 +36,7 @@ namespace AssetProject.Controllers
                 i.Discount,
                 i.Net,
                 i.Remarks,
-                i.PurchaseAssets,
+                i.PurchaseAssets
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.

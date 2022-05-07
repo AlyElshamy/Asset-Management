@@ -321,6 +321,12 @@
   <data name="Change your password" xml:space="preserve">
     <value>تغيير كلمة المرور الخاصة بك</value>
   </data>
+  <data name="Check In" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Check Ou" xml:space="preserve">
+    <value>الدفع</value>
+  </data>
   <data name="Check Out" xml:space="preserve">
     <value>الدفع</value>
   </data>
@@ -548,6 +554,9 @@
   </data>
   <data name="Docs" xml:space="preserve">
     <value>المستندات</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>الملف</value>
   </data>
   <data name="Document Name" xml:space="preserve">
     <value>اسم الملف</value>
@@ -1034,6 +1043,9 @@
   </data>
   <data name="Print" xml:space="preserve">
     <value>طباعة</value>
+  </data>
+  <data name="Print Asset" xml:space="preserve">
+    <value>طباعة أصل</value>
   </data>
   <data name="Purchase Date" xml:space="preserve">
     <value>تاريخ الشراء</value>
