@@ -4,35 +4,22 @@ using AssetProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AssetProject.Migrations.Asset
 {
     [DbContext(typeof(AssetContext))]
-    partial class AssetContextModelSnapshot : ModelSnapshot
+    [Migration("20220430220329_sellassetasd")]
+    partial class sellassetasd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AssetProject.Models.ActionLog", b =>
-                {
-                    b.Property<int>("ActionLogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ActionLogTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ActionLogId");
-
-                    b.ToTable("ActionLogs");
-                });
 
             modelBuilder.Entity("AssetProject.Models.ActionType", b =>
                 {
@@ -73,9 +60,6 @@ namespace AssetProject.Migrations.Asset
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("AssetStatusId")
-                        .HasColumnType("int");
-
                     b.Property<string>("AssetTagId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -101,23 +85,11 @@ namespace AssetProject.Migrations.Asset
                     b.Property<double?>("SalvageValue")
                         .HasColumnType("float");
 
-                    b.Property<int?>("StoreId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VendorId")
-                        .HasColumnType("int");
-
                     b.HasKey("AssetId");
-
-                    b.HasIndex("AssetStatusId");
 
                     b.HasIndex("DepreciationMethodId");
 
                     b.HasIndex("ItemId");
-
-                    b.HasIndex("StoreId");
-
-                    b.HasIndex("VendorId");
 
                     b.ToTable("Assets");
                 });
@@ -225,34 +197,6 @@ namespace AssetProject.Migrations.Asset
                     b.ToTable("AssetLeasings");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.AssetLog", b =>
-                {
-                    b.Property<int>("AssetLogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ActionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ActionLogId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AssetLogId");
-
-                    b.HasIndex("ActionLogId");
-
-                    b.HasIndex("AssetId");
-
-                    b.ToTable("AssetLogs");
-                });
-
             modelBuilder.Entity("AssetProject.Models.AssetLost", b =>
                 {
                     b.Property<int>("AssetLostId")
@@ -274,162 +218,6 @@ namespace AssetProject.Migrations.Asset
                     b.HasIndex("AssetId");
 
                     b.ToTable("AssetLosts");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetMaintainance", b =>
-                {
-                    b.Property<int>("AssetMaintainanceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("AssetMaintainanceDateCompleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("AssetMaintainanceDetails")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("AssetMaintainanceDueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("AssetMaintainanceFrequencyId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("AssetMaintainanceRepairesCost")
-                        .HasColumnType("float");
-
-                    b.Property<bool>("AssetMaintainanceRepeating")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("AssetMaintainanceTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MaintainanceStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MonthId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MonthlyDay")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MonthlyPeriod")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TechnicianId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WeekDayId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WeeklyPeriod")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("YearlyDay")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssetMaintainanceId");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("AssetMaintainanceFrequencyId");
-
-                    b.HasIndex("MaintainanceStatusId");
-
-                    b.HasIndex("MonthId");
-
-                    b.HasIndex("TechnicianId");
-
-                    b.HasIndex("WeekDayId");
-
-                    b.ToTable("AssetMaintainances");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetMaintainanceFrequency", b =>
-                {
-                    b.Property<int>("AssetMaintainanceFrequencyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AssetMaintainanceFrequencyTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AssetMaintainanceFrequencyId");
-
-                    b.ToTable("AssetMaintainanceFrequencies");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetMovement", b =>
-                {
-                    b.Property<int>("AssetMovementId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ActionTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssetId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AssetMovementDirectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("EmpolyeeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("StoreId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("AssetMovementId");
-
-                    b.HasIndex("ActionTypeId");
-
-                    b.HasIndex("AssetId");
-
-                    b.HasIndex("AssetMovementDirectionId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("EmpolyeeID");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("StoreId");
-
-                    b.ToTable("AssetMovements");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetMovementDirection", b =>
-                {
-                    b.Property<int>("AssetMovementDirectionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AssetMovementDirectionTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AssetMovementDirectionId");
-
-                    b.ToTable("AssetMovementDirections");
                 });
 
             modelBuilder.Entity("AssetProject.Models.AssetPhotos", b =>
@@ -488,21 +276,6 @@ namespace AssetProject.Migrations.Asset
                     b.HasIndex("TechnicianId");
 
                     b.ToTable("AssetRepairs");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetStatus", b =>
-                {
-                    b.Property<int>("AssetStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AssetStatusTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AssetStatusId");
-
-                    b.ToTable("AssetStatuses");
                 });
 
             modelBuilder.Entity("AssetProject.Models.AssetsInsurance", b =>
@@ -875,36 +648,6 @@ namespace AssetProject.Migrations.Asset
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.MaintainanceStatus", b =>
-                {
-                    b.Property<int>("MaintainanceStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("MaintainanceStatusTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MaintainanceStatusId");
-
-                    b.ToTable("MaintainanceStatuses");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.Month", b =>
-                {
-                    b.Property<int>("MonthId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("MonthTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MonthId");
-
-                    b.ToTable("Months");
-                });
-
             modelBuilder.Entity("AssetProject.Models.Purchase", b =>
                 {
                     b.Property<int>("PurchaseId")
@@ -1197,27 +940,8 @@ namespace AssetProject.Migrations.Asset
                     b.ToTable("Vendors");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.WeekDay", b =>
-                {
-                    b.Property<int>("WeekDayId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("WeekDayTitle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("WeekDayId");
-
-                    b.ToTable("WeekDays");
-                });
-
             modelBuilder.Entity("AssetProject.Models.Asset", b =>
                 {
-                    b.HasOne("AssetProject.Models.AssetStatus", "AssetStatus")
-                        .WithMany()
-                        .HasForeignKey("AssetStatusId");
-
                     b.HasOne("AssetProject.Models.DepreciationMethod", "DepreciationMethod")
                         .WithMany()
                         .HasForeignKey("DepreciationMethodId");
@@ -1228,23 +952,9 @@ namespace AssetProject.Migrations.Asset
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AssetProject.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId");
-
-                    b.HasOne("AssetProject.Models.Vendor", "Vendor")
-                        .WithMany()
-                        .HasForeignKey("VendorId");
-
-                    b.Navigation("AssetStatus");
-
                     b.Navigation("DepreciationMethod");
 
                     b.Navigation("Item");
-
-                    b.Navigation("Store");
-
-                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("AssetProject.Models.AssetBroken", b =>
@@ -1305,25 +1015,6 @@ namespace AssetProject.Migrations.Asset
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.AssetLog", b =>
-                {
-                    b.HasOne("AssetProject.Models.ActionLog", "ActionLog")
-                        .WithMany()
-                        .HasForeignKey("ActionLogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ActionLog");
-
-                    b.Navigation("Asset");
-                });
-
             modelBuilder.Entity("AssetProject.Models.AssetLost", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
@@ -1333,104 +1024,6 @@ namespace AssetProject.Migrations.Asset
                         .IsRequired();
 
                     b.Navigation("Asset");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetMaintainance", b =>
-                {
-                    b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.AssetMaintainanceFrequency", "AssetMaintainanceFrequency")
-                        .WithMany()
-                        .HasForeignKey("AssetMaintainanceFrequencyId");
-
-                    b.HasOne("AssetProject.Models.MaintainanceStatus", "MaintainanceStatus")
-                        .WithMany()
-                        .HasForeignKey("MaintainanceStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.Month", "Month")
-                        .WithMany()
-                        .HasForeignKey("MonthId");
-
-                    b.HasOne("AssetProject.Models.Technician", "Technician")
-                        .WithMany()
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.WeekDay", "WeekDay")
-                        .WithMany()
-                        .HasForeignKey("WeekDayId");
-
-                    b.Navigation("Asset");
-
-                    b.Navigation("AssetMaintainanceFrequency");
-
-                    b.Navigation("MaintainanceStatus");
-
-                    b.Navigation("Month");
-
-                    b.Navigation("Technician");
-
-                    b.Navigation("WeekDay");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.AssetMovement", b =>
-                {
-                    b.HasOne("AssetProject.Models.ActionType", "ActionType")
-                        .WithMany()
-                        .HasForeignKey("ActionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany("AssetMovements")
-                        .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.AssetMovementDirection", "AssetMovementDirection")
-                        .WithMany()
-                        .HasForeignKey("AssetMovementDirectionId");
-
-                    b.HasOne("AssetProject.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmpolyeeID");
-
-                    b.HasOne("AssetProject.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssetProject.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId");
-
-                    b.Navigation("ActionType");
-
-                    b.Navigation("Asset");
-
-                    b.Navigation("AssetMovementDirection");
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Location");
-
-                    b.Navigation("Store");
                 });
 
             modelBuilder.Entity("AssetProject.Models.AssetPhotos", b =>
@@ -1611,8 +1204,6 @@ namespace AssetProject.Migrations.Asset
                     b.Navigation("AssetLeasings");
 
                     b.Navigation("AssetLosts");
-
-                    b.Navigation("AssetMovements");
 
                     b.Navigation("AssetPhotos");
 
