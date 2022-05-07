@@ -10,16 +10,15 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Assets</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Assets List</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Assets"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Assets List"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Assets List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Assets List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Assets List</label>
-            <a asp-area="Admin" asp-page="/AssetManagment/AddAsset" class="btn btn-primary" style="float:right"> Add New Asset </a>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            <a asp-area="Admin" asp-page="/AssetManagment/AddAsset" class="btn btn-primary" style="float:right">@sharedResource["Add New Asset"]  </a>
+            <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
@@ -50,32 +49,32 @@
                     .Type(GridCommandColumnType.Buttons)
                     .Width(110)
                     .Buttons(b => {
-                    b.Add().Text("View").OnClick("viewButtonClick");
-                    b.Add().Text("Edit").OnClick("editButtonClick");
+                    b.Add().Text(sharedResource["View"]).OnClick("viewButtonClick");
+                    b.Add().Text(sharedResource["Edit"]).OnClick("editButtonClick");
                     });
 
-                    columns.AddFor(m => m.AssetId).Visible(false);
-                    columns.AddFor(m => m.AssetTagId).Fixed(true).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>);;
-                    columns.AddFor(m=>m.AssetDescription).Fixed(true);
-                    columns.AddFor(m => m.AssetCost);
-                    columns.AddFor(m => m.AssetSerialNo);
-                    columns.AddFor(m => m.AssetPurchaseDate);
-                    columns.AddFor(m => m.ItemId).Lookup(lookup => lookup
-                    .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("ItemsLookup").Key("Value"))
-                    .ValueExpr("Value")
-                    .DisplayExpr("Text")
-                    );
-                    columns.AddFor(m => m.Photo).Visible(false);
-                    columns.AddFor(m => m.DepreciableAsset).Visible(false);
-                    columns.AddFor(m => m.DepreciableCost).Visible(false);
-                    columns.AddFor(m => m.SalvageValue).Visible(false);
-                    columns.AddFor(m => m.AssetLife).Visible(false);
-                    columns.AddFor(m => m.DateAcquired).Visible(false);
-                    columns.AddFor(m => m.DepreciationMethodId).Lookup(lookup => lookup
-                    .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("DepreciationMethodsLookup").Key("Value"))
-                    .ValueExpr("Value")
-                    .DisplayExpr("Text")
-                    ).Visible(false);
+                    columns.AddFor(m => m.AssetId).Visible(false).Caption(sharedResource["Asset"]);
+                    columns.AddFor(m => m.AssetTagId).Fixed(true).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["AssetTagId"]); ;
+                        columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
+                        columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
+                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                        columns.AddFor(m => m.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
+                        columns.AddFor(m => m.ItemId).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("ItemsLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                        ).Caption(sharedResource["Item"]);
+                        columns.AddFor(m => m.Photo).Visible(false);
+                        columns.AddFor(m => m.DepreciableAsset).Visible(false);
+                        columns.AddFor(m => m.DepreciableCost).Visible(false);
+                        columns.AddFor(m => m.SalvageValue).Visible(false);
+                        columns.AddFor(m => m.AssetLife).Visible(false);
+                        columns.AddFor(m => m.DateAcquired).Visible(false);
+                        columns.AddFor(m => m.DepreciationMethodId).Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("DepreciationMethodsLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                        ).Visible(false);
                     })
 
 

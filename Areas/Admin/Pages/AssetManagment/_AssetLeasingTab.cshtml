@@ -22,38 +22,42 @@
 
                         <div class="modal-body">
                             @(Html.DevExtreme().Form<AssetProject.Models.AssetLeasing>
-()
-.ID("AddAssetLeasing")
-.ColCount(1).Width(400).Height(280)
-.Items(items =>
-{
-    items.AddSimpleFor(m => m.StartDate).IsRequired(true);
+    ()
+    .ID("AddAssetLeasing")
+    .ColCount(1).Width(400).Height(280)
+    .Items(items =>
+    {
+        items.AddSimpleFor(m => m.StartDate).ValidationRules(r => r
+        .AddRequired()
+        .Message("End Date is required")).Label(l => l.Text(sharedResource["StartDate"]));
 
-    items.AddSimpleFor(m => m.CustomerId)
-    .IsRequired(true)
-    .Editor(e => e
-    .Lookup()
-    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
-    .ValueExpr("Value")
-    .DisplayExpr("Text").Width(150)
-    );
+        items.AddSimpleFor(m => m.CustomerId)
+        .IsRequired(true)
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text").Width(150)
+        ).Label(l => l.Text(sharedResource["Customer"]));
 
-    items.AddSimpleFor(m => m.EndDate).IsRequired(true);
+        items.AddSimpleFor(m => m.EndDate).ValidationRules(r => r
+        .AddRequired()
+        .Message("End Date is required")).Label(l => l.Text(sharedResource["EndDate"]));
 
-})
+        items.AddSimpleFor(m => m.Notes).Editor(e => e.TextArea()).ValidationRules(r => r
+         .AddRequired()
+         .Message("Notes is required")).Label(l => l.Text(sharedResource["Notes"]));
 
-.Items(items =>
-{
-    items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e=>e.TextArea());
-})
+    })
+    
     )
 
-    <br />
+                            <br />
 
-</div>
+                        </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
                         </div>
                     </div>
                 </form>

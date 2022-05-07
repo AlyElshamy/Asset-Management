@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
         <div class="modal-content bd-0 tx-14">
             <div class="modal-header pd-y-20 pd-x-25">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Message Preview</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">@sharedResource["Message Preview"]</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -21,50 +21,50 @@
                             <div class="media">
                                 <img src="" id="img" alt="" class="img-fluid" >
                                 <div class="media-body">
-                                    <h3 class="card-profile-name">Asset Description</h3>
-                                    <p class="card-profile-position" >  Asset Tag Id <a href="" id="AssetTagId"></a></p>
+                                    <h3 class="card-profile-name">@sharedResource["Asset Description"]</h3>
+                                    <p class="card-profile-position"> @sharedResource["AssetTagId"]  <a href="" id="AssetTagId"></a></p>
                                     <p >Serial <a href="" id="AssetSerial"></a></p>
                                     <div class="row mg-t-20">
                                         <div class="col-md">
-                                            <label class="section-label-sm tx-gray-500">General Information</label>
+                                            <label class="section-label-sm tx-gray-500">@sharedResource["General Information"]</label>
                                             <p class="invoice-info-row">
-                                                <span>Description</span>
+                                                <span>@sharedResource["Description"]</span>
                                                 <span id="AssetDescription"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Asset Cost</span>
+                                                <span>@sharedResource["Asset Cost"]</span>
                                                 <span id="AssetCost"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Asset PurchaseDate:</span>
+                                                <span>@sharedResource["Asset PurchaseDate"]:</span>
                                                 <span id="AssetPurchaseDate"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Item:</span>
+                                                <span>@sharedResource["Item"]:</span>
                                                 <span id="AssetItem"></span>
                                             </p>
                                             
                                         </div><!-- col -->
                                         <div class="col-md">
-                                            <label class="section-label-sm tx-gray-500">Depreciation Information</label>
+                                            <label class="section-label-sm tx-gray-500">@sharedResource["Depreciation Information"]</label>
                                             <p class="invoice-info-row">
-                                                <span>Depreciable Cost</span>
+                                                <span>@sharedResource["Depreciable Cost"]</span>
                                                 <span id="DepreciableCost"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Salvage Value</span>
+                                                <span>@sharedResource["Salvage Value"]</span>
                                                 <span id="SalvageValue"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Asset Life:</span>
+                                                <span>@sharedResource["Asset Life"]:</span>
                                                 <span id="AssetLife"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Date Acquired:</span>
+                                                <span>@sharedResource["Date Acquired"]:</span>
                                                 <span id="DateAcquired"></span>
                                             </p>
                                             <p class="invoice-info-row">
-                                                <span>Depreciation Method:</span>
+                                                <span>@sharedResource["Depreciation Method"]:</span>
                                                 <span id="DepreciationMethod"></span>
                                             </p>
                                         </div><!-- col -->
@@ -74,7 +74,7 @@
                         </div><!-- card-body -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
             </div>
         </div>
     </div><!-- modal-dialog -->

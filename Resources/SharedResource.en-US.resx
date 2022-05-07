@@ -216,6 +216,9 @@
   <data name="CategoryTIAR" xml:space="preserve">
     <value>Category Name</value>
   </data>
+  <data name="checkconfirm" xml:space="preserve">
+    <value>Please check your email to confirm your account</value>
+  </data>
   <data name="Choose" xml:space="preserve">
     <value>Choose New Photo</value>
   </data>
@@ -228,11 +231,17 @@
   <data name="City" xml:space="preserve">
     <value>City</value>
   </data>
+  <data name="clickconfirm" xml:space="preserve">
+    <value>Click here to confirm your account</value>
+  </data>
   <data name="CompanyInformation" xml:space="preserve">
     <value>Company Information</value>
   </data>
   <data name="CompanyName" xml:space="preserve">
     <value>Company Name</value>
+  </data>
+  <data name="configure" xml:space="preserve">
+    <value>for how to configure a real email sender Normally this would be emailed</value>
   </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>ConfirmPassword</value>
@@ -311,6 +320,9 @@
   </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
+  </data>
+  <data name="doesnt have account" xml:space="preserve">
+    <value>This app does not currently have a real email sender registered, see</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -582,6 +594,9 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="searching" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="SignIn" xml:space="preserve">
     <value>Sign In</value>
   </data>
@@ -593,6 +608,9 @@
   </data>
   <data name="SignUpUsingTwitter" xml:space="preserve">
     <value>Sign Up Using Twitter</value>
+  </data>
+  <data name="slim paragraph" xml:space="preserve">
+    <value>We are excited to launch our new company and product Slim. After being featured in too many magazines to mention and having created an online stir, we know that ThemePixels is going to be big. We also hope to win Startup Fictional Business of the Year this year</value>
   </data>
   <data name="Start Date" xml:space="preserve">
     <value>Start Date</value>

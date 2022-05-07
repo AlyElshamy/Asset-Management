@@ -27,18 +27,18 @@
                     @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
                     //items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
-                    items.AddSimpleFor(m => m.DateLost);
-                    items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e => e.TextArea());
-                              
+                    items.AddSimpleFor(m => m.DateLost).Label(l=>l.Text(sharedResource["DateLost"]));
+                    items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e => e.TextArea()).Label(l => l.Text(sharedResource["Notes"]));
 
-    })
+
+                })
                 )
              
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
             </div>
         </div>
     </form>

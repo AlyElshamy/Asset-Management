@@ -7,8 +7,8 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
-                <li class="breadcrumb-item"><a href="#">Asset Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Leasing list</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Asset Management"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Leasing List"]</li>
             </ol>
             <h6 class="slim-pagetitle">@sharedResource["Leasing List"]</h6>
         </div><!-- slim-pageheader -->
@@ -50,17 +50,17 @@
 
                     .Columns(columns => {
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("Asset Serial Number");
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["Asset Serial Number"]);
 
-                        columns.AddFor(m => m.Asset.AssetLife).Caption("Asset Life");
+                        columns.AddFor(m => m.Asset.AssetLife).Caption(sharedResource["Asset Life"]);
 
                         columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Asset Cost"]);
 
-                        columns.AddFor(m => m.StartDate).Caption("Leasing StartDate");
+                        columns.AddFor(m => m.StartDate).Caption(sharedResource["Leasing StartDate"]);
 
-                        columns.AddFor(m => m.EndDate).Caption("Leasing EndtDate");
-                        columns.AddFor(m => m.Customer.FullName).Caption("Cusromer Name");
-                        columns.AddFor(m => m.Customer.Phone).Caption("Cusromer Phone");
+                        columns.AddFor(m => m.EndDate).Caption(sharedResource["Leasing EndtDate"]);
+                        columns.AddFor(m => m.Customer.FullName).Caption(sharedResource["Cusromer Name"]);
+                        columns.AddFor(m => m.Customer.Phone).Caption(sharedResource["Cusromer Phone"]);
 
 
                         //columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup

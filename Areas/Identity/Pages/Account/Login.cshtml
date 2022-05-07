@@ -10,36 +10,37 @@
     <div class="signin-right">
        
         <div class="signin-box">
+
             <form id="account" method="post">
               
-                 <h2 class="signin-title-primary">Welcome back!</h2>
-                  <h3 class="signin-title-secondary">Sign in to continue.</h3>
+                 <h2 class="signin-title-primary">@sharedResource["Welcome back"]!</h2>
+                 <h3 class="signin-title-secondary">@sharedResource["Sign in to continue"].</h3>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
-                    <input asp-for="Input.Email" class="form-control" placeholder="Enter your email"/>
+                    <input asp-for="Input.Email" class="form-control" placeholder="@sharedResource["Enter your email"]"/>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                    
-                    <input asp-for="Input.Password" class="form-control" placeholder="Enter your password" />
+                    <input asp-for="Input.Password" class="form-control" placeholder="@sharedResource["Enter your password"]" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
+                        <label @*asp-for="Input.RememberMe"*@>@sharedResource["Remember Me"]
                             <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            @*@Html.DisplayNameFor(m => m.Input.RememberMe)*@
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block btn-signin">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-signin">@sharedResource["Sign In"]</button>
                 </div>
-                   <p class="mg-b-0">Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Sign Up</a></p>
+                <p class="mg-b-0">@sharedResource["Don't have an account"]? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@sharedResource["Sign Up"]</a></p>
                 <div class="form-group">
                     <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a id="forgot-password" asp-page="./ForgotPassword">@sharedResource["Forgot your password"]?</a>
                     </p>
                     </div>
                    @* <p>
@@ -57,13 +58,13 @@
         <div class="signin-box">
           <h2 class="slim-logo"><a href="index.html">slim<span>.</span></a></h2>
 
-          <p>We are excited to launch our new company and product Slim. After being featured in too many magazines to mention and having created an online stir, we know that ThemePixels is going to be big. We also hope to win Startup Fictional Business of the Year this year.</p>
+          <p>@sharedResource["slim paragraph"]
+</p>
+          <p>@sharedResource["Browse our site and see for yourself why you need Slim"].</p>
 
-          <p>Browse our site and see for yourself why you need Slim.</p>
+          <p><a href="#" class="btn btn-outline-secondary pd-x-25">@sharedResource["Read More"]</a></p>
 
-          <p><a href="#" class="btn btn-outline-secondary pd-x-25">Learn More</a></p>
-
-          <p class="tx-12">&copy; Copyright 2018. All Rights Reserved.</p>
+          <p class="tx-12">&copy; @sharedResource["Copyright 2018. All Rights Reserved"].</p>
         </div>
       </div><!-- signin-left -->
 </div>

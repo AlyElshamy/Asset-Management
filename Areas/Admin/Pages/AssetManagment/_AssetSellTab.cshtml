@@ -26,18 +26,18 @@
 .ColCount(1).Width(400).Height(280)
 .Items(items =>
 {
-    items.AddSimpleFor(m => m.SaleDate).IsRequired(true);
+    items.AddSimpleFor(m => m.SaleDate).IsRequired(true).Label(l=>l.Text(sharedResource["Sale Date"]));
 
-   
 
-    items.AddSimpleFor(m => m.SoldTo).IsRequired(true);
-    items.AddSimpleFor(m => m.SaleAmount).IsRequired(true);
+
+    items.AddSimpleFor(m => m.SoldTo).IsRequired(true).Label(l => l.Text(sharedResource["Sold To"]));
+    items.AddSimpleFor(m => m.SaleAmount).IsRequired(true).Label(l => l.Text(sharedResource["Sale Amount"]));
 
 })
 
 .Items(items =>
 {
-    items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e=>e.TextArea());
+    items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e=>e.TextArea()).Label(l=>l.Text(sharedResource["Notes"]));
 })
     )
 
@@ -45,8 +45,8 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
                         </div>
                     </div>
                 </form>

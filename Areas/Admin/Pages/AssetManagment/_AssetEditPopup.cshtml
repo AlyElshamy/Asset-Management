@@ -21,12 +21,12 @@
                 
                     @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
-                items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
-                items.AddSimpleFor(m => m.AssetDescription);
-                items.AddSimpleFor(m => m.AssetTagId);
-                items.AddSimpleFor(m => m.AssetCost);
-                items.AddSimpleFor(m => m.AssetSerialNo);
-                items.AddSimpleFor(m => m.AssetPurchaseDate);
+                items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true)).Label(l=>l.Text(sharedResource["Asset"]));
+                items.AddSimpleFor(m => m.AssetDescription).Label(l=>l.Text(sharedResource["Asset Description"]));
+                items.AddSimpleFor(m => m.AssetTagId).Label(l => l.Text(sharedResource["AssetTagId"]));
+                items.AddSimpleFor(m => m.AssetCost).Label(l => l.Text(sharedResource["AssetCost"]));
+                items.AddSimpleFor(m => m.AssetSerialNo).Label(l => l.Text(sharedResource["AssetSerialNo"]));
+                items.AddSimpleFor(m => m.AssetPurchaseDate).Label(l => l.Text(sharedResource["AssetPurchaseDate"]));
                 items.AddSimpleFor(m => m.ItemId)
                 .Editor(e => e
                 .Lookup()
@@ -36,17 +36,17 @@
                 );
 
                 items.AddSimpleFor(m => m.Photo).Editor(e => e.TextBox().ReadOnly(true));
-             
-                
-                items.AddSimpleFor(m => m.DepreciableAsset).Editor(e => e.TextBox().ReadOnly(true)).CssClass("AssetClass");
 
-                items.AddSimpleFor(m => m.DepreciableCost).IsRequired(true);
 
-                items.AddSimpleFor(m => m.SalvageValue).IsRequired(true);
+                items.AddSimpleFor(m => m.DepreciableAsset).Editor(e => e.TextBox().ReadOnly(true)).CssClass("AssetClass").Label(l=>l.Text(sharedResource["DepreciableAsset"]));
 
-                items.AddSimpleFor(m => m.AssetLife).IsRequired(true);
+                items.AddSimpleFor(m => m.DepreciableCost).IsRequired(true).Label(l => l.Text(sharedResource["DepreciableCost"]));
 
-                items.AddSimpleFor(m => m.DateAcquired).IsRequired(true);
+                items.AddSimpleFor(m => m.SalvageValue).IsRequired(true).Label(l => l.Text(sharedResource["Salvage Value"]));
+
+                items.AddSimpleFor(m => m.AssetLife).IsRequired(true).Label(l => l.Text(sharedResource["Asset Life"]));
+
+                items.AddSimpleFor(m => m.DateAcquired).IsRequired(true).Label(l => l.Text(sharedResource["Date Acquired"]));
 
                 items.AddSimpleFor(m => m.DepreciationMethodId).IsRequired(true)
                 .Editor(e => e
@@ -54,9 +54,9 @@
                 .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("DepreciationMethodsLookup").Key("Value"))
                 .ValueExpr("Value")
                 .DisplayExpr("Text")
-                );
+                ).Label(l => l.Text(sharedResource["Depreciation Method"]));
 
-                items.AddSimpleFor(m => m.Photo).Label(k => k.Text("Photo")).Template(@<text>
+                items.AddSimpleFor(m => m.Photo).Label(k => k.Text(sharedResource["Photo"])).Template(@<text>
                      <div class="form-group">
                             @* <span> Asset Photo</span>*@
                               <div class="custom-file">
@@ -73,8 +73,8 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Close"]</button>
             </div>
         </div>
         </form>

@@ -139,7 +139,7 @@
         };
     }
                 </script>
-                 <label class="section-title d-inline mb-4 mt-4">Asset Leasing</label>
+                 <label class="section-title d-inline mb-4 mt-4">@sharedResource["Asset Leasing"]</label>
                 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetLeasing>()
     .DataSource(ds => ds.RemoteController()
         .LoadUrl(Url.Page("CustomerDetails", "GridData"))
@@ -149,7 +149,7 @@
     .Columns(columns =>
     {
 
-                    columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
+                    columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                     .AllowFiltering(false)
                     .AllowSorting(false)
                     .CellTemplate(@<text>
@@ -157,17 +157,17 @@
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-        columns.AddFor(m => m.Asset.AssetDescription).Caption("Description");
-        columns.AddFor(m => m.Asset.AssetTagId).Caption("TagId");
-                    columns.AddFor(m => m.Asset.AssetCost).Caption("Cost");
-        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("SerialNo");
-        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
+        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                    columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
+        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-         columns.AddFor(m => m.StartDate).Caption("Leasing StartDate");
-         columns.AddFor(m => m.EndDate).Caption("Leasing EndDate");
+         columns.AddFor(m => m.StartDate).Caption(sharedResource["Leasing StartDate"]);
+         columns.AddFor(m => m.EndDate).Caption(sharedResource["Leasing EndDate"]);
     })
 
                         )

@@ -8,14 +8,14 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Assets</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dispose Asset</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Assets"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Dispose Asset"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Dispose Assets</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Dispose Asset"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Dispose Assets List</label>
+            <label class="section-title d-inline">@sharedResource["Dispose Assets List"]</label>
 
             @*<a asp-area="Admin" asp-page="/AssetManagment/AddLostList" class="btn btn-primary" style="float:right"> Add New Contract   </a>*@
             @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
@@ -55,32 +55,32 @@
                             <div>
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
-                        </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription);
+                        </text>).Caption(sharedResource["Photos"]);
+                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
-                        columns.AddFor(m => m.Asset.AssetTagId);
+                        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                        columns.AddFor(m => m.Asset.AssetCost);
+                        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo);
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate);
+                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")
                         );
 
 
-                        columns.AddFor(m => m.DateDisposed);
-                        columns.AddFor(m => m.DisposeTo);
-                        columns.AddFor(m => m.Notes);
+                        columns.AddFor(m => m.DateDisposed).Caption(sharedResource["Date Disposed"]);
+                        columns.AddFor(m => m.DisposeTo).Caption(sharedResource["Dispose To"]);
+                        columns.AddFor(m => m.Notes).Caption(sharedResource["Notes"]);
                     })
                     )
                     @(Html.DevExtreme().Popup().ID("customPopup").Width(700)
         .MaxHeight(700)
-        .Container(".dx-viewport").Title("Custom popup edit").Visible(false)
+        .Container(".dx-viewport").Title(sharedResource["Custom popup edit"]).Visible(false)
                     .ContentTemplate(@<text>
 
                         <div class="row">
@@ -90,7 +90,7 @@
                        <div class="row mg-b-25">
                              <div class="col-lg-5">
                                  <div class="form-group">
-                         @Html.Label("Asset Description")
+                         @Html.Label(sharedResource["Asset Description"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetDescription")
                             </div>
                             </div>
@@ -98,14 +98,14 @@
 
                         <div class="col-lg-5">
                                  <div class="form-group">
-                            @Html.Label("Asset Tag Id")
+                            @Html.Label(sharedResource["AssetTagId"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
                             </div>
                             </div>
                             <br>
                               <div class="col-lg-5">
                                  <div class="form-group">
-                           @Html.Label("Asset Cost ")
+                           @Html.Label(sharedResource["AssetCost"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetCost")
                             </div>
                             </div>
@@ -113,7 +113,7 @@
 
                               <div class="col-lg-5">
                                  <div class="form-group">
-                           @Html.Label("Asset Serial No")
+                           @Html.Label(sharedResource["Asset Serial Number"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetSerialNo")
                             </div>
                             </div>
@@ -121,7 +121,7 @@
 
                               <div class="col-lg-5">
                                  <div class="form-group">
-                                 @Html.Label("AssetPurchaseDate")
+                                 @Html.Label(sharedResource["AssetPurchaseDate"])
                             @Html.DevExtreme().DateBox().ID("AssetPurchaseDate")
                             </div>
                             </div>
@@ -129,7 +129,7 @@
 
                                      <div class="col-lg-5">
                                  <div class="form-group">
-                                 @Html.Label("Item")
+                                 @Html.Label(sharedResource["Item"])
                                   @(Html.DevExtreme().Lookup()
                              .ID("TxtAssetItem")
             .DataSource(d => d.WebApi()
@@ -149,7 +149,7 @@
                               @Html.Label("Asset Photo")
                               <div class="custom-file">
                                   <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" onchange="changephotoname()" id="Photo" required>
-                                  <label class="custom-file-label" for="File" id="photolabel">Choose New Photo</label>
+                                  <label class="custom-file-label" for="File" id="photolabel">@sharedResource["Choose New Photo"]</label>
                               </div>
                           </div>
                       </div>
@@ -162,8 +162,8 @@
                             <br>*@
 
 </div>
-      @Html.DevExtreme().Button().Text("Save").OnClick("function (e) { saveButtonClick() }")
-      @Html.DevExtreme().Button().Text("Cancel").OnClick("function (e) { cancelButtonClick() }")
+      @Html.DevExtreme().Button().Text(sharedResource["Save"]).OnClick("function (e) { saveButtonClick() }")
+      @Html.DevExtreme().Button().Text(sharedResource["Cancel"]).OnClick("function (e) { cancelButtonClick() }")
 
                         </text>))
                 </div><!-- table-wrapper -->

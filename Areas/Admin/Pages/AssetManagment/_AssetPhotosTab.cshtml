@@ -26,12 +26,12 @@
                     @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
                // items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
-                items.AddSimpleFor(m => m.Remarks);
+                items.AddSimpleFor(m => m.Remarks).Label(l=>l.Text(sharedResource["Remarks"]));
             
  
         
 
-                items.AddSimpleFor(m => m.PhotoUrl).Label(k => k.Text("Photo")).Template(@<text>
+                items.AddSimpleFor(m => m.PhotoUrl).Label(k => k.Text(sharedResource["Photo"])).Template(@<text>
                      <div class="form-group">
                             @* <span> Asset Photo</span>*@
                               <div class="custom-file">
@@ -47,8 +47,8 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
             </div>
         </div>
         </form>
@@ -67,8 +67,8 @@
                   <img class="img-fluid mg-b-0" src="@AssetPhoto" width="200" height="200" alt="Image">
                 </div><!-- card-body -->
                 <div class="card-footer bd-t tx-right">
-                  <a href="javascript:void(0)" onclick="DeletePhoto(@item.AssetId,@item.AssetPhotoId)"><span class="material-symbols-outlined" >delete</span></a>
-                  <a href="javascript:void(0)"><span class="material-symbols-outlined">search</span> </a>
+                  <a href="javascript:void(0)" onclick="DeletePhoto(@item.AssetId,@item.AssetPhotoId)"><span class="material-symbols-outlined" >@sharedResource["delete"]</span></a>
+                  <a href="javascript:void(0)"><span class="material-symbols-outlined">@sharedResource["searching"]</span> </a>
             
                 </div><!-- card-footer -->
               </div>
