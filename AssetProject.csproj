@@ -32,7 +32,6 @@
     <Folder Include="wwwroot\Documents\AssetDocuments\" />
     <Folder Include="wwwroot\Images\Logo\" />
     <Folder Include="wwwroot\Images\AssetPhotos\" />
-    <Folder Include="wwwroot\Documents\AssetDocuments\" />
   </ItemGroup>
   <!--<ItemGroup>
     <Content Update="wwwroot\js\viewer.part.bundle.js">
