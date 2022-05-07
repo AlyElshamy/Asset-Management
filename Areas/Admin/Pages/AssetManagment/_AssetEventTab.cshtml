@@ -3,4 +3,44 @@
 *@
 @{
 }
-Event Content
+@using Microsoft.EntityFrameworkCore;
+@using System.Linq;
+@model int
+@inject AssetContext Context;
+@{
+    var assetlogs = Context.AssetLogs.Where(l => l.AssetId == Model).Select(l=>new
+    {
+    l.ActionDate,
+    l.Asset,
+    l.ActionLog,
+    l.Remark
+    });
+}
+<div class="row row-sm row-timeline">
+          <div class="col-lg-12">
+
+            <div class="card pd-30">
+              <div class="timeline-group">
+                @foreach(var item in assetlogs)
+                {
+                   <div class="timeline-item timeline-day">
+                  <div class="timeline-time">&nbsp;</div>
+                  <div class="timeline-body">
+                    <p class="timeline-date">@item.ActionDate.ToShortDateString()</p>
+                  </div><!-- timeline-body -->
+                </div><!-- timeline-item -->
+
+                <div class="timeline-item">
+                  <div class="timeline-time">@item.ActionDate.ToShortTimeString()</div>
+                  <div class="timeline-body">
+                    <p class="timeline-title" style="text-align:left"><a href="#">@item.ActionLog.ActionLogTitle</a></p>
+                    <p class="timeline-text">@item.Remark </p>
+                  </div><!-- timeline-body -->
+                </div><!-- timeline-item -->
+                }
+          
+              </div><!-- timeline-group -->
+            </div><!-- card -->
+
+          </div><!-- col-6 -->
+        </div>

@@ -146,7 +146,7 @@
         success: function (response) {
 
                $('#frmEdit').dxForm('instance').option('formData',response);
-                document.getElementById("AssetDescriptiontxt").innerHTML = response.AssetDescription
+                document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
                $('#AssetEditPoup').modal('show');
                console.log("Elemnt"+document.getElementsByClassName("AssetClass")[0].nodeValue)
                 
