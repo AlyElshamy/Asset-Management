@@ -24,13 +24,13 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         private readonly IToastNotification _toastNotification;
         public AssetMovement AssetMovementModel { set; get; }
         public AssetRepair AssetrepairModel { set; get; }
-        //public AssetMaintainance AssetMaintainance { set; get; }
-        //public AssetProfileModel(AssetContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
-        //{
-        //    Context = context;
-        //    _hostEnvironment = hostEnvironment;
-        //    _toastNotification = toastNotification;
-        //}
+        public AssetMaintainance AssetMaintainance { set; get; }
+        public AssetProfileModel(AssetContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
+        {
+            Context = context;
+            _hostEnvironment = hostEnvironment;
+            _toastNotification = toastNotification;
+        }
         //public IActionResult OnGet(int AssetId)
         //{
         //    Asset = Context.Assets.Where(a => a.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).Include(a=>a.AssetStatus).FirstOrDefault();
@@ -208,7 +208,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         ////        if (LastAssetMovementDetails != null)
         ////        {
         ////            var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
-                
+
         ////            if (LastAssetMovement == null)
         ////            {
         ////                assetMovement.StoreId = Asset.StoreId;
@@ -292,7 +292,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         //    {
 
         //        //Update Asset Status
-           
+
         //        Asset.AssetStatusId = 3;
         //        var UpdatedAsset = Context.Assets.Attach(Asset);
         //        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -314,7 +314,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         //            ActionDate = DateTime.Now,
         //            Remark = string.Format($"Repair Asset Asigned to {technician.FullName} with {ScheduleDate}{ScheduleD} and {CompletedDate}{CompletedD}")
         //        };
-                
+
         //        Context.AssetLogs.Add(assetLog);
         //        Context.SaveChanges();
         //        _toastNotification.AddSuccessToastMessage("Asset Repair Added Successfully");
