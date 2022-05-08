@@ -47,6 +47,18 @@ namespace AssetProject.Migrations.Asset
                     b.HasKey("ActionTypeId");
 
                     b.ToTable("ActionTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            ActionTypeId = 1,
+                            ActionTypeTitle = "To Employee"
+                        },
+                        new
+                        {
+                            ActionTypeId = 2,
+                            ActionTypeTitle = "To Department"
+                        });
                 });
 
             modelBuilder.Entity("AssetProject.Models.Asset", b =>
@@ -690,6 +702,33 @@ namespace AssetProject.Migrations.Asset
                     b.HasKey("DepreciationMethodId");
 
                     b.ToTable("DepreciationMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            DepreciationMethodId = 1,
+                            DepreciationMethodTitle = "Straight Line"
+                        },
+                        new
+                        {
+                            DepreciationMethodId = 2,
+                            DepreciationMethodTitle = "Declining Balance"
+                        },
+                        new
+                        {
+                            DepreciationMethodId = 3,
+                            DepreciationMethodTitle = "Double Declining Balance"
+                        },
+                        new
+                        {
+                            DepreciationMethodId = 4,
+                            DepreciationMethodTitle = "150% Declining Balance"
+                        },
+                        new
+                        {
+                            DepreciationMethodId = 5,
+                            DepreciationMethodTitle = "Sum of the Years' Digits"
+                        });
                 });
 
             modelBuilder.Entity("AssetProject.Models.DisposeAsset", b =>
