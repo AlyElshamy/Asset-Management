@@ -73,7 +73,7 @@
         .DataSource(ds => ds.RemoteController()
         .LoadUrl(Url.Page("newPurchase", "GridData")) 
         .UpdateUrl(Url.Page("newPurchase", "GridUpdate")) 
-        . InsertUrl(Url.Page("newPurchase", "GridInsert")) 
+        .InsertUrl(Url.Page("newPurchase", "GridInsert")) 
         .DeleteUrl(Url.Page("newPurchase", "GridDelete")) 
         .Key("PurchaseAssetId")
         .OnBeforeSend("grid_dataSource_beforeSend") // passes an antiforgery token

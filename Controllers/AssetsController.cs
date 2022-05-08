@@ -45,7 +45,11 @@ namespace AssetProject.Controllers
                 i.AssetLife,
                 i.DateAcquired,
                 i.Item.ItemTitle,
-                i.DepreciationMethodId
+                i.DepreciationMethodId,
+                i.VendorId,
+                i.StoreId,
+                i.AssetStatusId,
+              
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.

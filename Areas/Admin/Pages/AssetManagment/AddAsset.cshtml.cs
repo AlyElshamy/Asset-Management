@@ -35,16 +35,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 ModelState.AddModelError("", "Please Select Item");
                 return Page();
             }
-            //if (Asset.StoreId == 0)
-            //{
-            //    ModelState.AddModelError("", "Please Select Store");
-            //    return Page();
-            //}
-            //if (Asset.VendorId == 0)
-            //{
-            //    ModelState.AddModelError("", "Please Select Vendor");
-            //    return Page();
-            //}
+            if (Asset.StoreId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Store");
+                return Page();
+            }
+            if (Asset.VendorId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Vendor");
+                return Page();
+            }
             if (Asset.DepreciableAsset )
             {
                 if(Asset.DepreciationMethodId==0)
