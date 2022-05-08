@@ -3,11 +3,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Data
 {
-    public class AssetContext :DbContext
+    public class AssetContext : DbContext
     {
-        public AssetContext(DbContextOptions<AssetContext> options) :base(options)
+        public AssetContext(DbContextOptions<AssetContext> options) : base(options)
         {
+
         }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            //DepreciationMethod
+            modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod {DepreciationMethodId = 1,DepreciationMethodTitle= "Straight Line"});
+            modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod { DepreciationMethodId = 2, DepreciationMethodTitle = "Declining Balance" });
+            modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod { DepreciationMethodId = 3, DepreciationMethodTitle = "Double Declining Balance" });
+            modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod { DepreciationMethodId = 4, DepreciationMethodTitle = "150% Declining Balance" });
+            modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod { DepreciationMethodId = 5, DepreciationMethodTitle = "Sum of the Years' Digits" });
+
+            //ActionType
+            modelBuilder.Entity<ActionType>().HasData(new ActionType { ActionTypeId = 1, ActionTypeTitle = "To Employee" });
+            modelBuilder.Entity<ActionType>().HasData(new ActionType { ActionTypeId = 2, ActionTypeTitle = "To Department" });
+
+
+
+        }
+
 
         public DbSet<Department> Departments { set; get; }
         public DbSet<Country> Countries { set; get; }
@@ -35,7 +56,7 @@ namespace AssetProject.Data
         public DbSet<AssetDocument> assetDocuments { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<AssetLeasing> AssetLeasings { get; set; }
-        public DbSet<SellAsset> sellAssets{ get; set; }
+        public DbSet<SellAsset> sellAssets { get; set; }
         public DbSet<AssetBroken> assetBrokens { get; set; }
 
         public DbSet<AssetRepair> AssetRepairs { get; set; }
