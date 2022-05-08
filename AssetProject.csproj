@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\Asset\" />
     <Folder Include="wwwroot\Documents\AssetDocuments\" />
     <Folder Include="wwwroot\Images\Logo\" />
     <Folder Include="wwwroot\Images\AssetPhotos\" />

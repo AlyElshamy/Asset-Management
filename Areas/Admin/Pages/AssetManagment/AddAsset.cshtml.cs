@@ -63,7 +63,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Asset.Photo = await UploadImage(folder, file);
                 }
                 ActionLog actionLog = new ActionLog() { ActionLogTitle = "Asset Purchase" };
-                //Asset.AssetStatusId = 1;
+                Asset.AssetStatusId = 1;
                 Context.Assets.Add(Asset);
                 string Str = "purchase Date : "; 
                 string AssetPurchaseDate = Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);

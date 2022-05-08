@@ -135,6 +135,13 @@ namespace AssetProject.Data
         public DbSet<AssetStatus> AssetStatuses { get; set; }
         public DbSet<AssetLog> AssetLogs { get; set; }
         public DbSet<ActionLog> ActionLogs { get; set; }
+        public DbSet<AssetMovementDetails> AssetMovementDetails { get; set; }
+        public DbSet<AssetSellDetails> AssetSellDetails { get; set; }
+        public DbSet<AssetDisposeDetails> AssetDisposeDetails { get; set; }
+        public DbSet<AssetRepairDetails> AssetRepairDetails { get; set; }
+        public DbSet<AssetLostDetails> AssetLostDetails { get; set; }
+        public DbSet<AssetLeasingDetails> AssetLeasingDetails { get; set; }
+        public DbSet<AssetBrokenDetails> AssetBrokenDetails { get; set; }
 
     }
 }

@@ -42,8 +42,7 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
         {
             var assetLeasing = _context.AssetLeasings.Where(e => e.CustomerId == customerId).Select(e => new
             {
-             
-                e.Asset,
+
                 e.StartDate,
                 e.EndDate
             }) ;

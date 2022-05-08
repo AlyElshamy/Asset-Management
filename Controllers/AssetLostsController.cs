@@ -28,10 +28,10 @@ namespace AssetProject.Controllers
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
             var assetlosts = _context.AssetLosts.Select(i => new {
                 i.AssetLostId,
-                i.AssetId,
+
                 i.DateLost,
                 i.Notes,
-                i.Asset
+
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -96,7 +96,7 @@ namespace AssetProject.Controllers
 
         private void PopulateModel(AssetLost model, IDictionary values) {
             string ASSET_LOST_ID = nameof(AssetLost.AssetLostId);
-            string ASSET_ID = nameof(AssetLost.AssetId);
+
             string DATE_LOST = nameof(AssetLost.DateLost);
             string NOTES = nameof(AssetLost.Notes);
 
@@ -104,9 +104,7 @@ namespace AssetProject.Controllers
                 model.AssetLostId = Convert.ToInt32(values[ASSET_LOST_ID]);
             }
 
-            if(values.Contains(ASSET_ID)) {
-                model.AssetId = Convert.ToInt32(values[ASSET_ID]);
-            }
+
 
             if(values.Contains(DATE_LOST)) {
                 model.DateLost = Convert.ToDateTime(values[DATE_LOST]);

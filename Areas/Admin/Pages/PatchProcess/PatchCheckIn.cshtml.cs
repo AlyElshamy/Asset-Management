@@ -10,89 +10,69 @@ using System.Linq;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
-    public class PatchCheckOutModel : PageModel
+    public class PatchCheckInModel : PageModel
     {
         [BindProperty]
         public AssetMovement assetmovement { set; get; }
         AssetContext _context;
-        public static List<Asset> SelectedAssets=new List<Asset>();
+        public static List<Asset> SelectedAssets = new List<Asset>();
         private readonly IToastNotification _toastNotification;
-        public PatchCheckOutModel (AssetContext context, IToastNotification toastNotification)
+        public PatchCheckInModel(AssetContext context, IToastNotification toastNotification)
         {
             _context = context;
             _toastNotification = toastNotification;
             assetmovement = new AssetMovement();
         }
-        
         public void OnGet()
         {
-           
         }
+
         public IActionResult OnGetFillAssetList(string values)
         {
             var Assets = JsonConvert.DeserializeObject<List<Asset>>(values);
             SelectedAssets = Assets;
-            return new JsonResult(Assets); 
+            return new JsonResult(Assets);
         }
 
         //public IActionResult OnPost()
         //{
-        //    if (assetmovement.ActionTypeId == 0)
+        //    if (assetmovement.StoreId == 0)
         //    {
-        //        ModelState.AddModelError("", "Please Select Action");
+        //        ModelState.AddModelError("", "Please Select Store");
         //        return Page();
         //    }
-        //    if (assetmovement.LocationId == 0)
-        //    {
-        //        ModelState.AddModelError("", "Please Select Location");
-        //        return Page();
-        //    }
-        //    if (assetmovement.DepartmentId == 0)
-        //    {
-        //        ModelState.AddModelError("", "Please Select Department");
-        //        return Page();
-        //    }
-        //    if (assetmovement.ActionTypeId == 1)
-        //    {
-        //        if (assetmovement.EmpolyeeID == null)
-        //        {
-        //            ModelState.AddModelError("", "Please Select Empolyee");
-        //            return Page();
-        //        }
-        //    }
+           
         //    if (ModelState.IsValid)
         //    {
         //        if (SelectedAssets.Count != 0)
         //        {
-        //            AssetMovement assetcheckout = new AssetMovement
+        //            AssetMovement assetcheckIn = new AssetMovement
         //            {
-        //                AssetMovementDirectionId = 1,
-        //                ActionTypeId = assetmovement.ActionTypeId,
+        //                AssetMovementDirectionId = 2,
         //                TransactionDate = assetmovement.TransactionDate,
-        //                EmpolyeeID = assetmovement.EmpolyeeID,
-        //                LocationId = assetmovement.LocationId,
-        //                DepartmentId = assetmovement.DepartmentId,
         //                Remarks = assetmovement.Remarks,
-        //                //StoreId = LastAssetMovement.AssetMovementId==0 ? asset.StoreId : LastAssetMovement.StoreId
-
+        //                StoreId = assetmovement.StoreId
+        //                //ActionTypeId = LastAssetMovement.ActionTypeId,
+        //                //EmpolyeeID = LastAssetMovement.EmpolyeeID,
+        //                //LocationId = LastAssetMovement.LocationId,
+        //                //DepartmentId = LastAssetMovement.DepartmentId,
         //            };
-        //            _context.AssetMovements.Add(assetcheckout);
+        //            _context.AssetMovements.Add(assetcheckIn);
         //            foreach (var asset in SelectedAssets)
         //            {
         //                //var LastAssetMovementDetails = _context.AssetMovementDetails.Where(a => a.AssetId == asset.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
-        //                //AssetMovement LastAssetMovement=new AssetMovement();
+        //                //AssetMovement LastAssetMovement = new AssetMovement();
         //                //if (LastAssetMovementDetails != null)
         //                //{
-        //                //     LastAssetMovement = _context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);                        
+        //                //    LastAssetMovement = _context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
         //                //}
-                    
-        //                asset.AssetStatusId = 2;
+        //                asset.AssetStatusId = 1;
         //                var UpdatedAsset = _context.Assets.Attach(asset);
         //                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         //                var assetMovementDetails = new AssetMovementDetails()
         //                {
         //                    AssetId = asset.AssetId,
-        //                    AssetMovementId = assetcheckout.AssetMovementId
+        //                    AssetMovementId = assetcheckIn.AssetMovementId
         //                };
         //                _context.AssetMovementDetails.Add(assetMovementDetails);
         //            }
@@ -100,7 +80,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         //            {
         //                _context.SaveChanges();
         //            }
-        //            catch(Exception e)
+        //            catch (Exception e)
         //            {
         //                _toastNotification.AddErrorToastMessage("Something went Error,Try again");
         //                return Page();
@@ -114,5 +94,6 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         //    _toastNotification.AddErrorToastMessage("Something went Error,Try again");
         //    return Page();
         //}
+
     }
 }

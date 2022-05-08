@@ -31,8 +31,8 @@ namespace AssetProject.Controllers
                 i.StartDate,
                 i.EndDate,
                 i.Notes,
-                i.CustomerId
-                ,i.Asset,
+                i.CustomerId,
+
                 i.Customer
             });
 

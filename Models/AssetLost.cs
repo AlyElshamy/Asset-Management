@@ -9,10 +9,11 @@ namespace AssetProject.Models
     public class AssetLost
     {
         public int AssetLostId { get; set; }
-        public int AssetId { get; set; }
-        public Asset Asset { set; get; }
+      
         [Column(TypeName = "date")]
         public DateTime DateLost { get; set; }
         public string Notes { get; set; }
+
+        public ICollection<AssetLostDetails> AssetLostDetails { get; set; }
     }
 }

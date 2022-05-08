@@ -17,8 +17,8 @@ namespace AssetProject.Models
         [Required]
         public double SaleAmount { get; set; }
         public string Notes { get; set; }
-        [Required]
-        public int AssetId { get; set; }
-        public virtual Asset Asset { get; set; }
+
+        public ICollection<AssetSellDetails> AssetSellDetails { get; set; }
+
     }
 }

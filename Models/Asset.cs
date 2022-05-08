@@ -42,17 +42,10 @@ namespace AssetProject.Models
         public int? StoreId { get; set; }
         public virtual Store Store { get; set; }
         public ICollection<AssetPhotos> AssetPhotos { set; get; }
-        public ICollection<AssetMovement> AssetMovements { set; get; }
         public ICollection<AssetContract> AssetContracts { get; set; }
         public ICollection<AssetsInsurance> AssetsInsurances { get; set; }
         public ICollection<AssetDocument> documents { get; set; }
-        public ICollection<AssetRepair> AssetRepairs { get; set; }
-        public ICollection<AssetLost> AssetLosts { get; set; }
-        public ICollection<DisposeAsset> DisposeAssets { get; set; }
-        public ICollection<SellAsset> sellAssets { get; set; }
-        public ICollection<AssetBroken> AssetBrokens {get; set; }
-        public ICollection<AssetLeasing> AssetLeasings { get; set; }
-
+       
 
 
     }

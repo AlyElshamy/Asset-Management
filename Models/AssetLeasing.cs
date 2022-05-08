@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AssetProject.Models
@@ -12,10 +13,8 @@ namespace AssetProject.Models
         public string Notes { get; set; }
         public int CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
-        public int AssetId { get; set; }
-        public virtual Asset Asset { get; set; }
 
-
+        public ICollection<AssetLeasingDetails> AssetLeasingDetails { get; set; }
 
     }
 }

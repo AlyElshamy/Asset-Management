@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AssetProject.Models
 {
@@ -9,9 +10,9 @@ namespace AssetProject.Models
         public DateTime CompletedDate { set; get; }
         public double RepairCost { set; get; }
         public string Notes { set; get; }
-        public int AssetId { set; get; }
-        public Asset Asset { set; get; }
         public int TechnicianId { set; get; }
         public Technician Technician { set; get; }
+
+        public ICollection<AssetRepairDetails> AssetRepairDetails { get; set; }
     }
 }
