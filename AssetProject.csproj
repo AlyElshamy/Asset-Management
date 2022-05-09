@@ -13,7 +13,6 @@
     <Compile Remove="Areas\Admin\Pages\SellAssetManagement\SellAssetList.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="Areas\Admin\Pages\AssetBrokenManagement\AssetBrokenList.cshtml" />
     <Content Remove="Areas\Admin\Pages\AssetLeasingManagement\LeasingList.cshtml" />
     <Content Remove="Areas\Admin\Pages\AssetLostManagement\AddLostList.cshtml" />
     <Content Remove="Areas\Admin\Pages\AssetManagment\GetAssetRepair.cshtml" />

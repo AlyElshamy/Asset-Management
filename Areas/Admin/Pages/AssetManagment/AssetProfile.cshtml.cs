@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
@@ -18,6 +19,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
     public class AssetProfileModel : PageModel
     {
         AssetContext Context;
+     
         public Asset Asset { set; get; }
         public string AssetPhoto { set; get; }
         private readonly IWebHostEnvironment _hostEnvironment;
@@ -25,178 +27,181 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public AssetMovement AssetMovementModel { set; get; }
         public AssetRepair AssetrepairModel { set; get; }
         public AssetMaintainance AssetMaintainance { set; get; }
+        [BindProperty]
+        public int AssetId { set; get; }
         public AssetProfileModel(AssetContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             Context = context;
             _hostEnvironment = hostEnvironment;
             _toastNotification = toastNotification;
         }
-        //public IActionResult OnGet(int AssetId)
-        //{
-        //    Asset = Context.Assets.Where(a => a.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).Include(a=>a.AssetStatus).FirstOrDefault();
-        //    if (Asset == null)
-        //    {
-        //        return Redirect("../../Error");
+        public IActionResult OnGet(int AssetId)
+        {
+            Asset = Context.Assets.Where(a => a.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).Include(a => a.AssetStatus).FirstOrDefault();
+            if (Asset == null)
+            {
+                return Redirect("../../Error");
 
-        //    }
-        //    AssetPhoto = "/" + Asset.Photo;
-        //    return Page();
-        //}
+            }
+            AssetPhoto = "/" + Asset.Photo;
+            AssetId = Asset.AssetId;
+            return Page();
+        }
 
-        //public async Task<IActionResult> OnPostAddAssetPhotot(IFormFile file, AssetPhotos photos)
-        //{
-        //    if (file != null)
-        //    {
-        //        string folder = "Images/AssetPhotos/";
-        //        photos.PhotoUrl = await UploadImage(folder, file);
-        //    }
-        //    if (photos.AssetId!=0)
-        //    {
-        //        Context.AssetPhotos.Add(photos);
-        //        ActionLog actionLog = new ActionLog() { ActionLogTitle = "Link Asset Photo" };
-        //        Asset asset = Context.Assets.Find(photos.AssetId);
-        //        AssetLog assetLog = new AssetLog()
-        //        {
-        //            ActionLog = actionLog,
-        //            Asset = asset,
-        //            ActionDate = DateTime.Now,
-        //            Remark = string.Format($" Description : {photos.Remarks} ")
-        //        };
-        //        Context.AssetLogs.Add(assetLog);
-        //        Context.SaveChanges();
-        //        _toastNotification.AddSuccessToastMessage("Asset Photo Added successfully");
-        //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = photos.AssetId });
-        //    }
-        //    _toastNotification.AddErrorToastMessage("Asset Photo Not ADDED ,Try again");
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = photos.AssetId });
-        //}
-        //public IActionResult OnGetDeletePhoto(int AssetId,int AssetPhotoId)
-        //{
-        //    var Result = Context.AssetPhotos.Where(a => a.AssetId == AssetId && a.AssetPhotoId == AssetPhotoId).FirstOrDefault();
+        public async Task<IActionResult> OnPostAddAssetPhotot(IFormFile file, AssetPhotos photos)
+        {
+            if (file != null)
+            {
+                string folder = "Images/AssetPhotos/";
+                photos.PhotoUrl = await UploadImage(folder, file);
+            }
+            if (photos.AssetId != 0)
+            {
+                Context.AssetPhotos.Add(photos);
+                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Link Asset Photo" };
+                Asset asset = Context.Assets.Find(photos.AssetId);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLog = actionLog,
+                    Asset = asset,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($" Description : {photos.Remarks} ")
+                };
+                Context.AssetLogs.Add(assetLog);
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Photo Added successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = photos.AssetId });
+            }
+            _toastNotification.AddErrorToastMessage("Asset Photo Not ADDED ,Try again");
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = photos.AssetId });
+        }
+        public IActionResult OnGetDeletePhoto(int AssetId, int AssetPhotoId)
+        {
+            var Result = Context.AssetPhotos.Where(a => a.AssetId == AssetId && a.AssetPhotoId == AssetPhotoId).FirstOrDefault();
 
-        //    Context.AssetPhotos.Remove(Result);
-        //    ActionLog actionLog = new ActionLog() { ActionLogTitle = "Detached Asset Photo" };
-        //    Asset asset = Context.Assets.Find(AssetId);
-        //    AssetLog assetLog = new AssetLog()
-        //    {
-        //        ActionLog = actionLog,
-        //        Asset = asset,
-        //        ActionDate = DateTime.Now,
-        //    };
-        //    Context.AssetLogs.Add(assetLog);
-        //    Context.SaveChanges();
-        //    if (Result.PhotoUrl != null)
-        //    {
-        //        var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, Result.PhotoUrl);
-        //        if (System.IO.File.Exists(ImagePath))
-        //        {
-        //            System.IO.File.Delete(ImagePath);
-        //        }
-        //    }
+            Context.AssetPhotos.Remove(Result);
+            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Detached Asset Photo" };
+            Asset asset = Context.Assets.Find(AssetId);
+            AssetLog assetLog = new AssetLog()
+            {
+                ActionLog = actionLog,
+                Asset = asset,
+                ActionDate = DateTime.Now,
+            };
+            Context.AssetLogs.Add(assetLog);
+            Context.SaveChanges();
+            if (Result.PhotoUrl != null)
+            {
+                var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, Result.PhotoUrl);
+                if (System.IO.File.Exists(ImagePath))
+                {
+                    System.IO.File.Delete(ImagePath);
+                }
+            }
 
-        //    return new JsonResult(Result);
-        //}
-        //public async Task<IActionResult> OnPostAddAssetDocument(AssetDocument instance, IFormFile file)
-        //{
+            return new JsonResult(Result);
+        }
+        public async Task<IActionResult> OnPostAddAssetDocument(AssetDocument instance, IFormFile file)
+        {
 
-        //    if (file != null)
-        //    {
+            if (file != null)
+            {
 
-        //        string folder = "Documents/AssetDocuments/";
-        //        instance.DocumentType = await UploadImage(folder, file);
-        //    }
+                string folder = "Documents/AssetDocuments/";
+                instance.DocumentType = await UploadImage(folder, file);
+            }
 
 
-        //    Context.assetDocuments.Add(instance);
-        //    ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Asset Document" };
-        //    Asset asset = Context.Assets.Find(instance.AssetId);
-        //    AssetLog assetLog = new AssetLog()
-        //    {
-        //        ActionLog = actionLog,
-        //        Asset = asset,
-        //        ActionDate = DateTime.Now,
-        //        Remark = string.Format($"Document Name : {instance.DocumentName} ")
-        //    };
-        //    Context.AssetLogs.Add(assetLog);
-        //    Context.SaveChanges();
-        //    _toastNotification.AddSuccessToastMessage("Asset Document Added successfully");
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
+            Context.assetDocuments.Add(instance);
+            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Asset Document" };
+            Asset asset = Context.Assets.Find(instance.AssetId);
+            AssetLog assetLog = new AssetLog()
+            {
+                ActionLog = actionLog,
+                Asset = asset,
+                ActionDate = DateTime.Now,
+                Remark = string.Format($"Document Name : {instance.DocumentName} ")
+            };
+            Context.AssetLogs.Add(assetLog);
+            Context.SaveChanges();
+            _toastNotification.AddSuccessToastMessage("Asset Document Added successfully");
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
 
-        //}
-        //private async Task<string> UploadImage(string folderPath, IFormFile file)
-        //{
+        }
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
 
-        //    folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
 
-        //    string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folderPath);
+            string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folderPath);
 
-        //    await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
 
-        //    return folderPath;
-        //}
+            return folderPath;
+        }
 
-        //public IActionResult OnpostAddAssetContract(AssetContract assetcontract)
-        //{
+        public IActionResult OnpostAddAssetContract(AssetContract assetcontract)
+        {
 
-        //    if (assetcontract.ContractId != 0 && assetcontract.AssetId != 0)
-        //    {
-        //        var Assetcont = new AssetContract { AssetId = assetcontract.AssetId, ContractId = assetcontract.ContractId };
-        //        Context.AssetContracts.Add(Assetcont);
-        //        ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Contract" };
-        //        Asset asset = Context.Assets.Find(assetcontract.AssetId);
-        //        string ContractTitle = "Contract Title : ";
-        //        string ContractSDate = "Contract Start Date : ";
-        //        string ContractEDate = "Contract End Date : ";
-        //        Contract SelectedContract = Context.Contracts.Find(assetcontract.ContractId);
-        //        string ContractStartDate = SelectedContract.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-        //        string ContractEndDate = SelectedContract.EndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+            if (assetcontract.ContractId != 0 && assetcontract.AssetId != 0)
+            {
+                var Assetcont = new AssetContract { AssetId = assetcontract.AssetId, ContractId = assetcontract.ContractId };
+                Context.AssetContracts.Add(Assetcont);
+                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Contract" };
+                Asset asset = Context.Assets.Find(assetcontract.AssetId);
+                string ContractTitle = "Contract Title : ";
+                string ContractSDate = "Contract Start Date : ";
+                string ContractEDate = "Contract End Date : ";
+                Contract SelectedContract = Context.Contracts.Find(assetcontract.ContractId);
+                string ContractStartDate = SelectedContract.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string ContractEndDate = SelectedContract.EndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
 
-        //        AssetLog assetLog = new AssetLog()
-        //        {
-        //            ActionLog = actionLog,
-        //            Asset = asset,
-        //            ActionDate = DateTime.Now,
-        //            Remark = string.Format($"{ContractTitle}{SelectedContract.Title} , {ContractSDate}{ContractStartDate} and {ContractEDate}{ContractEndDate}")
-        //        };
-        //        Context.AssetLogs.Add(assetLog);
-        //        Context.SaveChanges();
-        //        _toastNotification.AddSuccessToastMessage("Link Contract Added Successfully");
-        //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
-        //    }
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLog = actionLog,
+                    Asset = asset,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"{ContractTitle}{SelectedContract.Title} , {ContractSDate}{ContractStartDate} and {ContractEDate}{ContractEndDate}")
+                };
+                Context.AssetLogs.Add(assetLog);
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Link Contract Added Successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+            }
 
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
-        //}
-        //public IActionResult OnpostAddAssetInsurance(AssetsInsurance assetsInsurance)
-        //{
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+        }
+        public IActionResult OnpostAddAssetInsurance(AssetsInsurance assetsInsurance)
+        {
 
-        //    if (assetsInsurance.InsuranceId != 0 && assetsInsurance.AssetId != 0)
-        //    {
-        //        AssetsInsurance AssetIns = new AssetsInsurance { AssetId = assetsInsurance.AssetId, InsuranceId = assetsInsurance.InsuranceId };
-        //        Context.AssetsInsurances.Add(AssetIns);
-        //        ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Insurance" };
-        //        Asset asset = Context.Assets.Find(assetsInsurance.AssetId);
-        //        string InsuranceTitle = "Insurance Title : ";
-        //        string InsuranceCompany = "Insurance Company : ";
-        //        Insurance SelectedInsurance = Context.Insurances.Find(assetsInsurance.InsuranceId);
-        //        string InsuranceTit = SelectedInsurance.Title;
-        //        string InsuranceComp = SelectedInsurance.InsuranceCompany;
+            if (assetsInsurance.InsuranceId != 0 && assetsInsurance.AssetId != 0)
+            {
+                AssetsInsurance AssetIns = new AssetsInsurance { AssetId = assetsInsurance.AssetId, InsuranceId = assetsInsurance.InsuranceId };
+                Context.AssetsInsurances.Add(AssetIns);
+                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Insurance" };
+                Asset asset = Context.Assets.Find(assetsInsurance.AssetId);
+                string InsuranceTitle = "Insurance Title : ";
+                string InsuranceCompany = "Insurance Company : ";
+                Insurance SelectedInsurance = Context.Insurances.Find(assetsInsurance.InsuranceId);
+                string InsuranceTit = SelectedInsurance.Title;
+                string InsuranceComp = SelectedInsurance.InsuranceCompany;
 
-        //        AssetLog assetLog = new AssetLog()
-        //        {
-        //            ActionLog = actionLog,
-        //            Asset = asset,
-        //            ActionDate = DateTime.Now,
-        //            Remark = string.Format($"{InsuranceTitle}{InsuranceTit} and {InsuranceCompany}{InsuranceComp} ")
-        //        };
-        //        Context.AssetLogs.Add(assetLog);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLog = actionLog,
+                    Asset = asset,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"{InsuranceTitle}{InsuranceTit} and {InsuranceCompany}{InsuranceComp} ")
+                };
+                Context.AssetLogs.Add(assetLog);
 
-        //        Context.SaveChanges();
-        //        _toastNotification.AddSuccessToastMessage("Link Insurance Added Successfully");
-        //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
-        //    }
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Link Insurance Added Successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+            }
 
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
-        //}
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+        }
 
         ////public IActionResult OnPostAddAssetCheckOut(AssetMovement assetMovement,int AssetId)
         ////{
@@ -449,146 +454,145 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = Sellasset.AssetId });
         //}
-        //public IActionResult OnpostAddAssetBroken(AssetBroken assetBroken)
-        //{
+        public IActionResult OnpostAddAssetBroken(AssetBroken assetBroken)
+        {
 
-        //    if (assetBroken.AssetId != 0)
-        //    {
-        //        AssetBroken assetBroke = new AssetBroken { AssetId = assetBroken.AssetId, DateBroken = assetBroken.DateBroken, Notes = assetBroken.Notes };
-        //        assetBroke.AssetBrokenDetails.Add(new AssetBrokenDetails(){ AssetId = Asset.AssetId, Remarks = "" });
-        //        Context.assetBrokens.Add(assetBroke);
-        //        Asset.AssetStatusId = 8;
-        //        var UpdatedAsset = Context.Assets.Attach(Asset);
-        //        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        //        ActionLog actionLog = new ActionLog() { ActionLogTitle = "Broken Asset" };
-        //        Asset asset = Context.Assets.Find(assetBroken.AssetId);
-        //        string BrockenDate = assetBroken.DateBroken.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+            if (ModelState.IsValid)
+            {              
+                var asset = Context.Assets.Find(AssetId);
+                assetBroken.AssetBrokenDetails = new List<AssetBrokenDetails>();
+                assetBroken.AssetBrokenDetails.Add(new AssetBrokenDetails() { AssetId = AssetId, Remarks = "" });
+                Context.assetBrokens.Add(assetBroken);
+               
+                asset.AssetStatusId = 8;
+                var UpdatedAsset = Context.Assets.Attach(asset);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                string BrockenDate = assetBroken.DateBroken.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 12,
+                    AssetId = AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"Brocken Asset Date {BrockenDate}")
+                };
+                Context.AssetLogs.Add(assetLog);
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Broken Added successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
+            }
 
-        //        AssetLog assetLog = new AssetLog()
-        //        {
-        //            ActionLog = actionLog,
-        //            Asset = asset,
-        //            ActionDate = DateTime.Now,
-        //            Remark = string.Format($"Brocken Asset Date {BrockenDate}")
-        //        };
-        //        Context.AssetLogs.Add(assetLog);
-        //        Context.SaveChanges();
-        //        _toastNotification.AddSuccessToastMessage("Asset Broken Added successfully");
-        //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetBroken.AssetId });
-        //    }
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
+        }
 
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetBroken.AssetId });
-        //}
+        public IActionResult OnPostAddAssetMaintainance(AssetMaintainance assetMaintainance)
+        {
+            if (!assetMaintainance.AssetMaintainanceRepeating)
+            {
+                if (assetMaintainance.AssetMaintainanceFrequencyId != null ||
+                    assetMaintainance.WeekDayId != null || assetMaintainance.WeeklyPeriod != null
+                    || assetMaintainance.MonthlyDay != null || assetMaintainance.MonthlyPeriod != null
+                    || assetMaintainance.YearlyDay != null || assetMaintainance.MonthId != null)
+                {
+                    _toastNotification.AddErrorToastMessage("Asset Maintainance Not Added ,Try again");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                Context.AssetMaintainances.Add(assetMaintainance);
+                Asset.AssetStatusId = 9;
+                var UpdatedAsset = Context.Assets.Attach(Asset);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Maintainance Added successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+            }
+            _toastNotification.AddErrorToastMessage("Asset Maintainance Not Added ,Try again");
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+        }
 
-        //public IActionResult OnPostAddAssetMaintainance(AssetMaintainance assetMaintainance)
-        //{
-        //    if (!assetMaintainance.AssetMaintainanceRepeating)
-        //    {
-        //        if(assetMaintainance.AssetMaintainanceFrequencyId!=null || 
-        //            assetMaintainance.WeekDayId!=null ||assetMaintainance.WeeklyPeriod !=null
-        //            || assetMaintainance.MonthlyDay !=null || assetMaintainance.MonthlyPeriod !=null
-        //            || assetMaintainance.YearlyDay !=null ||assetMaintainance.MonthId!=null)
-        //        {
-        //            _toastNotification.AddErrorToastMessage("Asset Maintainance Not Added ,Try again");
-        //            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
-        //        }
-        //    }
-        //    if (ModelState.IsValid)
-        //    {
-        //        Context.AssetMaintainances.Add(assetMaintainance);
-        //        Asset.AssetStatusId = 9;
-        //        var UpdatedAsset = Context.Assets.Attach(Asset);
-        //        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        //        Context.SaveChanges();
-        //        _toastNotification.AddSuccessToastMessage("Asset Maintainance Added successfully");
-        //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
-        //    }
-        //    _toastNotification.AddErrorToastMessage("Asset Maintainance Not Added ,Try again");
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
-        //}
+        public IActionResult OnpostDeattachAssetContract(AssetContract assetContract)
+        {
+            AssetContract _assetContract = Context.AssetContracts.Where(e => e.AssetContractID == assetContract.AssetContractID && e.AssetId == assetContract.AssetId).FirstOrDefault();
+            try
+            {
+                Context.AssetContracts.Remove(_assetContract);
+                _toastNotification.AddSuccessToastMessage("Asset Contract Dettached Succeffully");
+            }
+            catch (Exception)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
+            Contract contract = Context.Contracts.Find(assetContract.ContractId);
+            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Contract" };
+            Asset asset = Context.Assets.Find(assetContract.AssetId);
+            AssetLog assetLog = new AssetLog()
+            {
+                ActionLog = actionLog,
+                Asset = asset,
+                ActionDate = DateTime.Now,
+                Remark = string.Format($"Dettached Asset Contract With Contract Name : {contract.Title} and Contract Number : {contract.ContractNo}")
+            };
+            Context.AssetLogs.Add(assetLog);
 
-        //public IActionResult OnpostDeattachAssetContract(AssetContract assetContract)
-        //{
-        //    AssetContract _assetContract = Context.AssetContracts.Where(e => e.AssetContractID == assetContract.AssetContractID && e.AssetId == assetContract.AssetId).FirstOrDefault();
-        //    try
-        //    {
-        //        Context.AssetContracts.Remove(_assetContract);
-        //        _toastNotification.AddSuccessToastMessage("Asset Contract Dettached Succeffully");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        _toastNotification.AddErrorToastMessage("Some Thing Went Error");
-        //    }
-        //    Contract contract = Context.Contracts.Find(assetContract.ContractId);
-        //    ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Contract" };
-        //    Asset asset = Context.Assets.Find(assetContract.AssetId);
-        //    AssetLog assetLog = new AssetLog()
-        //    {
-        //        ActionLog = actionLog,
-        //        Asset = asset,
-        //        ActionDate = DateTime.Now,
-        //        Remark = string.Format($"Dettached Asset Contract With Contract Name : {contract.Title} and Contract Number : {contract.ContractNo}")
-        //    };
-        //    Context.AssetLogs.Add(assetLog);
+            Context.SaveChanges();
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetContract.AssetId });
 
-        //    Context.SaveChanges();
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetContract.AssetId });
+        }
+        public IActionResult OnpostDeattachAssetInsurance(AssetsInsurance assetInsurance)
+        {
+            AssetsInsurance _assetInsurance = Context.AssetsInsurances.Where(e => e.AssetsInsuranceId == assetInsurance.AssetsInsuranceId && e.AssetId == assetInsurance.AssetId).FirstOrDefault();
+            try
+            {
+                Context.AssetsInsurances.Remove(_assetInsurance);
+                _toastNotification.AddSuccessToastMessage("Asset Insurance Dettached Succeffully");
+            }
+            catch (Exception)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
+            Insurance insurance = Context.Insurances.Find(assetInsurance.InsuranceId);
+            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Insurance" };
+            Asset asset = Context.Assets.Find(assetInsurance.AssetId);
+            AssetLog assetLog = new AssetLog()
+            {
+                ActionLog = actionLog,
+                Asset = asset,
+                ActionDate = DateTime.Now,
+                Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
+            };
+            Context.AssetLogs.Add(assetLog);
 
-        //}
-        //public IActionResult OnpostDeattachAssetInsurance(AssetsInsurance assetInsurance)
-        //{
-        //    AssetsInsurance _assetInsurance = Context.AssetsInsurances.Where(e => e.AssetsInsuranceId == assetInsurance.AssetsInsuranceId && e.AssetId == assetInsurance.AssetId).FirstOrDefault();
-        //    try
-        //    {
-        //        Context.AssetsInsurances.Remove(_assetInsurance);
-        //        _toastNotification.AddSuccessToastMessage("Asset Insurance Dettached Succeffully");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        _toastNotification.AddErrorToastMessage("Some Thing Went Error");
-        //    }
-        //    Insurance insurance = Context.Insurances.Find(assetInsurance.InsuranceId);
-        //    ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Insurance" };
-        //    Asset asset = Context.Assets.Find(assetInsurance.AssetId);
-        //    AssetLog assetLog = new AssetLog()
-        //    {
-        //        ActionLog = actionLog,
-        //        Asset = asset,
-        //        ActionDate = DateTime.Now,
-        //        Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
-        //    };
-        //    Context.AssetLogs.Add(assetLog);
+            Context.SaveChanges();
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetInsurance.AssetId });
 
-        //    Context.SaveChanges();
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetInsurance.AssetId });
+        }
+        public IActionResult OnpostDeattachAssetDocument(AssetDocument assetDocument)
+        {
+            AssetDocument _assetDocument = Context.assetDocuments.Where(e => e.AssetDocumentId == assetDocument.AssetDocumentId && e.AssetId == assetDocument.AssetId).FirstOrDefault();
+            string AssetDocName = _assetDocument.DocumentName;
+            try
+            {
+                Context.assetDocuments.Remove(_assetDocument);
+                _toastNotification.AddSuccessToastMessage("Asset Document Dettached Succeffully");
+            }
+            catch (Exception)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
+            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Document" };
+            Asset asset = Context.Assets.Find(assetDocument.AssetId);
+            AssetLog assetLog = new AssetLog()
+            {
+                ActionLog = actionLog,
+                Asset = asset,
+                ActionDate = DateTime.Now,
+                Remark = string.Format($"Dettached Asset Document With Document Name : {AssetDocName} ")
+            };
+            Context.AssetLogs.Add(assetLog);
+            Context.SaveChanges();
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
 
-        //}
-        //public IActionResult OnpostDeattachAssetDocument(AssetDocument assetDocument)
-        //{
-        //    AssetDocument _assetDocument = Context.assetDocuments.Where(e => e.AssetDocumentId == assetDocument.AssetDocumentId && e.AssetId == assetDocument.AssetId).FirstOrDefault();
-        //    string AssetDocName = _assetDocument.DocumentName;
-        //    try
-        //    {
-        //        Context.assetDocuments.Remove(_assetDocument);
-        //        _toastNotification.AddSuccessToastMessage("Asset Document Dettached Succeffully");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        _toastNotification.AddErrorToastMessage("Some Thing Went Error");
-        //    }
-        //    ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Document" };
-        //    Asset asset = Context.Assets.Find(assetDocument.AssetId);
-        //    AssetLog assetLog = new AssetLog()
-        //    {
-        //        ActionLog = actionLog,
-        //        Asset = asset,
-        //        ActionDate = DateTime.Now,
-        //        Remark = string.Format($"Dettached Asset Document With Document Name : {AssetDocName} ")
-        //    };
-        //    Context.AssetLogs.Add(assetLog);
-        //    Context.SaveChanges();
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
-
-        //}
+        }
     }
 }
