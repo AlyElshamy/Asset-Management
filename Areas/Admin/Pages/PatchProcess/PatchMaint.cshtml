@@ -54,7 +54,7 @@
                     .AllowSorting(false)
                     .CellTemplate(@<text>
                             <div>
-                                <img src="<%- value %>" alt="" width="35" height="35" />
+                                <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
                     columns.AddFor(m => m.AssetDescription).Caption(sharedResource["Asset Description"]);
@@ -97,14 +97,14 @@
                             <div class="modal-content bd-0 tx-14">
                              <div class="modal-body pd-25">
                             <div class="row mg-b-25" >
-                           <div class="col-lg-6">
+                           <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label">Title <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceTitle"  class="form-control "  >
                    <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceTitle" class="text-danger"></span>
                 </div>
               </div><!-- col-6 -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label">Details <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceDetails"  class="form-control "  >
@@ -112,7 +112,7 @@
                 </div>
               </div><!-- col-6 -->
 
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label">Due Date <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceDueDate" type="date" class="form-control date" value=" " >
@@ -120,7 +120,7 @@
                 </div>
               </div><!-- col-6 -->
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label">Maintaince By <span class="tx-danger">*</span></label>
                       @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.TechnicianId)
@@ -135,7 +135,7 @@
                    <span asp-validation-for="@Model.assetMaintainance.TechnicianId" class="text-danger"></span>
                 </div>
               </div><!-- col-6 -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label">Maintainance Status<span class="tx-danger">*</span></label>
                               @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.MaintainanceStatusId)
@@ -151,7 +151,7 @@
                 </div>
               </div><!-- col-6 -->
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label"> Date Completed <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceDateCompleted" type="date" class="form-control date" value=" " >
@@ -159,7 +159,7 @@
                 </div>
               </div><!-- col-6 -->
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                 <div class="form-group">
                     <label class="form-control-label">Cost Of Repairs <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="form-control " >
@@ -167,7 +167,7 @@
                 </div>
               </div><!-- col-6 -->
 
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group">
                             <label class="form-control-label">Repeating</label>
                             <div class="col-md-10">
@@ -178,7 +178,7 @@
                         </div>
                         </div>
 
-                  <div class="col-lg-6"  id="MaintainanceFrequency" style="display:none" >
+                  <div class="col-lg-12"  id="MaintainanceFrequency" style="display:none" >
                 <div class="form-group">
                     <label class="form-control-label">Frequency<span class="tx-danger">*</span></label>
                               @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.AssetMaintainanceFrequencyId)
@@ -196,7 +196,7 @@
                 </div>
               </div><!-- col-6 -->
 
-           <div class="col-lg-6"  id="WeeklyFrequency" style="display:none"  >
+           <div class="col-lg-12"  id="WeeklyFrequency" style="display:none"  >
             <label >Recur on</label>
                 <div class="form-group">
                     <label >Every</label>
@@ -219,7 +219,7 @@
                 </div>
               </div><!-- col-6 -->
 
-                       <div class="col-lg-6"  id="MonthlyFrequency" style="display:none" >
+                       <div class="col-lg-12"  id="MonthlyFrequency" style="display:none" >
                    <label >Recur on</label>
                 <div class="form-group">
               <label >Every</label>
@@ -231,7 +231,7 @@
                 </div>
               </div><!-- col-6 -->
 
-                       <div class="col-lg-6"  id="YearlyFrequency" style="display:none" >
+                       <div class="col-lg-12"  id="YearlyFrequency" style="display:none" >
                 <label >Recur on</label>
                 <div class="form-group">
                            <label >Every</label>
