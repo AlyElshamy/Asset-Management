@@ -48,11 +48,11 @@
 
         columns.AddFor(m => m.Notes);
 
-        columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup
+       @* columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("AssetsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
-        );
+        );*@
 
         columns.AddFor(m => m.TechnicianId).Caption("Technician").Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("TechniciansLookup").Key("Value"))

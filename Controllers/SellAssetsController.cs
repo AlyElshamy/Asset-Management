@@ -32,8 +32,7 @@ namespace AssetProject.Controllers
                 i.SoldTo,
                 i.SaleAmount,
                 i.Notes,
-                i.AssetId,
-                i.Asset
+  
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -102,7 +101,7 @@ namespace AssetProject.Controllers
             string SOLD_TO = nameof(SellAsset.SoldTo);
             string SALE_AMOUNT = nameof(SellAsset.SaleAmount);
             string NOTES = nameof(SellAsset.Notes);
-            string ASSET_ID = nameof(SellAsset.AssetId);
+
 
             if(values.Contains(SELL_ASSET_ID)) {
                 model.SellAssetId = Convert.ToInt32(values[SELL_ASSET_ID]);
@@ -124,9 +123,7 @@ namespace AssetProject.Controllers
                 model.Notes = Convert.ToString(values[NOTES]);
             }
 
-            if(values.Contains(ASSET_ID)) {
-                model.AssetId = Convert.ToInt32(values[ASSET_ID]);
-            }
+    
         }
 
         private string GetFullErrorMessage(ModelStateDictionary modelState) {

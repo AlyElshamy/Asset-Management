@@ -28,11 +28,10 @@ namespace AssetProject.Controllers
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
             var disposeassets = _context.DisposeAssets.Select(i => new {
                 i.DisposeAssetId,
-                i.AssetId,
                 i.DateDisposed,
                 i.DisposeTo,
                 i.Notes,
-                i.Asset
+
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -97,7 +96,7 @@ namespace AssetProject.Controllers
 
         private void PopulateModel(DisposeAsset model, IDictionary values) {
             string DISPOSE_ASSET_ID = nameof(DisposeAsset.DisposeAssetId);
-            string ASSET_ID = nameof(DisposeAsset.AssetId);
+        
             string DATE_DISPOSED = nameof(DisposeAsset.DateDisposed);
             string DISPOSE_TO = nameof(DisposeAsset.DisposeTo);
             string NOTES = nameof(DisposeAsset.Notes);
@@ -106,9 +105,6 @@ namespace AssetProject.Controllers
                 model.DisposeAssetId = Convert.ToInt32(values[DISPOSE_ASSET_ID]);
             }
 
-            if(values.Contains(ASSET_ID)) {
-                model.AssetId = Convert.ToInt32(values[ASSET_ID]);
-            }
 
             if(values.Contains(DATE_DISPOSED)) {
                 model.DateDisposed = Convert.ToDateTime(values[DATE_DISPOSED]);

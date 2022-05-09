@@ -35,16 +35,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 ModelState.AddModelError("", "Please Select Item");
                 return Page();
             }
-            //if (Asset.StoreId == 0)
-            //{
-            //    ModelState.AddModelError("", "Please Select Store");
-            //    return Page();
-            //}
-            //if (Asset.VendorId == 0)
-            //{
-            //    ModelState.AddModelError("", "Please Select Vendor");
-            //    return Page();
-            //}
+            if (Asset.StoreId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Store");
+                return Page();
+            }
+            if (Asset.VendorId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Vendor");
+                return Page();
+            }
             if (Asset.DepreciableAsset )
             {
                 if(Asset.DepreciationMethodId==0)
@@ -63,7 +63,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Asset.Photo = await UploadImage(folder, file);
                 }
                 ActionLog actionLog = new ActionLog() { ActionLogTitle = "Asset Purchase" };
-                //Asset.AssetStatusId = 1;
+                Asset.AssetStatusId = 1;
                 Context.Assets.Add(Asset);
                 string Str = "purchase Date : "; 
                 string AssetPurchaseDate = Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);

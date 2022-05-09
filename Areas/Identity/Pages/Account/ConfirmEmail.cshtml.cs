@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using NToastNotify;
 
 namespace AssetProject.Areas.Identity.Pages.Account
 {
@@ -16,10 +17,11 @@ namespace AssetProject.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
+        private readonly IToastNotification _toastNotification;
+        public ConfirmEmailModel(UserManager<ApplicationUser> userManager, IToastNotification toastNotification)
         {
             _userManager = userManager;
+            _toastNotification = toastNotification;
         }
 
         [TempData]
@@ -41,7 +43,9 @@ namespace AssetProject.Areas.Identity.Pages.Account
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await _userManager.ConfirmEmailAsync(user, code);
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
-            return Page();
+            //return Page();
+            //_toastNotification.AddSuccessToastMessage("Email Confirmed , you can LogIn Now !");
+            return RedirectToPage("Login");
         }
     }
 }

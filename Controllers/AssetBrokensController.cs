@@ -30,7 +30,7 @@ namespace AssetProject.Controllers
                 i.AssetBrokenId,
                 i.DateBroken,
                 i.Notes,
-                i.Asset
+
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -97,7 +97,7 @@ namespace AssetProject.Controllers
             string ASSET_BROKEN_ID = nameof(AssetBroken.AssetBrokenId);
             string DATE_BROKEN = nameof(AssetBroken.DateBroken);
             string NOTES = nameof(AssetBroken.Notes);
-            string ASSET_ID = nameof(AssetBroken.AssetId);
+  
 
             if(values.Contains(ASSET_BROKEN_ID)) {
                 model.AssetBrokenId = Convert.ToInt32(values[ASSET_BROKEN_ID]);
@@ -111,9 +111,6 @@ namespace AssetProject.Controllers
                 model.Notes = Convert.ToString(values[NOTES]);
             }
 
-            if(values.Contains(ASSET_ID)) {
-                model.AssetId = Convert.ToInt32(values[ASSET_ID]);
-            }
         }
 
         private string GetFullErrorMessage(ModelStateDictionary modelState) {

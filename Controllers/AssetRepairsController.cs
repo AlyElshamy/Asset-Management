@@ -32,7 +32,7 @@ namespace AssetProject.Controllers
                 i.CompletedDate,
                 i.RepairCost,
                 i.Notes,
-                i.AssetId,
+
                 i.TechnicianId
             });
 
@@ -113,7 +113,7 @@ namespace AssetProject.Controllers
             string COMPLETED_DATE = nameof(AssetRepair.CompletedDate);
             string REPAIR_COST = nameof(AssetRepair.RepairCost);
             string NOTES = nameof(AssetRepair.Notes);
-            string ASSET_ID = nameof(AssetRepair.AssetId);
+ 
             string TECHNICIAN_ID = nameof(AssetRepair.TechnicianId);
 
             if(values.Contains(ASSET_REPAIR_ID)) {
@@ -136,9 +136,6 @@ namespace AssetProject.Controllers
                 model.Notes = Convert.ToString(values[NOTES]);
             }
 
-            if(values.Contains(ASSET_ID)) {
-                model.AssetId = Convert.ToInt32(values[ASSET_ID]);
-            }
 
             if(values.Contains(TECHNICIAN_ID)) {
                 model.TechnicianId = Convert.ToInt32(values[TECHNICIAN_ID]);
