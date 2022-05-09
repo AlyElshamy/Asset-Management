@@ -84,7 +84,7 @@ namespace AssetProject.Data
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 11, ActionLogTitle = "Dispose Asset " });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 12, ActionLogTitle = "Broken Asset" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 13, ActionLogTitle = "Repair Asset" });
-            modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 14, ActionLogTitle = "Repair Asset" });
+            modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 14, ActionLogTitle = "Asset Lost" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 15, ActionLogTitle = "Asset Leasing" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 16, ActionLogTitle = "CheckIn" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 17, ActionLogTitle = "CheckOut" });
