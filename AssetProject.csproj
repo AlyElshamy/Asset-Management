@@ -34,7 +34,6 @@
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.2" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
     <PackageReference Include="NToastNotify" Version="7.0.0" />
-	  <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
 	  <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="21.2.6" />
 	  <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
 
