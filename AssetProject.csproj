@@ -10,16 +10,7 @@
     <None Remove="Data\Migrations\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Areas\Admin\Pages\SellAssetManagement\SellAssetList.cshtml.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Areas\Admin\Pages\AssetBrokenManagement\AssetBrokenList.cshtml" />
-    <Content Remove="Areas\Admin\Pages\AssetLeasingManagement\LeasingList.cshtml" />
-    <Content Remove="Areas\Admin\Pages\AssetLostManagement\AddLostList.cshtml" />
-    <Content Remove="Areas\Admin\Pages\AssetManagment\GetAssetRepair.cshtml" />
     <Content Remove="Areas\Admin\Pages\CustomerManagement\CustomerDetails.cshtml" />
-    <Content Remove="Areas\Admin\Pages\Dispose Asset Managment\DisposeAssetList.cshtml" />
-    <Content Remove="Areas\Admin\Pages\SellAssetManagement\SellAssetList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
@@ -39,7 +30,6 @@
 
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Pages\SellAssetManagement\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Migrations\Asset\" />
     <Folder Include="wwwroot\Documents\AssetDocuments\" />

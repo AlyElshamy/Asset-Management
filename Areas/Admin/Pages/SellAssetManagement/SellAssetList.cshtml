@@ -20,7 +20,7 @@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
 
-                    @(Html.DevExtreme().DataGrid<AssetProject.Models.SellAsset>()
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetSellDetails>()
                     .DataSource(ds => ds.Mvc()
                     .Controller("SellAssets")
                     .LoadAction("Get")
@@ -40,30 +40,38 @@
                     .Visible(true)
                     .ApplyFilter(GridApplyFilterMode.Auto)
                     )
-                    @*.HeaderFilter(headerFilter => headerFilter.Visible(true))
+                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                    
                     .Columns(columns => {
 
-                    columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                            <a href="/Admin/ContractManagment/EditContract?id=<%- data.ContractId %>"> @sharedResource["Edit"] |  </a>
-                            <a href="/Admin/ContractManagment/DeleteContract?id=<%- data.ContractId %>"> @sharedResource["Delete"] | </a>
-                            <a href="/Admin/ContractManagment/DetailsContract?id=<%- data.ContractId %>">@sharedResource["Details"]  </a>
-                        </text>).Width(150);
-                    })*@
+                        columns.AddFor(m => m.SellAsset.SaleAmount).Caption("Sale Amount");
+                        columns.AddFor(m => m.SellAsset.SoldTo).Caption("Soled to");
+                        columns.AddFor(m => m.SellAsset.Notes).Caption("Sale Notes");
+                        
+                        columns.AddFor(m => m.Asset.Photo).Width(100)
+                .AllowFiltering(false)
+                .AllowSorting(false)
 
-                    .Columns(columns => {
+                        .CellTemplate(@<text>
+                            <div>
+                                <img src="/<%- value %>" alt="" width="35" height="35" />
+                            </div>
+                        </text>);
+                        columns.AddFor(m => m.Asset.AssetDescription);
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("Asset Serial Number");
+                        columns.AddFor(m => m.Asset.AssetTagId);
 
-                        columns.AddFor(m => m.Asset.AssetLife).Caption("Asset Life");
+                        columns.AddFor(m => m.Asset.AssetCost);
 
-                        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Asset Cost"]);
+                        columns.AddFor(m => m.Asset.AssetSerialNo);
 
-                        columns.AddFor(m => m.SaleDate).Caption("Sale Date");
+                        columns.AddFor(m => m.Asset.AssetPurchaseDate);
 
-                        columns.AddFor(m => m.SaleAmount).Caption("Sale Amount");
-                        columns.AddFor(m => m.SoldTo).Caption("Soled to");
-                        columns.AddFor(m => m.Notes).Caption("Sale Notes");
-
+                        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+                        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
+                        .ValueExpr("Value")
+                        .DisplayExpr("Text")
+                        );
 
                         //columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup
                         //.DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))

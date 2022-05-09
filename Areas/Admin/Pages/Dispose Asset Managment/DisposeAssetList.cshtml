@@ -21,7 +21,7 @@
             @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                    @(Html.DevExtreme().DataGrid<AssetProject.Models.DisposeAsset>()
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetDisposeDetails>()
                      .ID("gridContaine")
                     .DataSource(ds => ds.Mvc()
                     .Controller("DisposeAssets")
@@ -73,9 +73,9 @@
                         );
 
 
-                        columns.AddFor(m => m.DateDisposed).Caption(sharedResource["Date Disposed"]);
-                        columns.AddFor(m => m.DisposeTo).Caption(sharedResource["Dispose To"]);
-                        columns.AddFor(m => m.Notes).Caption(sharedResource["Notes"]);
+                        columns.AddFor(m => m.DisposeAsset.DateDisposed).Caption(sharedResource["Date Disposed"]);
+                        columns.AddFor(m => m.DisposeAsset.DisposeTo).Caption(sharedResource["Dispose To"]);
+                        columns.AddFor(m => m.DisposeAsset.Notes).Caption(sharedResource["Notes"]);
                     })
                     )
                     @(Html.DevExtreme().Popup().ID("customPopup").Width(700)
