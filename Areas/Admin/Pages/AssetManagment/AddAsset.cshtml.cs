@@ -62,7 +62,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     string folder = "Images/AssetPhotos/";
                     Asset.Photo = await UploadImage(folder, file);
                 }
-                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Asset Purchase" };
+              
                 Asset.AssetStatusId = 1;
                 Context.Assets.Add(Asset);
                 string Str = "purchase Date : "; 
@@ -70,7 +70,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
                 AssetLog assetLog = new AssetLog()
                 {
-                    ActionLog = actionLog,
+                    ActionLogId = 1,
                     Asset = Asset,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"{Str}{AssetPurchaseDate}")
