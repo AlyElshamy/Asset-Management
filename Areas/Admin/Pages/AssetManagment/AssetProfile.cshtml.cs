@@ -203,131 +203,142 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
         }
 
-        ////public IActionResult OnPostAddAssetCheckOut(AssetMovement assetMovement,int AssetId)
-        ////{
+        public IActionResult OnPostAddAssetCheckOut(AssetMovement assetMovement)
+        {
 
-        ////    if (ModelState.IsValid)
-        ////    {
-        ////        var Asset = Context.Assets.Find(AssetId);
-        ////        var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a => a.AssetId == AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
-        ////        if (LastAssetMovementDetails != null)
-        ////        {
-        ////            var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
+            if (ModelState.IsValid&&assetMovement.ActionTypeId!=null
+                &&assetMovement.DepartmentId!=null&&assetMovement.LocationId!=null
+                )
+            {
+                if (assetMovement.ActionTypeId == 1)
+                {
+                    if(assetMovement.EmpolyeeID==null)
+                    {
+                        _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
+                        return Page();
+                    }
+                }
+                var Asset = Context.Assets.Find(AssetId);
+                var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a => a.AssetId == AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                if (LastAssetMovementDetails != null)
+                {
+                    var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
 
-        ////            if (LastAssetMovement == null)
-        ////            {
-        ////                assetMovement.StoreId = Asset.StoreId;
-        ////            }
-        ////            else
-        ////            {
-        ////                assetMovement.StoreId = LastAssetMovement.StoreId;
-        ////            }
+                    if (LastAssetMovement == null)
+                    {
+                        assetMovement.StoreId = Asset.StoreId;
+                    }
+                    else
+                    {
+                        assetMovement.StoreId = LastAssetMovement.StoreId;
+                    }
 
-        ////        }
-        ////        assetMovement.AssetMovementDirectionId = 1;
-        ////        Asset.AssetStatusId = 2;
-        ////        var UpdatedAsset = Context.Assets.Attach(Asset);
-        ////        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        ////        Context.AssetMovements.Add(assetMovement);
-        ////        var assetMovementDetails = new AssetMovementDetails()
-        ////        {
-        ////            AssetId = AssetId,
-        ////            AssetMovementId = assetMovement.AssetMovementId
-        ////        };
-        ////        Context.AssetMovementDetails.Add(assetMovementDetails);
-        ////        ActionLog actionLog = new ActionLog() { ActionLogTitle = "Asset Checkout" };
-        ////        Asset asset = Context.Assets.Find(AssetId);
-        ////        string ActionTitle = "Action Title : ";
-        ////        string TransDate = "Transaction Date : ";
-        ////        ActionType SelectedActionType = Context.ActionTypes.Find(assetMovement.ActionTypeId);
-        ////        string TransactionDate = assetMovement.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-        ////        AssetLog assetLog = new AssetLog()
-        ////        {
-        ////            ActionLog = actionLog,
-        ////            Asset = asset,
-        ////            ActionDate = DateTime.Now,
-        ////            Remark = string.Format($"{TransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle}")
-        ////        };
-        ////        Context.AssetLogs.Add(assetLog);
-        ////        Context.SaveChanges();
-        ////        _toastNotification.AddSuccessToastMessage("Asset Movement Added Successfully");
-        ////        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
-        ////    }
-        ////    _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
-        ////    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
-        ////}
+                }
+                assetMovement.AssetMovementDirectionId = 1;
+                Asset.AssetStatusId = 2;
+                var UpdatedAsset = Context.Assets.Attach(Asset);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                assetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                assetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = AssetId, Remarks = "" });           
+                Context.AssetMovements.Add(assetMovement);                        
+                string ActionTitle = "Action Title : ";
+                string TransDate = "Transaction Date : ";
+                string DirectionTitle = "Direction Title : ";
+                ActionType SelectedActionType = Context.ActionTypes.Find(assetMovement.ActionTypeId);
+                AssetMovementDirection Direction = Context.AssetMovementDirections.Find(assetMovement.AssetMovementDirectionId);
+                string TransactionDate = assetMovement.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 17,
+                    AssetId =AssetId ,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"{TransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle} and {DirectionTitle}{Direction.AssetMovementDirectionTitle}")
+                };
+                Context.AssetLogs.Add(assetLog);
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Movement Added Successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+            }
+            _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+        }
 
-        ////public IActionResult OnPostAddAssetCheckIn(AssetMovement assetMovement,int AssetId)
-        ////{
+        public IActionResult OnPostAddAssetCheckIn(AssetMovement assetMovement)
+        {
 
-        ////    if (ModelState.IsValid)
-        ////    {
-        ////        var Asset = Context.Assets.Find(AssetId);
-        ////        var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a=>a.AssetId==AssetId).OrderByDescending(a=>a.AssetMovementDetailsId).FirstOrDefault();
-        ////        if (LastAssetMovementDetails != null)
-        ////        {
-        ////            var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);                   
-        ////            assetMovement.ActionTypeId = LastAssetMovement.ActionTypeId;
-        ////            assetMovement.DepartmentId = LastAssetMovement.DepartmentId;
-        ////            assetMovement.LocationId = LastAssetMovement.LocationId;
-        ////            assetMovement.EmpolyeeID = LastAssetMovement.EmpolyeeID;
-        ////        }
-        ////        assetMovement.AssetMovementDirectionId = 2;
-        ////        Asset.AssetStatusId = 1;
-        ////        var UpdatedAsset = Context.Assets.Attach(Asset);
-        ////        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        ////        Context.AssetMovements.Add(assetMovement);
-        ////        var assetMovementDetails = new AssetMovementDetails()
-        ////        {
-        ////            AssetId = AssetId,
-        ////            AssetMovementId = assetMovement.AssetMovementId
-        ////        };
-        ////        Context.AssetMovementDetails.Add(assetMovementDetails);
-        ////        Context.SaveChanges();
-        ////        _toastNotification.AddSuccessToastMessage("Asset Movement Added Successfully");
-        ////        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
-        ////    }
-        ////    _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
-        ////    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
-        ////}
+            if (ModelState.IsValid&&assetMovement.StoreId!=null)
+            {
+                var asset = Context.Assets.Find(AssetId);
+                var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a => a.AssetId == AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                if (LastAssetMovementDetails != null)
+                {
+                    var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
+                    assetMovement.ActionTypeId = LastAssetMovement.ActionTypeId;
+                    assetMovement.DepartmentId = LastAssetMovement.DepartmentId;
+                    assetMovement.LocationId = LastAssetMovement.LocationId;
+                    assetMovement.EmpolyeeID = LastAssetMovement.EmpolyeeID;
+                }
+                assetMovement.AssetMovementDirectionId = 2;
+                asset.AssetStatusId = 1;
+                var UpdatedAsset = Context.Assets.Attach(asset);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                assetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                assetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = AssetId, Remarks = "" });
+                Context.AssetMovements.Add(assetMovement);
+                string DirectionTitle = "Direction Title : ";
+                string TransDate = "Transaction Date : ";
+                AssetMovementDirection Direction = Context.AssetMovementDirections.Find(assetMovement.AssetMovementDirectionId);
+                string TransactionDate = assetMovement.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 16,
+                    AssetId = AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"{TransDate}{TransactionDate} and {DirectionTitle}{Direction.AssetMovementDirectionTitle}")
+                };
+                Context.AssetLogs.Add(assetLog);
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Movement Added Successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+            }
+            _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+        }
 
-        //public IActionResult OnPostAddAssetRepair(AssetRepair assetRepair)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
+        public IActionResult OnPostAddAssetRepair(AssetRepair assetRepair)
+        {
+            if (ModelState.IsValid&&assetRepair.TechnicianId!=0)
+            {
 
-        //        //Update Asset Status
+                //Update Asset Status
+                var asset = Context.Assets.Find(AssetId);
+                asset.AssetStatusId = 3;
+                var UpdatedAsset = Context.Assets.Attach(asset);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                assetRepair.AssetRepairDetails = new List<AssetRepairDetails>();
+                assetRepair.AssetRepairDetails.Add(new AssetRepairDetails { AssetId = Asset.AssetId, Remarks = "" });
+                Context.AssetRepairs.Add(assetRepair);             
+                Technician technician = Context.Technicians.Find(assetRepair.TechnicianId);
+                string ScheduleDate = "Schedule Date : ";
+                string CompletedDate = "Completed Date : ";
+                string ScheduleD = assetRepair.ScheduleDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string CompletedD = assetRepair.CompletedDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 13,
+                    AssetId =AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"Repair Asset Asigned to {technician.FullName} with {ScheduleDate}{ScheduleD} and {CompletedDate}{CompletedD}")
+                };
 
-        //        Asset.AssetStatusId = 3;
-        //        var UpdatedAsset = Context.Assets.Attach(Asset);
-        //        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-        //        assetRepair.AssetRepairDetails.Add(new AssetRepairDetails  { AssetId=Asset.AssetId,Remarks="" });
-
-        //        Context.AssetRepairs.Add(assetRepair);
-
-        //        ActionLog actionLog = new ActionLog() { ActionLogTitle = "Repair Asset " };
-        //        Technician technician = Context.Technicians.Find(assetRepair.TechnicianId);
-        //        string ScheduleDate = "Schedule Date : ";
-        //        string CompletedDate = "Completed Date : ";
-        //        string ScheduleD = assetRepair.ScheduleDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-        //        string CompletedD = assetRepair.CompletedDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-        //        AssetLog assetLog = new AssetLog()
-        //        {
-        //            ActionLog = actionLog,
-        //            AssetId = Asset.AssetId,
-        //            ActionDate = DateTime.Now,
-        //            Remark = string.Format($"Repair Asset Asigned to {technician.FullName} with {ScheduleDate}{ScheduleD} and {CompletedDate}{CompletedD}")
-        //        };
-
-        //        Context.AssetLogs.Add(assetLog);
-        //        Context.SaveChanges();
-        //        _toastNotification.AddSuccessToastMessage("Asset Repair Added Successfully");
-        //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = Asset.AssetId });
-        //    }
-        //    _toastNotification.AddErrorToastMessage("Asset Repair Not Added ,Try again");
-        //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = Asset.AssetId });
-        //}
+                Context.AssetLogs.Add(assetLog);
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Repair Added Successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+            }
+            _toastNotification.AddErrorToastMessage("Asset Repair Not Added ,Try again");
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+        }
 
         //public IActionResult OnpostAddAssetLost(AssetLost assetlost)
         //{
