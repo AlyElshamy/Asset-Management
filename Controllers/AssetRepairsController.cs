@@ -26,15 +26,16 @@ namespace AssetProject.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var assetrepairs = _context.AssetRepairs.Select(i => new {
-                i.AssetRepairId,
-                i.ScheduleDate,
-                i.CompletedDate,
-                i.RepairCost,
-                i.Notes,
-
-                i.TechnicianId
-            });
+           
+            var assetrepairs = _context.AssetRepairDetails.Select(
+              i => new
+              {
+                  i.AssetRepairDetailsId,
+                  i.AssetRepairId,
+                  i.Asset,
+                  i.AssetId,
+                  i.AssetRepair
+              });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
             // This can make SQL execution plans more efficient.

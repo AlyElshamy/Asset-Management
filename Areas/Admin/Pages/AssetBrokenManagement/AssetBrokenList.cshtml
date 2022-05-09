@@ -17,7 +17,7 @@
             <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                    @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetBroken>()
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetBrokenDetails>()
     .DataSource(ds => ds.Mvc()
         .Controller("AssetBrokens")
         .LoadAction("Get")
@@ -26,9 +26,9 @@
     .RemoteOperations(true)
     .Columns(columns => {
 
-        columns.AddFor(m => m.DateBroken);
+        columns.AddFor(m => m.AssetBroken.DateBroken);
 
-        columns.AddFor(m => m.Notes);
+        columns.AddFor(m => m.AssetBroken.Notes);
 
                     columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
                     .AllowFiltering(false)

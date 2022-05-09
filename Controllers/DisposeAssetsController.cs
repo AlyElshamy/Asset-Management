@@ -26,13 +26,17 @@ namespace AssetProject.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var disposeassets = _context.DisposeAssets.Select(i => new {
-                i.DisposeAssetId,
-                i.DateDisposed,
-                i.DisposeTo,
-                i.Notes,
+          
+            var disposeassets = _context.AssetDisposeDetails.Select(
+                i => new
+                {
+                    i.AssetDisposeDetailsId,
+                    i.DisposeAssetId,
+                    i.Asset,
+                    i.AssetId,
+                    i.DisposeAsset
+                });
 
-            });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
             // This can make SQL execution plans more efficient.
