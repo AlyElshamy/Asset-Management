@@ -5,8 +5,11 @@ namespace AssetProject.Areas.Admin.Pages.Dashboards
 {
     public class DashboardSummaryModel : PageModel
     {
+     
+        public int totalAssetCount { get; set; }
         public void OnGet()
         {
+            totalAssetCount = 125;
         }
     }
 }

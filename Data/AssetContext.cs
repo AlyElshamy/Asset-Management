@@ -22,8 +22,8 @@ namespace AssetProject.Data
             modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod { DepreciationMethodId = 5, DepreciationMethodTitle = "Sum of the Years' Digits" });
 
             //ActionType
-            modelBuilder.Entity<ActionType>().HasData(new ActionType { ActionTypeId = 1, ActionTypeTitle = "To Employee" });
-            modelBuilder.Entity<ActionType>().HasData(new ActionType { ActionTypeId = 2, ActionTypeTitle = "To Department" });
+            modelBuilder.Entity<ActionType>().HasData(new ActionType { ActionTypeId = 1, ActionTypeTitle = "Employee" });
+            modelBuilder.Entity<ActionType>().HasData(new ActionType { ActionTypeId = 2, ActionTypeTitle = "Department" });
 
             //Maintainance Frequency
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 1, AssetMaintainanceFrequencyTitle= "Daily" });

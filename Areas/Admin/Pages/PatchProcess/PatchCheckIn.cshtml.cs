@@ -42,6 +42,29 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 ModelState.AddModelError("", "Please Select Store");
                 return Page();
             }
+            if (assetmovement.ActionTypeId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Action");
+                return Page();
+            }
+            if (assetmovement.LocationId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Location");
+                return Page();
+            }
+            if (assetmovement.DepartmentId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Department");
+                return Page();
+            }
+            if (assetmovement.ActionTypeId == 1)
+            {
+                if (assetmovement.EmpolyeeID == null)
+                {
+                    ModelState.AddModelError("", "Please Select Empolyee");
+                    return Page();
+                }
+            }
 
             if (ModelState.IsValid)
             {

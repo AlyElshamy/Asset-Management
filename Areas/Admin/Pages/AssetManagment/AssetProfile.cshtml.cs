@@ -229,7 +229,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                         assetMovement.StoreId = LastAssetMovement.StoreId;
                     }
                 }
-                assetMovement.StoreId = asset.StoreId;
+                else
+                {
+                    assetMovement.StoreId = asset.StoreId;
+
+                }
                 assetMovement.AssetMovementDirectionId = 1;
                 asset.AssetStatusId = 2;
                 var UpdatedAsset = Context.Assets.Attach(asset);
@@ -517,6 +521,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Asset.AssetStatusId = 9;
                 var UpdatedAsset = Context.Assets.Attach(Asset);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                string DueDate = assetMaintainance.AssetMaintainanceDueDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string CompletedDate = assetMaintainance.AssetMaintainanceDateCompleted.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 18,
+                    AssetId = AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"Maintainance Asset with Title {assetMaintainance.AssetMaintainanceTitle} and DueDate {DueDate} and Completed Date {CompletedDate}")
+                };
+                Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Asset Maintainance Added successfully");
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });

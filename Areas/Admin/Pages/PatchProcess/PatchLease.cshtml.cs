@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NToastNotify;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 
@@ -41,20 +42,31 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             {
                 if (SelectedAssets.Count != 0)
                 {
+                    assetLeasing.AssetLeasingDetails = new List<AssetLeasingDetails>();
+                    string StartLeasingDate = assetLeasing.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    string EndLeasingDate = assetLeasing.EndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+
                     foreach (var asset in SelectedAssets)
                     {
 
-                        AssetLeasing assetLeasingObj = new AssetLeasing
+                        asset.AssetStatusId = 6;
+                        var UpdatedAsset = _context.Assets.Attach(asset);
+                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        assetLeasing.AssetLeasingDetails.Add(new AssetLeasingDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                        AssetLog assetLog = new AssetLog()
                         {
-                            StartDate=assetLeasing.StartDate,
-                            EndDate=assetLeasing.EndDate,
-                            Notes=assetLeasing.Notes,
-                            CustomerId= assetLeasing.CustomerId,
-                            //AssetId=asset.AssetId
+                            ActionLogId = 15,
+                            AssetId = asset.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"Leasing Asset Date is Between {StartLeasingDate} and {EndLeasingDate}")
                         };
-                        _context.AssetLeasings.Add(assetLeasingObj);
+                        _context.AssetLogs.Add(assetLog);
                     }
-                    try
+                    _context.AssetLeasings.Add(assetLeasing);
+
+                
+                try
                     {
                         _context.SaveChanges();
                     }

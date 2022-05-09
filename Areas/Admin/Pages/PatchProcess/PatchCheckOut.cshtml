@@ -218,7 +218,22 @@
                                     </div>
                                 </div>
 
-
+      <div class="col-lg-12">
+    <div class="form-group">
+        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
+              
+        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
+            .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("StoresLookup")
+                .Key("Value")
+            )
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        )
+         <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
+            </div>
+        </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
