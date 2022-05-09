@@ -61,6 +61,12 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     return Page();
                 }
             }
+
+            if (assetmovement.StoreId == 0)
+            {
+                ModelState.AddModelError("", "Please Select Store");
+                return Page();
+            }
             if (ModelState.IsValid)
             {
                 if (SelectedAssets.Count != 0)
