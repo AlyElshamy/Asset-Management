@@ -1,16 +1,16 @@
 ﻿[
-  {
-    "outputFileName": "wwwroot/css/thirdparty.bundle.css",
-    "inputFiles": [
-      "node_modules/jquery-ui-dist/jquery-ui.min.css",
-      "node_modules/bootstrap/dist/css/bootstrap.min.css",
-      "node_modules/devextreme/dist/css/dx.light.css"
-    ],
-    "minify": {
-      "enabled": false,
-      "adjustRelativePaths": false
-    }
-  },
+  //{
+  //  "outputFileName": "wwwroot/css/thirdparty.bundle.css",
+  //  "inputFiles": [
+  //    "node_modules/jquery-ui-dist/jquery-ui.min.css",
+  //    "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  //    "node_modules/devextreme/dist/css/dx.light.css"
+  //  ],
+  //  "minify": {
+  //    "enabled": false,
+  //    "adjustRelativePaths": false
+  //  }
+  //},
   {
     "outputFileName": "wwwroot/css/viewer.part.bundle.css",
     "inputFiles": [
@@ -24,20 +24,20 @@
     }
   },
 
-  {
-    "outputFileName": "wwwroot/js/thirdparty.bundle.js",
-    "inputFiles": [
-      "node_modules/jquery/dist/jquery.min.js",
-      "node_modules/jquery-ui-dist/jquery-ui.min.js",
-      "node_modules/knockout/build/output/knockout-latest.js",
-      "node_modules/bootstrap/dist/js/bootstrap.min.js",
-      "node_modules/devextreme/dist/js/dx.all.js"
-    ],
-    "minify": {
-      "enabled": false
-    },
-    "sourceMap": false
-  },
+  //{
+  //  "outputFileName": "wwwroot/js/thirdparty.bundle.js",
+  //  "inputFiles": [
+  //    "node_modules/jquery/dist/jquery.min.js",
+  //    "node_modules/jquery-ui-dist/jquery-ui.min.js",
+  //    "node_modules/knockout/build/output/knockout-latest.js",
+  //    "node_modules/bootstrap/dist/js/bootstrap.min.js",
+  //    "node_modules/devextreme/dist/js/dx.all.js"
+  //  ],
+  //  "minify": {
+  //    "enabled": false
+  //  },
+  //  "sourceMap": false
+  //},
   {
     "outputFileName": "wwwroot/js/viewer.part.bundle.js",
     "inputFiles": [
