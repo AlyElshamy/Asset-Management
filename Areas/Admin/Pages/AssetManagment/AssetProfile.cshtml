@@ -85,7 +85,9 @@
                     <div class="card-footer">
 
                         <a href="javascript:void(0)" onclick="editButtonClick(@Model.Asset.AssetId)">@sharedResource["Edit Information"]</a>
-                        <a asp-area="Admin" asp-page="/PrintAssetProfile/PrintAsset" asp-route-AssetId="@Model.Asset.AssetId">@sharedResource["Print Asset"]</a>
+                        <a asp-area="Admin" asp-page="/PrintAssetPurchase/PrintPurchase" asp-route-AssetId="@Model.Asset.AssetId">@sharedResource["Print Asset"]</a>
+                        <a asp-area="Admin" asp-page="/Reports/PrintAssetCheckOut" asp-route-AssetId="@Model.Asset.AssetId">Print Asset CheckOut</a>
+                        <a asp-area="Admin" asp-page="/Reports/AssetCheckIn" asp-route-AssetId="@Model.Asset.AssetId">Print Asset CheckIn</a>
 
                         <div class="dropdown show">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -95,9 +97,9 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 @if (Model.Asset.AssetStatusId == 1)
                                 {
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">@sharedResource["Check Out"]</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">@sharedResource["Check Out"]</a>
                                 }
-                                else if(Model.Asset.AssetStatusId == 2)
+                                else if (Model.Asset.AssetStatusId == 2)
                                 {
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
                                 }

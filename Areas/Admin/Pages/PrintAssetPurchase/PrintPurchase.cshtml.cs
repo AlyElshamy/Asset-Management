@@ -23,30 +23,42 @@ namespace AssetProject.Areas.Admin.Pages.PrintAssetPurchase
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public rptPurchaseList Report { get; set; }
-        public int PurchaseId { get; set; }
+        public int AssetId { get; set; }
 
-        public void OnGet()
+        public void OnGet(int AssetId)
         {
-            //Report = new rptPurchaseList();
-            //List<PuchaseListReportModel> ds = _context.PurchaseAssets.Select(i => new PuchaseListReportModel
-            //{
-            //    ItemTL = i.Item.ItemTitle,
-            //    CategoryTL = i.Item.Category.CategoryTIAR,
-            //    BrandTL = i.Item.Brand.BrandTitle,
-            //    PurchaseSerial = i.Purchase.PurchaseSerial,
-            //    Purchasedate = i.Purchase.Purchasedate,
-            //    Total = i.Purchase.Total,
-            //    Discount = i.Purchase.Discount,
-            //    Net = i.Purchase.Net,
-            //    Quantity = i.Quantity,
-            //    Price = i.Price,
-            //    TotalPurchaseAsset = i.Total,
-            //    DiscountPurchaseAsset = i.Discount,
-            //    NetPurchaseAsset = i.Net
+            List<PuchaseListReportModel> ds = _context.Assets.Select(i => new PuchaseListReportModel
+            {
+                ItemTL = i.Item.ItemTitle,
+                ItemId= i.ItemId,
+                CategoryTL = i.Item.Category.CategoryTIAR,
+                BrandTL = i.Item.Brand.BrandTitle,
+                VendorTitle=i.Vendor.VendorTitle,
+                StoreTitle= i.Store.StoreTitle,
+                AssetTagId= i.AssetTagId,
+                AssetCost= i.AssetCost,
+                AssetSerialNo= i.AssetSerialNo,
+                AssetPurchaseDate= i.AssetPurchaseDate,
+                DepreciationMethod= i.DepreciationMethod.DepreciationMethodTitle,
+                AssetLife= i.AssetLife,
+                DepreciableCost= i.DepreciableCost,
+                SalvageValue= i.SalvageValue
+                //PurchaseSerial = i..PurchaseSerial,
+                //Purchasedate = i.Purchase.Purchasedate,
+                //Total = i.Total,
+                //Discount = i.Purchase.Discount,
+                //Net = i.Purchase.Net,
+                //Quantity = i.Quantity,
+                //Price = i.Price,
+                //TotalPurchaseAsset = i.Total,
+                //DiscountPurchaseAsset = i.Discount,
+                //NetPurchaseAsset = i.Net
 
-            //}).ToList();
-
-            //Report.DataSource = ds;
+            }).ToList();
+            Report = new rptPurchaseList();
+            Report.DataSource = ds;
+            //Report.Parameters[0].Value = AssetId;
+            //Report.RequestParameters = false;
             //Report.Parameters[0].Value = 4;
             //Report.RequestParameters = false;
             //var ds = _context.Purchases.Include(a => a.PurchaseAssets).ThenInclude(a => a.Item).ThenInclude(a => a.Category).ToList();
@@ -64,39 +76,49 @@ namespace AssetProject.Areas.Admin.Pages.PrintAssetPurchase
         }
         public void OnPost()
         {
-            Report = new rptPurchaseList();
-            List<PuchaseListReportModel> ds = _context.PurchaseAssets.Where(e => e.Purchase.PurchaseSerial == filterModel.PurchaseSerial).Select(i => new PuchaseListReportModel {
+            
+
+            
+            List<PuchaseListReportModel> ds = _context.Assets.Select(i => new PuchaseListReportModel {
+
                 ItemTL=i.Item.ItemTitle,
-                CategoryTL=i.Item.Category.CategoryTIAR,
+                ItemId = i.ItemId,
+                StoreId= i.StoreId,
+                VendorId=i.VendorId,
+                CategoryTL = i.Item.Category.CategoryTIAR,
                 BrandTL=i.Item.Brand.BrandTitle,
-                PurchaseSerial=i.Purchase.PurchaseSerial,
-                Purchasedate= i.Purchase.Purchasedate,
-                Total= i.Purchase.Total,
-                Discount= i.Purchase.Discount,
-                Net= i.Purchase.Net,
-                Quantity= i.Quantity,
-                Price= i.Price,
-                TotalPurchaseAsset= i.Total,
-                DiscountPurchaseAsset= i.Discount,
-                NetPurchaseAsset= i.Net
+                VendorTitle = i.Vendor.VendorTitle,
+                StoreTitle = i.Store.StoreTitle,
+                AssetTagId = i.AssetTagId,
+                AssetCost = i.AssetCost,
+                AssetSerialNo = i.AssetSerialNo,
+                AssetPurchaseDate = i.AssetPurchaseDate,
+                DepreciationMethod = i.DepreciationMethod.DepreciationMethodTitle,
+                AssetLife = i.AssetLife,
+                DepreciableCost = i.DepreciableCost,
+                SalvageValue = i.SalvageValue
 
             }).ToList();
-
+            if(filterModel.FromDate!=null && filterModel.ToDate != null)
+            {
+                ds = ds.Where(e => e.AssetPurchaseDate >= filterModel.FromDate && e.AssetPurchaseDate <= filterModel.ToDate).ToList();
+            }
+            if (filterModel.ItemId != null)
+            {
+                ds = ds.Where(c => c.ItemId == filterModel.ItemId).ToList();
+            }
+            if (filterModel.VendorId != null)
+            {
+                ds = ds.Where(c => c.VendorId == filterModel.VendorId).ToList();
+            }
+            if (filterModel.StoreId != null)
+            {
+                ds = ds.Where(c => c.StoreId == filterModel.StoreId).ToList();
+            }
+            Report = new rptPurchaseList();
             Report.DataSource = ds;
 
-            //var ds = _context.Purchases.Include(a => a.PurchaseAssets).ThenInclude(a => a.Item).ThenInclude(a => a.Category).ToList();
-            //if (filterModel.PurchaseSerial != null)
-            //{
-            //    ds = ds.Where(c => c.PurchaseSerial == filterModel.PurchaseSerial).ToList();
-            //    //}
-            //    //if (filterModel.AssetTagId != null)
-            //    //{
-            //    //    ds = ds.Where(c => c.AssetTagId == filterModel.AssetTagId).ToList();
-            //    //}
-
-            //    Report.DataSource = ds;
-
-            //}
+           
 
 
         }

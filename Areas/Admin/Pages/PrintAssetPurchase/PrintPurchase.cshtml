@@ -23,46 +23,63 @@
                         @using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
 
 
-                            @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
-                                .FormData(Model.filterModel)
-                                .LabelMode(FormLabelMode.Outside)
-            .LabelLocation(FormLabelLocation.Top    )
+                            @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>
+    ()
+    .FormData(Model.filterModel)
+    .LabelMode(FormLabelMode.Outside)
+    .LabelLocation(FormLabelLocation.Top    )
     .Items(items => {
 
-        //items.AddSimpleFor(m => m.FromDate).IsRequired(true);
-        //items.AddSimpleFor(m => m.ToDate).IsRequired(true);
-        items.AddSimpleFor(m => m.PurchaseSerial);
+    items.AddSimpleFor(m => m.FromDate).IsRequired(false);
+    items.AddSimpleFor(m => m.ToDate).IsRequired(false);
+    //items.AddSimpleFor(m => m.PurchaseSerial);
 
 
-        items.AddSimpleFor(m => m.AssetSerialNo);
+    //items.AddSimpleFor(m => m.AssetSerialNo);
 
 
-        //items.AddSimpleFor(m => m.ItemId).IsRequired(false)
-        //    .Editor(e => e
-        //        .Lookup()
-        //        .ValueExpr("Value")
-        //        .DisplayExpr("Text")
-        //    );
+    items.AddSimpleFor(m => m.ItemId).IsRequired(false)
+    .Editor(e => e
+    .Lookup()
+    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ItemsLookup").Key("Value"))
 
-        //items.AddSimpleFor(m => m.VendorId).IsRequired(false)
-        // .Editor(e => e
-        //     .Lookup()
-        //     .ValueExpr("Value")
-        //     .DisplayExpr("Text")
-        // );
+    .ValueExpr("Value")
+    .DisplayExpr("Text")
+    );
+    //    items.AddSimpleFor(m => m.DepreciationMethod.DepreciationMethodTitle).IsRequired(false)
+    //.Editor(e => e
+    //    .Lookup()
+    //    .ValueExpr("Value")
+    //    .DisplayExpr("Text")
+    //);
+    items.AddSimpleFor(m => m.StoreId).IsRequired(false)
+    .Editor(e => e
+    .Lookup()
+    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
+    .ValueExpr("Value")
+    .DisplayExpr("Text")
+    );
+    items.AddSimpleFor(m => m.VendorId).IsRequired(false)
+    .Editor(e => e
+    .Lookup()
+    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
+    .ValueExpr("Value")
+    .DisplayExpr("Text")
+    );
 
-        items.AddButton()
-       .HorizontalAlignment(HorizontalAlignment.Left)
-       .ButtonOptions(b => b.Text("Send")
-       .Type(ButtonType.Success)
-       .UseSubmitBehavior(true)
-       );
+
+    items.AddButton()
+    .HorizontalAlignment(HorizontalAlignment.Left)
+    .ButtonOptions(b => b.Text("Show")
+    .Type(ButtonType.Success)
+    .UseSubmitBehavior(true)
+    );
     })
-)
+    )
 
 
-             
-                    </div><!-- post-group -->
+
+</div><!-- post-group -->
                 </div><!-- card -->
             </div>
             <div class="col-lg-9">
