@@ -54,7 +54,7 @@
                     .AllowSorting(false)
                     .CellTemplate(@<text>
                             <div>
-                                <img src="<%- value %>" alt="" width="35" height="35" />
+                                <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
                     columns.AddFor(m => m.AssetDescription).Caption(sharedResource["Asset Description"]);

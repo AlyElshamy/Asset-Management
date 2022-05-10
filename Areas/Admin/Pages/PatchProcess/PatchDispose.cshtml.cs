@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NToastNotify;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
@@ -39,18 +40,33 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             {
                 if (SelectedAssets.Count != 0)
                 {
+                    disposeAsset.AssetDisposeDetails= new List<AssetDisposeDetails>();
+                    string DisposeDate = "Dispose Date : ";
+                    string DisposeTo = "Disposed To  : ";
+                    string DisposeD = disposeAsset.DateDisposed.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    string DisposeFor = disposeAsset.DisposeTo;
+                   
+
+
                     foreach (var asset in SelectedAssets)
                     {
 
-                        DisposeAsset disposeAssetObj = new DisposeAsset
+                        asset.AssetStatusId = 5;
+                        var UpdatedAsset = _context.Assets.Attach(asset);
+                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        disposeAsset.AssetDisposeDetails.Add(new AssetDisposeDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                        AssetLog assetLog = new AssetLog()
                         {
-                            DateDisposed = disposeAsset.DateDisposed,
-                            DisposeTo= disposeAsset.DisposeTo,
-                            Notes=disposeAsset.Notes,
-                            //AssetId = asset.AssetId
+                            ActionLogId = 11,
+                            AssetId = asset.AssetId,
+                            ActionDate = DateTime.Now,
+                             Remark = string.Format($"{DisposeDate}{DisposeD} && {DisposeTo}{DisposeFor}")
                         };
-                        _context.DisposeAssets.Add(disposeAssetObj);
+                        _context.AssetLogs.Add(assetLog);
                     }
+                    _context.DisposeAssets.Add(disposeAsset);
+                  
                     try
                     {
                         _context.SaveChanges();
