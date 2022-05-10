@@ -23,5 +23,13 @@ namespace AssetProject.ReportModels
         public int? DepreciationMethodId { set; get; }
         public Vendor Vendor { set; get; }
         public int? VendorId  { set; get; }
+        public Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public Location Location { get; set; }
+        public int LocationId { get; set; }
+        public Department Department { get; set; }
+        public int DepartmentId { get; set; }
+
+
     }
 }

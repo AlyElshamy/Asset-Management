@@ -2,6 +2,64 @@
 @model AssetProject.Areas.Admin.Pages.ReportsManagement.assetreportModel
 @{
 }
+
+
+@using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
+
+
+    @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
+                                .FormData(Model.filterModel)
+                                .LabelMode(FormLabelMode.Outside)
+            .LabelLocation(FormLabelLocation.Top)
+    .Items(items => {
+
+        //items.AddSimpleFor(m => m.FromDate).IsRequired(true);
+        //items.AddSimpleFor(m => m.ToDate).IsRequired(true);
+
+
+        items.AddSimpleFor(m => m.AssetTagId);
+
+        items.AddSimpleFor(m => m.LocationId).IsRequired(false)
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(false)
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+        
+        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false)
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+
+
+
+        items.AddButton()
+       .HorizontalAlignment(HorizontalAlignment.Left)
+       .ButtonOptions(b => b.Text("Send")
+       .Type(ButtonType.Success)
+       .UseSubmitBehavior(true)
+       );
+    })
+)
+
+
+
+
+
+
 @using AssetProject.Reports
 
 <link rel="stylesheet" href="~/css/viewer.part.bundle.css" />
