@@ -335,9 +335,9 @@ namespace AssetProject.Reports
             this.DataSource = this.objectDataSource1;
             this.FilterString = "[AssetId] = ?AssetId";
             this.Font = new System.Drawing.Font("Arial", 9.75F);
-            this.Margins = new System.Drawing.Printing.Margins(0, 0, 100, 100);
+            this.Margins = new System.Drawing.Printing.Margins(0, 1, 100, 100);
             this.PageHeight = 600;
-            this.PageWidth = 650;
+            this.PageWidth = 655;
             this.PaperKind = System.Drawing.Printing.PaperKind.Custom;
             this.Parameters.AddRange(new DevExpress.XtraReports.Parameters.Parameter[] {
             this.AssetId});

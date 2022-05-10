@@ -1,7 +1,7 @@
 /**
 * DevExpress Analytics (dist\css\dx-analytics.common.css)
-* Version:  21.2.7
-* Build date: Apr 13, 2022
+* Version:  21.2.6
+* Build date: Feb 28, 2022
 * Copyright (c) 2012 - 2022 Developer Express Inc. ALL RIGHTS RESERVED
 * License: https://www.devexpress.com/Support/EULAs/universal.xml
 */
@@ -2590,8 +2590,8 @@
 
 /**
 * DevExpress Analytics (dist\css\dx-analytics.light.css)
-* Version:  21.2.7
-* Build date: Apr 13, 2022
+* Version:  21.2.6
+* Build date: Feb 28, 2022
 * Copyright (c) 2012 - 2022 Developer Express Inc. ALL RIGHTS RESERVED
 * License: https://www.devexpress.com/Support/EULAs/universal.xml
 */
@@ -2829,8 +2829,8 @@
 
 /**
 * DevExpress HTML/JS Reporting (dist\css\dx-webdocumentviewer.css)
-* Version:  21.2.7
-* Build date: Apr 13, 2022
+* Version:  21.2.6
+* Build date: Feb 28, 2022
 * Copyright (c) 2012 - 2022 Developer Express Inc. ALL RIGHTS RESERVED
 * License: https://www.devexpress.com/Support/EULAs/universal.xml
 */
@@ -3148,8 +3148,7 @@
   font-size: 11px;
 }
 .dxrd-preview.dxrd-designer-wrapper .dxrd-preview-search-wrapper .dxrdp-search-loading {
-  margin: 0 auto;
-  display: block;
+  text-align: center;
 }
 .dxrd-preview.dxrd-designer-wrapper .dxrd-preview-search-wrapper .dxrd-preview-search-result {
   top: 200px;
