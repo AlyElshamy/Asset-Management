@@ -1,5 +1,5 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.Reports.AssetCheckInModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.AssetStatusReportModel
 @{
 }
 <div class="slim-mainpanel">
@@ -30,25 +30,14 @@
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
 
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false);
-
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false)
+       
+        items.AddSimpleFor(m => m.StatusId).IsRequired(false)
         .Editor(e => e
         .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-        items.AddSimpleFor(m => m.employeeId).IsRequired(false)
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-
-
-
 
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)

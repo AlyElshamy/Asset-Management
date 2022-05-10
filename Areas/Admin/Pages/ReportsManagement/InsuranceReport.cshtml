@@ -1,7 +1,8 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.Reports.AssetCheckInModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.InsuranceReportModel
 @{
 }
+
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
@@ -32,17 +33,11 @@
 
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false);
 
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false)
+        
+        items.AddSimpleFor(m => m.InsuranceId).IsRequired(false)
         .Editor(e => e
         .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-        items.AddSimpleFor(m => m.employeeId).IsRequired(false)
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("InsurancesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );

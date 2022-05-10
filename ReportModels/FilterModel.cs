@@ -24,11 +24,18 @@ namespace AssetProject.ReportModels
         public Vendor Vendor { set; get; }
         public int? VendorId  { set; get; }
         public Category Category { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Location Location { get; set; }
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public Department Department { get; set; }
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? employeeId { get; set; }
+        public Employee employee { get; set; }
+        public int? ContractId { get; set; }
+        //public Contract Contract { get; set; }
+        public int? InsuranceId { get; set; }
+        public int? CustomerId { get; set; }
+        public int StatusId { get; set; }
 
 
     }

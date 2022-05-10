@@ -31,6 +31,7 @@ namespace AssetProject.ReportModels
         public string LocationTL { get; set; }
         public int LocationId { get; set; }
         public int DepartmentId { get; set; }
-
+        public string Status { get; set; }
+        public int? StatusId { get; set; }
     }
 }

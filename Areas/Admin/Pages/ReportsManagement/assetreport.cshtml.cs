@@ -18,6 +18,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         [BindProperty]
         public int AssetId { get; set; }
+        [BindProperty]
         public FilterModel filterModel { get; set; }
         public rptAssetReports Report { get; set; }
         public AssetContext _context { get; }
@@ -86,18 +87,20 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
             }
-            if (filterModel.LocationId!=0)
+            if (filterModel.LocationId!=null)
             {
                 ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
             }
-            if (filterModel.DepartmentId!=0)
+            if (filterModel.DepartmentId!=null)
             {
                 ds = ds.Where(i => i.DepartmentId == filterModel.DepartmentId).ToList();
             }
-            if (filterModel.CategoryId!=0)
+            if (filterModel.CategoryId!=null)
             {
                 ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
             }
+            Report = new rptAssetReports();
+            Report.DataSource = ds;
 
         }
     }

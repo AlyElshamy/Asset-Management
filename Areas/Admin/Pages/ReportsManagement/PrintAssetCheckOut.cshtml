@@ -2,6 +2,7 @@
 @model AssetProject.Areas.Admin.Pages.Reports.PrintAssetCheckOutModel
 @{
 }
+
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
@@ -13,10 +14,56 @@
             <h6 class="slim-pagetitle">Timeline</h6>
         </div><!-- slim-pageheader -->
 
+
+
         <div class="row row-sm row-timeline">
             <div class="col-lg-3  mg-lg-t-0">
                 <div class="card pd-20 mg-t-20">
-                   
+                    <label class="slim-card-title">Filter</label>
+                    <div class="post-group">
+
+                        @using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
+
+
+                            @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
+                                .FormData(Model.filterModel)
+                                .LabelMode(FormLabelMode.Outside)
+            .LabelLocation(FormLabelLocation.Top)
+    .Items(items => {
+
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false);
+
+        items.AddSimpleFor(m => m.LocationId).IsRequired(false)
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+        items.AddSimpleFor(m => m.employeeId).IsRequired(false)
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+
+
+
+        items.AddButton()
+       .HorizontalAlignment(HorizontalAlignment.Left)
+       .ButtonOptions(b => b.Text("Send")
+       .Type(ButtonType.Success)
+       .UseSubmitBehavior(true)
+       );
+    })
+)
+
+
+
+
+                    </div><!-- post-group -->
                 </div><!-- card -->
             </div>
             <div class="col-lg-9">

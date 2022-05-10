@@ -20,28 +20,73 @@ namespace AssetProject.Areas.Admin.Pages.Reports
         }
 
         [BindProperty]
+        public FilterModel filterModel { get; set; }
         public int AssetId { get; set; }
         public rtpAssetCheckOut Report { get; set; }
 
-        public void OnGet(int AssetId)
+        public void OnGet()
         {
-            List<AssetCheckOutList> ds = _context.AssetMovements.Select(i => new AssetCheckOutList
+            List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e => e.Asset.AssetStatusId == 2).Select(i => new AssetCheckOutList
             {
-                TransactionDate= i.TransactionDate,
-                EmployeeFullN= i.Employee.FullName,
-                LocationTl= i.Location.LocationTitle,
-                DepartmentTl=i.Department.DepartmentTitle,
-                StoreTl=i.Store.StoreTitle,
-                ActionTypeTl= i.ActionType.ActionTypeTitle,
-                AssetMovementDirectionTl= i.AssetMovementDirection.AssetMovementDirectionTitle,
-               
-                
+                TransactionDate= i.AssetMovement.TransactionDate,
+                EmployeeFullN= i.AssetMovement.Employee.FullName,
+                LocationTl= i.AssetMovement.Location.LocationTitle,
+                DepartmentTl=i.AssetMovement.Department.DepartmentTitle,
+                StoreTl=i.Asset.Store.StoreTitle,
+                ActionTypeTl= i.AssetMovement.ActionType.ActionTypeTitle,
+                AssetMovementDirectionTl= i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
+               AssetCost=i.Asset.AssetCost,
+               AssetDescription=i.Asset.AssetDescription,
+                AssetPurchaseDate=i.Asset.AssetPurchaseDate,
+                AssetSerialNo=i.Asset.AssetSerialNo,
+                AssetStatusTl=i.Asset.AssetStatus.AssetStatusTitle,
+                ItemTl=i.Asset.Item.ItemTitle,
+                Remarks=i.Remarks,
+                AssetTagId=i.Asset.AssetTagId
 
             }).ToList();
             Report = new rtpAssetCheckOut();
             Report.DataSource = ds;
-            //Report.Parameters[0].Value = AssetId;
-            //Report.RequestParameters = false;
+        }
+        public void OnPost()
+         {
+            List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e=>e.Asset.AssetStatusId==2).Select(i => new AssetCheckOutList
+            {
+                TransactionDate = i.AssetMovement.TransactionDate,
+                EmployeeFullN = i.AssetMovement.Employee.FullName,
+                LocationTl = i.AssetMovement.Location.LocationTitle,
+                DepartmentTl = i.AssetMovement.Department.DepartmentTitle,
+                StoreTl = i.Asset.Store.StoreTitle,
+                ActionTypeTl = i.AssetMovement.ActionType.ActionTypeTitle,
+                AssetMovementDirectionTl = i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
+               AssetCost = i.Asset.AssetCost,
+               AssetDescription = i.Asset.AssetDescription,
+                AssetPurchaseDate = i.Asset.AssetPurchaseDate,
+                AssetSerialNo = i.Asset.AssetSerialNo,
+                AssetStatusTl = i.Asset.AssetStatus.AssetStatusTitle,
+                ItemTl = i.Asset.Item.ItemTitle,
+                Remarks = i.Remarks,
+                AssetTagId = i.Asset.AssetTagId,
+                AssetMovementId=i.AssetMovement.AssetMovementId,
+                EmployeeId=i.AssetMovement.Employee.ID,
+                LocationId=i.AssetMovement.Location.LocationId
+                
+            }).ToList();
+            if (filterModel.employeeId!=null)
+            {
+                ds = ds.Where(e => e.EmployeeId == filterModel.employeeId).ToList();
+            }
+            if (filterModel.LocationId!=null)
+            {
+                ds = ds.Where(e => e.LocationId == filterModel.LocationId).ToList();
+            }
+            if (filterModel.AssetTagId != null)
+            {
+                ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
+            }
+
+            Report = new rtpAssetCheckOut();
+        Report.DataSource = ds;
         }
     }
 }

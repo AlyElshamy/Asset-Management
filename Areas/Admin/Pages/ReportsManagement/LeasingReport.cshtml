@@ -1,5 +1,5 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.Reports.AssetCheckInModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.LeasingReportModel
 @{
 }
 <div class="slim-mainpanel">
@@ -22,34 +22,19 @@
                     <div class="post-group">
 
                         @using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
-
-
                             @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
                                 .FormData(Model.filterModel)
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
-
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false);
-
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false)
+        items.AddSimpleFor(m => m.CustomerId).IsRequired(false)
         .Editor(e => e
         .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-        items.AddSimpleFor(m => m.employeeId).IsRequired(false)
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-
-
-
-
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
        .ButtonOptions(b => b.Text("Send")
@@ -58,10 +43,6 @@
        );
     })
 )
-
-
-
-
                     </div><!-- post-group -->
                 </div><!-- card -->
             </div>
