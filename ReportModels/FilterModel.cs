@@ -36,6 +36,10 @@ namespace AssetProject.ReportModels
         public int? InsuranceId { get; set; }
         public int? CustomerId { get; set; }
         public int StatusId { get; set; }
+        public string EmployeeIdStr { get; set; }
+        public string EmployeeFullName { get; set; }
+        public bool ShowAll { get; set; }
+
 
 
     }
