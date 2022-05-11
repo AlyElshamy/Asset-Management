@@ -26,27 +26,27 @@ namespace AssetProject.Areas.Admin.Pages.Reports
 
         public void OnGet()
         {
-            List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e => e.Asset.AssetStatusId == 2).Select(i => new AssetCheckOutList
-            {
-                TransactionDate= i.AssetMovement.TransactionDate,
-                EmployeeFullN= i.AssetMovement.Employee.FullName,
-                LocationTl= i.AssetMovement.Location.LocationTitle,
-                DepartmentTl=i.AssetMovement.Department.DepartmentTitle,
-                StoreTl=i.Asset.Store.StoreTitle,
-                ActionTypeTl= i.AssetMovement.ActionType.ActionTypeTitle,
-                AssetMovementDirectionTl= i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
-               AssetCost=i.Asset.AssetCost,
-               AssetDescription=i.Asset.AssetDescription,
-                AssetPurchaseDate=i.Asset.AssetPurchaseDate,
-                AssetSerialNo=i.Asset.AssetSerialNo,
-                AssetStatusTl=i.Asset.AssetStatus.AssetStatusTitle,
-                ItemTl=i.Asset.Item.ItemTitle,
-                Remarks=i.Remarks,
-                AssetTagId=i.Asset.AssetTagId
+            //List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e => e.Asset.AssetStatusId == 2).Select(i => new AssetCheckOutList
+            //{
+            //    TransactionDate= i.AssetMovement.TransactionDate,
+            //    EmployeeFullN= i.AssetMovement.Employee.FullName,
+            //    LocationTl= i.AssetMovement.Location.LocationTitle,
+            //    DepartmentTl=i.AssetMovement.Department.DepartmentTitle,
+            //    StoreTl=i.Asset.Store.StoreTitle,
+            //    ActionTypeTl= i.AssetMovement.ActionType.ActionTypeTitle,
+            //    AssetMovementDirectionTl= i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
+            //   AssetCost=i.Asset.AssetCost,
+            //   AssetDescription=i.Asset.AssetDescription,
+            //    AssetPurchaseDate=i.Asset.AssetPurchaseDate,
+            //    AssetSerialNo=i.Asset.AssetSerialNo,
+            //    AssetStatusTl=i.Asset.AssetStatus.AssetStatusTitle,
+            //    ItemTl=i.Asset.Item.ItemTitle,
+            //    Remarks=i.Remarks,
+            //    AssetTagId=i.Asset.AssetTagId
 
-            }).ToList();
+            //}).ToList();
             Report = new rtpAssetCheckOut();
-            Report.DataSource = ds;
+            //Report.DataSource = ds;
         }
         public void OnPost()
          {

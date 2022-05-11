@@ -22,7 +22,7 @@
                     <label class="slim-card-title">Filter</label>
                     <div class="post-group">
 
-                        @using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
+                        @using (Html.BeginForm(FormMethod.Post))
 
 
                             @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
@@ -31,10 +31,10 @@
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
 
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false);
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l=>l.Text("Asset Tag Ig"));
 
         
-        items.AddSimpleFor(m => m.InsuranceId).IsRequired(false)
+        items.AddSimpleFor(m => m.InsuranceId).IsRequired(false).Label(L=>L.Text("Insurance Id"))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("InsurancesLookup").Key("Value"))

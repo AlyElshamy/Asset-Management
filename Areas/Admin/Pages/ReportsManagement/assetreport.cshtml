@@ -23,7 +23,7 @@
                     <label class="slim-card-title">Filter</label>
                     <div class="post-group">
 
-                        @using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
+                        @using (Html.BeginForm(FormMethod.Post))
 
 
                             @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
@@ -36,9 +36,9 @@
         //items.AddSimpleFor(m => m.ToDate).IsRequired(true);
 
 
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false);
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("Asset Tag Id"));
 
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false)
+        items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text("Location"))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
@@ -46,7 +46,7 @@
         .DisplayExpr("Text")
         );
 
-        items.AddSimpleFor(m => m.CategoryId).IsRequired(false)
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text("Category"))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
@@ -54,7 +54,7 @@
         .DisplayExpr("Text")
         );
 
-        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false)
+        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text("Department"))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
