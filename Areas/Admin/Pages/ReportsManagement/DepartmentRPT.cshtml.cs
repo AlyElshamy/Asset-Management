@@ -23,9 +23,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         public rptDepartmentReport Report { get; set; }
         public void OnGet()
         {
-            List<Department> ds = _context.Departments.ToList();
+            //List<Department> ds = _context.Departments.ToList();
             Report = new rptDepartmentReport();
-            Report.DataSource = ds;
+            //Report.DataSource = ds;
         }
        
         public void OnPost()
@@ -34,6 +34,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             if (filterModel.DepartmentTitle != null)
             {
                 ds = ds.Where(d => d.DepartmentTitle.Contains(filterModel.DepartmentTitle)).ToList();
+            }
+            else
+            {
+                ds = new List<Department>();
             }
             Report = new rptDepartmentReport();
             Report.DataSource = ds;

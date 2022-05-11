@@ -28,7 +28,7 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
-        items.AddSimpleFor(m => m.DepartmentTitle).IsRequired(false).Label(l=>l.Text("Department"))
+        items.AddSimpleFor(m => m.DepartmentTitle).IsRequired(false).Label(l=>l.Text("Department"));
    
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
