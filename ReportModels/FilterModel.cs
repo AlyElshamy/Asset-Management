@@ -43,6 +43,11 @@ namespace AssetProject.ReportModels
         public DateTime? OnDay { set; get; }
         public DateTime? BeforeDay { set; get; }
         public DateTime? AfterDay { set; get; }
+        public string EmployeeIdStr { get; set; }
+        public string EmployeeFullName { get; set; }
+        public bool ShowAll { get; set; }
+
+
 
     }
 }
