@@ -37,7 +37,12 @@ namespace AssetProject.ReportModels
         public int? CustomerId { get; set; }
         public string DepartmentTitle { set; get; }
         public int StatusId { get; set; }
-
+        public int? TechnicianId { get; set; }
+        public string CompanyName { get; set; }
+        public string CustomerName { get; set; }
+        public DateTime? OnDay { set; get; }
+        public DateTime? BeforeDay { set; get; }
+        public DateTime? AfterDay { set; get; }
 
     }
 }
