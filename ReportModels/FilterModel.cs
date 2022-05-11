@@ -35,6 +35,7 @@ namespace AssetProject.ReportModels
         //public Contract Contract { get; set; }
         public int? InsuranceId { get; set; }
         public int? CustomerId { get; set; }
+        public string DepartmentTitle { set; get; }
         public int StatusId { get; set; }
         public int? TechnicianId { get; set; }
         public string CompanyName { get; set; }
