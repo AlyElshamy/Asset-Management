@@ -1,5 +1,5 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.ReportsManagement.AssetStatusReportModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.MaintainanceReportModel
 @{
 }
 <div class="slim-mainpanel">
@@ -30,11 +30,12 @@
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
 
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l=>l.Text("Asset Tag Id"));
 
-        items.AddSimpleFor(m => m.StatusId).IsRequired(false).Label(l => l.Text("Status"))
+        items.AddSimpleFor(m => m.TechnicianId).IsRequired(false).Label(l => l.Text("Tecnician Id"))
         .Editor(e => e
         .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("TechniciansLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );

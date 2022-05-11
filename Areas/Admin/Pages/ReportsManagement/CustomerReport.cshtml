@@ -1,5 +1,5 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.ReportsManagement.AssetStatusReportModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.CustomerReportModel
 @{
 }
 <div class="slim-mainpanel">
@@ -30,14 +30,8 @@
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
 
-
-        items.AddSimpleFor(m => m.StatusId).IsRequired(false).Label(l => l.Text("Status"))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
+        items.AddSimpleFor(m => m.CompanyName).IsRequired(false).Label(l=>l.Text("Company Name"));
+        items.AddSimpleFor(m => m.CustomerName).IsRequired(false).Label(l=>l.Text("Customer Name"));
 
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)

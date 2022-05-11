@@ -23,26 +23,27 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         public AssetContext _context { get; }
         public void OnGet()
         {
-            List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
-            {
-                AssetCost = i.AssetCost,
-                AssetSerialNo = i.AssetSerialNo,
-                AssetStatusTL = i.AssetStatus.AssetStatusTitle,
-                AssetTagId = i.AssetTagId,
-                ItemTL = i.Item.ItemTitle,
-                Photo = i.Photo,
-                StoreTL = i.Store.StoreTitle,
-                VendorTL = i.Vendor.VendorTitle,
-                DepreciationMethodTL = i.DepreciationMethod.DepreciationMethodTitle
-               
+            //List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
+            //{
+            //    AssetCost = i.AssetCost,
+            //    AssetSerialNo = i.AssetSerialNo,
+            //    AssetStatusTL = i.AssetStatus.AssetStatusTitle,
+            //    AssetTagId = i.AssetTagId,
+            //    ItemTL = i.Item.ItemTitle,
+            //    Photo = i.Photo,
+            //    StoreTL = i.Store.StoreTitle,
+            //    VendorTL = i.Vendor.VendorTitle,
+            //    DepreciationMethodTL = i.DepreciationMethod.DepreciationMethodTitle
 
-            }).ToList();
+
+            //}).ToList();
             Report = new rptAssetStatus();
-            Report.DataSource = ds;
+            //Report.DataSource = ds;
 
         }
         public void OnPost()
         {
+            
             List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
@@ -55,10 +56,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 VendorTL = i.Vendor.VendorTitle,
                 DepreciationMethodTL = i.DepreciationMethod.DepreciationMethodTitle,
                 StatusId=i.AssetStatusId,
-
-
-
             }).ToList();
+            
+
             if (filterModel.StatusId != 0)
             {
                 ds = ds.Where(i => i.StatusId == filterModel.StatusId).ToList();
