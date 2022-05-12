@@ -53,10 +53,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.TechnicianId == filterModel.TechnicianId).ToList();
             }
-            if (filterModel.Cost != null)
-            {
-                ds = ds.Where(i => i.RepairCost == filterModel.Cost).ToList();
-            }
+  
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
                 ds = ds.Where(i => i.ScheduleDate <= filterModel.ToDate && i.ScheduleDate >= filterModel.FromDate).ToList();
