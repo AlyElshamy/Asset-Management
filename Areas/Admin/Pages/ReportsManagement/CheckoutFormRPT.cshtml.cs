@@ -37,11 +37,13 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
 
-            Report = new rptCheckOutForm();
-            //Report.DataSource = ds;
-            Report.objectDataSource1.DataSource = ds;
-            Report.objectDataSource2.DataSource = tenant;
+            Report = new rptCheckOutForm(_context,tenant);
+            Report.DataSource = ds;
+            //Report.objectDataSource1.DataSource = ds;
+            //Report.objectDataSource2.DataSource = tenant;
             Report.Parameters[0].Value = AssetMovement;
+            
+            //Report.Parameters[1].Value = tenant.TenantId;
             Report.RequestParameters = false;
             return Page();
 
