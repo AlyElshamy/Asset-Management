@@ -48,6 +48,8 @@ namespace AssetProject.ReportModels
         public bool ShowAll { get; set; }
         public DateTime? BrockenDate { get; set; }
        
+        public double? Cost { set; get; }
+        public int? ActionLogId { set; get; }
 
 
 
