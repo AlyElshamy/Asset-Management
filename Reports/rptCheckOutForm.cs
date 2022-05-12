@@ -10,12 +10,11 @@ namespace AssetProject.Reports
 {
     public partial class rptCheckOutForm : DevExpress.XtraReports.UI.XtraReport
     {
-        private readonly AssetContext _context;
+      
         public Tenant TenantObj { get; set; }
-        public rptCheckOutForm(AssetContext context,Tenant tenant)
+        public rptCheckOutForm(Tenant tenant)
         {
             InitializeComponent();
-            // _context = context;
             TenantObj = tenant;
             //LoadTalent();
         }
@@ -32,8 +31,6 @@ namespace AssetProject.Reports
         }
         public void LoadTalent()
         {
-            //var TenantObj = _context.Tenants.Find(Tenant);
-
             txt_Address.Text = TenantObj.Address;
             Text_CN.Text = TenantObj.CompanyName;
         }

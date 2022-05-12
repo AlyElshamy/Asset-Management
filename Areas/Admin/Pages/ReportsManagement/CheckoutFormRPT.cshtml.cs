@@ -37,7 +37,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
 
-            Report = new rptCheckOutForm(_context,tenant);
+            Report = new rptCheckOutForm(tenant);
             Report.DataSource = ds;
             //Report.objectDataSource1.DataSource = ds;
             //Report.objectDataSource2.DataSource = tenant;
