@@ -33,6 +33,8 @@ namespace AssetProject.Reports
         {
             txt_Address.Text = TenantObj.Address;
             Text_CN.Text = TenantObj.CompanyName;
+            CompanyNo.Text = TenantObj.TenantId.ToString();
+
         }
 
         private void GroupHeader1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)

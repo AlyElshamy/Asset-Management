@@ -41,7 +41,6 @@ namespace AssetProject.ReportModels
         public int? TechnicianId { get; set; }
         public string CompanyName { get; set; }
         public string CustomerName { get; set; }
-        public DateTime? OnDay { set; get; }
         public DateTime? BeforeDay { set; get; }
         public DateTime? AfterDay { set; get; }
         public string EmployeeIdStr { get; set; }
