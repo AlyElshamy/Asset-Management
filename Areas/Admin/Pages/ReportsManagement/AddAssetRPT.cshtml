@@ -32,6 +32,54 @@
     .Items(items => {
         items.AddSimpleFor(m => m.FromDate).IsRequired(false);
         items.AddSimpleFor(m => m.ToDate).IsRequired(false);
+         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text("Location"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text("Category"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text("Department"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+     items.AddSimpleFor(m => m.VendorId).IsRequired(false).Label(l => l.Text("Vendor"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+        items.AddSimpleFor(m => m.StoreId).IsRequired(false).Label(l => l.Text("Store"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
+        items.AddSimpleFor(m => m.ItemId).IsRequired(false).Label(l => l.Text("Item"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ItemsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
+
 
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)

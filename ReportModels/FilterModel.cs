@@ -50,6 +50,7 @@ namespace AssetProject.ReportModels
        
         public double? Cost { set; get; }
         public int? ActionLogId { set; get; }
+        public int? StoreId { set; get; }
 
 
 
