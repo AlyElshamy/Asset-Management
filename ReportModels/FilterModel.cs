@@ -11,7 +11,8 @@ namespace AssetProject.ReportModels
     {
         public DateTime? FromDate { set; get; }
         public DateTime? ToDate { set; get; }
-
+        public DateTime? OnDay { set; get; }
+        public string DisposeTo { set; get; }
         public string AssetTagId { set; get; }
         public double AssetCost { set; get; }
         public string AssetSerialNo { set; get; }
