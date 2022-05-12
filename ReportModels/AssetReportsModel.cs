@@ -33,5 +33,10 @@ namespace AssetProject.ReportModels
         public int DepartmentId { get; set; }
         public string Status { get; set; }
         public int? StatusId { get; set; }
+        public DateTime? LogActionDate { get; set; }
+        public int? StoreId { get; set; }
+        public int? ItemId { get; set; }
+        public int? VendorId { get; set; }
+    
     }
 }

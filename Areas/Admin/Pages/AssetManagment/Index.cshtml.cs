@@ -68,6 +68,14 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
                 var UpdatedAsset = _context.Assets.Attach(instance);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 19,
+                    AssetId = instance.AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format("Asset Edited")
+                };
+                _context.AssetLogs.Add(assetLog);
                 _context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Asset Edited successfully");
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });

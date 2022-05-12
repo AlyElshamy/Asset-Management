@@ -26,21 +26,21 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 
         public void OnGet()
         {
-            List<LeasingModel> ds = _context.AssetLeasingDetails.Select(i => new LeasingModel
-            {
-                AssetCost = i.Asset.AssetCost,
-                AssetDescription = i.Asset.AssetDescription,
-                AssetSerialNo = i.Asset.AssetSerialNo,
-                AssetTagId = i.Asset.AssetTagId,
-                CustomerTL=i.AssetLeasing.Customer.FullName,
-                LeasingEndDate=i.AssetLeasing.EndDate,
-                LeasingStartDate=i.AssetLeasing.StartDate,
-                AssetLeasingId=i.AssetLeasing.AssetLeasingId,
-                CustomerId = i.AssetLeasing.Customer.CustomerId
+            //List<LeasingModel> ds = _context.AssetLeasingDetails.Select(i => new LeasingModel
+            //{
+            //    AssetCost = i.Asset.AssetCost,
+            //    AssetDescription = i.Asset.AssetDescription,
+            //    AssetSerialNo = i.Asset.AssetSerialNo,
+            //    AssetTagId = i.Asset.AssetTagId,
+            //    CustomerTL=i.AssetLeasing.Customer.FullName,
+            //    LeasingEndDate=i.AssetLeasing.EndDate,
+            //    LeasingStartDate=i.AssetLeasing.StartDate,
+            //    AssetLeasingId=i.AssetLeasing.AssetLeasingId,
+            //    CustomerId = i.AssetLeasing.Customer.CustomerId
 
-            }).ToList();
+            //}).ToList();
             Report = new rptLeasing();
-            Report.DataSource = ds;
+            //Report.DataSource = ds;
         }
         public void OnPost()
         {
@@ -65,6 +65,27 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             if (filterModel.CustomerId!=null)
             {
                 ds = ds.Where(i => i.CustomerId == filterModel.CustomerId).ToList();
+            }
+            if (filterModel.FromDate!=null&&filterModel.ToDate!=null)
+            {
+                ds = ds.Where(i => i.LeasingEndDate <= filterModel.ToDate && i.LeasingStartDate >= filterModel.FromDate).ToList();
+            }
+            if (filterModel.OnDay!=null)
+            {
+                ds = ds.Where(i => i.LeasingStartDate == filterModel.OnDay).ToList();
+            }
+            if (filterModel.BeforeDay!=null)
+            {
+                ds = ds.Where(i => i.LeasingStartDate < filterModel.BeforeDay).ToList();
+
+            }
+            if (filterModel.AfterDay!=null)
+            {
+                ds = ds.Where(i => i.LeasingStartDate > filterModel.AfterDay).ToList();
+            }
+            if (filterModel.AssetTagId == null&& filterModel.AfterDay == null&& filterModel.BeforeDay == null&& filterModel.OnDay == null&& filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
+            {
+                ds = null;
             }
             Report = new rptLeasing();
             Report.DataSource = ds;

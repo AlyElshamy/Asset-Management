@@ -17,7 +17,7 @@ namespace AssetProject.ReportModels
         public string MaintainanceStatusTL { set; get; }
         public DateTime AssetMaintainanceDateCompleted { set; get; }
         public double AssetMaintainanceRepairesCost { set; get; }
-        public int? AssetMaintainanceFrequencyTl { set; get; }
+        public string AssetMaintainanceFrequencyTl { set; get; }
         public string TechnicianName { set; get; }
         public string WeekDayTl { set; get; }
         public string MonthTl { set; get; }

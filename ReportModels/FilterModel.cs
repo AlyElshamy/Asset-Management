@@ -36,7 +36,23 @@ namespace AssetProject.ReportModels
         //public Contract Contract { get; set; }
         public int? InsuranceId { get; set; }
         public int? CustomerId { get; set; }
+        public string DepartmentTitle { set; get; }
         public int StatusId { get; set; }
+        public int? TechnicianId { get; set; }
+        public string CompanyName { get; set; }
+        public string CustomerName { get; set; }
+        public DateTime? OnDay { set; get; }
+        public DateTime? BeforeDay { set; get; }
+        public DateTime? AfterDay { set; get; }
+        public string EmployeeIdStr { get; set; }
+        public string EmployeeFullName { get; set; }
+        public bool ShowAll { get; set; }
+        public DateTime? BrockenDate { get; set; }
+       
+        public double? Cost { set; get; }
+        public int? ActionLogId { set; get; }
+        public int? StoreId { set; get; }
+
 
 
     }

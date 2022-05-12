@@ -30,7 +30,12 @@ namespace AssetProject.Data
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 2, AssetMaintainanceFrequencyTitle = "Weekly" });
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 3, AssetMaintainanceFrequencyTitle = "Monthly" });
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 4, AssetMaintainanceFrequencyTitle = "Yearly" });
-
+            //Maintainace Status 
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 1, MaintainanceStatusTitle = "Scheduled" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 2, MaintainanceStatusTitle = "In Progress" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 3, MaintainanceStatusTitle = "On Hold" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 4, MaintainanceStatusTitle = "Cancelled" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 5, MaintainanceStatusTitle = "Completed" });
             //Asset Movement Direction 
             modelBuilder.Entity<AssetMovementDirection>().HasData(new AssetMovementDirection { AssetMovementDirectionId = 1, AssetMovementDirectionTitle = "CheckOut" });
             modelBuilder.Entity<AssetMovementDirection>().HasData(new AssetMovementDirection { AssetMovementDirectionId = 2, AssetMovementDirectionTitle = "CheckIn" });
@@ -89,6 +94,7 @@ namespace AssetProject.Data
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 16, ActionLogTitle = "CheckIn" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 17, ActionLogTitle = "CheckOut" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 18, ActionLogTitle = "Asset Maintainance" });
+            modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 19, ActionLogTitle = "Asset Edited" });
         }
 
 
