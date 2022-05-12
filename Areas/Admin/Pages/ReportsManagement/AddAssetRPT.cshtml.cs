@@ -35,15 +35,15 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              AssetStatusTL=a.AssetStatus.AssetStatusTitle,
              ItemTL=a.Item.ItemTitle,
              VendorTL=a.Vendor.VendorTitle,
-             StoreTL=a.Store.StoreTitle
-            // StoreId=a.StoreId,
-            // ItemId=a.ItemId,
-            // VendorId=a.VendorId,
-            //LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
-            //    DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-            //    LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-            //    DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-            //
+             StoreTL=a.Store.StoreTitle,
+             StoreId=a.StoreId,
+             ItemId=a.ItemId,
+             VendorId=a.VendorId,
+             LocationTL = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
+             DepartmentTL = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
+             LocationId = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
+             DepartmentId = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
+             CategoryId = a.Item.CategoryId
             }).ToList();
             
 
@@ -51,10 +51,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.AssetPurchaseDate <= filterModel.ToDate && i.AssetPurchaseDate >= filterModel.FromDate).ToList();
             }
-            if ( filterModel.FromDate == null && filterModel.ToDate == null )
-            {
-                ds = null;
-            }
+           
             if (filterModel.LocationId != null)
             {
                 ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
@@ -79,9 +76,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.ItemId == filterModel.ItemId).ToList();
             }
-            if (filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null)
+            if ( filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.StoreId == null && filterModel.ItemId == null && filterModel.VendorId == null)  
             {
-                ds = new List<AssetReportsModel>();
+                ds = null;
             }
 
             Report = new rptAddAsset();
