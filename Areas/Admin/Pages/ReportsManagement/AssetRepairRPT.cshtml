@@ -31,9 +31,7 @@
 
         items.AddSimpleFor(m => m.FromDate).IsRequired(false);
         items.AddSimpleFor(m => m.ToDate).IsRequired(false);
-        items.AddSimpleFor(m => m.OnDay).IsRequired(false);
-        items.AddSimpleFor(m => m.AfterDay).IsRequired(false);
-        items.AddSimpleFor(m => m.BeforeDay).IsRequired(false);
+  
 
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("Asset Tag Ig"));
         items.AddSimpleFor(m => m.TechnicianId).IsRequired(false).Label(l => l.Text("Technician"))

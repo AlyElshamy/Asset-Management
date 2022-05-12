@@ -169,6 +169,8 @@
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/assetreport">Asset Report</a></li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetStatusReport">Status Report</a></li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/MaintainanceReport">Maintenance Reports</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/CheckoutFormRPT" asp-route-AssetMovement="1">Checkout Reports</a></li>
+
                         <li class="sub-with-sub">
                             <a href="#">Transaction Reports</a>
                             <ul>
@@ -205,7 +207,7 @@
                 <div class="sub-item">
                     <ul>
                         <li><a href="form-elements.html">Assets Past Due<span class="AlertMenuItem">1</span></a></li>
-                        <li><a href="form-elements.html">Contracts Expiring<span class="AlertMenuItem">5</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">5</span></a></li>
                         <li><a href="form-elements.html">Insurances Expiring<span class="AlertMenuItem">0</span></a></li>
                         <li><a href="form-elements.html">Leases Expiring<span class="AlertMenuItem">12</span></a></li>
                         <li><a href="form-elements.html">Maintenance Due<span class="AlertMenuItem">10</span></a></li>
