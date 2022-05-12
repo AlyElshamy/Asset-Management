@@ -46,6 +46,8 @@ namespace AssetProject.ReportModels
         public string EmployeeIdStr { get; set; }
         public string EmployeeFullName { get; set; }
         public bool ShowAll { get; set; }
+        public DateTime? BrockenDate { get; set; }
+       
         public double? Cost { set; get; }
         public int? ActionLogId { set; get; }
 

@@ -67,7 +67,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 {
                     ds = ds.Where(i => i.EmployeeId.Contains(filterModel.EmployeeIdStr)).ToList();
                 }
-                if(filterModel.EmployeeFullName==null&& filterModel.EmployeeIdStr == null)
+                if(filterModel.EmployeeFullName==null&& filterModel.EmployeeIdStr == null&& filterModel.ShowAll == false)
                 {
                     ds = new List<EmployeeModel>();
                 }
