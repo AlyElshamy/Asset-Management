@@ -42,6 +42,8 @@ namespace AssetProject.ReportModels
         public DateTime? OnDay { set; get; }
         public DateTime? BeforeDay { set; get; }
         public DateTime? AfterDay { set; get; }
+        public string SoldTo { set; get; }
+        public int? warrantyId { get; set; }
 
     }
 }

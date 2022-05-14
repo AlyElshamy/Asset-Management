@@ -143,6 +143,7 @@ namespace AssetProject.Data
         public DbSet<AssetLostDetails> AssetLostDetails { get; set; }
         public DbSet<AssetLeasingDetails> AssetLeasingDetails { get; set; }
         public DbSet<AssetBrokenDetails> AssetBrokenDetails { get; set; }
+        public DbSet<AssetWarranty> AssetWarranties { get; set; }
 
     }
 }

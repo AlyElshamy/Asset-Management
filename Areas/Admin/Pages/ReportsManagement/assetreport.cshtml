@@ -45,6 +45,13 @@
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
+        items.AddSimpleFor(m => m.warrantyId).IsRequired(false).Label(l => l.Text("Warranty"))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetWarrantyLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
 
         items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text("Category"))
         .Editor(e => e
