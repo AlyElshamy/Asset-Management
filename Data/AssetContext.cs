@@ -30,7 +30,12 @@ namespace AssetProject.Data
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 2, AssetMaintainanceFrequencyTitle = "Weekly" });
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 3, AssetMaintainanceFrequencyTitle = "Monthly" });
             modelBuilder.Entity<AssetMaintainanceFrequency>().HasData(new AssetMaintainanceFrequency { AssetMaintainanceFrequencyId = 4, AssetMaintainanceFrequencyTitle = "Yearly" });
-
+            //Maintainace Status 
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 1, MaintainanceStatusTitle = "Scheduled" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 2, MaintainanceStatusTitle = "In Progress" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 3, MaintainanceStatusTitle = "On Hold" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 4, MaintainanceStatusTitle = "Cancelled" });
+            modelBuilder.Entity<MaintainanceStatus>().HasData(new MaintainanceStatus { MaintainanceStatusId = 5, MaintainanceStatusTitle = "Completed" });
             //Asset Movement Direction 
             modelBuilder.Entity<AssetMovementDirection>().HasData(new AssetMovementDirection { AssetMovementDirectionId = 1, AssetMovementDirectionTitle = "CheckOut" });
             modelBuilder.Entity<AssetMovementDirection>().HasData(new AssetMovementDirection { AssetMovementDirectionId = 2, AssetMovementDirectionTitle = "CheckIn" });

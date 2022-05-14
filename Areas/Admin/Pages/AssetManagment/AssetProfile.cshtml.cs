@@ -257,7 +257,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Asset Movement Added Successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                return RedirectToPage("/ReportsManagement/CheckoutFormRPT", new { AssetMovement = assetMovement.AssetMovementId });
             }
             _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
@@ -299,7 +299,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Asset Movement Added Successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                return RedirectToPage("/ReportsManagement/CheckInFormRPT", new { AssetMovement = assetMovement.AssetMovementId });
             }
             _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });

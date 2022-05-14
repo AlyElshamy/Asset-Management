@@ -114,7 +114,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                         return Page();
                     }
                     _toastNotification.AddSuccessToastMessage("Asset Movements Added successfully");
-                    return RedirectToPage();
+                    return RedirectToPage("/ReportsManagement/CheckoutFormRPT", new { AssetMovement = assetmovement.AssetMovementId });
                 }
                 _toastNotification.AddErrorToastMessage("Please Select at Least one Asset");
                 return Page();

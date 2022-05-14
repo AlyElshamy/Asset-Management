@@ -162,15 +162,42 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="form-elements.html">Form Elements</a></li>
-                        <li><a href="form-layouts.html">Form Layouts</a></li>
-                        <li><a href="form-validation.html">Form Validation</a></li>
-                        <li><a href="form-wizards.html">Form Wizards</a></li>
-                        <li><a href="form-editor.html">WYSIWYG Editor</a></li>
-                        <li><a href="form-select2.html">Select2</a></li>
-                        <li><a href="form-rangeslider.html">Range Slider</a></li>
-                        <li><a href="form-datepicker.html">Datepicker</a></li>
+
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/InsuranceReport">Insurances Policy Report</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/ContractReport">Contracts Report</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/LeasingReport">Leased Asset Report</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/assetreport">Asset Report</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetStatusReport">Status Report</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/MaintainanceReport">Maintenance Reports</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/CheckoutFormRPT" asp-route-AssetMovement="2">Checkout Reports</a></li>
+                        <li><a asp-area="Admin" asp-page="/ReportsManagement/CheckInFormRPT" asp-route-AssetMovement="1">CheckIn Reports</a></li>
+
+                        <li class="sub-with-sub">
+                            <a href="#">Transaction Reports</a>
+                            <ul>
+
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/PrintAssetCheckOut">CheckOut Assets Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetCheckIn">CheckIn Assets Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/AddAssetRPT">Added Assets Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetEditedReport">Editd Assets Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/BrockenReport">Brocken Asset Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetRepairRPT">Assets Repair Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/LeasingReport">Leased Out Asset Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/Transactions HistoryRPT">Transactions History Report</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="sub-with-sub">
+                            <a href="#">Other Reports</a>
+                            <ul>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/DepartmentRPT">Departments Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/EmployeeReport">Employees Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/CustomerReport">Customers Report</a></li>
+                            </ul>
+                        </li>
+
                     </ul>
+
                 </div><!-- dropdown-menu -->
             </li>
             <li class="nav-item  with-sub">
@@ -182,7 +209,7 @@
                 <div class="sub-item">
                     <ul>
                         <li><a href="form-elements.html">Assets Past Due<span class="AlertMenuItem">1</span></a></li>
-                        <li><a href="form-elements.html">Contracts Expiring<span class="AlertMenuItem">5</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">5</span></a></li>
                         <li><a href="form-elements.html">Insurances Expiring<span class="AlertMenuItem">0</span></a></li>
                         <li><a href="form-elements.html">Leases Expiring<span class="AlertMenuItem">12</span></a></li>
                         <li><a href="form-elements.html">Maintenance Due<span class="AlertMenuItem">10</span></a></li>

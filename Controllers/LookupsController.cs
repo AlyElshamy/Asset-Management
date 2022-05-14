@@ -302,17 +302,17 @@ namespace AssetProject.Controllers
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> ActionLogsLookup(DataSourceLoadOptions loadOptions)
-        //{
-        //    var lookup = from i in _context.ActionLogs
-        //                 orderby i.ActionLogTitle
-        //                 select new
-        //                 {
-        //                     Value = i.ActionLogId,
-        //                     Text = i.ActionLogTitle
-        //                 };
-        //    return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
-        //}
+        [HttpGet]
+        public async Task<IActionResult> ActionLogsLookup(DataSourceLoadOptions loadOptions)
+        {
+           var lookup = from i in _context.ActionLogs
+                         orderby i.ActionLogTitle
+                         select new
+                         {
+                             Value = i.ActionLogId,
+                             Text = i.ActionLogTitle
+                        };
+           return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
     }
 }
