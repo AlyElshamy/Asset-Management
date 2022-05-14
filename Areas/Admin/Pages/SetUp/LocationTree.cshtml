@@ -49,8 +49,8 @@
             .DisplayExpr("Text")
         );
 *@
-        columns.AddFor(m => m.LocationTitle).Caption(@sharedResource["LocationTitle"]);
-
+    columns.AddFor(m => m.LocationTitle).Caption(@sharedResource["LocationTitle"]);
+    columns.AddFor(m => m.BarCode).Caption(@sharedResource["BarCode"]);
       @*  columns.AddFor(m => m.CountryId);
 
         columns.AddFor(m => m.Address);
