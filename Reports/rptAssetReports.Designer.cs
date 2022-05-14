@@ -31,6 +31,7 @@ namespace AssetProject.Reports
         {
             this.components = new System.ComponentModel.Container();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
+            this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.Detail = new DevExpress.XtraReports.UI.DetailBand();
@@ -54,6 +55,7 @@ namespace AssetProject.Reports
             this.xrTableCell34 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell33 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrTableCell35 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.xrTable1 = new DevExpress.XtraReports.UI.XRTable();
             this.xrTableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
@@ -74,7 +76,7 @@ namespace AssetProject.Reports
             this.xrTableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell20 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrTableCell36 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -86,6 +88,17 @@ namespace AssetProject.Reports
             this.xrLabel1});
             this.TopMargin.HeightF = 125.8333F;
             this.TopMargin.Name = "TopMargin";
+            // 
+            // xrLabel1
+            // 
+            this.xrLabel1.Font = new System.Drawing.Font("Arial", 15.75F);
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(26.99999F, 67.5F);
+            this.xrLabel1.Multiline = true;
+            this.xrLabel1.Name = "xrLabel1";
+            this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel1.SizeF = new System.Drawing.SizeF(166.4118F, 28.83331F);
+            this.xrLabel1.StylePriority.UseFont = false;
+            this.xrLabel1.Text = "Asset Reports";
             // 
             // BottomMargin
             // 
@@ -142,7 +155,8 @@ namespace AssetProject.Reports
             this.xrTableCell32,
             this.xrTableCell34,
             this.xrTableCell3,
-            this.xrTableCell33});
+            this.xrTableCell33,
+            this.xrTableCell35});
             this.xrTableRow2.Name = "xrTableRow2";
             this.xrTableRow2.Weight = 11.5D;
             // 
@@ -364,6 +378,18 @@ namespace AssetProject.Reports
             this.xrTableCell33.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell33.Weight = 0.12165450121654502D;
             // 
+            // xrTableCell35
+            // 
+            this.xrTableCell35.BorderWidth = 4F;
+            this.xrTableCell35.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[WarrantyLenght]")});
+            this.xrTableCell35.Multiline = true;
+            this.xrTableCell35.Name = "xrTableCell35";
+            this.xrTableCell35.StylePriority.UseBorderWidth = false;
+            this.xrTableCell35.StylePriority.UseTextAlignment = false;
+            this.xrTableCell35.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.xrTableCell35.Weight = 0.12165450121654502D;
+            // 
             // ReportHeader
             // 
             this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -401,7 +427,8 @@ namespace AssetProject.Reports
             this.xrTableCell15,
             this.xrTableCell17,
             this.xrTableCell16,
-            this.xrTableCell20});
+            this.xrTableCell20,
+            this.xrTableCell36});
             this.xrTableRow1.Name = "xrTableRow1";
             this.xrTableRow1.Weight = 11.5D;
             // 
@@ -662,16 +689,20 @@ namespace AssetProject.Reports
             this.xrTableCell20.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell20.Weight = 0.12165450121654502D;
             // 
-            // xrLabel1
+            // xrTableCell36
             // 
-            this.xrLabel1.Font = new System.Drawing.Font("Arial", 15.75F);
-            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(26.99999F, 67.5F);
-            this.xrLabel1.Multiline = true;
-            this.xrLabel1.Name = "xrLabel1";
-            this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-            this.xrLabel1.SizeF = new System.Drawing.SizeF(166.4118F, 28.83331F);
-            this.xrLabel1.StylePriority.UseFont = false;
-            this.xrLabel1.Text = "Asset Reports";
+            this.xrTableCell36.BackColor = System.Drawing.Color.LightGray;
+            this.xrTableCell36.BorderWidth = 3F;
+            this.xrTableCell36.Font = new System.Drawing.Font("Arial", 11.75F);
+            this.xrTableCell36.Multiline = true;
+            this.xrTableCell36.Name = "xrTableCell36";
+            this.xrTableCell36.StylePriority.UseBackColor = false;
+            this.xrTableCell36.StylePriority.UseBorderWidth = false;
+            this.xrTableCell36.StylePriority.UseFont = false;
+            this.xrTableCell36.StylePriority.UseTextAlignment = false;
+            this.xrTableCell36.Text = "Warranty len";
+            this.xrTableCell36.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.xrTableCell36.Weight = 0.12165450121654502D;
             // 
             // rptAssetReports
             // 
@@ -740,5 +771,7 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell33;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell20;
         private DevExpress.XtraReports.UI.XRLabel xrLabel1;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell35;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell36;
     }
 }

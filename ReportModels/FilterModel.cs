@@ -53,6 +53,8 @@ namespace AssetProject.ReportModels
         public int? StoreId { set; get; }
 
 
+        public string SoldTo { set; get; }
+        public int? warrantyId { get; set; }
 
     }
 }

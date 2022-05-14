@@ -49,7 +49,13 @@
                             </div>
                         </div>
 
-
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Due Date: <span class="tx-danger">*</span></label>
+                                <input asp-for="@Model.DueDate" type="date" class="form-control date" value=" ">
+                                <span asp-validation-for="@Model.DueDate" class="text-danger"></span>
+                            </div>
+                        </div><!-- col-4 -->
 
                         <div class="col-lg-4" id="AssetToEmpolyee" style="display:none">
                             <div class="form-group">
@@ -74,15 +80,15 @@
                                 <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
                                 @*  @(Html.DevExtreme().LookupFor(c=>c.LocationId)
-                                    .DataSource(d => d.WebApi()
-                                    .Controller("Lookups")
-                                    .LoadAction("LocationsLookup")
-                                    .Key("Value")
-                                    )
-                                    .ValueExpr("Value")
-                                    .DisplayExpr("Text")
+                .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("LocationsLookup")
+                .Key("Value")
+                )
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
 
-                                    )*@
+                )*@
                                 @(Html.DevExtreme().DropDownBoxFor(c=>c.LocationId)
                                 .ValueExpr("Value")
                                 .DisplayExpr("Text")

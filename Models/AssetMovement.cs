@@ -25,6 +25,7 @@ namespace AssetProject.Models
         public int? AssetMovementDirectionId { set; get; }
         public string Remarks { set; get; }
         public ICollection<AssetMovementDetails> AssetMovementDetails { get; set; }
+        public DateTime? DueDate { set; get; }
 
     }
 }

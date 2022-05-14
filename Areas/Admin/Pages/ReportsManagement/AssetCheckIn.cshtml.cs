@@ -84,7 +84,18 @@ namespace AssetProject.Areas.Admin.Pages.Reports
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
             }
-
+            if (filterModel.FromDate != null && filterModel.ToDate != null)
+            {
+                ds = ds.Where(i => i.TransactionDate <= filterModel.ToDate && i.TransactionDate >= filterModel.FromDate).ToList();
+            }
+            if (filterModel.OnDay != null)
+            {
+                ds = ds.Where(i => i.TransactionDate == filterModel.OnDay).ToList();
+            }
+            if (filterModel.OnDay == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.LocationId == null && filterModel.AssetTagId == null && filterModel.employeeId == null)
+            {
+                ds = null;
+            }
             Report = new rtpAssetCheckIn();
             Report.DataSource = ds;
         }
