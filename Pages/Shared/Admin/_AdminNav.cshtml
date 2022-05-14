@@ -3,7 +3,9 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @inject SignInManager<ApplicationUser> SignInManager
+@inject AssetContext context;
 @{
+    var contractCount = context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
 }
 <div class="slim-navbar">
     <div class="container">
@@ -208,8 +210,8 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="form-elements.html">Assets Past Due<span class="AlertMenuItem">1</span></a></li>
-                        <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">5</span></a></li>
+                        <li><a href="form-elements.html">Assets Past Due<span class="AlertMenuItem"></span></a></li>
+                         <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">@contractCount</span></a></li>
                         <li><a href="form-elements.html">Insurances Expiring<span class="AlertMenuItem">0</span></a></li>
                         <li><a href="form-elements.html">Leases Expiring<span class="AlertMenuItem">12</span></a></li>
                         <li><a href="form-elements.html">Maintenance Due<span class="AlertMenuItem">10</span></a></li>
