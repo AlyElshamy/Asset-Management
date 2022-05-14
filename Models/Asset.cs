@@ -45,6 +45,8 @@ namespace AssetProject.Models
         public ICollection<AssetContract> AssetContracts { get; set; }
         public ICollection<AssetsInsurance> AssetsInsurances { get; set; }
         public ICollection<AssetDocument> documents { get; set; }
+        public AssetWarranty Warranty { get; set; }
+        
 
     }
 }
