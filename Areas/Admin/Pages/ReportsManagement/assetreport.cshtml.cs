@@ -55,7 +55,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
                 LocationId= _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
                 DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()== null? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-                CategoryId=i.Item.CategoryId
+                CategoryId=i.Item.CategoryId,
+                WarrantyId=i.Warranty.WarrantyId,
+                WarrantyLenght=i.Warranty.Length
                 
             }).ToList();
             
@@ -76,8 +78,12 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
             }
+             if (filterModel.warrantyId!=null)
+            {
+                ds = ds.Where(i => i.WarrantyId == filterModel.warrantyId).ToList();
+            }
 
-            if (filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null)
+            if (filterModel.warrantyId == null&&filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null)
             {
                 ds =new List<AssetReportsModel>();
             }

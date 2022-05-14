@@ -4,5 +4,86 @@
 @{
 }
 
+<a href="javascript:void(0)" onclick="ShowAssetWarantyPopup('<%- data.AssetId %>')" class="btn btn-success" style="float:right">Link Contract  </a>
+@(Html.DevExtreme().DataGrid<AssetProject.Models.AssetWarranty>()
+    .ID("gridContractContainer")
+    .DataSource(ds => ds.Mvc()
+        .Controller("AssetContracts")
+        .LoadAction("Get")
+        .LoadParams(new { AssetId = Model })
+        .DeleteAction("Delete")
+        .Key("AssetContractID")
+    )
+    .RemoteOperations(true)
+    .Columns(columns =>
+    {
 
-Details Content
+        columns.AddFor(m => m.ExpirationDate).Caption(sharedResource["Expiration Date"]);
+        columns.AddFor(m => m.Length).Caption(sharedResource["Length"]);
+        columns.AddFor(m => m.Notes).Caption(sharedResource["Notes"]);
+                      
+    })
+
+    @*.Columns(columns =>
+    {
+    columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
+                    .CellTemplate(@<text>
+                            @Html.DevExtreme().Button().Text(sharedResource["Detach"]).OnClick("function (e) { DeattachWarrantyButtonClick(data)}")
+                        </text>);
+
+        })*@
+                    )
+
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+                    <div id="AssetWarrantyPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
+                            <form asp-area="Admin" asp-page="/AssetManagment/assetprofile" asp-page-handler="AddAssetWarranty" asp-route-AssetId="@Model" enctype="multipart/form-data">
+                                <div class="modal-content bd-0 tx-14">
+                                    <div class="modal-header pd-y-20 pd-x-25">
+                                        <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" id="AssetDescriptiontxt"></h6>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <br />
+                                    <br />
+
+                                    <div class="modal-body pd-25">
+                                        @(Html.DevExtreme().Form<AssetProject.Models.AssetWarranty>()
+                .ID("AddAssetWarranty")
+                .ColCount(1).Width(300).Height(280)
+                .Items(items =>
+                {
+                    items.AddSimpleFor(m => m.Length);
+                    items.AddSimpleFor(m => m.ExpirationDate).ValidationRules(r => r
+       .AddRequired()
+       .Message("Expiration Date is required")).Label(l => l.Text(sharedResource["Expiration Date"]));
+
+                    items.AddSimpleFor(m => m.Notes).Editor(e => e.TextArea()).ValidationRules(r => r
+                     .AddRequired()
+                     .Message("Notes is required")).Label(l => l.Text(sharedResource["Notes"]));
+                })
+                )
+
+                                        <br />
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- modal-dialog -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       
+    </script>

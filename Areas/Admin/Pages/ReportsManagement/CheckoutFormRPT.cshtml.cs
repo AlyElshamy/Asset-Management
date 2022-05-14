@@ -23,7 +23,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
-        public rptCheckOutForm Report { get; set; }
+        public ReportCheckOutForm Report { get; set; }
         public AssetContext _context { get; }
         public Tenant tenant { set; get; }
         UserManager<ApplicationUser> UserManger;
@@ -37,7 +37,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
 
-            Report = new rptCheckOutForm(tenant);
+            Report = new ReportCheckOutForm(tenant);
             Report.DataSource = ds;
             //Report.objectDataSource1.DataSource = ds;
             //Report.objectDataSource2.DataSource = tenant;

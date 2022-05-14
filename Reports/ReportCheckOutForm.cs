@@ -7,10 +7,10 @@ using System.Drawing;
 
 namespace AssetProject.Reports
 {
-    public partial class rptCheckInForm : DevExpress.XtraReports.UI.XtraReport
+    public partial class ReportCheckOutForm : DevExpress.XtraReports.UI.XtraReport
     {
         public Tenant TenantObj { get; set; }
-        public rptCheckInForm(Tenant tenant)
+        public ReportCheckOutForm(Tenant tenant)
         {
             InitializeComponent();
             TenantObj = tenant;
@@ -23,10 +23,11 @@ namespace AssetProject.Reports
                 Text_CN.Text = TenantObj.CompanyName;
                 CompanyNo.Text = TenantObj.TenantId.ToString();
             }
-           
+            
         }
 
-       
+
+
         private void rptCheckInForm_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
             LoadTalent();

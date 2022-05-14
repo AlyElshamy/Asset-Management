@@ -38,5 +38,7 @@ namespace AssetProject.ReportModels
         public int? ItemId { get; set; }
         public int? VendorId { get; set; }
     
+        public int WarrantyId { get; set; }
+        public int WarrantyLenght { get; set; }
     }
 }

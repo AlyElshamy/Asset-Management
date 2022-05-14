@@ -29,6 +29,9 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
+        items.AddSimpleFor(m => m.FromDate).IsRequired(false);
+        items.AddSimpleFor(m => m.ToDate).IsRequired(false);
+        items.AddSimpleFor(m => m.OnDay).IsRequired(false);
 
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("Asset Tag Id"));
 

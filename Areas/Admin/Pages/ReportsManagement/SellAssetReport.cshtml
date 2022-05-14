@@ -1,8 +1,7 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.Reports.PrintAssetCheckOutModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.SellAssetReportModel
 @{
 }
-
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
@@ -23,38 +22,20 @@
                     <div class="post-group">
 
                         @using (Html.BeginForm(FormMethod.Post))
-
-
                             @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
                                 .FormData(Model.filterModel)
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
+
         items.AddSimpleFor(m => m.FromDate).IsRequired(false);
         items.AddSimpleFor(m => m.ToDate).IsRequired(false);
         items.AddSimpleFor(m => m.OnDay).IsRequired(false);
+       
 
-
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("Asset Tag Id"));
-
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text("Location Id"))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-        items.AddSimpleFor(m => m.employeeId).IsRequired(false)
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-
-
-
-
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("Asset Tag Ig"));
+        items.AddSimpleFor(m => m.SoldTo).IsRequired(false).Label(l => l.Text("Sold To"));
+       
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
        .ButtonOptions(b => b.Text("Send")
@@ -63,10 +44,6 @@
        );
     })
 )
-
-
-
-
                     </div><!-- post-group -->
                 </div><!-- card -->
             </div>

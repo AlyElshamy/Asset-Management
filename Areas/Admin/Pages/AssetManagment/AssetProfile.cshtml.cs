@@ -623,5 +623,36 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
 
         }
+        public IActionResult OnpostAddAssetWarranty(AssetWarranty assetWarranty)
+        {
+
+            if (assetWarranty.AssetId != 0)
+            {
+                AssetWarranty AssetWar = new AssetWarranty { AssetId = assetWarranty.AssetId, WarrantyId = assetWarranty.WarrantyId };
+                Context.AssetWarranties.Add(AssetWar);
+                //ActionLog actionLog = new ActionLog() { ActionLogTitle = "Create Warranty" };
+                //Asset asset = Context.Assets.Find(assetWarranty.AssetId);
+                //string WarrantyTitle = "Warranty Title : ";
+                //string WarrantyCompany = "Warranty Company : ";
+                //AssetWarranty SelectedWarranty = Context.AssetWarranties.Find(assetWarranty.WarrantyId);
+                //string InsuranceTit = SelectedInsurance.Title;
+                //string InsuranceComp = SelectedInsurance.InsuranceCompany;
+
+                //AssetLog assetLog = new AssetLog()
+                //{
+                //    ActionLog = actionLog,
+                //    Asset = asset,
+                //    ActionDate = DateTime.Now,
+                //    Remark = string.Format("Create Warranty")
+                //};
+                //Context.AssetLogs.Add(assetLog);
+
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Link Warranty Added Successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetWarranty.AssetId });
+            }
+
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetWarranty.AssetId });
+        }
     }
 }

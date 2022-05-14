@@ -17,6 +17,8 @@ namespace AssetProject.Models
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        public string BarCode { get; set; }
+
 
         public virtual Location LocationParent { get; set; }
         public virtual ICollection<Location> InverseLocationParent { get; set; }

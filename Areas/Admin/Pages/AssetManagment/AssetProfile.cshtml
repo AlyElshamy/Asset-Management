@@ -315,6 +315,9 @@ function DeletePhoto(AssetId,AssetPhotoId)
     function ShowAssetBrokenPopup() {
         $('#AssetBrokenPoup').modal('show');
     }
+    function ShowAssetWarantyPopup() {
+        $('#AssetWarrantyPoup').modal('show');
+    }
 
     function ShowAddAssetMiantainancePopUp(AssetId)
     {
@@ -334,6 +337,7 @@ function DeletePhoto(AssetId,AssetPhotoId)
      document.getElementById("checkInAssetIdField").value =AssetId;
         console.log( document.getElementById("checkInAssetIdField").value)
     }
+   
 </script>
 
 @section Scripts {

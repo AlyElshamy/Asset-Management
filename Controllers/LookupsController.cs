@@ -289,6 +289,18 @@ namespace AssetProject.Controllers
                          };
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
+        [HttpGet]
+        public async Task<IActionResult> AssetWarrantyLookup(DataSourceLoadOptions loadOptions)
+        {
+            var lookup = from i in _context.AssetWarranties
+                         orderby i.WarrantyId
+                         select new
+                         {
+                             Value = i.WarrantyId,
+                             Text = i.Length
+                         };
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
 
         [HttpGet]
         public async Task<IActionResult> ActionLogsLookup(DataSourceLoadOptions loadOptions)
