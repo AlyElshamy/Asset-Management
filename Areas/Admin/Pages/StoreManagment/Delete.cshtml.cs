@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AssetProject.Data;
 using AssetProject.Models;
 using NToastNotify;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly AssetContext _context;

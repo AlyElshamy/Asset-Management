@@ -1,5 +1,6 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace AssetProject.Areas.Admin.Pages.TypeManagment
 {
+    [Authorize]
     public class TypeDetailsModel : PageModel
     {
         public Type Type { set; get; }

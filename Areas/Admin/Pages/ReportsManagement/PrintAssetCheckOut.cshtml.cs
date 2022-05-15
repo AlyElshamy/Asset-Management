@@ -1,55 +1,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.Reports
 {
+    [Authorize]
     public class PrintAssetCheckOutModel : PageModel
     {
         private readonly AssetContext _context;
 
-        public PrintAssetCheckOutModel(AssetContext context)
+        public PrintAssetCheckOutModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public int AssetId { get; set; }
         public rtpAssetCheckOut Report { get; set; }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            //List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e => e.Asset.AssetStatusId == 2).Select(i => new AssetCheckOutList
-            //{
-            //    TransactionDate= i.AssetMovement.TransactionDate,
-            //    EmployeeFullN= i.AssetMovement.Employee.FullName,
-            //    LocationTl= i.AssetMovement.Location.LocationTitle,
-            //    DepartmentTl=i.AssetMovement.Department.DepartmentTitle,
-            //    StoreTl=i.Asset.Store.StoreTitle,
-            //    ActionTypeTl= i.AssetMovement.ActionType.ActionTypeTitle,
-            //    AssetMovementDirectionTl= i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
-            //   AssetCost=i.Asset.AssetCost,
-            //   AssetDescription=i.Asset.AssetDescription,
-            //    AssetPurchaseDate=i.Asset.AssetPurchaseDate,
-            //    AssetSerialNo=i.Asset.AssetSerialNo,
-            //    AssetStatusTl=i.Asset.AssetStatus.AssetStatusTitle,
-            //    ItemTl=i.Asset.Item.ItemTitle,
-            //    Remarks=i.Remarks,
-            //    AssetTagId=i.Asset.AssetTagId
-
-            //}).ToList();
-            Report = new rtpAssetCheckOut();
-            //Report.DataSource = ds;
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rtpAssetCheckOut(tenant);
+            return Page();
         }
-        public void OnPost()
-         {
+        public async Task<IActionResult> OnPost()
+        {
             List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e=>e.Asset.AssetStatusId==2).Select(i => new AssetCheckOutList
             {
                 TransactionDate = i.AssetMovement.TransactionDate,
@@ -97,8 +91,14 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                 ds = null;
             }
 
-            Report = new rtpAssetCheckOut();
-        Report.DataSource = ds;
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rtpAssetCheckOut(tenant);
+            Report.DataSource = ds;
+            return Page();
         }
     }
 }

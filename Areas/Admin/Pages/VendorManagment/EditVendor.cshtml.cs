@@ -1,11 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 
 namespace AssetProject.Areas.Admin.Pages.VendorManagment
 {
+    [Authorize]
     public class EditVendorModel : PageModel
     {
         [BindProperty]

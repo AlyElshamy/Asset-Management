@@ -1,11 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 
 namespace AssetProject.Areas.Admin.Pages.TypeManagment
 {
+    [Authorize]
     public class AddTypeModel : PageModel
     {
         [BindProperty]

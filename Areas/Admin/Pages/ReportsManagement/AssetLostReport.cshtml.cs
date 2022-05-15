@@ -1,35 +1,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class AssetLostReportModel : PageModel
     {
         private readonly AssetContext _context;
 
-        public AssetLostReportModel(AssetContext context)
+        public AssetLostReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
+        public rptAssetLost Report { get; set; }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public int AssetId { get; set; }
-        public rptAssetLost Report { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-           
-            Report = new rptAssetLost();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAssetLost(tenant);
+            return Page();
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
             List<AssetLostModel> ds = _context.AssetLostDetails.Select(i => new AssetLostModel
             {
@@ -60,8 +73,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = null;
             }
 
-            Report = new rptAssetLost();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAssetLost(tenant);
             Report.DataSource = ds;
+            return Page();
         }
     }
 }

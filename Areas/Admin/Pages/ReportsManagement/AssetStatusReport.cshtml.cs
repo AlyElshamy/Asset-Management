@@ -1,49 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class AssetStatusReportModel : PageModel
     {
-        public AssetStatusReportModel(AssetContext context)
+        public AssetStatusReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
-        
+
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public rptAssetStatus Report { get; set; }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         public AssetContext _context { get; }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            //List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
-            //{
-            //    AssetCost = i.AssetCost,
-            //    AssetSerialNo = i.AssetSerialNo,
-            //    AssetStatusTL = i.AssetStatus.AssetStatusTitle,
-            //    AssetTagId = i.AssetTagId,
-            //    ItemTL = i.Item.ItemTitle,
-            //    Photo = i.Photo,
-            //    StoreTL = i.Store.StoreTitle,
-            //    VendorTL = i.Vendor.VendorTitle,
-            //    DepreciationMethodTL = i.DepreciationMethod.DepreciationMethodTitle
-
-
-            //}).ToList();
-            Report = new rptAssetStatus();
-            //Report.DataSource = ds;
-
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAssetStatus(tenant);
+            return Page();
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            
+
             List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
@@ -65,9 +63,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             }
 
 
-            Report = new rptAssetStatus();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAssetStatus(tenant);
             Report.DataSource = ds;
-
+            return Page();
         }
     }
     }

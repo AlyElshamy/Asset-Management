@@ -1,58 +1,73 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class BrockenReportModel : PageModel
     {
         private readonly AssetContext _context;
 
-        public BrockenReportModel(AssetContext context)
+        public BrockenReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public int AssetId { get; set; }
         public rptAssetBrocken Report { get; set; }
-        static List<BrockenModel> ShowAllList = new List<BrockenModel>();
-        public void OnGet()
-        {
-            ShowAllList = _context.AssetBrokenDetails.Select(i => new BrockenModel
-            {
-                AssetCost = i.Asset.AssetCost,
-                AssetDescription = i.Asset.AssetDescription,
-                AssetSerialNo = i.Asset.AssetSerialNo,
-                AssetTagId = i.Asset.AssetTagId,
-                AssetId=i.AssetId,
-                Photo=i.Asset.Photo,
-                CategoryTL = i.Asset.Item.Category.CategoryTIAR,
-                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
-                DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-                LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-                DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-                CategoryId = i.Asset.Item.CategoryId,
-                ItemTL = i.Asset.Item.ItemTitle,
-                StoreTL = i.Asset.Store.StoreTitle,
-                AssetBrokenId =i.AssetBrokenId,
-                DateBroken=i.AssetBroken.DateBroken,
-                Notes= i.AssetBroken.Notes,
-                
+        public Tenant tenant { set; get; }
+        UserManager<ApplicationUser> UserManger;
 
-            }).ToList();
-            Report = new rptAssetBrocken();
-            
+        static List<BrockenModel> ShowAllList = new List<BrockenModel>();
+        public async Task<IActionResult> OnGet()
+        {
+            //ShowAllList = _context.AssetBrokenDetails.Select(i => new BrockenModel
+            //{
+            //    AssetCost = i.Asset.AssetCost,
+            //    AssetDescription = i.Asset.AssetDescription,
+            //    AssetSerialNo = i.Asset.AssetSerialNo,
+            //    AssetTagId = i.Asset.AssetTagId,
+            //    AssetId=i.AssetId,
+            //    Photo=i.Asset.Photo,
+            //    CategoryTL = i.Asset.Item.Category.CategoryTIAR,
+            //    LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
+            //    DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
+            //    LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
+            //    DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
+            //    CategoryId = i.Asset.Item.CategoryId,
+            //    ItemTL = i.Asset.Item.ItemTitle,
+            //    StoreTL = i.Asset.Store.StoreTitle,
+            //    AssetBrokenId =i.AssetBrokenId,
+            //    DateBroken=i.AssetBroken.DateBroken,
+            //    Notes= i.AssetBroken.Notes,
+
+
+            //}).ToList();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            Report = new rptAssetBrocken(tenant);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            return Page();
+
         }
 
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
 
             List<BrockenModel> ds = _context.AssetBrokenDetails.Select(i => new BrockenModel
@@ -73,7 +88,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 StoreTL=i.Asset.Store.StoreTitle,
                 AssetBrokenId = i.AssetBrokenId,
                 DateBroken = i.AssetBroken.DateBroken,
-                Notes = i.AssetBroken.Notes
+                Notes = i.AssetBroken.Notes,
+
             }).ToList();
             if (filterModel.ShowAll != false)
             {
@@ -106,8 +122,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = new List<BrockenModel>();
             }
-            Report = new rptAssetBrocken();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+
+            Report = new rptAssetBrocken(tenant);
             Report.DataSource = ds;
+
+            return Page();
         }
     }
 }

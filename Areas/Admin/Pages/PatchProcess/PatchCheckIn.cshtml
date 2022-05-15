@@ -2,6 +2,7 @@
 @model AssetProject.Areas.Admin.Pages.PatchProcess.PatchCheckInModel
 @{
 }
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 <div class="slim-mainpanel" style="position: relative;">
     <div class="container">
         <div class="slim-pageheader">
@@ -20,13 +21,21 @@
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
+  <script>
+    function grid_dataSource_beforeSend(op, ajax) {
+        ajax.headers = {
+            RequestVerificationToken: "@Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken"
+        };
+    }
+</script>
                           @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
                      .ID("grid-container")
-                    .DataSource(ds => ds.Mvc()
-                    .Controller("Assets")
-                    .LoadAction("Get")           
-                    .Key("AssetId")
-                    )
+                 .DataSource(ds => ds.RemoteController()
+                 .LoadUrl(Url.Page("PatchCheckIn", "GridData")) 
+                      .Key("AssetId")
+                    .OnBeforeSend("grid_dataSource_beforeSend")
+
+                  )
                          .Selection(s => s.Mode(SelectionMode.Multiple))
                           .OnSelectionChanged("selection_changed")
                          

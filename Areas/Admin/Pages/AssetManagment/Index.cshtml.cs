@@ -2,6 +2,7 @@ using AssetProject.Data;
 using AssetProject.Models;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
 

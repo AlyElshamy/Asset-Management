@@ -12,10 +12,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
-
+    [Authorize]
     public class AssetProfileModel : PageModel
     {
         AssetContext Context;

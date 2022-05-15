@@ -2,6 +2,7 @@ using AssetProject.Data;
 using AssetProject.Models;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace AssetProject.Areas.Admin.Pages.ContractManagment
 {
+    [Authorize]
     public class DetailsContractModel : PageModel
     {
         public Contract Contract { set; get; }
