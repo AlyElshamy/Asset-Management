@@ -1,38 +1,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class DisposeAssetReportModel : PageModel
     {
         
             private readonly AssetContext _context;
 
-            public DisposeAssetReportModel(AssetContext context)
-            {
-                _context = context;
-            }
+            public DisposeAssetReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            UserManger = userManager;
+        }
 
             [BindProperty]
             public FilterModel filterModel { get; set; }
             public int AssetId { get; set; }
             public rptDisposeAsset Report { get; set; }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-            public void OnGet()
-            {
-                Report = new rptDisposeAsset();
-            }
-
-            public void OnPost()
-            {
-                List<DisposeModel> ds = _context.AssetDisposeDetails.Select(i => new DisposeModel
+        public async Task<IActionResult> OnGet()
+        {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptDisposeAsset(tenant);
+            return Page();
+        }
+        public async Task<IActionResult> OnPost()
+        {
+            List<DisposeModel> ds = _context.AssetDisposeDetails.Select(i => new DisposeModel
                 {
                     AssetCost = i.Asset.AssetCost,
                     AssetDescription = i.Asset.AssetDescription,
@@ -64,9 +77,15 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                     ds = null;
                 }
 
-                Report = new rptDisposeAsset();
-                Report.DataSource = ds;
-            }
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptDisposeAsset(tenant);
+            Report.DataSource = ds;
+            return Page();
+        }
         }
     }
 

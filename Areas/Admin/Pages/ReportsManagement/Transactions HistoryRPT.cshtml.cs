@@ -1,31 +1,45 @@
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class Transactions_HistoryRPTModel : PageModel
     {
 
-        public Transactions_HistoryRPTModel(AssetContext context)
+        public Transactions_HistoryRPTModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
-
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public rptTransactionsHistory Report { get; set; }
         public AssetContext _context { get; }
-        public void OnGet()
-        {
-            Report = new rptTransactionsHistory();
-        }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public void OnPost()
+        public async Task<IActionResult> OnGet()
+        {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptTransactionsHistory(tenant);
+            return Page();
+        }
+        public async Task<IActionResult> OnPost()
         {
             List<TransactionHistoryRM> ds = _context.AssetLogs.Select(a => new TransactionHistoryRM
             {
@@ -58,8 +72,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            Report = new rptTransactionsHistory();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptTransactionsHistory(tenant);
             Report.DataSource = ds;
+            return Page();
 
         }
     }

@@ -29,7 +29,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetExpiringContracts(DataSourceLoadOptions loadOptions)
         {
-            var contracts = _context.Contracts.Where(c=>c.EndDate.Date<DateTime.Now.Date).Select(i => new
+            var contracts = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Select(i => new
             {
                 i.ContractId,
                 i.Title,
@@ -41,6 +41,21 @@ namespace AssetProject.Controllers
                 i.VendorId
             });
             return Json(await DataSourceLoader.LoadAsync(contracts, loadOptions));
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetExpiringCheckOut(DataSourceLoadOptions loadOptions)
+        {
+
+            var AssetsCheckOut = _context.AssetMovementDetails.Where(c=>c.AssetMovement.DueDate<DateTime.Now&&c.Asset.AssetStatus.AssetStatusId==2).Include(i=>i.Asset).Include(i=>i.AssetMovement).Select(i => new
+            {
+              i.AssetMovementDetailsId,
+              i.AssetMovementId,
+              i.Remarks,
+              i.Asset,
+              i.AssetMovement
+            });
+            return Json(await DataSourceLoader.LoadAsync(AssetsCheckOut, loadOptions));
         }
     }
 }

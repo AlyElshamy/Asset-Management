@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly AssetProject.Data.AssetContext _context;

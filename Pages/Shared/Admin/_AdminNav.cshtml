@@ -6,6 +6,8 @@
 @inject AssetContext context;
 @{
     var contractCount = context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+    var AssetsCheckOut = context.AssetMovementDetails.Where(c => c.AssetMovement.DueDate < DateTime.Now&&c.Asset.AssetStatusId==2).Count();
+
 }
 <div class="slim-navbar">
     <div class="container">
@@ -183,6 +185,9 @@
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetEditedReport">Editd Assets Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/BrockenReport">Brocken Asset Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetRepairRPT">Assets Repair Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetLostReport">Assets Lost Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/SellAssetReport">Assets Sell Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/DisposeAssetReport">Assets Dispose Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/LeasingReport">Leased Out Asset Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/Transactions HistoryRPT">Transactions History Report</a></li>
 
@@ -194,6 +199,7 @@
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/DepartmentRPT">Departments Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/EmployeeReport">Employees Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/CustomerReport">Customers Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/PrintCategory">Category Report</a></li>
                             </ul>
                         </li>
 
@@ -209,7 +215,7 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li><a href="form-elements.html">Assets Past Due<span class="AlertMenuItem"></span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/CheckOutExpiring">Assets Past Due<span class="AlertMenuItem">@AssetsCheckOut</span></a></li>
                          <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">@contractCount</span></a></li>
                         <li><a href="form-elements.html">Insurances Expiring<span class="AlertMenuItem">0</span></a></li>
                         <li><a href="form-elements.html">Leases Expiring<span class="AlertMenuItem">12</span></a></li>

@@ -2,6 +2,7 @@ using AssetProject.Data;
 using AssetProject.Models;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace AssetProject.Areas.Admin.Pages.CustomerManagement
 {
+    [Authorize]
     public class CustomerDetailsModel : PageModel
     {
         private readonly AssetContext _context;

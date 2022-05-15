@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.PrintAssetPurchase
 {
+    [Authorize]
     public class PrintPurchaseModel : PageModel
     {
         private readonly AssetContext _context;

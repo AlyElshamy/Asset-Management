@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using AssetProject.Data;
 using AssetProject.Models;
 using NToastNotify;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly AssetContext _context;

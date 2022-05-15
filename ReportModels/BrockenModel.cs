@@ -21,5 +21,6 @@ namespace AssetProject.ReportModels
         public int DepartmentId { get; set; }
         public DateTime DateBroken { get; set; }
         public string Notes { get; set; }
+        public DateTime TransactionDate { get; set; }
     }
 }

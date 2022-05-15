@@ -1,48 +1,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class LeasingReportModel : PageModel
     {
         private readonly AssetContext _context;
 
-        public LeasingReportModel(AssetContext context)
+        public LeasingReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
+
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public int AssetId { get; set; }
         public rptLeasing Report { get; set; }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            //List<LeasingModel> ds = _context.AssetLeasingDetails.Select(i => new LeasingModel
-            //{
-            //    AssetCost = i.Asset.AssetCost,
-            //    AssetDescription = i.Asset.AssetDescription,
-            //    AssetSerialNo = i.Asset.AssetSerialNo,
-            //    AssetTagId = i.Asset.AssetTagId,
-            //    CustomerTL=i.AssetLeasing.Customer.FullName,
-            //    LeasingEndDate=i.AssetLeasing.EndDate,
-            //    LeasingStartDate=i.AssetLeasing.StartDate,
-            //    AssetLeasingId=i.AssetLeasing.AssetLeasingId,
-            //    CustomerId = i.AssetLeasing.Customer.CustomerId
-
-            //}).ToList();
-            Report = new rptLeasing();
-            //Report.DataSource = ds;
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptLeasing(tenant);
+            return Page();
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
             List<LeasingModel> ds = _context.AssetLeasingDetails.Select(i => new LeasingModel
             {
@@ -87,8 +88,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            Report = new rptLeasing();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptLeasing(tenant);
             Report.DataSource = ds;
+            return Page();
         }
     }
     }

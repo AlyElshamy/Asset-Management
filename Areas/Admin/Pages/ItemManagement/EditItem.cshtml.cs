@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 
 namespace AssetProject.Areas.Admin.Pages.ItemManagement
 {
+    [Authorize]
     public class EditItemModel : PageModel
     {
         [BindProperty]

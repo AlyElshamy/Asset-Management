@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AssetProject.Areas.Admin.Pages.AssetBrokenManagement
+namespace AssetProject.Areas.Admin.Pages.AlertsManagement
 {
     [Authorize]
-    public class AssetBrokenListModel : PageModel
+    public class CheckOutExpiringModel : PageModel
     {
         public void OnGet()
         {
