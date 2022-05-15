@@ -1,4 +1,5 @@
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Identity.Pages.UserManagment
 {
+    [Authorize]
     public class AddUserModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

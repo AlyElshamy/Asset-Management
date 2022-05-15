@@ -2,6 +2,7 @@ using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class CheckoutFormRPTModel : PageModel
     {
         public CheckoutFormRPTModel(AssetContext context, UserManager<ApplicationUser> userManager)
@@ -36,7 +38,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
             Report = new ReportCheckOutForm(tenant);
             Report.DataSource = ds;
             //Report.objectDataSource1.DataSource = ds;

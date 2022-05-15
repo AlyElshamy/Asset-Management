@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
+    [Authorize]
     public class ListModel : PageModel
     {
         public void OnGet()

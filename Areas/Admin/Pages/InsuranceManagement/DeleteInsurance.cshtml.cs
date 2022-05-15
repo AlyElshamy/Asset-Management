@@ -1,5 +1,6 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
@@ -8,6 +9,8 @@ using System.Globalization;
 
 namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
 {
+    [Authorize]
+
     public class DeleteInsuranceModel : PageModel
     {
         private readonly AssetContext _context;

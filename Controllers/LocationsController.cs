@@ -34,7 +34,8 @@ namespace AssetProject.Controllers
                 i.Address,
                 i.City,
                 i.State,
-                i.PostalCode
+                i.PostalCode,
+                i.BarCode
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -97,8 +98,9 @@ namespace AssetProject.Controllers
             string CITY = nameof(Location.City);
             string STATE = nameof(Location.State);
             string POSTAL_CODE = nameof(Location.PostalCode);
+            string BARCODE = nameof(Location.BarCode);
 
-            if(values.Contains(LOCATION_ID)) {
+            if (values.Contains(LOCATION_ID)) {
                 model.LocationId = Convert.ToInt32(values[LOCATION_ID]);
             }
 
@@ -128,6 +130,11 @@ namespace AssetProject.Controllers
 
             if(values.Contains(POSTAL_CODE)) {
                 model.PostalCode = Convert.ToString(values[POSTAL_CODE]);
+            }
+
+            if (values.Contains(BARCODE))
+            {
+                model.BarCode = Convert.ToString(values[BARCODE]);
             }
         }
 

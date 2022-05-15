@@ -2,30 +2,45 @@ using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class AddAssetRPTModel : PageModel
     {
 
-        public AddAssetRPTModel(AssetContext context)
+        public AddAssetRPTModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
+        public Tenant tenant { set; get; }
+        UserManager<ApplicationUser> UserManger;
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public rptAddAsset Report { get; set; }
         public AssetContext _context { get; }
-        public void OnGet()
+
+        public async Task<IActionResult> OnGet()
         {
-            Report = new rptAddAsset();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAddAsset(tenant);
+            return Page();
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
             List<AssetReportsModel> ds = _context.Assets.Select(a => new AssetReportsModel
             {
@@ -80,9 +95,15 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-
-            Report = new rptAddAsset();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAddAsset(tenant);
             Report.DataSource = ds;
+            return Page();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using System.Globalization;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
+    [Authorize]
     public class PatchMaintModel : PageModel
     {
         [BindProperty]

@@ -1,31 +1,46 @@
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class AssetRepairRPTModel : PageModel
     {
         private readonly AssetContext _context;
 
-        public AssetRepairRPTModel(AssetContext context)
+        public AssetRepairRPTModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
+
         }
+        public rptAssetRepair Report { get; set; }
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
         [BindProperty]
         public FilterModel filterModel { get; set; }
-        public rptAssetRepair Report { get; set; }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            Report = new rptAssetRepair();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAssetRepair(tenant);
+            return Page();
         }
-
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
             List<AssetRepairRM> ds = _context.AssetRepairDetails.Select(a => new AssetRepairRM
             {
@@ -63,8 +78,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = null;
             }
 
-            Report = new rptAssetRepair();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            tenant.Email = user.Email;
+            tenant.Phone = user.PhoneNumber;
+            Report = new rptAssetRepair(tenant);
             Report.DataSource = ds;
+            return Page();
         }
     }
 }

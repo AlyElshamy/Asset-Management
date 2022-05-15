@@ -2,6 +2,7 @@ using AssetProject.Data;
 using AssetProject.Models;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.PurchaseManagement
 {
+    [Authorize]
     public class NewPurchaseModel : PageModel
     {
         private readonly AssetContext _context;
