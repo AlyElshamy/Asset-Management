@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using DevExtreme.AspNet.Mvc;
+using DevExtreme.AspNet.Data;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
@@ -36,6 +38,32 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             return new JsonResult(Assets); 
         }
 
+        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
+        {
+            var Assets=_context.Assets.Where(a=>a.AssetStatusId==1).Select(i => new {
+                i.AssetId,
+                i.AssetDescription,
+                i.AssetTagId,
+                i.AssetCost,
+                i.AssetSerialNo,
+                i.AssetPurchaseDate,
+                i.ItemId,
+                i.Photo,
+                i.DepreciableAsset,
+                i.DepreciableCost,
+                i.SalvageValue,
+                i.AssetLife,
+                i.DateAcquired,
+                i.Item.ItemTitle,
+                i.DepreciationMethodId,
+                i.VendorId,
+                i.StoreId,
+                i.AssetStatusId,
+
+            });
+
+            return new JsonResult(DataSourceLoader.Load(Assets, loadOptions));
+        }
         public IActionResult OnPost()
         {
             if (assetmovement.ActionTypeId == 0)
@@ -43,12 +71,12 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 ModelState.AddModelError("", "Please Select Action");
                 return Page();
             }
-            if (assetmovement.LocationId == 0)
+            if (assetmovement.LocationId == null)
             {
                 ModelState.AddModelError("", "Please Select Location");
                 return Page();
             }
-            if (assetmovement.DepartmentId == 0)
+            if (assetmovement.DepartmentId == null)
             {
                 ModelState.AddModelError("", "Please Select Department");
                 return Page();
@@ -71,6 +99,8 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             {
                 if (SelectedAssets.Count != 0)
                 {
+
+                    //Check in from employeee to store
                     assetmovement.AssetMovementDirectionId = 1;
                     //StoreId = LastAssetMovement.AssetMovementId==0 ? asset.StoreId : LastAssetMovement.StoreId;                  
                     assetmovement.AssetMovementDetails = new List<AssetMovementDetails>();

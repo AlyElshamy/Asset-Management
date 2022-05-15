@@ -1,9 +1,7 @@
 ﻿@page
+@model AssetProject.Areas.Admin.Pages.PatchProcess.PatchTransferFromEmpolyeeModel
 @{
-    var day = Model.assetmovement.TransactionDate.Date.Day;
-    var date = Model.assetmovement.TransactionDate.ToShortDateString();
 }
-@model AssetProject.Areas.Admin.Pages.PatchProcess.PatchCheckOutModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 <div class="slim-mainpanel" style="position: relative;">
     <div class="container">
@@ -23,7 +21,7 @@
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
- <script>
+  <script>
     function grid_dataSource_beforeSend(op, ajax) {
         ajax.headers = {
             RequestVerificationToken: "@Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken"
@@ -32,13 +30,13 @@
 </script>
                           @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
                      .ID("grid-container")
-                 .DataSource(ds => ds.RemoteController()
-                 .LoadUrl(Url.Page("PatchCheckOut", "GridData")) 
+                  .DataSource(ds => ds.RemoteController()
+               .LoadUrl(Url.Page("PatchTransferFromEmpolyee", "GridData")) 
                       .Key("AssetId")
                     .OnBeforeSend("grid_dataSource_beforeSend")
 
                   )
-                         .Selection(s => s.Mode(SelectionMode.Multiple))
+                  .Selection(s => s.Mode(SelectionMode.Multiple))
                           .OnSelectionChanged("selection_changed")
                          
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
@@ -103,33 +101,12 @@
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Action Type"]: <span class="tx-danger">*</span></label>
-
-                                        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.ActionTypeId)
-                                        .ID("ActionTypeLookup")
-                                        .DataSource(d => d.WebApi()
-                                        .Controller("Lookups")
-                                        .LoadAction("ActionTypesLookup")
-                                        .Key("Value")
-                                        )
-                                        .OnSelectionChanged("AcionTypeLookuP")
-                                        .ValueExpr("Value")
-                                        .DisplayExpr("Text")
-                                        )
-                                        <span asp-validation-for="@Model.assetmovement.ActionTypeId" class="text-danger"></span>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-lg-12" id="AssetToEmpolyee" style="display:none">
+                                <div class="col-lg-12" id="AssetToEmpolyee" style="display:block">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().LookupFor(c=>c.assetmovement.EmpolyeeID)
+                                        .ID("EmpolyeeLookup")
                                         .DataSource(d => d.WebApi()
                                         .Controller("Lookups")
                                         .LoadAction("EmpolyeesLookup")
@@ -137,13 +114,14 @@
                                         )
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
+                                       .OnSelectionChanged("GetAssets")
                                         )
                                         <span asp-validation-for="@Model.assetmovement.EmpolyeeID" class="text-danger"></span>
                                     </div>
                                 </div>
 
 
-                                <div class="col-lg-12" id="AssetToLocation" style="display:none">
+                                <div class="col-lg-12" id="AssetToLocation" style="display:block">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
@@ -210,7 +188,7 @@
                                 )
                                 }
 
-                                <div class="col-lg-12" id="AssetToDepartment" style="display:none">
+                                <div class="col-lg-12" id="AssetToDepartment" style="display:block">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Department"] <span class="tx-danger">*</span></label>
 
@@ -272,27 +250,7 @@
     </div>
 
     <script>
-        function AcionTypeLookuP(){
-            console.log("inside the funcion")
-            var ActionType = $("#ActionTypeLookup").dxLookup("instance");
-             console.log(ActionType)
-           var ActionTypeValue = ActionType.option("selectedItem");
-           console.log(ActionTypeValue)
-               if( ActionTypeValue.Value==1)
-               {
-                   console.log("In TO Empolyee ")
-                    document.getElementById("AssetToEmpolyee").style.display='block'
-                     document.getElementById("AssetToLocation").style.display='block'
-                     document.getElementById("AssetToDepartment").style.display='block'
-               }
-               else if (ActionTypeValue.Value==2){
-                     console.log("In TO Department ")
-                      document.getElementById("AssetToDepartment").style.display='block'
-                      document.getElementById("AssetToEmpolyee").style.display='none'
-                     document.getElementById("AssetToLocation").style.display='block'
-               }
-           }
-
+        
               function syncTreeViewSelection(treeView, value) {
                   console.log(treeView)
                   console.log(value)
@@ -333,7 +291,7 @@
         {
              $.ajax({
         type: "GET",
-        url: "/admin/PatchProcess/PatchCheckOut?handler=FillAssetList",
+        url: "/admin/PatchProcess/PatchTransferFromEmpolyee?handler=FillAssetList",
         data: { "values": myJSON },
         contentType: "application/json",
         dataType: "json",
@@ -353,6 +311,37 @@
             //$("#selectedItemsContainer").text("Nobody has been selected");
         }
 
+    }
+
+    function GetAssets()
+    {
+      console.log("inside the funcion")
+        var Empolyee = $("#EmpolyeeLookup").dxLookup("instance");
+         console.log(Empolyee)
+       var EmpolyeeValue = Empolyee.option("selectedItem");
+       console.log(EmpolyeeValue)
+       console.log(EmpolyeeValue.Value)
+      
+             $.ajax({
+        type: "GET",
+        url: "/admin/PatchProcess/PatchTransferFromEmpolyee?handler=AssetsForEmpolyee",
+        data: { "values": EmpolyeeValue.Value},
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+            console.log("get Employee successfully"+response)
+           // $("#grid-container").dxDataGrid("instance").refresh()
+            $("#grid-container").dxDataGrid("instance").option("dataSource",response)
+            console.log($("#grid-container").dxDataGrid("instance"))
+  
+},
+        failure: function (response) {
+            alert(response);
+        }
+    });
+
+       
+     
     }
 
     </script>

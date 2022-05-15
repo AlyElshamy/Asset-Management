@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using DevExtreme.AspNet.Mvc;
+using DevExtreme.AspNet.Data;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
@@ -33,6 +35,32 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             var Assets = JsonConvert.DeserializeObject<List<Asset>>(values);
             SelectedAssets = Assets;
             return new JsonResult(Assets);
+        }
+        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
+        {
+            var Assets = _context.Assets.Where(a => a.AssetStatusId == 2).Select(i => new {
+                i.AssetId,
+                i.AssetDescription,
+                i.AssetTagId,
+                i.AssetCost,
+                i.AssetSerialNo,
+                i.AssetPurchaseDate,
+                i.ItemId,
+                i.Photo,
+                i.DepreciableAsset,
+                i.DepreciableCost,
+                i.SalvageValue,
+                i.AssetLife,
+                i.DateAcquired,
+                i.Item.ItemTitle,
+                i.DepreciationMethodId,
+                i.VendorId,
+                i.StoreId,
+                i.AssetStatusId,
+
+            });
+
+            return new JsonResult(DataSourceLoader.Load(Assets, loadOptions));
         }
 
         public IActionResult OnPost()
