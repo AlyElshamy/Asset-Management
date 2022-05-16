@@ -59,12 +59,10 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             if (photos.AssetId != 0)
             {
                 Context.AssetPhotos.Add(photos);
-                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Link Asset Photo" };
-                Asset asset = Context.Assets.Find(photos.AssetId);
                 AssetLog assetLog = new AssetLog()
                 {
-                    ActionLog = actionLog,
-                    Asset = asset,
+                    ActionLogId = 5,
+                    AssetId = photos.AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($" Description : {photos.Remarks} ")
                 };
@@ -81,12 +79,10 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             var Result = Context.AssetPhotos.Where(a => a.AssetId == AssetId && a.AssetPhotoId == AssetPhotoId).FirstOrDefault();
 
             Context.AssetPhotos.Remove(Result);
-            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Detached Asset Photo" };
-            Asset asset = Context.Assets.Find(AssetId);
             AssetLog assetLog = new AssetLog()
             {
-                ActionLog = actionLog,
-                Asset = asset,
+                ActionLogId = 9,
+                AssetId = AssetId,
                 ActionDate = DateTime.Now,
             };
             Context.AssetLogs.Add(assetLog);
@@ -114,12 +110,10 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
 
             Context.assetDocuments.Add(instance);
-            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Asset Document" };
-            Asset asset = Context.Assets.Find(instance.AssetId);
             AssetLog assetLog = new AssetLog()
             {
-                ActionLog = actionLog,
-                Asset = asset,
+                ActionLogId = 4,
+                AssetId = instance.AssetId,
                 ActionDate = DateTime.Now,
                 Remark = string.Format($"Document Name : {instance.DocumentName} ")
             };
@@ -148,8 +142,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 var Assetcont = new AssetContract { AssetId = assetcontract.AssetId, ContractId = assetcontract.ContractId };
                 Context.AssetContracts.Add(Assetcont);
-                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Contract" };
-                Asset asset = Context.Assets.Find(assetcontract.AssetId);
+               
                 string ContractTitle = "Contract Title : ";
                 string ContractSDate = "Contract Start Date : ";
                 string ContractEDate = "Contract End Date : ";
@@ -159,8 +152,8 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
                 AssetLog assetLog = new AssetLog()
                 {
-                    ActionLog = actionLog,
-                    Asset = asset,
+                    ActionLogId = 2,
+                    AssetId    = assetcontract.AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"{ContractTitle}{SelectedContract.Title} , {ContractSDate}{ContractStartDate} and {ContractEDate}{ContractEndDate}")
                 };
@@ -179,8 +172,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 AssetsInsurance AssetIns = new AssetsInsurance { AssetId = assetsInsurance.AssetId, InsuranceId = assetsInsurance.InsuranceId };
                 Context.AssetsInsurances.Add(AssetIns);
-                ActionLog actionLog = new ActionLog() { ActionLogTitle = "Creation Link Insurance" };
-                Asset asset = Context.Assets.Find(assetsInsurance.AssetId);
+                
                 string InsuranceTitle = "Insurance Title : ";
                 string InsuranceCompany = "Insurance Company : ";
                 Insurance SelectedInsurance = Context.Insurances.Find(assetsInsurance.InsuranceId);
@@ -189,8 +181,8 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
                 AssetLog assetLog = new AssetLog()
                 {
-                    ActionLog = actionLog,
-                    Asset = asset,
+                    ActionLogId = 3,
+                    AssetId = assetsInsurance.AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"{InsuranceTitle}{InsuranceTit} and {InsuranceCompany}{InsuranceComp} ")
                 };
@@ -554,12 +546,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
             Contract contract = Context.Contracts.Find(assetContract.ContractId);
-            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Contract" };
-            Asset asset = Context.Assets.Find(assetContract.AssetId);
+            
             AssetLog assetLog = new AssetLog()
             {
-                ActionLog = actionLog,
-                Asset = asset,
+                ActionLogId = 6,
+                AssetId = assetContract.AssetId,
                 ActionDate = DateTime.Now,
                 Remark = string.Format($"Dettached Asset Contract With Contract Name : {contract.Title} and Contract Number : {contract.ContractNo}")
             };
@@ -582,12 +573,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
             Insurance insurance = Context.Insurances.Find(assetInsurance.InsuranceId);
-            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Insurance" };
-            Asset asset = Context.Assets.Find(assetInsurance.AssetId);
+           
             AssetLog assetLog = new AssetLog()
             {
-                ActionLog = actionLog,
-                Asset = asset,
+                ActionLogId = 7,
+                AssetId = assetInsurance.AssetId,
                 ActionDate = DateTime.Now,
                 Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
             };
@@ -610,12 +600,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
-            ActionLog actionLog = new ActionLog() { ActionLogTitle = "Dettached Asset Document" };
-            Asset asset = Context.Assets.Find(assetDocument.AssetId);
+           
             AssetLog assetLog = new AssetLog()
             {
-                ActionLog = actionLog,
-                Asset = asset,
+                ActionLogId = 8,
+                AssetId = assetDocument.AssetId,
                 ActionDate = DateTime.Now,
                 Remark = string.Format($"Dettached Asset Document With Document Name : {AssetDocName} ")
             };
@@ -630,23 +619,15 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             if (assetWarranty.AssetId != 0)
             {
                 AssetWarranty AssetWar = new AssetWarranty { AssetId = assetWarranty.AssetId, WarrantyId = assetWarranty.WarrantyId };
-                Context.AssetWarranties.Add(AssetWar);
-                //ActionLog actionLog = new ActionLog() { ActionLogTitle = "Create Warranty" };
-                //Asset asset = Context.Assets.Find(assetWarranty.AssetId);
-                //string WarrantyTitle = "Warranty Title : ";
-                //string WarrantyCompany = "Warranty Company : ";
-                //AssetWarranty SelectedWarranty = Context.AssetWarranties.Find(assetWarranty.WarrantyId);
-                //string InsuranceTit = SelectedInsurance.Title;
-                //string InsuranceComp = SelectedInsurance.InsuranceCompany;
-
-                //AssetLog assetLog = new AssetLog()
-                //{
-                //    ActionLog = actionLog,
-                //    Asset = asset,
-                //    ActionDate = DateTime.Now,
-                //    Remark = string.Format("Create Warranty")
-                //};
-                //Context.AssetLogs.Add(assetLog);
+                Context.AssetWarranties.Add(AssetWar); 
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 20,
+                    AssetId = assetWarranty.AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format("Create Warranty")
+                };
+                Context.AssetLogs.Add(assetLog);
 
                 Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Link Warranty Added Successfully");

@@ -114,7 +114,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
 
                 //Print check in form
                 _toastNotification.AddSuccessToastMessage("Asset Movements Added successfully");
-                return RedirectToPage("/ReportsManagement/CheckInFormRPT", new { AssetMovement = CheckInID });
+                return RedirectToPage("/ReportsManagement/MergeTwoReport", new { CheckInId=CheckInID, CheckOutId =CheckoutID});
                 //Print check out form
 
             }
