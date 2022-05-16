@@ -95,6 +95,7 @@ namespace AssetProject.Data
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 17, ActionLogTitle = "CheckOut" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 18, ActionLogTitle = "Asset Maintainance" });
             modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 19, ActionLogTitle = "Asset Edited" });
+            modelBuilder.Entity<ActionLog>().HasData(new ActionLog { ActionLogId = 20, ActionLogTitle = "Add Asset Wrantty" });
         }
 
 
