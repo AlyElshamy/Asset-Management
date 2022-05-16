@@ -284,6 +284,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetMaintainanceDueDate]")});
             this.tableCell19.Name = "tableCell19";
             this.tableCell19.StyleName = "DetailData1";
+            this.tableCell19.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell19.Weight = 0.080458123085901265D;
             // 
             // tableCell20

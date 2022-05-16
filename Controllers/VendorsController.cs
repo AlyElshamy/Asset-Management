@@ -16,6 +16,7 @@ using AssetProject.Models;
 namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class VendorsController : Controller
     {
         private AssetContext _context;

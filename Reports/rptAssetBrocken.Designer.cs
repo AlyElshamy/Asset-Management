@@ -348,6 +348,7 @@
             this.tableCell19.StyleName = "DetailData1";
             this.tableCell19.StylePriority.UseTextAlignment = false;
             this.tableCell19.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.tableCell19.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell19.Weight = 0.18716327235261338D;
             // 
             // tableCell20

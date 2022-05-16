@@ -17,6 +17,7 @@ using Type = AssetProject.Models.Type;
 namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class TypesController : Controller
     {
         private AssetContext _context;

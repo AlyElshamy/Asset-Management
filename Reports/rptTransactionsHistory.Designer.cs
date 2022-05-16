@@ -464,7 +464,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TransactionDate]")});
             this.xrTableCell6.Multiline = true;
             this.xrTableCell6.Name = "xrTableCell6";
-            this.xrTableCell6.TextFormatString = "{0:MM/dd/yy}";
+            this.xrTableCell6.TextFormatString = "{0:dd/mm/yyyy}";
             this.xrTableCell6.Weight = 1.2624092484521574D;
             // 
             // xrLabel17

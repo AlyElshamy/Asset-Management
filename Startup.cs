@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Localization;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using NToastNotify;
 using System;
@@ -103,6 +104,11 @@ namespace AssetProject
                 }
 
                 );
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerGeneratorOptions.IgnoreObsoleteActions = true;
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
             services.AddDevExpressControls();
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
@@ -144,6 +150,13 @@ namespace AssetProject
                 DefaultRequestCulture = new RequestCulture("en-Us"),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                //options.RoutePrefix = string.Empty;
+
             });
             app.UseHttpsRedirection();
             app.UseStaticFiles();

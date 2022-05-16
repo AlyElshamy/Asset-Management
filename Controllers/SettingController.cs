@@ -14,6 +14,7 @@ namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class SettingController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

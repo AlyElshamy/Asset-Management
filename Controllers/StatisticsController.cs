@@ -16,6 +16,7 @@ using AssetProject.Models;
 namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class StatisticsController : Controller
     {
         private AssetContext _context;

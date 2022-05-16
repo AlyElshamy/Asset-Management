@@ -157,7 +157,7 @@ namespace AssetProject.Reports
             this.xrLabel12.StylePriority.UseTextAlignment = false;
             this.xrLabel12.Text = "xrLabel12";
             this.xrLabel12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel12.TextFormatString = "{0:dd-MMM-yy}";
+            this.xrLabel12.TextFormatString = "{0:dd/mm/yyyy}";
             // 
             // xrLabel1
             // 
