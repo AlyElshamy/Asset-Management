@@ -37,14 +37,14 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         public IActionResult OnGetAssetsForEmpolyee(string values)
         {
             var EmpoyeeId = JsonConvert.DeserializeObject<int>(values);
-            var movementsForDepartment = _context.AssetMovements.Where(a => a.EmpolyeeID == EmpoyeeId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
-            foreach (var item in movementsForDepartment)
+            var movementsForEmpolyee = _context.AssetMovements.Where(a => a.EmpolyeeID == EmpoyeeId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+            foreach (var item in movementsForEmpolyee)
             {
                 foreach (var item2 in item.AssetMovementDetails)
                 {
                     if (item2.Asset.AssetStatusId == 2)
                     {
-                        var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                        var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                         if (lastassetmovement.AssetMovement.EmpolyeeID == EmpoyeeId )
                         {
                             EmpoyeeAssets.Add(item2.Asset);
@@ -53,7 +53,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 }
             }
 
-            return new JsonResult(EmpoyeeAssets);
+            return new JsonResult(EmpoyeeAssets.Distinct());
         }
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
         {

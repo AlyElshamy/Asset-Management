@@ -25,12 +25,13 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         private readonly AssetContext _context;
         private readonly IToastNotification _toastNotification;
         private readonly IWebHostEnvironment _hostEnvironment;
-
+        public Asset Asset { set; get; }
         public IndexModel(AssetContext context, IToastNotification toastNotification, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
             _toastNotification = toastNotification;
             _hostEnvironment = hostEnvironment;
+            Asset = new Asset();
         }
 
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)

@@ -51,6 +51,8 @@
 *@
     columns.AddFor(m => m.LocationTitle).Caption(@sharedResource["LocationTitle"]);
     columns.AddFor(m => m.BarCode).Caption(@sharedResource["BarCode"]);
+    columns.AddFor(m => m.LocationLatitude).Caption(@sharedResource["Latitude"]);
+    columns.AddFor(m => m.LocationLangtiude).Caption(@sharedResource["Langtiude"]);
       @*  columns.AddFor(m => m.CountryId);
 
         columns.AddFor(m => m.Address);
@@ -62,11 +64,17 @@
         columns.AddFor(m => m.PostalCode);*@
     })
     .Editing(e => e
+    .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
         .AllowDeleting(true)
+          .Popup(p => p
+                .Title("Location Info")
+                .ShowTitle(true)
+                .Width(700)
+                .Height(525)
     )
-        .Selection(s => s.Mode(SelectionMode.Single))
+    ).Selection(s => s.Mode(SelectionMode.Single))
 
 )
                 </div>

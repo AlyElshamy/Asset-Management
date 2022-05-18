@@ -37,7 +37,7 @@ namespace AssetProject.Models
 
         public int? VendorId { get; set; }
         public virtual Vendor Vendor { get; set; }
-
+       
 
         public int? StoreId { get; set; }
         public virtual Store Store { get; set; }
@@ -45,6 +45,7 @@ namespace AssetProject.Models
         public ICollection<AssetContract> AssetContracts { get; set; }
         public ICollection<AssetsInsurance> AssetsInsurances { get; set; }
         public ICollection<AssetDocument> documents { get; set; }
+        public ICollection<AssetMovementDetails> AssetMovementDetails{ get; set; }
         public AssetWarranty Warranty { get; set; }
         
 
