@@ -27,7 +27,8 @@ namespace AssetProject.ReportModels
         public DateTime AssetPurchaseDate { set; get; }
         public string ItemTl { set; get; }
         public string AssetStatusTl { set; get; }
-       
+        public string Photo { set; get; }
+
     }
 
 }

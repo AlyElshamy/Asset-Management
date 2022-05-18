@@ -7,30 +7,30 @@ using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
-    [Authorize]
-    public class AssetStatusReportModel : PageModel
+    public class LocationReportModel : PageModel
     {
-        public AssetStatusReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
+        private readonly AssetContext _context;
+
+        public LocationReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             UserManger = userManager;
         }
 
+
         [BindProperty]
         public FilterModel filterModel { get; set; }
-        public rptAssetStatus Report { get; set; }
+        public int AssetId { get; set; }
+        public rptsite Report { get; set; }
         UserManager<ApplicationUser> UserManger;
         public Tenant tenant { set; get; }
-        public Asset asset { set; get; }
 
-        public AssetContext _context { get; }
         public async Task<IActionResult> OnGet()
         {
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -38,41 +38,38 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             tenant = _context.Tenants.Find(user.TenantId);
             tenant.Email = user.Email;
             tenant.Phone = user.PhoneNumber;
-            Report = new rptAssetStatus(tenant);
+            Report = new rptsite(tenant);
             return Page();
         }
         public async Task<IActionResult> OnPost()
         {
-
-            List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
+            List<SiteModel> ds = _context.Locations.Select(i => new SiteModel
             {
-                AssetCost = i.AssetCost,
-                AssetSerialNo = i.AssetSerialNo,
-                AssetStatusTL = i.AssetStatus.AssetStatusTitle,
-                AssetTagId = i.AssetTagId,
-                ItemTL = i.Item.ItemTitle,
-                Photo = i.Photo,
-                StoreTL = i.Store.StoreTitle,
-                VendorTL = i.Vendor.VendorTitle,
-                DepreciationMethodTL = i.DepreciationMethod.DepreciationMethodTitle,
-                StatusId=i.AssetStatusId,
+                LocationId=i.LocationId,
+                Address=i.Address,
+                City=i.City,
+                LocationTitle=i.LocationTitle, 
+                PostalCode=i.PostalCode, 
+                State= i.State
+
             }).ToList();
-            
-
-            if (filterModel.StatusId != 0)
+            if (filterModel.LocationId != null)
             {
-                ds = ds.Where(i => i.StatusId == filterModel.StatusId).ToList();
+                ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
             }
-                
 
+            if (filterModel.LocationId == null)
+            {
+                ds = null;
+            }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
             tenant.Email = user.Email;
             tenant.Phone = user.PhoneNumber;
-            Report = new rptAssetStatus(tenant);
+            Report = new rptsite(tenant);
             Report.DataSource = ds;
             return Page();
         }
     }
-    }
+}

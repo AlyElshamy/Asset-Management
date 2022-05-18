@@ -7,6 +7,11 @@
 @{
     var contractCount = context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
     var AssetsCheckOut = context.AssetMovementDetails.Where(c => c.AssetMovement.DueDate < DateTime.Now&&c.Asset.AssetStatusId==2).Count();
+    var InsuranceCount = context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+    var LeasingCount = context.AssetLeasingDetails.Where(c => c.AssetLeasing.EndDate.Date < DateTime.Now.Date && c.Asset.AssetStatus.AssetStatusId == 6).Count();
+    var WarrantyCount = context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+    var MaintenanceCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Date == DateTime.Now.Date&& c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
+    var MaintenanceoverdueCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Date < DateTime.Now.Date  && c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
 
 }
 <div class="slim-navbar">
@@ -200,6 +205,8 @@
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/EmployeeReport">Employees Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/CustomerReport">Customers Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/PrintCategory">Category Report</a></li>
+                                @*<li><a asp-area="Admin" asp-page="/ReportsManagement/LocationReport">Location Report</a></li>*@
+
                             </ul>
                         </li>
 
@@ -217,11 +224,11 @@
                     <ul>
                         <li><a asp-area="Admin" asp-page="/AlertsManagement/CheckOutExpiring">Assets Past Due<span class="AlertMenuItem">@AssetsCheckOut</span></a></li>
                          <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">@contractCount</span></a></li>
-                        <li><a href="form-elements.html">Insurances Expiring<span class="AlertMenuItem">0</span></a></li>
-                        <li><a href="form-elements.html">Leases Expiring<span class="AlertMenuItem">12</span></a></li>
-                        <li><a href="form-elements.html">Maintenance Due<span class="AlertMenuItem">10</span></a></li>
-                        <li><a href="form-elements.html">Maintenance Overdue<span class="AlertMenuItem">9</span></a></li>
-                        <li><a href="form-elements.html">Warranties Expiring<span class="AlertMenuItem">4</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/InsurancesExpiring">Insurances Expiring<span class="AlertMenuItem">@InsuranceCount</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/LeasesExpiring">Leases Expiring<span class="AlertMenuItem">@LeasingCount</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/MaintenanceDue">Maintenance Due<span class="AlertMenuItem">@MaintenanceCount</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/MaintenanceOverdue">Maintenance Overdue<span class="AlertMenuItem">@MaintenanceoverdueCount</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/Warranties Expiring">Warranties Expiring<span class="AlertMenuItem">@WarrantyCount</span></a></li>
                     </ul>
                 </div><!-- dropdown-menu -->
             </li>

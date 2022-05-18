@@ -50,6 +50,7 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                 EmployeeFullN = i.AssetMovement.Employee.FullName,
                 LocationTl = i.AssetMovement.Location.LocationTitle,
                 DepartmentTl = i.AssetMovement.Department.DepartmentTitle,
+                Photo=i.Asset.Photo,
                 StoreTl = i.Asset.Store.StoreTitle,
                 ActionTypeTl = i.AssetMovement.ActionType.ActionTypeTitle,
                 AssetMovementDirectionTl = i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
