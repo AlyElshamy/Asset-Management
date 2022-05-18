@@ -32,14 +32,14 @@
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
 
-         columns.AddFor(m => m.ActionLogId).Caption("Action Name").Lookup(lookup => lookup
+         columns.AddFor(m => m.ActionLogId).Caption(sharedResource["Action Name"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetLogs").LoadAction("ActionLogsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
         );
-        columns.AddFor(m => m.ActionDate);
+        columns.AddFor(m => m.ActionDate).Caption(sharedResource["Action Date"]);
 
-        columns.AddFor(m => m.Remark);
+        columns.AddFor(m => m.Remark).Caption(sharedResource["Remark"]);
        
     })
 )

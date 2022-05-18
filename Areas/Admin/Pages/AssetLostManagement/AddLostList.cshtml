@@ -8,14 +8,14 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Assets</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Assets Lost</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Assets"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Assets Lost"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Assets Lost List</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Assets Lost List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Assets List</label>
+            <label class="section-title d-inline">@sharedResource["Assets List"]</label>
             @*<a asp-area="Admin" asp-page="/AssetManagment/AddLostList" class="btn btn-primary" style="float:right"> Add New Contract   </a>*@
             @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
             <div class="table-wrapper">
@@ -46,9 +46,9 @@
 
                     .Columns(columns =>
                     {
-                        columns.AddFor(m => m.AssetLost.DateLost);
-                        columns.AddFor(m => m.AssetLost.Notes);
-                    columns.AddFor(m => m.Asset.Photo).Width(100)
+                        columns.AddFor(m => m.AssetLost.DateLost).Caption(sharedResource["Date Lost"]);
+                        columns.AddFor(m => m.AssetLost.Notes).Caption(sharedResource["Notes"]);
+                    columns.AddFor(m => m.Asset.Photo).Width(100).Caption(sharedResource["Photo"])
                 .AllowFiltering(false)
                 .AllowSorting(false)
 
@@ -57,25 +57,25 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription);
+                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
-                        columns.AddFor(m => m.Asset.AssetTagId);
+                        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                        columns.AddFor(m => m.Asset.AssetCost);
+                        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo);
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate);
+                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")
                         );
 
 
-                        
-                        
+
+
 
 
 
@@ -85,8 +85,8 @@
                     columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                     .CellTemplate(@<text>
                             @*@Html.DevExtreme().Button().Text("Edit").OnClick("function (e) { editButtonClick(data) }")*@
-                            @Html.DevExtreme().Button().Text("Delete").OnClick("function (e) { deleteButtonClick(data) }")
-                            @Html.DevExtreme().Button().Text("View").OnClick("function (e) { viewButtonClick(data) }")
+                            @Html.DevExtreme().Button().Text(sharedResource["Delete"]).OnClick("function (e) { deleteButtonClick(data) }")
+                            @Html.DevExtreme().Button().Text(sharedResource["View"]).OnClick("function (e) { viewButtonClick(data) }")
                         </text>);
 
                     })
@@ -133,7 +133,7 @@
                        <div class="row mg-b-25">
                              <div class="col-lg-5">
                                  <div class="form-group">
-                         @Html.Label("Asset Description")
+                         @Html.Label(sharedResource["Asset Description"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetDescription")
                             </div>
                             </div>
@@ -141,14 +141,14 @@
 
                         <div class="col-lg-5">
                                  <div class="form-group">
-                            @Html.Label("Asset Tag Id")
+                            @Html.Label(sharedResource["AssetTagId"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
                             </div>
                             </div>
                             <br>
                               <div class="col-lg-5">
                                  <div class="form-group">
-                           @Html.Label("Asset Cost ")
+                           @Html.Label(sharedResource["Asset Cost"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetCost")
                             </div>
                             </div>
@@ -189,7 +189,7 @@
 
                                <div class="col-lg-5">
                           <div class="form-group">
-                              @Html.Label("Asset Photo")
+                              @Html.Label("Photo")
                               <div class="custom-file">
                                   <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" onchange="changephotoname()" id="Photo" required>
                                   <label class="custom-file-label" for="File" id="photolabel">Choose New Photo</label>
@@ -205,8 +205,8 @@
                             <br>*@
 
 </div>
-      @Html.DevExtreme().Button().Text("Save").OnClick("function (e) { saveButtonClick() }")
-      @Html.DevExtreme().Button().Text("Cancel").OnClick("function (e) { cancelButtonClick() }")
+      @Html.DevExtreme().Button().Text(sharedResource["Save"]).OnClick("function (e) { saveButtonClick() }")
+      @Html.DevExtreme().Button().Text(sharedResource["Cancel"]).OnClick("function (e) { cancelButtonClick() }")
 
                         </text>))
                     @*         @Html.PartialAsync("_AssetEditPopup",Model);
@@ -228,27 +228,27 @@
                           <table class="table table-bordered table-hover table-striped">
                               <tr>
                                 <td>
-                                    Asset Cost
+                                    @sharedResource["Asset Cost"]
                                 </td>
                                  <td id="AssetCost">
                                 </td>
                                   <tr />
                               <tr>
                                   <td>
-                                      Asset SerialNo
+                                     @sharedResource["Asset Serial No"] 
                                   </td>
                                   <td id="AssetSerialNo">
                                   </td>
                               </tr>
                             <tr>
                                 <td>
-                                    Asset Purchase Date
+                                    @sharedResource["AssetPurchaseDate"]
                                 </td>
                                 <td id="TxtAssetPurchaseDate"></td>
                             </tr>
                               <tr>
                                   <td>
-                                      Asset Item
+                                      @sharedResource["Item"] 
                                   </td>
                                   <td id="AssetItem"></td>
                               </tr>
@@ -260,7 +260,7 @@
                  <input type='button' class="btn btn-secondary bd-0" value='More Details' />
               </a>
 
-                            @Html.DevExtreme().Button().Text("Close").OnClick("function (e) { closeButtonClick() }")
+                            @Html.DevExtreme().Button().Text(sharedResource["Cancel"]).OnClick("function (e) { closeButtonClick() }")
                         </text>))
 
 

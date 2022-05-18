@@ -27,7 +27,7 @@
                     @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
                     //items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
-                    items.AddSimpleFor(m => m.DateLost).Label(l=>l.Text(sharedResource["DateLost"]));
+                    items.AddSimpleFor(m => m.DateLost).Label(l=>l.Text(sharedResource["Date Lost"]));
                     items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e => e.TextArea()).Label(l => l.Text(sharedResource["Notes"]));
 
 

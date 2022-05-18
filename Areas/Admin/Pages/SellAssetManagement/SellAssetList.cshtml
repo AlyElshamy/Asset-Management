@@ -9,8 +9,8 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
-                <li class="breadcrumb-item"><a href="#">Asset Management</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Sell Asset list</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Asset Management"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Sell Asset list"]</li>
             </ol>
             <h6 class="slim-pagetitle">@sharedResource["Sell Asset List"]</h6>
         </div><!-- slim-pageheader -->
@@ -44,9 +44,9 @@
                     
                     .Columns(columns => {
 
-                        columns.AddFor(m => m.SellAsset.SaleAmount).Caption("Sale Amount");
-                        columns.AddFor(m => m.SellAsset.SoldTo).Caption("Soled to");
-                        columns.AddFor(m => m.SellAsset.Notes).Caption("Sale Notes");
+                        columns.AddFor(m => m.SellAsset.SaleAmount).Caption(sharedResource["Sale Amount"]);
+                        columns.AddFor(m => m.SellAsset.SoldTo).Caption(sharedResource["Soled to"]);
+                        columns.AddFor(m => m.SellAsset.Notes).Caption(sharedResource["Notes"]);
                         
                         columns.AddFor(m => m.Asset.Photo).Width(100)
                 .AllowFiltering(false)
@@ -57,17 +57,17 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription);
+                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
-                        columns.AddFor(m => m.Asset.AssetTagId);
+                        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                        columns.AddFor(m => m.Asset.AssetCost);
+                        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo);
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate);
+                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")
