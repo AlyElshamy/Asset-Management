@@ -125,11 +125,20 @@
             document.getElementById("AssetCost").innerHTML = response.AssetCost
             document.getElementById("AssetPurchaseDate").innerHTML = response.AssetPurchaseDate
             document.getElementById("AssetItem").innerHTML = response.Item.ItemTitle
+            if (response.DepreciableAsset)
+            {
             document.getElementById("DepreciableCost").innerHTML = response.DepreciableCost
             document.getElementById("SalvageValue").innerHTML = response.SalvageValue
             document.getElementById("AssetLife").innerHTML = response.AssetLife
             document.getElementById("DateAcquired").innerHTML = response.DateAcquired
             document.getElementById("DepreciationMethod").innerHTML = response.DepreciationMethod.DepreciationMethodTitle
+            }
+            else
+
+            {
+              document.getElementById("DepreciationInfo").style.display='none';
+            }
+         
              $('#AssetQuickViewPoup').modal('show');
             
         },
