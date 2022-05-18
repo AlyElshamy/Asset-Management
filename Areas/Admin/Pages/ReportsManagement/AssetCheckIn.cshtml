@@ -31,26 +31,18 @@
     .Items(items => {
         items.AddSimpleFor(m => m.FromDate).IsRequired(false);
         items.AddSimpleFor(m => m.ToDate).IsRequired(false);
-        items.AddSimpleFor(m => m.OnDay).IsRequired(false);
+
 
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
 
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
+
+         items.AddSimpleFor(m => m.StoreId).IsRequired(false).Label(l => l.Text(sharedResource["Store"]))
         .Editor(e => e
         .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-        items.AddSimpleFor(m => m.employeeId).IsRequired(false).Label(l => l.Text(sharedResource["Employee"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-
-
 
 
         items.AddButton()

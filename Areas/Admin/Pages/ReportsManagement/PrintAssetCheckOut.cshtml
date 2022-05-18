@@ -32,8 +32,6 @@
     .Items(items => {
         items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Day"]));
         items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Day"]));
-        items.AddSimpleFor(m => m.OnDay).IsRequired(false).Label(l => l.Text(sharedResource["On Day"]));
-
 
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
 
@@ -52,6 +50,13 @@
         .DisplayExpr("Text")
         );
 
+         items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
 
 
 

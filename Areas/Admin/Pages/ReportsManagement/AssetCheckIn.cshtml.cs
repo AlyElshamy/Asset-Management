@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.Reports
 {
@@ -44,36 +45,35 @@ namespace AssetProject.Areas.Admin.Pages.Reports
         }
         public async Task<IActionResult> OnPost()
         {
-            List<AssetCheckOutList> ds = _context.AssetMovementDetails.Where(e => e.Asset.AssetStatusId == 1).Select(i => new AssetCheckOutList
+            List<AssetCheckOutList> ds = new List<AssetCheckOutList>();
+            var checkedinAssets = _context.Assets.Where(e => e.AssetStatusId == 1).Include(a=>a.AssetMovementDetails).ThenInclude(a=>a.AssetMovement);
+            foreach(var asset in checkedinAssets)
             {
-                TransactionDate = i.AssetMovement.TransactionDate,
-                EmployeeFullN = i.AssetMovement.Employee.FullName,
-                LocationTl = i.AssetMovement.Location.LocationTitle,
-                DepartmentTl = i.AssetMovement.Department.DepartmentTitle,
-                Photo=i.Asset.Photo,
-                StoreTl = i.Asset.Store.StoreTitle,
-                ActionTypeTl = i.AssetMovement.ActionType.ActionTypeTitle,
-                AssetMovementDirectionTl = i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle,
-                AssetCost = i.Asset.AssetCost,
-                AssetDescription = i.Asset.AssetDescription,
-                AssetPurchaseDate = i.Asset.AssetPurchaseDate,
-                AssetSerialNo = i.Asset.AssetSerialNo,
-                AssetStatusTl = i.Asset.AssetStatus.AssetStatusTitle,
-                ItemTl = i.Asset.Item.ItemTitle,
-                Remarks = i.Remarks,
-                AssetTagId = i.Asset.AssetTagId,
-                AssetMovementId = i.AssetMovement.AssetMovementId,
-                EmployeeId = i.AssetMovement.Employee.ID,
-                LocationId = i.AssetMovement.Location.LocationId
+                var lastAssetMovement = asset.AssetMovementDetails.OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                ds.Add(new AssetCheckOutList()
+                {
+                    TransactionDate = lastAssetMovement.AssetMovement.TransactionDate,
+                    EmployeeFullN = _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID)==null?null: _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID).FullName,
+                    LocationTl = _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId).LocationTitle,
+                    DepartmentTl =_context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId).DepartmentTitle,
+                    Photo = lastAssetMovement.Asset.Photo,
+                    StoreTl = _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId).StoreTitle,
+                    ActionTypeTl = _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId).ActionTypeTitle,
+                    AssetPurchaseDate = lastAssetMovement.Asset.AssetPurchaseDate,
+                    AssetSerialNo = lastAssetMovement.Asset.AssetSerialNo,
+                    AssetTagId = lastAssetMovement.Asset.AssetTagId,
+                    AssetMovementId = lastAssetMovement.AssetMovementId,
+                    EmployeeId = lastAssetMovement.AssetMovement.EmpolyeeID,
+                    LocationId = lastAssetMovement.AssetMovement.LocationId,
+                    StoreId=lastAssetMovement.AssetMovement.StoreId,
+                    DepartmentId=lastAssetMovement.AssetMovement.DepartmentId
+                    
+                });
 
-            }).ToList();
-            if (filterModel.employeeId != null)
-            {
-                ds = ds.Where(e => e.EmployeeId == filterModel.employeeId).ToList();
             }
-            if (filterModel.LocationId != null)
+            if (filterModel.StoreId != null)
             {
-                ds = ds.Where(e => e.LocationId == filterModel.LocationId).ToList();
+                ds = ds.Where(i => i.StoreId == filterModel.StoreId).ToList();
             }
             if (filterModel.AssetTagId != null)
             {
@@ -83,11 +83,8 @@ namespace AssetProject.Areas.Admin.Pages.Reports
             {
                 ds = ds.Where(i => i.TransactionDate <= filterModel.ToDate && i.TransactionDate >= filterModel.FromDate).ToList();
             }
-            if (filterModel.OnDay != null)
-            {
-                ds = ds.Where(i => i.TransactionDate == filterModel.OnDay).ToList();
-            }
-            if (filterModel.OnDay == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.LocationId == null && filterModel.AssetTagId == null && filterModel.employeeId == null)
+      
+            if (filterModel.StoreId == null && filterModel.FromDate == null && filterModel.ToDate == null &&filterModel.AssetTagId == null )
             {
                 ds = null;
             }
