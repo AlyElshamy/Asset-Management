@@ -120,6 +120,12 @@
   <data name="Access denied" xml:space="preserve">
     <value>غير مسموح بالوصول</value>
   </data>
+  <data name="Action Date" xml:space="preserve">
+    <value>تاريخ الإجراء</value>
+  </data>
+  <data name="Action Name" xml:space="preserve">
+    <value>اسم الإجراء</value>
+  </data>
   <data name="Action Type" xml:space="preserve">
     <value>نوع الإجراء</value>
   </data>
@@ -141,14 +147,23 @@
   <data name="Add Contract" xml:space="preserve">
     <value>إضافه إتفاقية</value>
   </data>
+  <data name="Add Customer" xml:space="preserve">
+    <value>إضافة عميل</value>
+  </data>
   <data name="Add Document" xml:space="preserve">
     <value>أضف ملف</value>
   </data>
   <data name="Add Item" xml:space="preserve">
     <value>إضافة عنصر</value>
   </data>
+  <data name="Add New" xml:space="preserve">
+    <value>اضف جديد</value>
+  </data>
   <data name="Add New Asset" xml:space="preserve">
     <value>إضافة أصل جديد</value>
+  </data>
+  <data name="Add New Customer" xml:space="preserve">
+    <value>إضافة عميل جديد</value>
   </data>
   <data name="Add New Photo" xml:space="preserve">
     <value>إضافة صورة جديدة</value>
@@ -164,6 +179,9 @@
   </data>
   <data name="Add Vendor" xml:space="preserve">
     <value>إضافة بائع</value>
+  </data>
+  <data name="Add Warranty" xml:space="preserve">
+    <value>إضافة ضمان</value>
   </data>
   <data name="AddBrand" xml:space="preserve">
     <value>اضافة ماركة</value>
@@ -207,6 +225,27 @@
   <data name="Asset" xml:space="preserve">
     <value>الأصل</value>
   </data>
+  <data name="Asset Broken" xml:space="preserve">
+    <value>الأصل المكسور</value>
+  </data>
+  <data name="Asset Broken List" xml:space="preserve">
+    <value>قائمة الأصول المكسورة</value>
+  </data>
+  <data name="Asset Broken Report" xml:space="preserve">
+    <value>تقرير الأصول المكسورة</value>
+  </data>
+  <data name="Asset Check In" xml:space="preserve">
+    <value>إيداع الأصول</value>
+  </data>
+  <data name="Asset Check In Report" xml:space="preserve">
+    <value>تقرير إيداع الأصول</value>
+  </data>
+  <data name="Asset Check Out" xml:space="preserve">
+    <value>سحب الأصول</value>
+  </data>
+  <data name="Asset Check Out Report" xml:space="preserve">
+    <value>تقرير سحب الأصول</value>
+  </data>
   <data name="Asset Cost" xml:space="preserve">
     <value>تكلفة الأصول</value>
   </data>
@@ -216,8 +255,17 @@
   <data name="Asset Details" xml:space="preserve">
     <value>تفاصيل الأصل</value>
   </data>
+  <data name="Asset Edited" xml:space="preserve">
+    <value>الأصول التي تم تعديلها</value>
+  </data>
+  <data name="Asset Edited Report" xml:space="preserve">
+    <value>تقرير الأصور التي تم تعديلها</value>
+  </data>
   <data name="Asset Information" xml:space="preserve">
     <value>معلومات الأصول</value>
+  </data>
+  <data name="Asset Insurance  Report" xml:space="preserve">
+    <value>تقرير تأمين الأصول</value>
   </data>
   <data name="Asset Leasing" xml:space="preserve">
     <value>تأجير الأصول</value>
@@ -225,8 +273,35 @@
   <data name="Asset Leasing Information" xml:space="preserve">
     <value>معلومات تأجير الأصول</value>
   </data>
+  <data name="Asset Leasing Report" xml:space="preserve">
+    <value>تقرير تأجير الأصول</value>
+  </data>
   <data name="Asset Life" xml:space="preserve">
     <value>عمر الأصل (شهر)</value>
+  </data>
+  <data name="Asset Life (Months)" xml:space="preserve">
+    <value>عمر الأصول (شهور)</value>
+  </data>
+  <data name="Asset List" xml:space="preserve">
+    <value>قائمة الأصول</value>
+  </data>
+  <data name="Asset Lost" xml:space="preserve">
+    <value>الأصول المفقوده</value>
+  </data>
+  <data name="Asset Lost Report" xml:space="preserve">
+    <value>تقرير الأصول المفقودة</value>
+  </data>
+  <data name="Asset Losted" xml:space="preserve">
+    <value>الاصول المفقودة</value>
+  </data>
+  <data name="Asset Maintainance" xml:space="preserve">
+    <value>صيانة الأصول</value>
+  </data>
+  <data name="Asset Maintainance Report" xml:space="preserve">
+    <value>تقرير صيانة الأصول</value>
+  </data>
+  <data name="Asset Maintaince" xml:space="preserve">
+    <value>صيانة الأصول</value>
   </data>
   <data name="Asset Management" xml:space="preserve">
     <value>إدارة الأصول</value>
@@ -243,17 +318,29 @@
   <data name="Asset Repair" xml:space="preserve">
     <value>إصلاح الأصول</value>
   </data>
+  <data name="Asset Repair Report" xml:space="preserve">
+    <value>تقرير إصلاح الأصول</value>
+  </data>
+  <data name="Asset Report" xml:space="preserve">
+    <value>تقرير الأصول</value>
+  </data>
   <data name="Asset Sell" xml:space="preserve">
     <value>بيع أصل</value>
   </data>
   <data name="Asset Serial Number" xml:space="preserve">
     <value>الرقم التسلسلي للأصل</value>
   </data>
+  <data name="Asset Status" xml:space="preserve">
+    <value>حالة الأصول</value>
+  </data>
+  <data name="Asset Status Report" xml:space="preserve">
+    <value>تقرير حالة الأصول</value>
+  </data>
   <data name="AssetCost" xml:space="preserve">
     <value>تكلفة الأصل</value>
   </data>
   <data name="AssetDescription" xml:space="preserve">
-    <value />
+    <value>وصف الأصول</value>
   </data>
   <data name="AssetInformation" xml:space="preserve">
     <value>معلومات الأصل</value>
@@ -266,6 +353,12 @@
   </data>
   <data name="Assets List" xml:space="preserve">
     <value>قائمة الأصول</value>
+  </data>
+  <data name="Assets Lost" xml:space="preserve">
+    <value>الأصول المفقودة</value>
+  </data>
+  <data name="Assets Lost List" xml:space="preserve">
+    <value>قائمة الأصول المفقودة</value>
   </data>
   <data name="AssetSerialNo" xml:space="preserve">
     <value>رقم السيريال</value>
@@ -309,6 +402,9 @@
   <data name="Category" xml:space="preserve">
     <value>الفئة</value>
   </data>
+  <data name="Category Report" xml:space="preserve">
+    <value>تقرير الفئة</value>
+  </data>
   <data name="CategoryList" xml:space="preserve">
     <value>مجموعة الفئات</value>
   </data>
@@ -322,7 +418,10 @@
     <value>تغيير كلمة المرور الخاصة بك</value>
   </data>
   <data name="Check In" xml:space="preserve">
-    <value />
+    <value>تحقق في</value>
+  </data>
+  <data name="Check In Information" xml:space="preserve">
+    <value>تحقق في المعلومات</value>
   </data>
   <data name="Check Ou" xml:space="preserve">
     <value>الدفع</value>
@@ -330,11 +429,20 @@
   <data name="Check Out" xml:space="preserve">
     <value>الدفع</value>
   </data>
+  <data name="Check Out Information" xml:space="preserve">
+    <value>تحقق من المعلومات</value>
+  </data>
   <data name="checkconfirm" xml:space="preserve">
     <value>يرجى التحقق من بريدك الإلكتروني لتأكيد حسابك</value>
   </data>
+  <data name="CheckOut Expiring Assets List" xml:space="preserve">
+    <value> قائمة الأصول منتهية الصلاحية</value>
+  </data>
   <data name="Choose" xml:space="preserve">
     <value>إختر صورة جديدة</value>
+  </data>
+  <data name="Choose Asset Photo" xml:space="preserve">
+    <value>اختر صورة الأصل</value>
   </data>
   <data name="Choose New File" xml:space="preserve">
     <value>اختر ملف جديد</value>
@@ -414,6 +522,9 @@
   <data name="Contract No" xml:space="preserve">
     <value>رقم الإتفاقية</value>
   </data>
+  <data name="Contract Report" xml:space="preserve">
+    <value>تقرير العقد</value>
+  </data>
   <data name="Contract Title" xml:space="preserve">
     <value>عنوان الإتفاقية</value>
   </data>
@@ -428,6 +539,9 @@
   </data>
   <data name="Cost" xml:space="preserve">
     <value>التكلفة</value>
+  </data>
+  <data name="Cost Of Repairs" xml:space="preserve">
+    <value>تكلفة الإصلاحات</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
@@ -460,10 +574,25 @@
     <value>هاتف العميل</value>
   </data>
   <data name="Custom popup edit" xml:space="preserve">
-    <value />
+    <value>تعديل منبثق مخصص</value>
   </data>
   <data name="Customer" xml:space="preserve">
     <value>العميل</value>
+  </data>
+  <data name="Customer Information" xml:space="preserve">
+    <value>معلومات العميل</value>
+  </data>
+  <data name="Customer List" xml:space="preserve">
+    <value>قائمة العملاء</value>
+  </data>
+  <data name="Customer Management" xml:space="preserve">
+    <value>ادارة الزبائن</value>
+  </data>
+  <data name="Customer Name" xml:space="preserve">
+    <value>إسم العميل</value>
+  </data>
+  <data name="Customer Report" xml:space="preserve">
+    <value>تقرير العميل</value>
   </data>
   <data name="Date Acquired" xml:space="preserve">
     <value>تاريخ الإبقاء</value>
@@ -471,11 +600,17 @@
   <data name="Date Broken" xml:space="preserve">
     <value>تاريخ الكسر</value>
   </data>
+  <data name="Date Completed" xml:space="preserve">
+    <value>تاريخ الانتهاء</value>
+  </data>
   <data name="Date Disposed" xml:space="preserve">
     <value>تاريخ التخلص</value>
   </data>
   <data name="Date Lost" xml:space="preserve">
     <value>تاريخ الضياع</value>
+  </data>
+  <data name="DateBroken" xml:space="preserve">
+    <value>تاريخ الكسر</value>
   </data>
   <data name="Deductible" xml:space="preserve">
     <value>الخصم</value>
@@ -506,6 +641,9 @@
   </data>
   <data name="Department" xml:space="preserve">
     <value>القسم</value>
+  </data>
+  <data name="Department Report" xml:space="preserve">
+    <value>تقرير القسم</value>
   </data>
   <data name="DepartmentList" xml:space="preserve">
     <value>مجموعة الاقسام</value>
@@ -543,11 +681,20 @@
   <data name="Details" xml:space="preserve">
     <value>تفاصيل</value>
   </data>
+  <data name="Dispose Asset" xml:space="preserve">
+    <value>التخلص من الأصول</value>
+  </data>
+  <data name="Dispose Asset Report" xml:space="preserve">
+    <value>الأصول التي تم التخلص منها</value>
+  </data>
   <data name="Dispose Assets" xml:space="preserve">
     <value>التخلص من الأصول</value>
   </data>
   <data name="Dispose Assets List" xml:space="preserve">
     <value>قائمة الأصول المنتهية</value>
+  </data>
+  <data name="Dispose Information" xml:space="preserve">
+    <value>التخلص من المعلومات</value>
   </data>
   <data name="Dispose To" xml:space="preserve">
     <value>التخلص من</value>
@@ -573,11 +720,17 @@
   <data name="Don't have an account" xml:space="preserve">
     <value>ليس لديك حساب</value>
   </data>
+  <data name="Due Date" xml:space="preserve">
+    <value>تاريخ الاستحقاق</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
   <data name="Edit Contract" xml:space="preserve">
     <value>تعديل العقد</value>
+  </data>
+  <data name="Edit Customer" xml:space="preserve">
+    <value>تعديل العميل</value>
   </data>
   <data name="Edit Information" xml:space="preserve">
     <value>تعديل المعلومات</value>
@@ -609,6 +762,12 @@
   <data name="Email" xml:space="preserve">
     <value>الايميل</value>
   </data>
+  <data name="Employee" xml:space="preserve">
+    <value>الموظف</value>
+  </data>
+  <data name="Employee Report" xml:space="preserve">
+    <value>تقرير الموظفين</value>
+  </data>
   <data name="EmployeeDetails" xml:space="preserve">
     <value>تفاصيل الموظف</value>
   </data>
@@ -636,6 +795,9 @@
   <data name="Enter Asset Cost" xml:space="preserve">
     <value>أدخل تكلفة الأصل</value>
   </data>
+  <data name="Enter Asset Description" xml:space="preserve">
+    <value>أدخل وصف الأصل</value>
+  </data>
   <data name="Enter Asset Life" xml:space="preserve">
     <value>أدخل العمر الإفتراضي للأصل</value>
   </data>
@@ -647,6 +809,12 @@
   </data>
   <data name="Enter Asset Tag Id" xml:space="preserve">
     <value>أدخل الرقم التعريفي للأصل</value>
+  </data>
+  <data name="Enter City" xml:space="preserve">
+    <value>أدخل المدينة</value>
+  </data>
+  <data name="Enter Company Name" xml:space="preserve">
+    <value>أدخل اسم الشركة</value>
   </data>
   <data name="Enter Contract Description" xml:space="preserve">
     <value>أدخل تفاصيل الإتفاقيه</value>
@@ -660,6 +828,9 @@
   <data name="Enter Cost" xml:space="preserve">
     <value>أدخل التكلفة</value>
   </data>
+  <data name="Enter Country" xml:space="preserve">
+    <value>أدخل البلد</value>
+  </data>
   <data name="Enter Date Acquired" xml:space="preserve">
     <value>أدخل تاريخ إبقاء الأصل</value>
   </data>
@@ -668,6 +839,9 @@
   </data>
   <data name="Enter Fax" xml:space="preserve">
     <value>أدخل الفاكس</value>
+  </data>
+  <data name="Enter First Address" xml:space="preserve">
+    <value>أدخل العنوان الأول</value>
   </data>
   <data name="Enter Item Description" xml:space="preserve">
     <value>أدخل وصف العنصر</value>
@@ -696,8 +870,17 @@
   <data name="Enter Phone Number" xml:space="preserve">
     <value>أدخل رقم الهاتف</value>
   </data>
+  <data name="Enter Postal Code" xml:space="preserve">
+    <value>أدخل الرمز البريدي</value>
+  </data>
   <data name="Enter salvage Value" xml:space="preserve">
     <value>أدخل قيمه الإسترداد</value>
+  </data>
+  <data name="Enter Secound Address" xml:space="preserve">
+    <value>أدخل العنوان الثاني</value>
+  </data>
+  <data name="Enter State" xml:space="preserve">
+    <value>أدخل الدولة</value>
   </data>
   <data name="Enter Store Address" xml:space="preserve">
     <value>أدخل عنوان المتجر</value>
@@ -801,8 +984,24 @@
   <data name="Events" xml:space="preserve">
     <value>الأحداث</value>
   </data>
+  <data name="Every" xml:space="preserve">
+    <value>علي مدار</value>
+  </data>
+  <data name="Expiration Date" xml:space="preserve">
+    <value>تاريخ الإنتهاء</value>
+  </data>
+  <data name="Expiring Assets" xml:space="preserve">
+    <value>Save translation
+الأصول المنتهية الصلاحية</value>
+  </data>
   <data name="Fax" xml:space="preserve">
     <value>الفاكس</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>فلتر</value>
+  </data>
+  <data name="First Address" xml:space="preserve">
+    <value>العنوان الأول</value>
   </data>
   <data name="First Name" xml:space="preserve">
     <value>الأسم الأول</value>
@@ -818,6 +1017,12 @@
   </data>
   <data name="Forms" xml:space="preserve">
     <value>نماذج</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>عدد التكرار</value>
+  </data>
+  <data name="From Date" xml:space="preserve">
+    <value>منذ تاريخ</value>
   </data>
   <data name="FullName" xml:space="preserve">
     <value>الاسم بالكامل </value>
@@ -843,8 +1048,14 @@
   <data name="Insurance" xml:space="preserve">
     <value>بوليصة التأمين</value>
   </data>
+  <data name="Insurance Asset" xml:space="preserve">
+    <value>تأمين الأصول</value>
+  </data>
   <data name="Insurance Description" xml:space="preserve">
     <value>وصف التأمين</value>
+  </data>
+  <data name="Insurance Title" xml:space="preserve">
+    <value>عنوان التأمين</value>
   </data>
   <data name="InsuranceCompany" xml:space="preserve">
     <value>شركة التامين</value>
@@ -906,6 +1117,9 @@
   <data name="Lease Expires" xml:space="preserve">
     <value>انتهاء عقد الإيجار</value>
   </data>
+  <data name="Leasing" xml:space="preserve">
+    <value>تأجير</value>
+  </data>
   <data name="Leasing Customer" xml:space="preserve">
     <value>العميل المؤجر</value>
   </data>
@@ -915,11 +1129,17 @@
   <data name="Leasing EndtDate" xml:space="preserve">
     <value>تاريخ انتهاء التأجير</value>
   </data>
+  <data name="Leasing Information" xml:space="preserve">
+    <value>معلومات التأجير</value>
+  </data>
   <data name="Leasing List" xml:space="preserve">
     <value>قائمة التأجير</value>
   </data>
   <data name="Leasing StartDate" xml:space="preserve">
     <value>تاريخ بداية التأجير</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>المدة</value>
   </data>
   <data name="Link Asset Dispose" xml:space="preserve">
     <value>ربط أصل مستبعد</value>
@@ -957,6 +1177,18 @@
   <data name="Logo" xml:space="preserve">
     <value>الشعار</value>
   </data>
+  <data name="Maintainance" xml:space="preserve">
+    <value>اعمال صيانة</value>
+  </data>
+  <data name="Maintainance Information" xml:space="preserve">
+    <value>معلومات الصيانة</value>
+  </data>
+  <data name="Maintainance Status" xml:space="preserve">
+    <value>حالة الصيانة</value>
+  </data>
+  <data name="Maintaince By" xml:space="preserve">
+    <value>الصيانة بواسطة</value>
+  </data>
   <data name="Maintenance" xml:space="preserve">
     <value>اعمال صيانة</value>
   </data>
@@ -966,6 +1198,12 @@
   <data name="Mobile Number" xml:space="preserve">
     <value>رقم الهاتف</value>
   </data>
+  <data name="Month(s) on" xml:space="preserve">
+    <value>الشهور خلال :</value>
+  </data>
+  <data name="Movement Details" xml:space="preserve">
+    <value>تفاصيل الحركة</value>
+  </data>
   <data name="New Password" xml:space="preserve">
     <value>كلمة المرور الجديدة</value>
   </data>
@@ -974,6 +1212,12 @@
   </data>
   <data name="Notes" xml:space="preserve">
     <value>ملاحظات</value>
+  </data>
+  <data name="on" xml:space="preserve">
+    <value>في</value>
+  </data>
+  <data name="On Date" xml:space="preserve">
+    <value>في تاريخ</value>
   </data>
   <data name="or signup using" xml:space="preserve">
     <value>أو اشترك عن طريق</value>
@@ -986,6 +1230,15 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>الرقم السرى</value>
+  </data>
+  <data name="Patch Dispose" xml:space="preserve">
+    <value>التخلص من التصحيح</value>
+  </data>
+  <data name="Patch Leasing" xml:space="preserve">
+    <value>تأجير التصحيح</value>
+  </data>
+  <data name="Patch Maintainance" xml:space="preserve">
+    <value>صيانة التصحيح</value>
   </data>
   <data name="Permium" xml:space="preserve">
     <value>بريميوم</value>
@@ -1004,6 +1257,9 @@
   </data>
   <data name="Please check your email to reset your password" xml:space="preserve">
     <value>يرجى التحقق من بريدك الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك</value>
+  </data>
+  <data name="PLEASE FILL Customer INFORMATION" xml:space="preserve">
+    <value>يرجى ملء بيانات العميل</value>
   </data>
   <data name="Please fill Store information" xml:space="preserve">
     <value>من فضلك أدخل معلومات المتجر</value>
@@ -1038,6 +1294,9 @@
   <data name="PolicyNumber" xml:space="preserve">
     <value>رقم البوليصة</value>
   </data>
+  <data name="Postal Code" xml:space="preserve">
+    <value>رمز بريدي</value>
+  </data>
   <data name="PostalCode" xml:space="preserve">
     <value>الرقم البريدي</value>
   </data>
@@ -1055,6 +1314,9 @@
   </data>
   <data name="Read More" xml:space="preserve">
     <value>اقرأ المزيد</value>
+  </data>
+  <data name="Recur on" xml:space="preserve">
+    <value>تتكرر فى</value>
   </data>
   <data name="Remark" xml:space="preserve">
     <value>ملاحظات</value>
@@ -1074,6 +1336,12 @@
   <data name="Repaired Assets" xml:space="preserve">
     <value>الأصول التي تم إصلاحها</value>
   </data>
+  <data name="Repaires Cost" xml:space="preserve">
+    <value>تكلفة التصليح</value>
+  </data>
+  <data name="Repeating" xml:space="preserve">
+    <value>التكرار</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>إعادة تعيين</value>
   </data>
@@ -1085,6 +1353,9 @@
   </data>
   <data name="Sale Date" xml:space="preserve">
     <value>تاريخ البيع</value>
+  </data>
+  <data name="Sale Notes" xml:space="preserve">
+    <value />
   </data>
   <data name="Salvage Value" xml:space="preserve">
     <value>القيمة المستردة</value>
@@ -1101,11 +1372,29 @@
   <data name="searching" xml:space="preserve">
     <value>بحث</value>
   </data>
+  <data name="Secound Address" xml:space="preserve">
+    <value>العنوان الثاني</value>
+  </data>
+  <data name="Sell Asset" xml:space="preserve">
+    <value>بيع الأصول</value>
+  </data>
+  <data name="Sell Asset list" xml:space="preserve">
+    <value>قائمة الأصول المباعة</value>
+  </data>
+  <data name="Sell Asset Report" xml:space="preserve">
+    <value>تقرير الأصول المباعة</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
   <data name="Serial" xml:space="preserve">
     <value>سيريال</value>
   </data>
   <data name="SETUP" xml:space="preserve">
     <value>تأسيس</value>
+  </data>
+  <data name="Show All" xml:space="preserve">
+    <value>عرض الكل</value>
   </data>
   <data name="Sign In" xml:space="preserve">
     <value>تسجيل الدخول</value>
@@ -1149,6 +1438,9 @@
   <data name="State" xml:space="preserve">
     <value>المنطقة</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>حالة</value>
+  </data>
   <data name="Store" xml:space="preserve">
     <value>المتجر</value>
   </data>
@@ -1182,6 +1474,9 @@
   <data name="Submit" xml:space="preserve">
     <value>تأكيد</value>
   </data>
+  <data name="TagId" xml:space="preserve">
+    <value />
+  </data>
   <data name="Technician" xml:space="preserve">
     <value>الفني</value>
   </data>
@@ -1191,11 +1486,29 @@
   <data name="these docs" xml:space="preserve">
     <value>هذه المستندات</value>
   </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>الجدول الزمني</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>العنوان</value>
   </data>
+  <data name="To Date" xml:space="preserve">
+    <value>إلي تاريخ</value>
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>تاريخ الصفقة</value>
+  </data>
+  <data name="Transaction History" xml:space="preserve">
+    <value>تاريخ المعاملات</value>
+  </data>
+  <data name="Transaction History Report" xml:space="preserve">
+    <value>تقرير تاريخ المعاملات</value>
+  </data>
+  <data name="Transform" xml:space="preserve">
+    <value>تحويل</value>
+  </data>
+  <data name="Transform Report" xml:space="preserve">
+    <value>تقرير التحويل</value>
   </data>
   <data name="TypeDetails" xml:space="preserve">
     <value>تفاصيل النوع</value>
@@ -1250,6 +1563,9 @@
   </data>
   <data name="Warranty" xml:space="preserve">
     <value>ضمان</value>
+  </data>
+  <data name="Week(s) on" xml:space="preserve">
+    <value>الاسابيع خلال :</value>
   </data>
   <data name="Welcome back" xml:space="preserve">
     <value>أهلا بعودتك</value>

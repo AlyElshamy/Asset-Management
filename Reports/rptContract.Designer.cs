@@ -360,7 +360,7 @@ namespace AssetProject.Reports
             this.xrTableCell9.StylePriority.UseTextAlignment = false;
             this.xrTableCell9.Text = "xrTableCell9";
             this.xrTableCell9.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell9.TextFormatString = "{0:d}";
+            this.xrTableCell9.TextFormatString = "{0:dd/mm/yyyy}";
             this.xrTableCell9.Weight = 0.18481479268410922D;
             // 
             // xrTableCell10
@@ -372,7 +372,7 @@ namespace AssetProject.Reports
             this.xrTableCell10.StylePriority.UseTextAlignment = false;
             this.xrTableCell10.Text = "xrTableCell10";
             this.xrTableCell10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell10.TextFormatString = "{0:d}";
+            this.xrTableCell10.TextFormatString = "{0:dd/mm/yyyy}";
             this.xrTableCell10.Weight = 0.17785165824142157D;
             // 
             // objectDataSource1

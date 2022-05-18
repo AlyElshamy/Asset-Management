@@ -271,6 +271,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[LeasingStartDate]")});
             this.tableCell14.Name = "tableCell14";
             this.tableCell14.StyleName = "DetailData1";
+            this.tableCell14.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell14.Weight = 0.14692495492788463D;
             // 
             // tableCell15
@@ -279,6 +280,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[LeasingEndDate]")});
             this.tableCell15.Name = "tableCell15";
             this.tableCell15.StyleName = "DetailData1";
+            this.tableCell15.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell15.Weight = 0.14120539738581731D;
             // 
             // tableCell16

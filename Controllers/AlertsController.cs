@@ -13,9 +13,11 @@ using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
 
+
 namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class AlertsController : Controller
     {
 

@@ -88,7 +88,7 @@
 </div>
 
 <partial name="_AssetQuickViewPopup" />
-<partial name="_AssetEditPopup" />
+<partial name="_AssetEditPopup" model="@Model.Asset"/>
 
 
 
@@ -145,8 +145,24 @@
         dataType: "json",
         success: function (response) {
 
-               $('#frmEdit').dxForm('instance').option('formData',response);
+              // $('#frmEdit').dxForm('instance').option('formData',response);
                 document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
+                document.getElementById("AtagId").innerHTML = response.AssetTagId
+                 document.getElementById("Acost").innerHTML = response.AssetCost
+                 document.getElementById("AserialNum").innerHTML = response.AssetSerialNo
+                 document.getElementById("ApurshaseDate").innerHTML = response.AssetPurchaseDate
+                 $("#AItem").dxLookup("instance").option("Value",response.ItemId);
+                 $("#AStore").dxLookup("instance").option("Value",response.StoreId );
+                 $("#Avendor").dxLookup("instance").option("Value",response.VendorId);
+                  document.getElementById("ADescription").innerHTML = response.AssetDescription
+                  document.getElementById("AtagId").innerHTML = response.AssetTagId
+                  document.getElementById("AtagId").innerHTML = response.AssetTagId
+                  document.getElementById("AtagId").innerHTML = response.AssetTagId
+                  document.getElementById("AtagId").innerHTML = response.AssetTagId
+                 document.getElementById("AtagId").innerHTML = response.AssetTagId
+                document.getElementById("AtagId").innerHTML = response.AssetTagId
+               document.getElementById("AtagId").innerHTML = response.AssetTagId
+              document.getElementById("AtagId").innerHTML = response.AssetTagId
                $('#AssetEditPoup').modal('show');
                console.log("Elemnt"+document.getElementsByClassName("AssetClass")[0].nodeValue)
                 

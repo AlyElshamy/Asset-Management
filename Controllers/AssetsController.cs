@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Http;
 namespace AssetProject.Controllers
 {
     [Route("api/[controller]/[action]")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class AssetsController : Controller
     {
         private AssetContext _context;

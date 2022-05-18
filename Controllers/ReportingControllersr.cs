@@ -11,21 +11,23 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace AssetProject.Controllers
+
 {
-    public class CustomWebDocumentViewerController : WebDocumentViewerController
+	[ApiExplorerSettings(IgnoreApi = true)]
+	public class CustomWebDocumentViewerController : WebDocumentViewerController
     {
 		public CustomWebDocumentViewerController(IWebDocumentViewerMvcControllerService controllerService) : base(controllerService)
 		{
 		}
 	}
-
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public class CustomReportDesignerController : ReportDesignerController
 	{
 		public CustomReportDesignerController(IReportDesignerMvcControllerService controllerService) : base(controllerService)
 		{
 		}
 	}
-
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public class CustomQueryBuilderController : QueryBuilderController
 	{
 		public CustomQueryBuilderController(IQueryBuilderMvcControllerService controllerService) : base(controllerService)

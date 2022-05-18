@@ -350,7 +350,7 @@ namespace AssetProject.Reports
             this.tableCell21.StyleName = "DetailData1";
             this.tableCell21.StylePriority.UseTextAlignment = false;
             this.tableCell21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell21.TextFormatString = "{0:yyyy-MM-dd}";
+            this.tableCell21.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell21.Weight = 0.083803165142352767D;
             // 
             // tableCell22
@@ -361,7 +361,7 @@ namespace AssetProject.Reports
             this.tableCell22.StyleName = "DetailData1";
             this.tableCell22.StylePriority.UseTextAlignment = false;
             this.tableCell22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell22.TextFormatString = "{0:yyyy-MM-dd}";
+            this.tableCell22.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell22.Weight = 0.078317589393028852D;
             // 
             // objectDataSource1

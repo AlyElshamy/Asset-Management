@@ -10,14 +10,14 @@
 }
 @model AssetProject.Models.AssetMaintainance
 
- <a href="javascript:void(0)" onclick="ShowAddAssetMiantainancePopUp(@ViewData["AssetId"])" class="btn btn-primary" style="float:right">Add New </a>
+ <a href="javascript:void(0)" onclick="ShowAddAssetMiantainancePopUp(@ViewData["AssetId"])" class="btn btn-primary" style="float:right">@sharedResource["Add New"] </a>
  <p id="Deletephotot"></p>
 <div id="AssetMiantainancePoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
         <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="AddAssetMaintainance" enctype="multipart/form-data">
         <div class="modal-content bd-0 tx-14">
             <div class="modal-header pd-y-20 pd-x-25">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > Asset Maintaince</h6>
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > @sharedResource["Asset Maintaince"] </h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -26,14 +26,14 @@
                  <div class="row mg-b-25" >
                            <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Title <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Title"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.AssetMaintainanceTitle"  class="form-control "  >
                    <span asp-validation-for="@Model.AssetMaintainanceTitle" class="text-danger"></span>
                 </div>
               </div><!-- col-6 -->
                     <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Details <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Details"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.AssetMaintainanceDetails"  class="form-control "  >
                    <span asp-validation-for="@Model.AssetMaintainanceDetails" class="text-danger"></span>
                 </div>
@@ -41,7 +41,7 @@
 
               <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Due Date <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Due Date"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.AssetMaintainanceDueDate" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.AssetMaintainanceDueDate" class="text-danger"></span>
                 </div>
@@ -49,7 +49,7 @@
 
                     <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Maintaince By <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Maintaince By"] <span class="tx-danger">*</span></label>
                       @(Html.DevExtreme().LookupFor(c=>c.TechnicianId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -64,7 +64,7 @@
               </div><!-- col-6 -->
                     <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Maintainance Status<span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Maintainance Status"]<span class="tx-danger">*</span></label>
                               @(Html.DevExtreme().LookupFor(c=>c.MaintainanceStatusId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -80,7 +80,7 @@
 
                     <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label"> Date Completed <span class="tx-danger">*</span></label>
+                    <label class="form-control-label"> @sharedResource["Date Completed"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.AssetMaintainanceDateCompleted" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.AssetMaintainanceDateCompleted" class="text-danger"></span>
                 </div>
@@ -88,7 +88,7 @@
 
                     <div class="col-lg-6">
                 <div class="form-group">
-                    <label class="form-control-label">Cost Of Repairs <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.AssetMaintainanceRepairesCost" class="form-control " >
                    <span asp-validation-for="@Model.AssetMaintainanceRepairesCost" class="text-danger"></span>
                 </div>
@@ -96,7 +96,7 @@
 
                 <div class="col-lg-6">
                     <div class="form-group">
-                            <label class="form-control-label">Repeating</label>
+                        <label class="form-control-label">@sharedResource["Repeating"]</label>
                             <div class="col-md-10">
                                 <label for="ch1"> @sharedResource["yes"]</label><input asp-for="@Model.AssetMaintainanceRepeating" value="True"  type="radio" id="ch1" onclick="myFunction()" />
                                 <br />
@@ -107,7 +107,7 @@
 
                   <div class="col-lg-6"  id="MaintainanceFrequency" style="display:none" >
                 <div class="form-group">
-                    <label class="form-control-label">Frequency<span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Frequency"]<span class="tx-danger">*</span></label>
                               @(Html.DevExtreme().LookupFor(c=>c.AssetMaintainanceFrequencyId)
                               .ID("MaintFreqLookup")
             .DataSource(d => d.WebApi()
@@ -124,12 +124,12 @@
               </div><!-- col-6 -->
 
            <div class="col-lg-6"  id="WeeklyFrequency" style="display:none"  >
-            <label >Recur on</label>
+               <label>@sharedResource["Recur on"]</label>
                 <div class="form-group">
-                    <label >Every</label>
+                    <label>@sharedResource["Every"]</label>
                      <input asp-for="@Model.WeeklyPeriod" class="form-control" style="width:75px; display:inline-block"  >
                   <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
-                   <label>Week(s) on </label>
+                  <label>@sharedResource["Week(s) on"] </label>
                    <div style="display:inline-block">  
                        @(Html.DevExtreme().LookupFor(c=>c.WeekDayId)
                        .Width(170)
@@ -147,21 +147,21 @@
               </div><!-- col-6 -->
 
                        <div class="col-lg-6"  id="MonthlyFrequency" style="display:none" >
-                   <label >Recur on</label>
+                           <label>@sharedResource["Recur on"]</label>
                 <div class="form-group">
-              <label >Every</label>
+                    <label>@sharedResource["Every"]</label>
                      <input asp-for="@Model.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block">
                   <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
-                   <label>Month(s) on </label>
+                  <label>@sharedResource["Month(s) on"] </label>
              <input asp-for="@Model.MonthlyDay" class="form-control" style="width:75px;display:inline-block">        
               <span asp-validation-for="@Model.MonthlyDay" class="text-danger"></span>
                 </div>
               </div><!-- col-6 -->
 
                        <div class="col-lg-6"  id="YearlyFrequency" style="display:none" >
-                <label >Recur on</label>
+                           <label>@sharedResource["Recur on"]</label>
                 <div class="form-group">
-                           <label >Every</label>
+                    <label>@sharedResource["Every"]</label>
                          <div style="display:inline-block">  
                        @(Html.DevExtreme().LookupFor(c=>c.MonthId)
                        .Width(175)
@@ -174,7 +174,7 @@
             .DisplayExpr("Text")
           )  </div>
                   <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
-                   <label> on </label>
+                  <label> @sharedResource["on"] </label>
              <input asp-for="@Model.YearlyDay" class="form-control" style="width:75px; display:inline-block" >        
               <span asp-validation-for="@Model.MonthlyDay" class="text-danger"></span>
                 </div>
@@ -184,8 +184,8 @@
                 </div> <!-- row-->
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Submit"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Close"]</button>
             </div>
         </div>
         </form>
@@ -217,21 +217,21 @@
 
 @*        columns.AddFor(m => m.AssetMaintainanceId);*@
 
-        columns.AddFor(m => m.AssetMaintainanceTitle).Caption("Title");
+        columns.AddFor(m => m.AssetMaintainanceTitle).Caption(sharedResource["Title"]);
 
  @*columns.AddFor(m => m.AssetMaintainanceDetails);*@
 
-        columns.AddFor(m => m.AssetMaintainanceDueDate).Caption("Due Date");
+        columns.AddFor(m => m.AssetMaintainanceDueDate).Caption(@sharedResource["Due Date"]);
 
-        columns.AddFor(m => m.MaintainanceStatusId).Caption("Maintainance Status").Lookup(lookup => lookup
+        columns.AddFor(m => m.MaintainanceStatusId).Caption(@sharedResource["Maintainance Status"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetMaintainances").LoadAction("MaintainanceStatusesLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
         );
 
-        columns.AddFor(m => m.AssetMaintainanceDateCompleted).Caption("Date Completed");
+        columns.AddFor(m => m.AssetMaintainanceDateCompleted).Caption(@sharedResource["Date Completed"]);
 
-        columns.AddFor(m => m.AssetMaintainanceRepairesCost).Caption("Repaires Cost");
+        columns.AddFor(m => m.AssetMaintainanceRepairesCost).Caption(@sharedResource["Repaires Cost"]);
 
  @*       columns.AddFor(m => m.AssetMaintainanceRepeating);
 

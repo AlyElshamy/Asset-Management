@@ -21,7 +21,9 @@ namespace AssetProject.Reports
             {
                 txt_Address.Text = TenantObj.Address;
                 Text_CN.Text = TenantObj.CompanyName;
-                CompanyNo.Text = TenantObj.TenantId.ToString();
+                website.Text = TenantObj.Website;
+                phone.Text = TenantObj.Phone;
+                email.Text = TenantObj.Email;
             }
             
         }
@@ -31,6 +33,12 @@ namespace AssetProject.Reports
         private void rptCheckInForm_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
             LoadTalent();
+        }
+
+        private void pictureBox1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+            pictureBox1.ImageUrl = "https://localhost:44311/images/logo/" + TenantObj.Logo;
+
         }
     }
 }

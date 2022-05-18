@@ -5,17 +5,17 @@
 <div class="slim-mainpanel">
     <div class="container">
         <<div class="slim-pageheader">
-            <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Customer Management</li>
-            </ol>
-            <h6 class="slim-pagetitle">Customer List</h6>
+             <ol class="breadcrumb slim-breadcrumb">
+                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                 <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
+                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["Customer Management"]</li>
+             </ol>
+             <h6 class="slim-pagetitle">@sharedResource["Customer List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">Customer List</label>
-            <a asp-area="Admin" asp-page="/CustomerManagement/AddCustomer" class="btn btn-primary" style="float:right"> Add New Customer   </a>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            <label class="section-title d-inline">@sharedResource["Customer List"]</label>
+            <a asp-area="Admin" asp-page="/CustomerManagement/AddCustomer" class="btn btn-primary" style="float:right"> @sharedResource["Add New Customer"]   </a>
+            <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
 
@@ -51,27 +51,27 @@
             </text>).Width(150);
              })
     .Columns(columns => {
-        columns.AddFor(m => m.FullName);
+        columns.AddFor(m => m.FullName).Caption(sharedResource["FullName"]);
 
-        columns.AddFor(m => m.CompanyName);
+        columns.AddFor(m => m.CompanyName).Caption(sharedResource["Company Name"]);
 
-        columns.AddFor(m => m.Address1);
+        columns.AddFor(m => m.Address1).Caption(sharedResource["First Address"]);
 
-        columns.AddFor(m => m.Address2);
+        columns.AddFor(m => m.Address2).Caption(sharedResource["Secound Address"]);
 
-        columns.AddFor(m => m.City);
+        columns.AddFor(m => m.City).Caption(sharedResource["City"]);
 
-        columns.AddFor(m => m.State);
+        columns.AddFor(m => m.State).Caption(sharedResource["State"]);
 
-        columns.AddFor(m => m.PostalCode);
+        columns.AddFor(m => m.PostalCode).Caption(sharedResource["Postal Code"]);
 
-        columns.AddFor(m => m.Country);
+        columns.AddFor(m => m.Country).Caption(sharedResource["Country"]);
 
-        columns.AddFor(m => m.Phone);
+        columns.AddFor(m => m.Phone).Caption(sharedResource["Phone"]);
 
-        columns.AddFor(m => m.Email);
+        columns.AddFor(m => m.Email).Caption(sharedResource["Email"]);
 
-        columns.AddFor(m => m.Notes);
+        columns.AddFor(m => m.Notes).Caption(sharedResource["Notes"]);
     })
 )
     </div>

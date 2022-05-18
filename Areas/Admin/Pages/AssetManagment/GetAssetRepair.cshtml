@@ -8,10 +8,10 @@
          <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
-                <li class="breadcrumb-item"><a href="#">Asset Managment</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Repaired Assets </li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Asset Managment"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Repaired Assets"] </li>
             </ol>
-            <h6 class="slim-pagetitle">Repaired Assets</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Repaired Assets"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
  
@@ -40,26 +40,26 @@
 
       @*  columns.AddFor(m => m.AssetRepairId);*@
 
-        columns.AddFor(m => m.AssetRepair.ScheduleDate);
+        columns.AddFor(m => m.AssetRepair.ScheduleDate).Caption(sharedResource["Schedule Date"]);
 
-        columns.AddFor(m => m.AssetRepair.CompletedDate);
+        columns.AddFor(m => m.AssetRepair.CompletedDate).Caption(sharedResource["Completed Date"]);
 
-        columns.AddFor(m => m.AssetRepair.RepairCost);
+        columns.AddFor(m => m.AssetRepair.RepairCost).Caption(sharedResource["Repair Cost"]);
 
-        columns.AddFor(m => m.AssetRepair.Notes);
+        columns.AddFor(m => m.AssetRepair.Notes).Caption(sharedResource["Notes"]);
 
-        columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup
+        columns.AddFor(m => m.AssetId).Caption(sharedResource["Asset"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("AssetsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
         );
 
-        columns.AddFor(m => m.AssetRepair.TechnicianId).Caption("Technician").Lookup(lookup => lookup
+        columns.AddFor(m => m.AssetRepair.TechnicianId).Caption(sharedResource["Technician"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("TechniciansLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
         );
-        columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
+        columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                     .AllowFiltering(false)
                     .AllowSorting(false)
                     .CellTemplate(@<text>
@@ -67,17 +67,17 @@
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption("Description");
+                        columns.AddFor(m => m.Asset.AssetDescription).Caption("AssetDescription");
 
-                        columns.AddFor(m => m.Asset.AssetTagId).Caption("TagId");
+                        columns.AddFor(m => m.Asset.AssetTagId).Caption("AssetTagId");
 
-                        columns.AddFor(m => m.Asset.AssetCost).Caption("Cost");
+                        columns.AddFor(m => m.Asset.AssetCost).Caption("AssetCost");
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("SerialNo");
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("AssetSerialNo");
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption("PurchaseDate");
+                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption("Asset PurchaseDate");
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")

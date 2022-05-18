@@ -75,16 +75,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.LeasingStartDate == filterModel.OnDay).ToList();
             }
-            if (filterModel.BeforeDay!=null)
-            {
-                ds = ds.Where(i => i.LeasingStartDate < filterModel.BeforeDay).ToList();
-
-            }
-            if (filterModel.AfterDay!=null)
-            {
-                ds = ds.Where(i => i.LeasingStartDate > filterModel.AfterDay).ToList();
-            }
-            if (filterModel.AssetTagId == null&& filterModel.AfterDay == null&& filterModel.BeforeDay == null&& filterModel.OnDay == null&& filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
+            if (filterModel.AssetTagId == null&& filterModel.OnDay == null&& filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
             {
                 ds = null;
             }

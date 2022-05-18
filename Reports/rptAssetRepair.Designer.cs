@@ -227,6 +227,7 @@
             this.tableCell10.StylePriority.UseBorders = false;
             this.tableCell10.StylePriority.UseTextAlignment = false;
             this.tableCell10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.tableCell10.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell10.Weight = 0.14300322297527013D;
             // 
             // tableCell11
@@ -237,6 +238,7 @@
             this.tableCell11.StyleName = "DetailData1";
             this.tableCell11.StylePriority.UseTextAlignment = false;
             this.tableCell11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.tableCell11.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell11.Weight = 0.15663185751551367D;
             // 
             // tableCell12

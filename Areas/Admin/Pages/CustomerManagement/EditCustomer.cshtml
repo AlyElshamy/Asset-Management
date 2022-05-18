@@ -5,11 +5,11 @@
 <div class="slim-mainpanel">
       <div class="container">
         <div class="slim-pageheader">
-          <ol class="breadcrumb slim-breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Customer</li>
-          </ol>
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Edit Customer"]</li>
+            </ol>
           <h6 class="slim-pagetitle">Customer Information</h6>
         </div><!-- slim-pageheader -->
 
@@ -30,15 +30,15 @@
                       </div><!-- col-4 -->
                          <div class="col-lg-4">
                          <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">CompanyName : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.CompanyName"  class="form-control" placeholder="Enter Company Name">
+                             <label class="form-control-label">@sharedResource["Company Name"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.CompanyName"  class="form-control" placeholder="@sharedResource["Enter Company Name"]">
                            <span asp-validation-for="@Model.customer.CompanyName" class="text-danger"></span>
                         </div>
                         </div>
                         <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">Address 1 : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.Address1"  class="form-control" placeholder="Enter Address ">
+                            <label class="form-control-label">@sharedResource["First Address"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.Address1"  class="form-control" placeholder="@sharedResource["Enter First Address"] ">
                            <span asp-validation-for="@Model.customer.Address1" class="text-danger"></span>
                         </div>
                       </div><!-- col-4 -->
@@ -47,8 +47,8 @@
                        
                       <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">Address 2 : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.Address2"  class="form-control" placeholder="Enter Address ">
+                            <label class="form-control-label">@sharedResource["Secound Address"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.Address2"  class="form-control" placeholder="Enter Secound Address ">
                            <span asp-validation-for="@Model.customer.Address2" class="text-danger"></span>
                         </div>
                       </div>
@@ -56,16 +56,16 @@
                     
                        <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">Country : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.Country"  class="form-control" placeholder="Enter Country">
+                            <label class="form-control-label">@sharedResource["Country"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.Country"  class="form-control" placeholder="@sharedResource["Enter Country"]">
                            <span asp-validation-for="@Model.customer.Country" class="text-danger"></span>
                         </div>
                       </div><!-- col-4 -->
 
                       <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">City : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.City"  class="form-control" placeholder="Enter City">
+                            <label class="form-control-label">@sharedResource["City"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.City"  class="form-control" placeholder="@sharedResource["Enter City"]">
                            <span asp-validation-for="@Model.customer.City" class="text-danger"></span>
                         </div>
                       </div><!-- col-4 -->
@@ -73,15 +73,15 @@
                         <div class="row mg-b-10">
                       <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">State : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.State"  class="form-control" placeholder="Enter State">
+                            <label class="form-control-label">@sharedResource["State"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.State"  class="form-control" placeholder="@sharedResource["Enter State"]">
                            <span asp-validation-for="@Model.customer.State" class="text-danger"></span>
                         </div>
                       </div><!-- col-4 -->
                       <div class="col-lg-4">
                         <div class="form-group mg-b-10-force">
-                          <label class="form-control-label">Postal Code : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.customer.PostalCode"  class="form-control" placeholder="Postal Code">
+                            <label class="form-control-label">@sharedResource["Postal Code"] : <span class="tx-danger">*</span></label>
+                          <input  asp-for="@Model.customer.PostalCode"  class="form-control" placeholder="@sharedResource["Enter Postal Code"]">
                            <span asp-validation-for="@Model.customer.PostalCode" class="text-danger"></span>
                         </div>
                       </div><!-- col-4 -->

@@ -237,6 +237,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[LostDateLost]")});
             this.tableCell11.Name = "tableCell11";
             this.tableCell11.StyleName = "DetailData1";
+            this.tableCell11.TextFormatString = "{0:dd/mm/yyyy}";
             this.tableCell11.Weight = 0.17580330481896034D;
             // 
             // tableCell12

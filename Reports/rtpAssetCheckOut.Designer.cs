@@ -399,7 +399,7 @@ namespace AssetProject.Reports
             this.xrTableCell38.StylePriority.UseTextAlignment = false;
             this.xrTableCell38.Text = "xrTableCell38";
             this.xrTableCell38.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell38.TextFormatString = "{0:d}";
+            this.xrTableCell38.TextFormatString = "{0:dd/mm/yyyy}";
             this.xrTableCell38.Weight = 0.23285777085076581D;
             // 
             // objectDataSource1
@@ -622,7 +622,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TransactionDate]")});
             this.xrTableCell6.Multiline = true;
             this.xrTableCell6.Name = "xrTableCell6";
-            this.xrTableCell6.TextFormatString = "{0:MM/dd/yy}";
+            this.xrTableCell6.TextFormatString = "{0:dd/mm/yyyy}";
             this.xrTableCell6.Weight = 1.3594015573791309D;
             // 
             // xrLabel17

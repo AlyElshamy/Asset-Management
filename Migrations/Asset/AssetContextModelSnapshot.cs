@@ -1259,6 +1259,12 @@ namespace AssetProject.Migrations.Asset
                     b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("LocationLangtiude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationLatitude")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("LocationParentId")
                         .HasColumnType("int");
 

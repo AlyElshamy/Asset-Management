@@ -24,14 +24,14 @@
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Purchase Date : <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Purchase Date"] : <span class="tx-danger">*</span></label>
                                 <input asp-for="@Model.purchase.Purchasedate" class="form-control date" type="date">
                                 <span asp-validation-for="@Model.purchase.Purchasedate" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Brand: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Brand"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.purchase.VendorId)
             .DataSource(d => d.WebApi()
@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Brand: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Brand"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.purchase.StoreId)
             .DataSource(d => d.WebApi()

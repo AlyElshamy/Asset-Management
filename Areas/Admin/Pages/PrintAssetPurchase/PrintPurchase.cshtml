@@ -7,17 +7,17 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Timeline</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Pages"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Timeline"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Timeline</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Timeline"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm row-timeline">
             <div class="col-lg-3  mg-lg-t-0">
                 <div class="card pd-20 mg-t-20">
-                    <label class="slim-card-title">Filter</label>
+                    <label class="slim-card-title">@sharedResource["Filter"]</label>
                     <div class="post-group">
 
                         @using (Html.BeginForm("OnPost", "PrintPurchase", FormMethod.Post))
@@ -34,7 +34,7 @@
         items.AddSimpleFor(m => m.PurchaseSerial);
 
 
-        items.AddSimpleFor(m => m.AssetSerialNo);
+        items.AddSimpleFor(m => m.AssetSerialNo).Label(l=>l.Text(sharedResource["AssetSerialNo"]));
 
 
         //items.AddSimpleFor(m => m.ItemId).IsRequired(false)
