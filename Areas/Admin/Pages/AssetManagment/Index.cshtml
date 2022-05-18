@@ -117,11 +117,20 @@
             document.getElementById("AssetCost").innerHTML = response.AssetCost
             document.getElementById("AssetPurchaseDate").innerHTML = response.AssetPurchaseDate
             document.getElementById("AssetItem").innerHTML = response.Item.ItemTitle
+            if (response.DepreciableAsset)
+            {
             document.getElementById("DepreciableCost").innerHTML = response.DepreciableCost
             document.getElementById("SalvageValue").innerHTML = response.SalvageValue
             document.getElementById("AssetLife").innerHTML = response.AssetLife
             document.getElementById("DateAcquired").innerHTML = response.DateAcquired
             document.getElementById("DepreciationMethod").innerHTML = response.DepreciationMethod.DepreciationMethodTitle
+            }
+            else
+
+            {
+              document.getElementById("DepreciationInfo").style.display='none';
+            }
+         
              $('#AssetQuickViewPoup').modal('show');
             
         },
@@ -157,7 +166,13 @@
             $("#AItem").dxLookup("instance").option("value", response.ItemId);
             $("#AStore").dxLookup("instance").option("value", response.StoreId);
             $("#Avendor").dxLookup("instance").option("value", response.VendorId);
-            document.getElementById("ADescription").value = response.AssetDescription            document.getElementById("ADepreciable").value = response.DepreciableCost            document.getElementById("ASalvageValue").value = response.SalvageValue            document.getElementById("ALife").value = response.AssetLife            document.getElementById("AdateAcquired").value = response.DateAcquired            $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);            const form = document.getElementById('depreciable')
+            document.getElementById("ADescription").value = response.AssetDescription
+            document.getElementById("ADepreciable").value = response.DepreciableCost
+            document.getElementById("ASalvageValue").value = response.SalvageValue
+            document.getElementById("ALife").value = response.AssetLife
+            document.getElementById("AdateAcquired").value = response.DateAcquired
+            $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);
+            const form = document.getElementById('depreciable')
             var btn1 = document.getElementById('ch1');
             var btn2 = document.getElementById('ch2');
 
