@@ -11,6 +11,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
+using AssetProject.ViewModel;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
@@ -53,6 +54,9 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     }
                 }
             }
+            
+              
+            
                 return new JsonResult(DepartmentAssets);
         }
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)

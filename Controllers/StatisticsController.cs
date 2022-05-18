@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using AssetProject.ViewModel;
 
 namespace AssetProject.Controllers
 {
@@ -29,136 +30,130 @@ namespace AssetProject.Controllers
         public object GetAssetCountsPerCategory(DataSourceLoadOptions loadOptions)
         {
 
-            var listEn = _context.Stores.GroupBy(c => c.StoreId).Select(g => new
+            var listEn = _context.Categories.GroupBy(c => c.CategoryId).Select(g => new
             {
-                name = _context.Stores.FirstOrDefault(r => r.StoreId == g.Key).StoreTitle,
-                count = _context.Assets.Where(r => r.StoreId == g.Key).Count()
+                Name = _context.Categories.FirstOrDefault(r => r.CategoryId == g.Key).CategoryTIAR,
+                Count = _context.Assets.Where(r => r.Item.CategoryId == g.Key).Count()
 
-            }).OrderByDescending(r => r.count);
+            }).OrderByDescending(r => r.Count);
 
          
 
             return listEn;
         }
-
-        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
-        {
-            //var assetbrokens = _context.assetBrokens.Select(i => new {
-            //    i.AssetBrokenId,
-            //    i.DateBroken,
-            //    i.Notes,
-            //    i.AssetBrokenDetails
-            //});
-            var assetbrokens = _context.AssetBrokenDetails.Select(
-                i => new
-                {
-                    i.AssetBrokenDetailsId,
-                    i.AssetBrokenId,
-                    i.Asset,
-                    i.AssetId,
-                    i.AssetBroken
-                });
-
-            // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
-            // This can make SQL execution plans more efficient.
-            // For more detailed information, please refer to this discussion: https://github.com/DevExpress/DevExtreme.AspNet.Data/issues/336.
-            // loadOptions.PrimaryKey = new[] { "AssetBrokenId" };
-            // loadOptions.PaginateViaPrimaryKey = true;
-
-            return Json(await DataSourceLoader.LoadAsync(assetbrokens, loadOptions));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(string values)
-        {
-            var model = new AssetBroken();
-            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
-            PopulateModel(model, valuesDict);
-
-            if (!TryValidateModel(model))
-                return BadRequest(GetFullErrorMessage(ModelState));
-
-            var result = _context.assetBrokens.Add(model);
-            await _context.SaveChangesAsync();
-
-            return Json(new { result.Entity.AssetBrokenId });
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Put(int key, string values)
-        {
-            var model = await _context.assetBrokens.FirstOrDefaultAsync(item => item.AssetBrokenId == key);
-            if (model == null)
-                return StatusCode(409, "Object not found");
-
-            var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
-            PopulateModel(model, valuesDict);
-
-            if (!TryValidateModel(model))
-                return BadRequest(GetFullErrorMessage(ModelState));
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpDelete]
-        public async Task Delete(int key)
-        {
-            var model = await _context.assetBrokens.FirstOrDefaultAsync(item => item.AssetBrokenId == key);
-
-            _context.assetBrokens.Remove(model);
-            await _context.SaveChangesAsync();
-        }
-
-
         [HttpGet]
-        public async Task<IActionResult> AssetsLookup(DataSourceLoadOptions loadOptions)
+        public object GetAssetCostByCategory(DataSourceLoadOptions loadOptions)
         {
-            var lookup = from i in _context.Assets
-                         orderby i.AssetDescription
-                         select new
-                         {
-                             Value = i.AssetId,
-                             Text = i.AssetDescription
-                         };
-            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+            var listEn = _context.Categories.GroupBy(c => c.CategoryId).Select(g => new
+            {
+                Name = _context.Categories.FirstOrDefault(r => r.CategoryId == g.Key).CategoryTIAR,
+                Cost = _context.Assets.Where(r => r.Item.CategoryId == g.Key).Sum(s=>s.AssetCost)
+
+            }).OrderByDescending(r => r.Cost);
+
+
+
+            return listEn;
+        }
+        [HttpGet]
+        public object GetAssetCostByDepartment(DataSourceLoadOptions loadOptions)
+        {
+
+                        var listEn = _context.Departments.GroupBy(c => c.DepartmentId).Select(g => new
+            {
+                Name = _context.Departments.FirstOrDefault(r => r.DepartmentId == g.Key).DepartmentTitle,
+                Cost = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g=>g.AssetMovement)
+                    .Where(a => a.AssetStatusId == 2 && a.AssetMovementDetails
+                    .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
+                    .AssetMovement.DepartmentId == g.Key).Sum(a => a.AssetCost)
+
+          }).OrderByDescending(r => r.Cost);
+            return listEn;
+
+            
+        }
+        public object GetAssetCountByDepartment(DataSourceLoadOptions loadOptions)
+        {
+
+            var listEn = _context.Departments.GroupBy(c => c.DepartmentId).Select(g => new
+            {
+                Name = _context.Departments.FirstOrDefault(r => r.DepartmentId == g.Key).DepartmentTitle,
+                Count = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g => g.AssetMovement)
+        .Where(a => a.AssetStatusId == 2 && a.AssetMovementDetails
+        .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
+        .AssetMovement.DepartmentId == g.Key).Count()
+
+            }).OrderByDescending(r => r.Count);
+            return listEn;
+
+
+        }
+        [HttpGet]
+        public object GetAssetCostByStatus(DataSourceLoadOptions loadOptions)
+        {
+
+            var listEn = _context.AssetStatuses.GroupBy(c => c.AssetStatusId).Select(g => new
+            {
+                Name = _context.AssetStatuses.FirstOrDefault(r => r.AssetStatusId == g.Key).AssetStatusTitle,
+                Cost = _context.Assets.Where(r => r.AssetStatusId== g.Key).Sum(s => s.AssetCost)
+
+            }).OrderByDescending(r => r.Cost);
+
+
+
+            return listEn;
+        }
+        [HttpGet]
+        public object GetAssetCountByStatus(DataSourceLoadOptions loadOptions)
+        {
+
+            var listEn = _context.AssetStatuses.GroupBy(c => c.AssetStatusId).Select(g => new
+            {
+                Name = _context.AssetStatuses.FirstOrDefault(r => r.AssetStatusId == g.Key).AssetStatusTitle,
+                Count = _context.Assets.Where(r => r.AssetStatusId == g.Key).Count()
+            }).OrderByDescending(r => r.Count);
+
+
+
+            return listEn;
+        }
+      
+        public object GetAssetCostByLocation(DataSourceLoadOptions loadOptions)
+        {
+
+            var listEn = _context.Locations.GroupBy(c => c.LocationId).Select(g => new
+            {
+                Name = _context.Locations.FirstOrDefault(r => r.LocationId == g.Key).LocationTitle,
+                Cost = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g => g.AssetMovement)
+        .Where(a => a.AssetStatusId == 2 
+         && a.AssetMovementDetails
+        .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
+        .AssetMovement.LocationId == g.Key).Sum(a => a.AssetCost)
+
+            }).OrderByDescending(r => r.Cost);
+            return listEn;
+
+
+        }
+        public object GetAssetCountByLocation(DataSourceLoadOptions loadOptions)
+        {
+
+            var listEn = _context.Locations.GroupBy(c => c.LocationId).Select(g => new
+            {
+                Name = _context.Locations.FirstOrDefault(r => r.LocationId == g.Key).LocationTitle,
+                Count = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g => g.AssetMovement)
+        .Where(a => a.AssetStatusId == 2
+         && a.AssetMovementDetails
+        .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
+        .AssetMovement.LocationId == g.Key).Count()
+
+            }).OrderByDescending(r => r.Count);
+            return listEn;
+
+
         }
 
-        private void PopulateModel(AssetBroken model, IDictionary values)
-        {
-            string ASSET_BROKEN_ID = nameof(AssetBroken.AssetBrokenId);
-            string DATE_BROKEN = nameof(AssetBroken.DateBroken);
-            string NOTES = nameof(AssetBroken.Notes);
 
 
-            if (values.Contains(ASSET_BROKEN_ID))
-            {
-                model.AssetBrokenId = Convert.ToInt32(values[ASSET_BROKEN_ID]);
-            }
-
-            if (values.Contains(DATE_BROKEN))
-            {
-                model.DateBroken = Convert.ToDateTime(values[DATE_BROKEN]);
-            }
-
-            if (values.Contains(NOTES))
-            {
-                model.Notes = Convert.ToString(values[NOTES]);
-            }
-
-        }
-
-        private string GetFullErrorMessage(ModelStateDictionary modelState)
-        {
-            var messages = new List<string>();
-
-            foreach (var entry in modelState)
-            {
-                foreach (var error in entry.Value.Errors)
-                    messages.Add(error.ErrorMessage);
-            }
-
-            return String.Join(" ", messages);
-        }
     }
 }
