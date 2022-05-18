@@ -209,7 +209,7 @@
     </div><!-- container -->
 </div>
 
-<partial name="_AssetEditPopup" />
+<partial name="_AssetEditPopup" model="@Model.Asset" />
    @{ 
       ViewData["AssetId"] = Model.Asset.AssetId;
      <partial name="_AssetCHeckOut" model=@Model.AssetMovementModel view-data=" ViewData" />

@@ -128,6 +128,11 @@ namespace AssetProject.Migrations.Asset
                         {
                             ActionLogId = 19,
                             ActionLogTitle = "Asset Edited"
+                        },
+                        new
+                        {
+                            ActionLogId = 20,
+                            ActionLogTitle = "Add Asset Wrantty"
                         });
                 });
 
@@ -360,6 +365,9 @@ namespace AssetProject.Migrations.Asset
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("LeasedCost")
+                        .HasColumnType("float");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -1251,6 +1259,12 @@ namespace AssetProject.Migrations.Asset
                     b.Property<int?>("CountryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("LocationLangtiude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationLatitude")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("LocationParentId")
                         .HasColumnType("int");
 
@@ -1993,7 +2007,7 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetMovementDetails", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetMovementDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2200,6 +2214,8 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.Asset", b =>
                 {
                     b.Navigation("AssetContracts");
+
+                    b.Navigation("AssetMovementDetails");
 
                     b.Navigation("AssetPhotos");
 

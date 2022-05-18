@@ -11,6 +11,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
+using AssetProject.ViewModel;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
@@ -35,25 +36,27 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         {
         }
 
-        public IActionResult OnGetAssetsForEmpolyee(string values)
+        public IActionResult OnGetAssetsForDepartment(string values)
         {
             var DepartmentId = JsonConvert.DeserializeObject<int>(values);
-            var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+            var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1&& a.EmpolyeeID == null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
             foreach (var item in movementsForDepartment)
             {
                 foreach (var item2 in item.AssetMovementDetails)
                 {
                     if (item2.Asset.AssetStatusId == 2)
                     {
-                        var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                        var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                         if (lastassetmovement.AssetMovement.EmpolyeeID == null && lastassetmovement.AssetMovement.DepartmentId == DepartmentId)
                         {
                             DepartmentAssets.Add(item2.Asset);
                         }
+                   
                     }
                 }
             }
-                return new JsonResult(DepartmentAssets);
+            
+            return new JsonResult(DepartmentAssets.Distinct());
         }
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
         {

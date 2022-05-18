@@ -8,15 +8,15 @@
       <div class="container">
         <div class="slim-pageheader">
           <ol class="breadcrumb slim-breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Asset</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add Asset</li>
+            <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+            <li class="breadcrumb-item"><a href="#">@sharedResource["Asset"]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@sharedResource["Add Asset"]</li>
           </ol>
-          <h6 class="slim-pagetitle">Asset Information</h6>
+          <h6 class="slim-pagetitle">@sharedResource["Asset Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
-            <label class="section-title">Please fill your Asset information</label>
+            <label class="section-title">@sharedResource["Please fill your Asset information"]</label>
             
             <div class="form-layout">
                 <form method="post" enctype="multipart/form-data">
@@ -26,28 +26,28 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["AssetTagId"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetTagId" class="form-control" placeholder="Enter Asset Tag Id">
+                                <input asp-for="Asset.AssetTagId" class="form-control" placeholder="@sharedResource["Enter Asset Tag Id"]">
                                 <span asp-validation-for="Asset.AssetTagId" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["AssetCost"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetCost" class="form-control" placeholder="Enter Asset Cost" value="@(Model.Asset.AssetCost > 0 ? Model.Asset.AssetCost :string.Empty)">
+                                <input asp-for="Asset.AssetCost" class="form-control" placeholder="@sharedResource["Enter Asset Cost"]" value="@(Model.Asset.AssetCost > 0 ? Model.Asset.AssetCost :string.Empty)">
                                 <span asp-validation-for="Asset.AssetCost" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["AssetSerialNo"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetSerialNo" class="form-control" placeholder="Enter Asset Serial No">
+                                <input asp-for="Asset.AssetSerialNo" class="form-control" placeholder="@sharedResource["Enter Asset Serial No"]">
                                 <span asp-validation-for="Asset.AssetSerialNo" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["AssetPurchaseDate"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetPurchaseDate" type="date" class="form-control date" placeholder="Enter Asset Purchase Date" value="@(Model.Asset.AssetPurchaseDate >= DateTime.Now ? Model.Asset.AssetPurchaseDate :string.Empty)">
+                                <input asp-for="Asset.AssetPurchaseDate" type="date" class="form-control date" placeholder="@sharedResource["Enter Asset Purchase Date"]" value="@(Model.Asset.AssetPurchaseDate >= DateTime.Now ? Model.Asset.AssetPurchaseDate :string.Empty)">
                                 <span asp-validation-for="Asset.AssetPurchaseDate" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -70,7 +70,7 @@
 
                                <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Store <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Store"] <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.Asset.StoreId)
             .DataSource(d => d.WebApi()
@@ -87,7 +87,7 @@
 
                                <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Vendor: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Vendor"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.Asset.VendorId)
             .DataSource(d => d.WebApi()
@@ -109,7 +109,7 @@
                                 <label class="form-control-label"> @sharedResource["Photo"]: <span class="tx-danger">*</span></label>
                                 <div class="custom-file">
                                     <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" id="text" required>
-                                    <label class="custom-file-label" for="File">Choose New Photo</label>
+                                    <label class="custom-file-label" for="File">@sharedResource["Choose New Photo"]</label>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                               <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Description"]: <span class="tx-danger">*</span></label>
-                                <textarea asp-for="Asset.AssetDescription" class="form-control" placeholder="Enter Asset Description"> </textarea>
+                                <textarea asp-for="Asset.AssetDescription" class="form-control" placeholder="@sharedResource["Enter Asset Description"]"> </textarea>
                                 <span asp-validation-for="Asset.AssetDescription" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -141,7 +141,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["DepreciableCost"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.DepreciableCost" class="form-control required" placeholder="Enter Depreciable Cost " value="@(Model.Asset.DepreciableCost > 0 ? Model.Asset.DepreciableCost :string.Empty)">
+                                <input asp-for="Asset.DepreciableCost" class="form-control required" placeholder="@sharedResource["Enter Depreciable Cost"]" value="@(Model.Asset.DepreciableCost > 0 ? Model.Asset.DepreciableCost :string.Empty)">
                                 <span asp-validation-for="Asset.DepreciableCost" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -149,21 +149,21 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["SalvageValue"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.SalvageValue" class="form-control required" placeholder="Enter salvage Value " value="@(Model.Asset.SalvageValue > 0 ? Model.Asset.SalvageValue :string.Empty)">
+                                <input asp-for="Asset.SalvageValue" class="form-control required" placeholder="@sharedResource["Enter salvage Value"]" value="@(Model.Asset.SalvageValue > 0 ? Model.Asset.SalvageValue :string.Empty)">
                                 <span asp-validation-for="Asset.SalvageValue" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Asset Life (Months): <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetLife" class="form-control required" placeholder="Enter Asset Life " value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
+                                <label class="form-control-label">@sharedResource["Asset Life (Months)"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Asset.AssetLife" class="form-control required" placeholder="@sharedResource["Enter Asset Life"] " value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
                                 <span asp-validation-for="Asset.AssetLife" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Date Acquired: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.DateAcquired" type="date" class="form-control required" placeholder="Enter Date Acquired" value="@(Model.Asset.DateAcquired >= DateTime.Now ? Model.Asset.DateAcquired :string.Empty)">
+                                <label class="form-control-label">@sharedResource["Date Acquired"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Asset.DateAcquired" type="date" class="form-control required" placeholder="@sharedResource["Enter Date Acquired"]" value="@(Model.Asset.DateAcquired >= DateTime.Now ? Model.Asset.DateAcquired :string.Empty)">
                                 <span asp-validation-for="Asset.DateAcquired" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -171,7 +171,7 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Depreciation Method: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Depreciation Method"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.Asset.DepreciationMethodId)
                     .DataSource(d => d.WebApi()
@@ -189,9 +189,9 @@
 
                     </div>
                     <div class="form-layout-footer">
-                        <button class="btn btn-primary bd-0">Create Asset </button>
+                        <button class="btn btn-primary bd-0">@sharedResource["Create Asset"] </button>
                         <a asp-area="Admin" asp-page="/AssetManagment/Index">
-                            <input type='button' class="btn btn-secondary bd-0" value='Cancel' />
+                            <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
                         </a>
                     </div><!-- form-layout-footer -->
 

@@ -6,11 +6,11 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Timeline</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Reports"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Category Report"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Timeline</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Category"]</h6>
         </div><!-- slim-pageheader -->
 
 
@@ -18,7 +18,7 @@
         <div class="row row-sm row-timeline">
             <div class="col-lg-3  mg-lg-t-0">
                 <div class="card pd-20 mg-t-20">
-                    <label class="slim-card-title">Filter</label>
+                    <label class="slim-card-title">@sharedResource["Filter"]</label>
                     <div class="post-group">
 
                         @using (Html.BeginForm(FormMethod.Post))
@@ -27,7 +27,7 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
-        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l=>l.Text("Category Title"))
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l=>l.Text(sharedResource["Category"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
@@ -36,7 +36,7 @@
         );
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
-       .ButtonOptions(b => b.Text("Send")
+       .ButtonOptions(b => b.Text(sharedResource["Send"])
        .Type(ButtonType.Success)
        .UseSubmitBehavior(true)
        );
