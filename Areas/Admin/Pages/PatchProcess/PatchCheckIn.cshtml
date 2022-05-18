@@ -7,17 +7,17 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Check-In</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Check In"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Check-In</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Check In"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm">
             <div class="col-lg-7">
                 <div class="card card-table">
                     <div class="card-header">
-                        <h6 class="slim-card-title">Asset List</h6>
+                        <h6 class="slim-card-title">@sharedResource["Asset List"]</h6>
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
@@ -93,7 +93,7 @@
 
             <div class="col-lg-5 mg-t-20 mg-lg-t-0">
                 <div class="section-wrapper">
-                    <label class="section-title">Check-In Information</label>
+                    <label class="section-title">@sharedResource["Check In Information"]</label>
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
                         <form asp-area="Admin" method="post" enctype="multipart/form-data">
@@ -101,7 +101,7 @@
                                <div class="row mg-b-25">
               <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Transaction Date <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Transaction Date"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                 </div>
@@ -230,7 +230,7 @@
                         </div>
       <div class="col-lg-12">
     <div class="form-group">
-        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
+        <label class="form-control-label">@sharedResource["Store"]: <span class="tx-danger">*</span></label>
               
         @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
             .DataSource(d => d.WebApi()
@@ -248,7 +248,7 @@
                 
           <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Remarks <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Remarks"] <span class="tx-danger">*</span></label>
                   <textarea asp-for="@Model.assetmovement.Remarks" class="form-control"  placeholder=""></textarea>
                    <span asp-validation-for="@Model.assetmovement.Remarks" class="text-danger"></span>
                 </div>

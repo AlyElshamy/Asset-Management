@@ -15,7 +15,7 @@
         <div class="modal-content bd-0 tx-14">
             <div class="modal-header pd-y-20 pd-x-25">
                 @*<h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" id="AssetDescriptiontxt"></h6>*@
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="@sharedResource["Close"]">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -25,7 +25,7 @@
                      <input  id="ContractIdFaildHidden" name="ContractId" class="form-control" hidden>
                       <div class="row mg-b-25">
                 <div class="form-group">
-                  <label class="form-control-label">Contract Title <span class="tx-danger"></span></label>
+                    <label class="form-control-label">@sharedResource["Contract Title"] <span class="tx-danger"></span></label>
                   <input id="ContractIdFaild"  class="form-control" readonly>
                 </div>
               
@@ -56,8 +56,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Confirm</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Confirm"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Close"]</button>
             </div>
         </div>
     </form>

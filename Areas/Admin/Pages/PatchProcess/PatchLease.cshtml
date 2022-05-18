@@ -6,17 +6,17 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Patch Leasing</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Patch Leasing"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Leasing</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Leasing"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm">
             <div class="col-lg-7">
                 <div class="card card-table">
                     <div class="card-header">
-                        <h6 class="slim-card-title">Asset List</h6>
+                        <h6 class="slim-card-title">@sharedResource["Asset List"]</h6>
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
@@ -90,7 +90,7 @@
 
             <div class="col-lg-5 mg-t-20 mg-lg-t-0">
                 <div class="section-wrapper">
-                    <label class="section-title">Leasing Information</label>
+                    <label class="section-title">@sharedResource["Leasing Information"]</label>
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
                         <form asp-area="Admin" method="post" enctype="multipart/form-data">

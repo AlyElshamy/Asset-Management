@@ -6,17 +6,17 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Patch Maintainance</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Patch Maintainance"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Maintainance</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Maintainance"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm">
             <div class="col-lg-7">
                 <div class="card card-table">
                     <div class="card-header">
-                        <h6 class="slim-card-title">Asset List</h6>
+                        <h6 class="slim-card-title">@sharedResource["Asset List"]</h6>
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
@@ -90,7 +90,7 @@
 
             <div class="col-lg-5 mg-t-20 mg-lg-t-0">
                 <div class="section-wrapper">
-                    <label class="section-title">Maintainance Information</label>
+                    <label class="section-title">@sharedResource["Maintainance Information"]</label>
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
                         <form asp-area="Admin" method="post" enctype="multipart/form-data">
@@ -99,14 +99,14 @@
                             <div class="row mg-b-25" >
                            <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Title <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Title"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceTitle"  class="form-control "  >
                    <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceTitle" class="text-danger"></span>
                 </div>
               </div><!-- col-6 -->
                     <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Details <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Details"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceDetails"  class="form-control "  >
                    <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceDetails" class="text-danger"></span>
                 </div>
@@ -114,7 +114,7 @@
 
               <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Due Date <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Due Date"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceDueDate" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceDueDate" class="text-danger"></span>
                 </div>
@@ -122,7 +122,7 @@
 
                     <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Maintaince By <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Maintaince By"] <span class="tx-danger">*</span></label>
                       @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.TechnicianId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -137,7 +137,7 @@
               </div><!-- col-6 -->
                     <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Maintainance Status<span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Maintainance Status"]<span class="tx-danger">*</span></label>
                               @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.MaintainanceStatusId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -153,7 +153,7 @@
 
                     <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label"> Date Completed <span class="tx-danger">*</span></label>
+                    <label class="form-control-label"> @sharedResource["Date Completed"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceDateCompleted" type="date" class="form-control date" value=" " >
                    <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceDateCompleted" class="text-danger"></span>
                 </div>
@@ -161,7 +161,7 @@
 
                     <div class="col-lg-12">
                 <div class="form-group">
-                    <label class="form-control-label">Cost Of Repairs <span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
                   <input asp-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="form-control " >
                    <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="text-danger"></span>
                 </div>
@@ -169,7 +169,7 @@
 
                 <div class="col-lg-12">
                     <div class="form-group">
-                            <label class="form-control-label">Repeating</label>
+                        <label class="form-control-label">@sharedResource["Repeating"]</label>
                             <div class="col-md-10">
                                 <label for="ch1"> @sharedResource["yes"]</label><input asp-for="@Model.assetMaintainance.AssetMaintainanceRepeating" value="True"  type="radio" id="ch1" onclick="myFunction()" />
                                 <br />
@@ -180,7 +180,7 @@
 
                   <div class="col-lg-12"  id="MaintainanceFrequency" style="display:none" >
                 <div class="form-group">
-                    <label class="form-control-label">Frequency<span class="tx-danger">*</span></label>
+                    <label class="form-control-label">@sharedResource["Frequency"]<span class="tx-danger">*</span></label>
                               @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.AssetMaintainanceFrequencyId)
                               .ID("MaintFreqLookup")
             .DataSource(d => d.WebApi()
@@ -197,12 +197,12 @@
               </div><!-- col-6 -->
 
            <div class="col-lg-12"  id="WeeklyFrequency" style="display:none"  >
-            <label >Recur on</label>
+               <label>@sharedResource["Recur on"]</label>
                 <div class="form-group">
-                    <label >Every</label>
+                    <label>@sharedResource["Every"]</label>
                      <input asp-for="@Model.assetMaintainance.WeeklyPeriod" class="form-control" style="width:75px; display:inline-block"  >
                   <span asp-validation-for="@Model.assetMaintainance.WeeklyPeriod" class="text-danger"></span>
-                   <label>Week(s) on </label>
+                  <label>@sharedResource["Week(s) on"] </label>
                    <div style="display:inline-block">  
                        @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.WeekDayId)
                        .Width(170)
@@ -220,21 +220,21 @@
               </div><!-- col-6 -->
 
                        <div class="col-lg-12"  id="MonthlyFrequency" style="display:none" >
-                   <label >Recur on</label>
+                           <label>@sharedResource["Recur on"]</label>
                 <div class="form-group">
-              <label >Every</label>
+                    <label>@sharedResource["Every"]</label>
                      <input asp-for="@Model.assetMaintainance.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block">
                   <span asp-validation-for="@Model.assetMaintainance.WeeklyPeriod" class="text-danger"></span>
-                   <label>Month(s) on </label>
+                  <label>@sharedResource["Month(s) on"] </label>
              <input asp-for="@Model.assetMaintainance.MonthlyDay" class="form-control" style="width:75px;display:inline-block">        
               <span asp-validation-for="@Model.assetMaintainance.MonthlyDay" class="text-danger"></span>
                 </div>
               </div><!-- col-6 -->
 
                        <div class="col-lg-12"  id="YearlyFrequency" style="display:none" >
-                <label >Recur on</label>
+                           <label>@sharedResource["Recur on"]</label>
                 <div class="form-group">
-                           <label >Every</label>
+                    <label>@sharedResource["Every"]</label>
                          <div style="display:inline-block">  
                        @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.MonthId)
                        .Width(175)
@@ -247,7 +247,7 @@
             .DisplayExpr("Text")
           )  </div>
                   <span asp-validation-for="@Model.assetMaintainance.MonthId" class="text-danger"></span>
-                   <label> on </label>
+                  <label> @sharedResource["on"] </label>
              <input asp-for="@Model.assetMaintainance.YearlyDay" class="form-control" style="width:75px; display:inline-block" >        
               <span asp-validation-for="@Model.assetMaintainance.MonthlyDay" class="text-danger"></span>
                 </div>
@@ -257,8 +257,8 @@
                 </div> <!-- row-->
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">@sharedResource["Submit"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Close"]</button>
             </div>
         </div>
                         </form>

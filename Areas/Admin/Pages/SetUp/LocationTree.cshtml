@@ -9,8 +9,8 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">SETUP</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["LocationTree"] </li>
 
             </ol>
@@ -18,7 +18,7 @@
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <label class="section-title d-inline">@sharedResource["LocationList"]</label>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().TreeList<AssetProject.Models.Location>()

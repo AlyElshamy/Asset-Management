@@ -51,7 +51,7 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Due Date: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["DueDate"] : <span class="tx-danger">*</span></label>
                                 <input asp-for="@Model.DueDate" type="date" class="form-control date" value=" ">
                                 <span asp-validation-for="@Model.DueDate" class="text-danger"></span>
                             </div>
@@ -152,7 +152,7 @@
                                 .LoadAction("DepartmentsLookup")
                                 .Key("Value")
                                 )
-                                .ValueExpr("Value")
+                                .ValueExpr("Value") 
                                 .DisplayExpr("Text")
                                 )
                                 <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>

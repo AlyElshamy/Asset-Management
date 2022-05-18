@@ -6,7 +6,7 @@
 }
 
 
-<a href="javascript:void(0)" onclick="ShowAssetcontractPopUp('<%- data.AssetId %>')" class="btn btn-success" style="float:right">Link Contract  </a>
+<a href="javascript:void(0)" onclick="ShowAssetcontractPopUp('<%- data.AssetId %>')" class="btn btn-success" style="float:right">@sharedResource["Link Contract"]  </a>
 <label class="section-title d-inline">@sharedResource["Contracts"]</label>
 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetContract>()
     .ID("gridContractContainer")
@@ -26,7 +26,7 @@
         columns.AddFor(m => m.Contract.StartDate).Caption(sharedResource["StartDate"]);
         columns.AddFor(m => m.Contract.EndDate).Caption(sharedResource["EndDate"]);
         columns.AddFor(m => m.Contract.Description).Caption(sharedResource["Contract Description"]);
-        columns.AddFor(m => m.ContractId).Lookup(lookup => lookup
+        columns.AddFor(m => m.ContractId).Caption(sharedResource["Contract"]).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().Controller("AssetContracts").LoadAction("ContractsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
@@ -67,7 +67,7 @@
                 .Items(items =>
                 {
                     
-                    items.AddSimpleFor(m => m.ContractId)
+                    items.AddSimpleFor(m => m.ContractId).Label(l=>l.Text(sharedResource["Contract"]))
                     .IsRequired(true)
                     .Editor(e => e
                     .Lookup()
