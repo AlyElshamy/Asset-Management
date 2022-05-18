@@ -36,7 +36,9 @@ namespace AssetProject.Controllers
                 i.City,
                 i.State,
                 i.PostalCode,
-                i.BarCode
+                i.BarCode,
+                i.LocationLangtiude,
+                i.LocationLatitude
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -77,7 +79,7 @@ namespace AssetProject.Controllers
 
             await _context.SaveChangesAsync();
             return Ok();
-        }
+        }   
 
         [HttpDelete]
         public async Task Delete(int key) {
@@ -100,7 +102,9 @@ namespace AssetProject.Controllers
             string STATE = nameof(Location.State);
             string POSTAL_CODE = nameof(Location.PostalCode);
             string BARCODE = nameof(Location.BarCode);
-
+            string Langtude = nameof(Location.LocationLangtiude);
+            string Latetude = nameof(Location.LocationLatitude);
+            
             if (values.Contains(LOCATION_ID)) {
                 model.LocationId = Convert.ToInt32(values[LOCATION_ID]);
             }
@@ -137,6 +141,15 @@ namespace AssetProject.Controllers
             {
                 model.BarCode = Convert.ToString(values[BARCODE]);
             }
+            if (values.Contains(Langtude))
+            {
+                model.LocationLangtiude = Convert.ToString(values[Langtude]);
+            }
+            if (values.Contains(Latetude))
+            {
+                model.LocationLatitude = Convert.ToString(values[Latetude]);
+            }
+
         }
 
         private string GetFullErrorMessage(ModelStateDictionary modelState) {

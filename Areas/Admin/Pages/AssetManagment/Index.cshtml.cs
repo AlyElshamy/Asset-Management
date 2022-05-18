@@ -48,6 +48,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         {
             var Result = _context.Assets.Where(c => c.AssetId == AssetId).FirstOrDefault();
             return new JsonResult(Result);
+
         }
 
         public async Task<IActionResult> OnPostEditAsset(Asset instance,IFormFile file)

@@ -6,13 +6,13 @@
 
 <a href="javascript:void(0)" onclick="ShowAssetWarantyPopup('<%- data.AssetId %>')" class="btn btn-success" style="float:right">@sharedResource["Add Warranty"]  </a>
 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetWarranty>()
-    .ID("gridContractContainer")
+    .ID("gridWarrantyContainer")
     .DataSource(ds => ds.Mvc()
-        .Controller("AssetContracts")
+        .Controller("AssetWarranties")
         .LoadAction("Get")
         .LoadParams(new { AssetId = Model })
         .DeleteAction("Delete")
-        .Key("AssetContractID")
+        .Key("WarrantyId")
     )
     .RemoteOperations(true)
     .Columns(columns =>
@@ -24,16 +24,16 @@
                       
     })
 
-    @*.Columns(columns =>
+    .Columns(columns =>
     {
     columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn-outline-danger")
                     .CellTemplate(@<text>
                             @Html.DevExtreme().Button().Text(sharedResource["Detach"]).OnClick("function (e) { DeattachWarrantyButtonClick(data)}")
                         </text>);
 
-        })*@
+        })
                     )
-
+<partial name="_DetachAssetWarranty" />
     <div class="slim-mainpanel">
         <div class="container">
             <div class="table-wrapper">
@@ -85,5 +85,29 @@
         </div>
     </div>
     <script>
-       
+        function deleteButtonClickWarranty(data) {
+            var grid = $('#gridWarrantyContainer').dxDataGrid('instance');
+            var rowIndex = grid.getRowIndexByKey(data.WarrantyId)
+            grid.deleteRow(rowIndex);
+        }
+        function DeattachWarrantyButtonClick(data) {
+
+            $('#DeattacheAssetWarrantyPoup').modal('show');
+
+
+            //$('#frmDeattachContract').dxForm('instance').option('formData', data);
+            document.getElementById("AssetWarrantyIdFaild").value = data.WarrantyId;
+            document.getElementById("WarrantylenghtFaild").value = data.Length;
+            document.getElementById("WarrantyExpirationDate").value = data.ExpirationDate;
+
+
+            //var pop = $('#DeattacheAssetContractPoup').dxPopup('instance');
+            //     pop.option('visible', true);
+            //     $("#DeattacheAssetContractPoup").dxPopup({
+            //         title: data.AssetContractID,
+
+            //     });
+            //$('#DeattacheAssetContractPoup').modal('show');
+
+        }
     </script>

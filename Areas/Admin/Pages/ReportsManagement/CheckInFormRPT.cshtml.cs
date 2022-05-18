@@ -32,6 +32,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 
         public async Task<IActionResult> OnGet(int AssetMovement)
         {
+
+
             List<AssetMovement> ds = _context.AssetMovements.Include(a=>a.Employee).Include(a=>a.Location).Include(a=>a.Store).
                 Include(a=>a.Department).Include(a=>a.AssetMovementDetails).ThenInclude(a=>a.Asset).ThenInclude(a=>a.Item)
                 .ToList();

@@ -618,16 +618,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
             if (assetWarranty.AssetId != 0)
             {
-                AssetWarranty AssetWar = new AssetWarranty { AssetId = assetWarranty.AssetId, WarrantyId = assetWarranty.WarrantyId };
+                AssetWarranty AssetWar = new AssetWarranty {AssetId=assetWarranty.AssetId, Length=assetWarranty.Length,Notes=assetWarranty.Notes,ExpirationDate=assetWarranty.ExpirationDate, };
                 Context.AssetWarranties.Add(AssetWar); 
-                AssetLog assetLog = new AssetLog()
-                {
-                    ActionLogId = 20,
-                    AssetId = assetWarranty.AssetId,
-                    ActionDate = DateTime.Now,
-                    Remark = string.Format("Create Warranty")
-                };
-                Context.AssetLogs.Add(assetLog);
+                //AssetLog assetLog = new AssetLog()
+                //{
+                //    ActionLogId = 20,
+                //    AssetId = assetWarranty.AssetId,
+                //    ActionDate = DateTime.Now,
+                //    Remark = string.Format("Create Warranty")
+                //};
+                //Context.AssetLogs.Add(assetLog);
 
                 Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Link Warranty Added Successfully");
@@ -635,6 +635,33 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             }
 
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetWarranty.AssetId });
+        }
+
+        public IActionResult OnpostDeattachAssetWarranty(AssetWarranty assetwarranty)
+        {
+            AssetWarranty _assetwarranty = Context.AssetWarranties.Where(e => e.WarrantyId == assetwarranty.WarrantyId).FirstOrDefault();
+            try
+            {
+                Context.AssetWarranties.Remove(_assetwarranty);
+                _toastNotification.AddSuccessToastMessage("Asset Warranty Dettached Succeffully");
+            }
+            catch (Exception)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
+            //AssetWarranty insurance = Context.AssetWarranties.Find(assetwarranty.WarrantyId);
+            //AssetLog assetLog = new AssetLog()
+            //{
+            //    ActionLogId = 7,
+            //    AssetId = assetInsurance.AssetId,
+            //    ActionDate = DateTime.Now,
+            //    Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
+            //};
+            //Context.AssetLogs.Add(assetLog);
+
+            Context.SaveChanges();
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetwarranty.AssetId });
+
         }
     }
 }

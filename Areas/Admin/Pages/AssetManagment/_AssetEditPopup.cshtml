@@ -15,41 +15,44 @@
                 </button>
             </div>
             <div class="modal-body pd-25">
-  <div class="row mg-b-25">
-                  
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["AssetTagId"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetTagId" id="AtagId" class="form-control" placeholder="Enter Asset Tag Id">
-                                <span asp-validation-for="@Model.AssetTagId" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["AssetCost"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetCost" id="Acost" class="form-control" placeholder="Enter Asset Cost" value="@(Model.AssetCost > 0 ? Model.AssetCost :string.Empty)">
-                                <span asp-validation-for="@Model.AssetCost" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["AssetSerialNo"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetSerialNo" id="AserialNum" class="form-control" placeholder="Enter Asset Serial No">
-                                <span asp-validation-for="@Model.AssetSerialNo" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["AssetPurchaseDate"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetPurchaseDate" id="ApurshaseDate" type="date" class="form-control date" placeholder="Enter Asset Purchase Date" value="@(Model.AssetPurchaseDate.Date.Day >= 1 ? Model.AssetPurchaseDate :string.Empty)">
-                                <span asp-validation-for="@Model.AssetPurchaseDate" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["Item"]: <span class="tx-danger">*</span></label>
+                <div class="row mg-b-25">
+                    <input asp-for="@Model.AssetId" id="AssetId" hidden>
+                    <input asp-for="@Model.AssetStatusId" id="AssetStatusId" hidden>
+                    <input asp-for="@Model.Photo" id="AssetphotoId" hidden>
 
-                                @(Html.DevExtreme().LookupFor(c=>c.ItemId)
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["AssetTagId"]: <span class="tx-danger">*</span></label>
+                            <input asp-for="@Model.AssetTagId" id="AtagId" class="form-control" placeholder="Enter Asset Tag Id">
+                            <span asp-validation-for="@Model.AssetTagId" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["AssetCost"]: <span class="tx-danger">*</span></label>
+                            <input asp-for="@Model.AssetCost" id="Acost" class="form-control" placeholder="Enter Asset Cost" value="@(Model.AssetCost > 0 ? Model.AssetCost :string.Empty)">
+                            <span asp-validation-for="@Model.AssetCost" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["AssetSerialNo"]: <span class="tx-danger">*</span></label>
+                            <input asp-for="@Model.AssetSerialNo" id="AserialNum" class="form-control" placeholder="Enter Asset Serial No">
+                            <span asp-validation-for="@Model.AssetSerialNo" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["AssetPurchaseDate"]: <span class="tx-danger">*</span></label>
+                            <input asp-for="@Model.AssetPurchaseDate" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date" value="@(Model.AssetPurchaseDate.Date.Day >= 1 ? Model.AssetPurchaseDate :string.Empty)">
+                            <span asp-validation-for="@Model.AssetPurchaseDate" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["Item"]: <span class="tx-danger">*</span></label>
+
+                            @(Html.DevExtreme().LookupFor(c=>c.ItemId)
                                 .ID("AItem")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -59,15 +62,15 @@
             .ValueExpr("Value")
             .DisplayExpr("Text")
         )
-                                <span asp-validation-for="@Model.ItemId" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
+                            <span asp-validation-for="@Model.ItemId" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
 
-                               <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Store <span class="tx-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">Store <span class="tx-danger">*</span></label>
 
-                                @(Html.DevExtreme().LookupFor(c=>c.StoreId)
+                            @(Html.DevExtreme().LookupFor(c=>c.StoreId)
                                 .ID("AStore")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -77,15 +80,15 @@
             .ValueExpr("Value")
             .DisplayExpr("Text")
         )
-                                <span asp-validation-for="@Model.StoreId" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
+                            <span asp-validation-for="@Model.StoreId" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
 
-                               <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Vendor: <span class="tx-danger">*</span></label>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">Vendor: <span class="tx-danger">*</span></label>
 
-                                @(Html.DevExtreme().LookupFor(c=>c.VendorId)
+                            @(Html.DevExtreme().LookupFor(c=>c.VendorId)
                                 .ID("Avendor")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -95,33 +98,33 @@
             .ValueExpr("Value")
             .DisplayExpr("Text")
         )
-                                <span asp-validation-for="@Model.VendorId" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-                        <hr />
+                            <span asp-validation-for="@Model.VendorId" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
+                    <hr />
 
 
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label"> @sharedResource["Photo"]: <span class="tx-danger">*</span></label>
-                                <div class="custom-file">
-                                    <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" id="text" required>
-                                    <label class="custom-file-label" for="File">Choose New Photo</label>
-                                </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label"> @sharedResource["Photo"]: <span class="tx-danger">*</span></label>
+                            <div class="custom-file">
+                                <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" id="text">
+                                <label class="custom-file-label" for="File">Choose New Photo</label>
                             </div>
                         </div>
-
-
-                              <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["Description"]: <span class="tx-danger">*</span></label>
-                                <textarea asp-for="@Model.AssetDescription" id="ADescription" class="form-control" placeholder="Enter Asset Description"> </textarea>
-                                <span asp-validation-for="@Model.AssetDescription" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-
-                        <hr />
                     </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["Description"]: <span class="tx-danger">*</span></label>
+                            <textarea asp-for="@Model.AssetDescription" id="ADescription" class="form-control" placeholder="Enter Asset Description"> </textarea>
+                            <span asp-validation-for="@Model.AssetDescription" class="text-danger"></span>
+                        </div>
+                    </div><!-- col-4 -->
+
+                    <hr />
+                </div>
 
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
@@ -133,7 +136,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div id="depreciable" class="row mg-b-25" style="display: none;">
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -160,7 +162,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Date Acquired: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.DateAcquired" type="date" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired" value="string.Empty">
+                                <input asp-for="@Model.DateAcquired" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired" value="string.Empty">
                                 <span asp-validation-for="@Model.DateAcquired" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -202,7 +204,24 @@
                     document.getElementById("photolabel").innerHTML=fileName;
                   
             }
- 
+    function myFunction() {
+        var btn1 = document.getElementById('ch1');
+        var btn2 = document.getElementById('ch2');
+
+        const form = document.getElementById('depreciable');
+
+        if (btn1.checked == true) {
+            // 👇 this SHOWS the form
+            form.style.display = 'flex';
+            document.getElementsByClassName("required").setAttribute("required", "");
+
+        }
+        else if (btn2.checked == true) {
+            // 👇 this HIDES the form
+            form.style.display = 'none';
+        }
+    }
+
 
 
 </script>

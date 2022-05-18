@@ -146,23 +146,31 @@
         success: function (response) {
 
               // $('#frmEdit').dxForm('instance').option('formData',response);
-                document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
-                document.getElementById("AtagId").innerHTML = response.AssetTagId
-                 document.getElementById("Acost").innerHTML = response.AssetCost
-                 document.getElementById("AserialNum").innerHTML = response.AssetSerialNo
-                 document.getElementById("ApurshaseDate").innerHTML = response.AssetPurchaseDate
-                 $("#AItem").dxLookup("instance").option("Value",response.ItemId);
-                 $("#AStore").dxLookup("instance").option("Value",response.StoreId );
-                 $("#Avendor").dxLookup("instance").option("Value",response.VendorId);
-                  document.getElementById("ADescription").innerHTML = response.AssetDescription
-                  document.getElementById("AtagId").innerHTML = response.AssetTagId
-                  document.getElementById("AtagId").innerHTML = response.AssetTagId
-                  document.getElementById("AtagId").innerHTML = response.AssetTagId
-                  document.getElementById("AtagId").innerHTML = response.AssetTagId
-                 document.getElementById("AtagId").innerHTML = response.AssetTagId
-                document.getElementById("AtagId").innerHTML = response.AssetTagId
-               document.getElementById("AtagId").innerHTML = response.AssetTagId
-              document.getElementById("AtagId").innerHTML = response.AssetTagId
+            document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
+            document.getElementById("AtagId").value = response.AssetTagId
+            document.getElementById("AssetId").value = response.AssetId
+            document.getElementById("AssetphotoId").value = response.Photo
+            document.getElementById("AssetStatusId").value = response.AssetStatusId
+            document.getElementById("Acost").value = response.AssetCost
+            document.getElementById("AserialNum").value = response.AssetSerialNo
+            document.getElementById("ApurshaseDate").value = response.AssetPurchaseDate
+            $("#AItem").dxLookup("instance").option("value", response.ItemId);
+            $("#AStore").dxLookup("instance").option("value", response.StoreId);
+            $("#Avendor").dxLookup("instance").option("value", response.VendorId);
+            document.getElementById("ADescription").value = response.AssetDescription            document.getElementById("ADepreciable").value = response.DepreciableCost            document.getElementById("ASalvageValue").value = response.SalvageValue            document.getElementById("ALife").value = response.AssetLife            document.getElementById("AdateAcquired").value = response.DateAcquired            $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);            const form = document.getElementById('depreciable')
+            var btn1 = document.getElementById('ch1');
+            var btn2 = document.getElementById('ch2');
+
+            if (response.DepreciableAsset) {
+                btn1.checked = true;
+                form.style.display = 'flex';
+            } else
+            {
+                btn1.checked = false;
+                btn2.checked = true;
+                form.style.display = 'none';
+
+            }
                $('#AssetEditPoup').modal('show');
                console.log("Elemnt"+document.getElementsByClassName("AssetClass")[0].nodeValue)
                 
