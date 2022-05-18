@@ -39,9 +39,7 @@ namespace AssetProject.Reports
             this.tableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell5 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -53,9 +51,7 @@ namespace AssetProject.Reports
             this.tableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell18 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell19 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell20 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -87,6 +83,9 @@ namespace AssetProject.Reports
             this.pageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.xrLabel13 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLine1 = new DevExpress.XtraReports.UI.XRLine();
+            this.xrPictureBox1 = new DevExpress.XtraReports.UI.XRPictureBox();
+            this.tableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.tableCell17 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
@@ -125,7 +124,6 @@ namespace AssetProject.Reports
             this.tableCell1,
             this.tableCell2,
             this.tableCell3,
-            this.tableCell4,
             this.tableCell5,
             this.tableCell6,
             this.tableCell7,
@@ -159,35 +157,21 @@ namespace AssetProject.Reports
             this.tableCell3.Name = "tableCell3";
             this.tableCell3.StyleName = "DetailCaption1";
             this.tableCell3.Text = "Asset Serial No";
-            this.tableCell3.Weight = 0.12058639526367188D;
-            // 
-            // tableCell4
-            // 
-            this.tableCell4.Name = "tableCell4";
-            this.tableCell4.StyleName = "DetailCaption1";
-            this.tableCell4.Text = "Item TL";
-            this.tableCell4.Weight = 0.067360364473783046D;
+            this.tableCell3.Weight = 0.12529936951850959D;
             // 
             // tableCell5
             // 
             this.tableCell5.Name = "tableCell5";
             this.tableCell5.StyleName = "DetailCaption1";
             this.tableCell5.Text = "Photo";
-            this.tableCell5.Weight = 0.057179847130408655D;
-            // 
-            // tableCell6
-            // 
-            this.tableCell6.Name = "tableCell6";
-            this.tableCell6.StyleName = "DetailCaption1";
-            this.tableCell6.Text = "Title";
-            this.tableCell6.Weight = 0.046243180495042065D;
+            this.tableCell5.Weight = 0.119827237349354D;
             // 
             // tableCell7
             // 
             this.tableCell7.Name = "tableCell7";
             this.tableCell7.StyleName = "DetailCaption1";
             this.tableCell7.Text = "Insurance Company";
-            this.tableCell7.Weight = 0.15186347374549278D;
+            this.tableCell7.Weight = 0.14694997323119427D;
             // 
             // tableCell8
             // 
@@ -239,7 +223,6 @@ namespace AssetProject.Reports
             this.tableCell12,
             this.tableCell13,
             this.tableCell14,
-            this.tableCell15,
             this.tableCell16,
             this.tableCell17,
             this.tableCell18,
@@ -280,37 +263,17 @@ namespace AssetProject.Reports
             this.tableCell14.StyleName = "DetailData1";
             this.tableCell14.StylePriority.UseTextAlignment = false;
             this.tableCell14.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell14.Weight = 0.12058639526367188D;
-            // 
-            // tableCell15
-            // 
-            this.tableCell15.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ItemTL]")});
-            this.tableCell15.Name = "tableCell15";
-            this.tableCell15.StyleName = "DetailData1";
-            this.tableCell15.StylePriority.UseTextAlignment = false;
-            this.tableCell15.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell15.Weight = 0.067360364473783046D;
+            this.tableCell14.Weight = 0.12529936970234099D;
             // 
             // tableCell16
             // 
-            this.tableCell16.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Photo]")});
+            this.tableCell16.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrPictureBox1});
             this.tableCell16.Name = "tableCell16";
             this.tableCell16.StyleName = "DetailData1";
             this.tableCell16.StylePriority.UseTextAlignment = false;
             this.tableCell16.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell16.Weight = 0.057179847130408655D;
-            // 
-            // tableCell17
-            // 
-            this.tableCell17.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Title]")});
-            this.tableCell17.Name = "tableCell17";
-            this.tableCell17.StyleName = "DetailData1";
-            this.tableCell17.StylePriority.UseTextAlignment = false;
-            this.tableCell17.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell17.Weight = 0.046243177560659557D;
+            this.tableCell16.Weight = 0.11982723716552257D;
             // 
             // tableCell18
             // 
@@ -320,7 +283,7 @@ namespace AssetProject.Reports
             this.tableCell18.StyleName = "DetailData1";
             this.tableCell18.StylePriority.UseTextAlignment = false;
             this.tableCell18.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell18.Weight = 0.15186346200796275D;
+            this.tableCell18.Weight = 0.14694993451730265D;
             // 
             // tableCell19
             // 
@@ -600,6 +563,33 @@ namespace AssetProject.Reports
             this.xrLine1.Name = "xrLine1";
             this.xrLine1.SizeF = new System.Drawing.SizeF(846F, 5.833337F);
             // 
+            // xrPictureBox1
+            // 
+            this.xrPictureBox1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "ImageUrl", "\'https://localhost:44311/\'+[Photo]\n")});
+            this.xrPictureBox1.ImageAlignment = DevExpress.XtraPrinting.ImageAlignment.MiddleCenter;
+            this.xrPictureBox1.LocationFloat = new DevExpress.Utils.PointFloat(10F, 0F);
+            this.xrPictureBox1.Name = "xrPictureBox1";
+            this.xrPictureBox1.SizeF = new System.Drawing.SizeF(81.61349F, 25F);
+            this.xrPictureBox1.Sizing = DevExpress.XtraPrinting.ImageSizeMode.Squeeze;
+            // 
+            // tableCell6
+            // 
+            this.tableCell6.Name = "tableCell6";
+            this.tableCell6.StyleName = "DetailCaption1";
+            this.tableCell6.Text = "Title";
+            this.tableCell6.Weight = 0.051156681009340566D;
+            // 
+            // tableCell17
+            // 
+            this.tableCell17.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Title]")});
+            this.tableCell17.Name = "tableCell17";
+            this.tableCell17.StyleName = "DetailData1";
+            this.tableCell17.StylePriority.UseTextAlignment = false;
+            this.tableCell17.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.tableCell17.Weight = 0.051156705051319654D;
+            // 
             // rptInsurance
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -640,9 +630,7 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRTableCell tableCell1;
         private DevExpress.XtraReports.UI.XRTableCell tableCell2;
         private DevExpress.XtraReports.UI.XRTableCell tableCell3;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell4;
         private DevExpress.XtraReports.UI.XRTableCell tableCell5;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell6;
         private DevExpress.XtraReports.UI.XRTableCell tableCell7;
         private DevExpress.XtraReports.UI.XRTableCell tableCell8;
         private DevExpress.XtraReports.UI.XRTableCell tableCell9;
@@ -654,9 +642,7 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRTableCell tableCell12;
         private DevExpress.XtraReports.UI.XRTableCell tableCell13;
         private DevExpress.XtraReports.UI.XRTableCell tableCell14;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell15;
         private DevExpress.XtraReports.UI.XRTableCell tableCell16;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell17;
         private DevExpress.XtraReports.UI.XRTableCell tableCell18;
         private DevExpress.XtraReports.UI.XRTableCell tableCell19;
         private DevExpress.XtraReports.UI.XRTableCell tableCell20;
@@ -688,5 +674,8 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRPageInfo pageInfo1;
         private DevExpress.XtraReports.UI.XRLabel xrLabel13;
         private DevExpress.XtraReports.UI.XRLine xrLine1;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell6;
+        private DevExpress.XtraReports.UI.XRPictureBox xrPictureBox1;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell17;
     }
 }

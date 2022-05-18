@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -62,17 +63,15 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 StoreTL = i.Store.StoreTitle,
                 VendorTL = i.Vendor.VendorTitle,
                 SalvageValue = i.SalvageValue,
-                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()==null?null: _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
+                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
                 DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-                LocationId= _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-                DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()== null? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-                CategoryId=i.Item.CategoryId,
-                WarrantyId=i.Warranty.WarrantyId,
-                WarrantyLenght=i.Warranty.Length
-                
-            }).ToList();
-            
+                LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
+                DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
+                CategoryId = i.Item.CategoryId,
+                WarrantyId = _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault() == null ? 0 : _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault().WarrantyId,
+                WarrantyLenght = _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault() == null ? 0 : _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault().Length
 
+            }).ToList();
             if (filterModel.AssetTagId!=null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -105,8 +104,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             tenant.Email = user.Email;
             tenant.Phone = user.PhoneNumber;
             Report = new rptAssetReports(tenant);
-            return Page();
             Report.DataSource = ds;
+            return Page();
 
         }
     }

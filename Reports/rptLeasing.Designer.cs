@@ -186,7 +186,7 @@ namespace AssetProject.Reports
             // 
             this.tableCell8.Name = "tableCell8";
             this.tableCell8.StyleName = "DetailCaption1";
-            this.tableCell8.Text = "Customer TL";
+            this.tableCell8.Text = "Customer ";
             this.tableCell8.Weight = 0.10856516911433294D;
             // 
             // Detail

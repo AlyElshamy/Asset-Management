@@ -12,10 +12,12 @@ namespace AssetProject.ReportModels
         public int AssetId { set; get; }
         public DateTime TransactionDate { set; get; }
         public string EmployeeFullN { set; get; }
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
         public string LocationTl { set; get; }
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public string DepartmentTl { set; get; }
+        public int? DepartmentId { set; get; }
+        public int? StoreId { set; get; }
         public string StoreTl { set; get; }
         public string ActionTypeTl { set; get; }
         public string AssetMovementDirectionTl { set; get; }
@@ -27,7 +29,8 @@ namespace AssetProject.ReportModels
         public DateTime AssetPurchaseDate { set; get; }
         public string ItemTl { set; get; }
         public string AssetStatusTl { set; get; }
-       
+        public string Photo { set; get; }
+
     }
 
 }
