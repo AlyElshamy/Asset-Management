@@ -70,6 +70,14 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     string folder = "Images/AssetPhotos/";
                     instance.Photo = await UploadImage(folder, file);
                 }
+                if (!instance.DepreciableAsset)
+                {
+                    instance.DepreciableCost = 0;
+                    instance.DateAcquired = null;
+                    instance.DepreciationMethodId = null;
+                    instance.SalvageValue = 0;
+                    instance.AssetLife = 0;
+                }
                 var UpdatedAsset = _context.Assets.Attach(instance);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 AssetLog assetLog = new AssetLog()

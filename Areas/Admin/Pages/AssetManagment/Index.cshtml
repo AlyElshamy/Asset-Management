@@ -54,8 +54,16 @@
                     });
 
                     columns.AddFor(m => m.AssetId).Visible(false).Caption(sharedResource["Asset"]);
+                        columns.AddFor(m => m.Photo).Width(100)
+                    .AllowFiltering(false)
+                    .AllowSorting(false)
+                    .CellTemplate(@<text>
+                            <div>
+                                <img src="<%- '/' + value %>" alt="" width="35" height="35" />
+                            </div>
+                        </text>).Caption(sharedResource["Photo"]);
                     columns.AddFor(m => m.AssetTagId).Fixed(true).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["AssetTagId"]); ;
-                        columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
+                        //columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
                         columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
                         columns.AddFor(m => m.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);

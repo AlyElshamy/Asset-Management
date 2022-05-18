@@ -54,6 +54,14 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
                
             }
+            if (!Asset.DepreciableAsset)
+            {
+                Asset.DepreciableCost = 0;
+                Asset.DateAcquired = null;
+                Asset.DepreciationMethodId = null;
+                Asset.SalvageValue = 0;
+                Asset.AssetLife = 0;
+            }
             
             if (ModelState.IsValid)
             {
