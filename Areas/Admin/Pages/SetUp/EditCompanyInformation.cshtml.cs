@@ -45,7 +45,7 @@ namespace AssetProject.Pages
 
         public async Task<IActionResult> OnPostAsync(IFormFile file)
         {
-            if (tenant.CountryId == 0)
+            if (tenant.CountryId == null)
             {
                
                 ModelState.AddModelError("", "Please select country");

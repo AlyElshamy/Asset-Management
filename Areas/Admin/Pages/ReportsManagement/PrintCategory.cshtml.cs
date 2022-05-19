@@ -37,32 +37,32 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptCategory(tenant);
             return Page();
         }
         public async Task<IActionResult> OnPost()
         {
-            List<ReportModels.Category> ds = _context.SubCategories.Select(i => new ReportModels.Category
+            List<ReportModels.Category> ds = _context.Categories.Select(i => new ReportModels.Category
             {
-                CategoryTIAR = i.Category.CategoryTIAR,
-                SubCategoryDescription = i.SubCategoryDescription,
-                SubCategoryTitle = i.SubCategoryTitle,
-                CategoryId = i.Category.CategoryId
-
+                CategoryId=i.CategoryId,
+               CategoryTIAR=i.CategoryTIAR
 
             }).ToList();
-
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.CategoryId != null)
             {
                 ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
             }
+            if (filterModel.ShowAll == false&& filterModel.CategoryId == null)
+            {
+                ds = null;
+            }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptCategory(tenant);
             Report.DataSource = ds;
             return Page();

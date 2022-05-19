@@ -32,9 +32,14 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
         {
             if (ModelState.IsValid)
             {
-                if (Item.ItemId == null)
+                if (Item.CategoryId == null)
                 {
-                    ModelState.AddModelError("", "Please Select Item");
+                    ModelState.AddModelError("", "Please Select Category");
+                    return Page();
+                }
+                if (Item.BrandId == null)
+                {
+                    ModelState.AddModelError("", "Please Select Brand");
                     return Page();
                 }
                 Context.Items.Add(Item);

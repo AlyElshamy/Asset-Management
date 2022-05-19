@@ -30,6 +30,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public AssetMaintainance AssetMaintainance { set; get; }
         [BindProperty]
         public int AssetId { set; get; }
+        public Asset asset { get; set; }
         public AssetProfileModel(AssetContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             Context = context;
@@ -354,7 +355,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 };
                 Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Asset Broken Added successfully");
+                _toastNotification.AddSuccessToastMessage("Asset Lost Added successfully");
                 return RedirectToPage("/AssetManagment/AssetProfile", new
                 {
                     AssetId = AssetId
@@ -613,31 +614,39 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
 
         }
-        public IActionResult OnpostAddAssetWarranty(AssetWarranty assetWarranty)
+        public IActionResult OnPostAddAssetWarranty(AssetWarranty assetWarranty)
         {
 
             if (assetWarranty.AssetId != 0)
             {
                 AssetWarranty AssetWar = new AssetWarranty {AssetId=assetWarranty.AssetId, Length=assetWarranty.Length,Notes=assetWarranty.Notes,ExpirationDate=assetWarranty.ExpirationDate, };
-                Context.AssetWarranties.Add(AssetWar); 
-                //AssetLog assetLog = new AssetLog()
-                //{
-                //    ActionLogId = 20,
-                //    AssetId = assetWarranty.AssetId,
-                //    ActionDate = DateTime.Now,
-                //    Remark = string.Format("Create Warranty")
-                //};
-                //Context.AssetLogs.Add(assetLog);
+                Context.AssetWarranties.Add(AssetWar);
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 20,
+                    AssetId = assetWarranty.AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format("Create Warranty")
+                };
 
-                Context.SaveChanges();
+                Context.AssetLogs.Add(assetLog);
+                try
+                {
+                    Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Link Warranty Added Successfully");
+
+                }
+                catch (Exception)
+                {
+                    _toastNotification.AddErrorToastMessage("This Asset Has Already Warranty..");
+                }
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetWarranty.AssetId });
             }
 
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetWarranty.AssetId });
         }
 
-        public IActionResult OnpostDeattachAssetWarranty(AssetWarranty assetwarranty)
+        public IActionResult OnPostDeattachAssetWarranty(AssetWarranty assetwarranty)
         {
             AssetWarranty _assetwarranty = Context.AssetWarranties.Where(e => e.WarrantyId == assetwarranty.WarrantyId).FirstOrDefault();
             try

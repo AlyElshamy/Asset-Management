@@ -37,8 +37,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptSellAsset(tenant);
             return Page();
         }
@@ -53,7 +51,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                SaleAmount=i.SellAsset.SaleAmount,
                SaleDate=i.SellAsset.SaleDate,
                SellNotes=i.SellAsset.Notes,
-               SoldTo=i.SellAsset.SoldTo
+               SoldTo=i.SellAsset.SoldTo,
+               photo=i.Asset.Photo
 
             }).ToList();
 
@@ -69,19 +68,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.SaleDate <= filterModel.ToDate && i.SaleDate >= filterModel.FromDate).ToList();
             }
-            if (filterModel.OnDay != null)
-            {
-                ds = ds.Where(i => i.SaleDate == filterModel.OnDay).ToList();
-            }
-            if (filterModel.OnDay == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.SoldTo == null && filterModel.AssetTagId == null)
+            
+            if ( filterModel.FromDate == null && filterModel.ToDate == null && filterModel.SoldTo == null && filterModel.AssetTagId == null)
             {
                 ds = null;
             }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptSellAsset(tenant);
             Report.DataSource = ds;
             return Page();

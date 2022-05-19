@@ -17,6 +17,9 @@ namespace AssetProject.ReportModels
         public DateTime LeasingEndDate { get; set; }
         public string CustomerTL { get; set; }
         public int CustomerId { get; set; }
+        public Double LeasingCost { get; set; }
+        public DateTime TransactionDate { get; set; }
+        public string photo { get; set; }
 
     }
 }

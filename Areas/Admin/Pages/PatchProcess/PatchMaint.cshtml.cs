@@ -66,8 +66,9 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                             AssetMaintainanceRepeating = assetMaintainance.AssetMaintainanceRepeating,
                             MonthlyDay = assetMaintainance.MonthlyDay,
                             YearlyDay = assetMaintainance.YearlyDay,
-                            AssetId = asset.AssetId
-
+                            AssetId = asset.AssetId,
+                            TechnicianId=assetMaintainance.TechnicianId,
+                            
                         };
                         asset.AssetStatusId = 9;
                         var UpdatedAsset = _context.Assets.Attach(asset);

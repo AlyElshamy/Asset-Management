@@ -24,6 +24,8 @@ namespace AssetProject.Reports
                 website.Text = TenantObj.Website;
                 phone.Text = TenantObj.Phone;
                 email.Text = TenantObj.Email;
+                pictureBox1.ImageUrl = "https://localhost:44311/" + TenantObj.Logo;
+
             }
         }
 
@@ -35,7 +37,7 @@ namespace AssetProject.Reports
 
         private void pictureBox1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
-            pictureBox1.ImageUrl = "https://localhost:44311/images/logo/" + TenantObj.Logo;
+            //pictureBox1.ImageUrl = "https://localhost:44311/" + TenantObj.Logo;
             //CompanyNo.Text = TenantObj.TenantId.ToString();
 
         }

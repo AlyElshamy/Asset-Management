@@ -35,8 +35,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptAssetRepair(tenant);
             return Page();
         }
@@ -55,7 +53,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 RepairCost=a.AssetRepair.RepairCost,
                 Notes=a.AssetRepair.Notes,
                 TechnicianId=a.AssetRepair.TechnicianId,
-                TechnicianName=a.AssetRepair.Technician.FullName
+                TechnicianName=a.AssetRepair.Technician.FullName,
+                photo=a.Asset.Photo
 
             }).ToList();
 
@@ -81,8 +80,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptAssetRepair(tenant);
             Report.DataSource = ds;
             return Page();

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -38,8 +39,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptLeasing(tenant);
             return Page();
         }
@@ -55,10 +54,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 LeasingEndDate = i.AssetLeasing.EndDate,
                 LeasingStartDate = i.AssetLeasing.StartDate,
                 AssetLeasingId=i.AssetLeasing.AssetLeasingId,
-                CustomerId=i.AssetLeasing.Customer.CustomerId
+                CustomerId=i.AssetLeasing.Customer.CustomerId,
+                photo=i.Asset.Photo,
+                LeasingCost=i.AssetLeasing.LeasedCost
 
             }).ToList();
-            
             if (filterModel.AssetTagId != null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -69,21 +69,15 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             }
             if (filterModel.FromDate!=null&&filterModel.ToDate!=null)
             {
-                ds = ds.Where(i => i.LeasingEndDate <= filterModel.ToDate && i.LeasingStartDate >= filterModel.FromDate).ToList();
+                ds = ds.Where(i => i.LeasingStartDate <= filterModel.ToDate && i.LeasingStartDate >= filterModel.FromDate).ToList();
             }
-            if (filterModel.OnDay!=null)
-            {
-                ds = ds.Where(i => i.LeasingStartDate == filterModel.OnDay).ToList();
-            }
-            if (filterModel.AssetTagId == null&& filterModel.OnDay == null&& filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
+            if (filterModel.AssetTagId == null&&filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
             {
                 ds = null;
             }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptLeasing(tenant);
             Report.DataSource = ds;
             return Page();

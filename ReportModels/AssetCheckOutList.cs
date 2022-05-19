@@ -8,9 +8,9 @@ namespace AssetProject.ReportModels
 {
     public class AssetCheckOutList
     {
-        public int AssetMovementId { set; get; }
+        public int? AssetMovementId { set; get; }
         public int AssetId { set; get; }
-        public DateTime TransactionDate { set; get; }
+        public DateTime? TransactionDate { set; get; }
         public string EmployeeFullN { set; get; }
         public int? EmployeeId { get; set; }
         public string LocationTl { set; get; }

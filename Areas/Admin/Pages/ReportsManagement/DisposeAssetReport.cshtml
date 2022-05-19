@@ -31,7 +31,6 @@
     .Items(items => {
         items.AddSimpleFor(m => m.FromDate).IsRequired(false);
         items.AddSimpleFor(m => m.ToDate).IsRequired(false);
-        items.AddSimpleFor(m => m.OnDay).IsRequired(false);
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
         items.AddSimpleFor(m => m.DisposeTo).IsRequired(false).Label(l => l.Text(sharedResource["Dispose To"]));
 

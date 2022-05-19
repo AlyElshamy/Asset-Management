@@ -24,40 +24,54 @@
                             @(Html.DevExtreme().Form<AssetProject.Models.AssetLeasing>
     ()
     .ID("AddAssetLeasing")
-    .ColCount(1).Width(400).Height(280)
+    .ColCount(1).Width(400).Height(320)
     .Items(items =>
     {
-        items.AddSimpleFor(m => m.StartDate).ValidationRules(r => r
-        .AddRequired()
-        .Message("End Date is required")).Label(l => l.Text(sharedResource["StartDate"]));
+    items.AddSimpleFor(m => m.StartDate).ValidationRules(r => r
+    .AddRequired()
+    .Message("End Date is required")).Label(l => l.Text(sharedResource["StartDate"]));
 
-        items.AddSimpleFor(m => m.CustomerId)
-        .IsRequired(true)
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text").Width(150)
-        ).Label(l => l.Text(sharedResource["Customer"]));
+    items.AddSimpleFor(m => m.CustomerId)
+    .IsRequired(true)
+    .Editor(e => e
+    .Lookup()
+    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
+    .ValueExpr("Value")
+    .DisplayExpr("Text").Width(150)
+    ).Label(l => l.Text(sharedResource["Customer"]));
+    items.AddSimpleFor(m=>m.LeasedCost).ValidationRules(r => r
+    .AddRequired()
+    .Message("Leased Cost is required"));
+    items.AddSimpleFor(m => m.EndDate).ValidationRules(r => r
+    .AddRequired()
+    .Message("End Date is required")).Label(l => l.Text(sharedResource["EndDate"]));
 
-        items.AddSimpleFor(m => m.EndDate).ValidationRules(r => r
-        .AddRequired()
-        .Message("End Date is required")).Label(l => l.Text(sharedResource["EndDate"]));
+    items.AddSimpleFor(m => m.Notes).Editor(e => e.TextArea()).Label(l => l.Text(sharedResource["Notes"]));
+    items.AddEmpty().CssClass("modal-footer");
+    items.AddGroup().ColCount(2)
+                       .Items(groupItems =>
+                       {
+                           groupItems.AddButton()
+                                           .HorizontalAlignment(HorizontalAlignment.Left)
+                                           .ButtonOptions(b => b.Text(@sharedResource["Save"])
+                                               .Type(ButtonType.Default)
+                                               .UseSubmitBehavior(true)
+                                       );
+                           groupItems.AddButton()
+                                           .HorizontalAlignment(HorizontalAlignment.Left)
+                                           .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
-        items.AddSimpleFor(m => m.Notes).Editor(e => e.TextArea()).ValidationRules(r => r
-         .AddRequired()
-         .Message("Notes is required")).Label(l => l.Text(sharedResource["Notes"]));
+                        @*.UseSubmitBehavior(true)*@
+                );
+
+                       });
 
     })
-    
+
     )
 
                             <br />
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
                         </div>
                     </div>
                 </form>

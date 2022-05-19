@@ -50,6 +50,7 @@ namespace AssetProject.Reports
             this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
             this.table2 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
+            this.xrTableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -57,6 +58,8 @@ namespace AssetProject.Reports
             this.Detail1 = new DevExpress.XtraReports.UI.DetailBand();
             this.table3 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow4 = new DevExpress.XtraReports.UI.XRTableRow();
+            this.xrTableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrPictureBox1 = new DevExpress.XtraReports.UI.XRPictureBox();
             this.tableCell22 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell24 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -240,7 +243,7 @@ namespace AssetProject.Reports
             this.xrLabel7.StylePriority.UsePadding = false;
             this.xrLabel7.StylePriority.UseTextAlignment = false;
             this.xrLabel7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel7.TextFormatString = "{0:dd/mm/yyyy}";
+            this.xrLabel7.TextFormatString = "{0:dd-MM-yyyy}";
             // 
             // xrLabel6
             // 
@@ -476,17 +479,30 @@ namespace AssetProject.Reports
             this.table2.Name = "table2";
             this.table2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow3});
-            this.table2.SizeF = new System.Drawing.SizeF(840F, 28F);
+            this.table2.SizeF = new System.Drawing.SizeF(850F, 28F);
             // 
             // tableRow3
             // 
             this.tableRow3.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
+            this.xrTableCell1,
             this.tableCell13,
             this.tableCell14,
             this.tableCell15,
             this.tableCell16});
             this.tableRow3.Name = "tableRow3";
             this.tableRow3.Weight = 1D;
+            // 
+            // xrTableCell1
+            // 
+            this.xrTableCell1.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell1.Multiline = true;
+            this.xrTableCell1.Name = "xrTableCell1";
+            this.xrTableCell1.StyleName = "DetailCaption2";
+            this.xrTableCell1.StylePriority.UseBorders = false;
+            this.xrTableCell1.StylePriority.UseTextAlignment = false;
+            this.xrTableCell1.Text = "Photo";
+            this.xrTableCell1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.xrTableCell1.Weight = 0.23284307468850329D;
             // 
             // tableCell13
             // 
@@ -530,7 +546,7 @@ namespace AssetProject.Reports
             // 
             this.Detail1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.table3});
-            this.Detail1.HeightF = 25F;
+            this.Detail1.HeightF = 36.66667F;
             this.Detail1.Name = "Detail1";
             // 
             // table3
@@ -540,17 +556,41 @@ namespace AssetProject.Reports
             this.table3.OddStyleName = "DetailData3_Odd";
             this.table3.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow4});
-            this.table3.SizeF = new System.Drawing.SizeF(840F, 25F);
+            this.table3.SizeF = new System.Drawing.SizeF(850F, 36.66667F);
             // 
             // tableRow4
             // 
             this.tableRow4.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
+            this.xrTableCell2,
             this.tableCell22,
             this.tableCell23,
             this.tableCell24,
             this.tableCell25});
             this.tableRow4.Name = "tableRow4";
             this.tableRow4.Weight = 11.5D;
+            // 
+            // xrTableCell2
+            // 
+            this.xrTableCell2.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.xrTableCell2.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrPictureBox1});
+            this.xrTableCell2.Multiline = true;
+            this.xrTableCell2.Name = "xrTableCell2";
+            this.xrTableCell2.StyleName = "DetailData2";
+            this.xrTableCell2.StylePriority.UseBorders = false;
+            this.xrTableCell2.StylePriority.UseTextAlignment = false;
+            this.xrTableCell2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.xrTableCell2.Weight = 0.2328430704496911D;
+            // 
+            // xrPictureBox1
+            // 
+            this.xrPictureBox1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "ImageUrl", "\'https://localhost:44311/\'+[Asset].[Photo]")});
+            this.xrPictureBox1.ImageAlignment = DevExpress.XtraPrinting.ImageAlignment.MiddleCenter;
+            this.xrPictureBox1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.xrPictureBox1.Name = "xrPictureBox1";
+            this.xrPictureBox1.SizeF = new System.Drawing.SizeF(162.0835F, 36.66667F);
+            this.xrPictureBox1.Sizing = DevExpress.XtraPrinting.ImageSizeMode.Squeeze;
             // 
             // tableCell22
             // 
@@ -869,7 +909,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TransactionDate]")});
             this.tableCell4.Multiline = true;
             this.tableCell4.Name = "tableCell4";
-            this.tableCell4.TextFormatString = "{0:dd/mm/yyyy}";
+            this.tableCell4.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell4.Weight = 1.1125145374308745D;
             // 
             // xrLabel17
@@ -901,12 +941,12 @@ namespace AssetProject.Reports
             this.pageInfo1,
             this.xrLabel13,
             this.xrLine1});
-            this.PageFooter.HeightF = 68.25027F;
+            this.PageFooter.HeightF = 130.7503F;
             this.PageFooter.Name = "PageFooter";
             // 
             // pageInfo2
             // 
-            this.pageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(533.3333F, 30.58344F);
+            this.pageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(537.3333F, 30.58344F);
             this.pageInfo2.Name = "pageInfo2";
             this.pageInfo2.SizeF = new System.Drawing.SizeF(312.6667F, 23F);
             this.pageInfo2.StyleName = "PageInfo";
@@ -1044,5 +1084,8 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRPageInfo pageInfo1;
         private DevExpress.XtraReports.UI.XRLabel xrLabel13;
         private DevExpress.XtraReports.UI.XRLine xrLine1;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell1;
+        private DevExpress.XtraReports.UI.XRTableCell xrTableCell2;
+        private DevExpress.XtraReports.UI.XRPictureBox xrPictureBox1;
     }
 }

@@ -14,5 +14,6 @@ namespace AssetProject.ReportModels
         public string AssetSerialNo { set; get; }
         public int ActionLogId { get; set; }
         public string ActionLogTitle { get; set; }
+        public string photo { get; set; }
     }
 }

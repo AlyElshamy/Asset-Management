@@ -34,8 +34,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptTransactionsHistory(tenant);
             return Page();
         }
@@ -52,7 +50,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 AssetCost=a.Asset.AssetCost,
                 AssetDescription=a.Asset.AssetDescription,
                 AssetSerialNo=a.Asset.AssetSerialNo,
-                AssetTagId=a.Asset.AssetTagId
+                AssetTagId=a.Asset.AssetTagId,
+                photo=a.Asset.Photo
             }).ToList();
 
             if (filterModel.AssetTagId != null)
@@ -75,8 +74,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptTransactionsHistory(tenant);
             Report.DataSource = ds;
             return Page();

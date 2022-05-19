@@ -16,5 +16,6 @@ namespace AssetProject.ReportModels
         public string SoldTo { get; set; }
         public double SaleAmount { get; set; }
         public string SellNotes { get; set; }
+        public string photo { get; set; }
     }
 }

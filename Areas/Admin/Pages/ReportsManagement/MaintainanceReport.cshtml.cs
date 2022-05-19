@@ -37,8 +37,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
+           
             Report = new rptMaintainance(tenant);
             return Page();
         }
@@ -69,11 +68,18 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.TechnicianId == filterModel.TechnicianId).ToList();
             }
+            if (filterModel.FromDate != null && filterModel.ToDate != null)
+            {
+                ds = ds.Where(i => i.AssetMaintainanceDueDate <= filterModel.ToDate && i.AssetMaintainanceDueDate >= filterModel.FromDate).ToList();
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.TechnicianId == null&& filterModel.AssetTagId == null)
+            {
+                ds = null;
+            }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
+           
             Report = new rptMaintainance(tenant);
             Report.DataSource = ds;
             return Page();

@@ -62,7 +62,7 @@
                                 <img src="<%- '/' + value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
-                    columns.AddFor(m => m.AssetTagId).Fixed(true).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["AssetTagId"]); ;
+                    columns.AddFor(m => m.AssetTagId).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["AssetTagId"]); ;
                         //columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
                         columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
@@ -120,6 +120,7 @@
         success: function (response) {
             document.getElementById("img").src ="/"+response.Photo
             document.getElementById("AssetTagId").innerHTML = response.AssetTagId
+            document.getElementById("assettagid").innerHTML = response.AssetTagId
             document.getElementById("AssetSerial").innerHTML = response.AssetSerialNo
             document.getElementById("AssetDescription").innerHTML = response.AssetDescription
             document.getElementById("AssetCost").innerHTML = response.AssetCost
@@ -163,7 +164,7 @@
         success: function (response) {
 
               // $('#frmEdit').dxForm('instance').option('formData',response);
-            document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
+            document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetTagId
             document.getElementById("AtagId").value = response.AssetTagId
             document.getElementById("AssetId").value = response.AssetId
             document.getElementById("AssetphotoId").value = response.Photo
@@ -174,7 +175,13 @@
             $("#AItem").dxLookup("instance").option("value", response.ItemId);
             $("#AStore").dxLookup("instance").option("value", response.StoreId);
             $("#Avendor").dxLookup("instance").option("value", response.VendorId);
-            document.getElementById("ADescription").value = response.AssetDescription            document.getElementById("ADepreciable").value = response.DepreciableCost            document.getElementById("ASalvageValue").value = response.SalvageValue            document.getElementById("ALife").value = response.AssetLife            document.getElementById("AdateAcquired").value = response.DateAcquired            $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);            const form = document.getElementById('depreciable')
+            document.getElementById("ADescription").value = response.AssetDescription
+            document.getElementById("ADepreciable").value = response.DepreciableCost
+            document.getElementById("ASalvageValue").value = response.SalvageValue
+            document.getElementById("ALife").value = response.AssetLife
+            document.getElementById("AdateAcquired").value = response.DateAcquired
+            $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);
+            const form = document.getElementById('depreciable')
             var btn1 = document.getElementById('ch1');
             var btn2 = document.getElementById('ch2');
 

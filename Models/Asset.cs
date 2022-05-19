@@ -46,6 +46,12 @@ namespace AssetProject.Models
         public ICollection<AssetsInsurance> AssetsInsurances { get; set; }
         public ICollection<AssetDocument> documents { get; set; }
         public ICollection<AssetMovementDetails> AssetMovementDetails{ get; set; }
+        public ICollection<AssetLeasingDetails> AssetLeasingDetails{ get; set; }
+        public ICollection<AssetLostDetails> AssetLostDetails{ get; set; }
+        public ICollection<AssetDisposeDetails> AssetDisposeDetails{ get; set; }
+        public ICollection<AssetRepairDetails> AssetRepairDetails{ get; set; }
+        public ICollection<AssetSellDetails> AssetSellDetails{ get; set; }
+        public ICollection<AssetBrokenDetails> AssetBrokenDetails{ get; set; }
         public AssetWarranty Warranty { get; set; }
         
 

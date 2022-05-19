@@ -72,11 +72,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
                 if (!instance.DepreciableAsset)
                 {
-                    instance.DepreciableCost = 0;
-                    instance.DateAcquired = null;
-                    instance.DepreciationMethodId = null;
-                    instance.SalvageValue = 0;
-                    instance.AssetLife = 0;
+                    Asset.DepreciableCost = null;
+                    Asset.DateAcquired = null;
+                    Asset.DepreciationMethodId = null;
+                    Asset.SalvageValue = null;
+                    Asset.AssetLife = null;
                 }
                 var UpdatedAsset = _context.Assets.Attach(instance);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

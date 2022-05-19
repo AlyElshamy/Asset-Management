@@ -251,7 +251,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetMaintainanceDueDate]")});
             this.tableCell19.Name = "tableCell19";
             this.tableCell19.StyleName = "DetailData1";
-            this.tableCell19.TextFormatString = "{0:dd/mm/yyyy}";
+            this.tableCell19.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell19.Weight = 0.0842925360023965D;
             // 
             // tableCell20
@@ -268,6 +268,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetMaintainanceDateCompleted]")});
             this.tableCell21.Name = "tableCell21";
             this.tableCell21.StyleName = "DetailData1";
+            this.tableCell21.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell21.Weight = 0.12425974469836788D;
             // 
             // tableCell22

@@ -32,7 +32,7 @@
 
         items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m=>m.Text("Show All"));
            items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(m=>m.Text("From Date"));
-        items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(m=>m.Text("To Date"));
+           items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(m=>m.Text("To Date"));
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(m=>m.Text("AssetTagID"));
         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text("Location"))
         .Editor(e => e

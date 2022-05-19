@@ -37,8 +37,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptAssetLost(tenant);
             return Page();
         }
@@ -52,7 +50,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 AssetSerialNo = i.Asset.AssetSerialNo,
                 AssetTagId = i.Asset.AssetTagId,
                 DateLost=i.AssetLost.DateLost,
-                LostNotes=i.AssetLost.Notes
+                LostNotes=i.AssetLost.Notes,
+                photo=i.Asset.Photo
             }).ToList();
 
             if (filterModel.AssetTagId != null)
@@ -64,10 +63,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.DateLost <= filterModel.ToDate && i.DateLost >= filterModel.FromDate).ToList();
             }
-            if (filterModel.OnDay != null)
-            {
-                ds = ds.Where(i => i.DateLost == filterModel.OnDay).ToList();
-            }
+            
             if (filterModel.OnDay == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.AssetTagId == null)
             {
                 ds = null;
@@ -76,8 +72,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptAssetLost(tenant);
             Report.DataSource = ds;
             return Page();

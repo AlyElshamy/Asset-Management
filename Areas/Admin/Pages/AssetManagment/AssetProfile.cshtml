@@ -1,7 +1,7 @@
 ﻿@page
 @model AssetProject.Areas.Admin.Pages.AssetManagment.AssetProfileModel
 @{
-  
+    ViewData["AssetId"] = Model.Asset.AssetId;
 }
 
 <div class="slim-mainpanel">
@@ -209,11 +209,8 @@
     </div><!-- container -->
 </div>
 
-<partial name="_AssetEditPopup" model="@Model.Asset" />
-   @{ 
-      ViewData["AssetId"] = Model.Asset.AssetId;
+<partial name="_AssetEditPopup" model="@Model.asset" />
      <partial name="_AssetCHeckOut" model=@Model.AssetMovementModel view-data=" ViewData" />
-  }
  <partial name="_AssetRepair" model=@Model.AssetrepairModel />
  <partial name="_AddAssetLostPopup" model=Model.Asset.AssetId />
  <partial name="_DisposeAssetPopup" model=Model.Asset.AssetId />
@@ -232,11 +229,39 @@
         contentType: "application/json",
         dataType: "json",
         success: function (response) {
-               $('#frmEdit').dxForm('instance').option('formData',response);
-                document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetDescription
-                console.log(document.getElementById("EditAssetDescriptiontxt"))
-               $('#AssetEditPoup').modal('show');
-                
+            document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetTagId
+            document.getElementById("AtagId").value = response.AssetTagId
+            document.getElementById("AssetId").value = response.AssetId
+            document.getElementById("AssetphotoId").value = response.Photo
+            document.getElementById("AssetStatusId").value = response.AssetStatusId
+            document.getElementById("Acost").value = response.AssetCost
+            document.getElementById("AserialNum").value = response.AssetSerialNo
+            document.getElementById("ApurshaseDate").value = response.AssetPurchaseDate
+            $("#AItem").dxLookup("instance").option("value", response.ItemId);
+            $("#AStore").dxLookup("instance").option("value", response.StoreId);
+            $("#Avendor").dxLookup("instance").option("value", response.VendorId);
+            document.getElementById("ADescription").value = response.AssetDescription
+            document.getElementById("ADepreciable").value = response.DepreciableCost
+            document.getElementById("ASalvageValue").value = response.SalvageValue
+            document.getElementById("ALife").value = response.AssetLife
+            document.getElementById("AdateAcquired").value = response.DateAcquired
+            $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);
+            const form = document.getElementById('depreciable')
+            var btn1 = document.getElementById('ch1');
+            var btn2 = document.getElementById('ch2');
+
+            if (response.DepreciableAsset) {
+                btn1.checked = true;
+                form.style.display = 'flex';
+            } else {
+                btn1.checked = false;
+                btn2.checked = true;
+                form.style.display = 'none';
+
+            }
+            $('#AssetEditPoup').modal('show');
+            console.log("Elemnt" + document.getElementsByClassName("AssetClass")[0].nodeValue)
+
         },
         failure: function (response) {
             alert(response);

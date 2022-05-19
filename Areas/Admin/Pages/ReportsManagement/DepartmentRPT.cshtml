@@ -28,8 +28,10 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
+        items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m => m.Text(sharedResource["Show All"]));
+
         items.AddSimpleFor(m => m.DepartmentTitle).IsRequired(false).Label(l=>l.Text("Department"));
-   
+
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
        .ButtonOptions(b => b.Text(sharedResource["Send"])

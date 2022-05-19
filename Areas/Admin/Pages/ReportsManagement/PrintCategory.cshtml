@@ -27,6 +27,7 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
+        items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m => m.Text(sharedResource["Show All"]));
         items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l=>l.Text(sharedResource["Category"]))
         .Editor(e => e
         .Lookup()

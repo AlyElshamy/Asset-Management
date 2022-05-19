@@ -35,34 +35,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         static List<BrockenModel> ShowAllList = new List<BrockenModel>();
         public async Task<IActionResult> OnGet()
         {
-            //ShowAllList = _context.AssetBrokenDetails.Select(i => new BrockenModel
-            //{
-            //    AssetCost = i.Asset.AssetCost,
-            //    AssetDescription = i.Asset.AssetDescription,
-            //    AssetSerialNo = i.Asset.AssetSerialNo,
-            //    AssetTagId = i.Asset.AssetTagId,
-            //    AssetId=i.AssetId,
-            //    Photo=i.Asset.Photo,
-            //    CategoryTL = i.Asset.Item.Category.CategoryTIAR,
-            //    LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
-            //    DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-            //    LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-            //    DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-            //    CategoryId = i.Asset.Item.CategoryId,
-            //    ItemTL = i.Asset.Item.ItemTitle,
-            //    StoreTL = i.Asset.Store.StoreTitle,
-            //    AssetBrokenId =i.AssetBrokenId,
-            //    DateBroken=i.AssetBroken.DateBroken,
-            //    Notes= i.AssetBroken.Notes,
-
-
-            //}).ToList();
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
             Report = new rptAssetBrocken(tenant);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             return Page();
 
         }
@@ -93,7 +69,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             }).ToList();
             if (filterModel.ShowAll != false)
             {
-                ds = ShowAllList.ToList();
+                ds = ds.ToList();
             }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
@@ -103,7 +79,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.AssetTagId.Contains(filterModel.AssetTagId)).ToList();
             }
-            
             if (filterModel.LocationId != null)
             {
                 ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
@@ -116,8 +91,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
             }
-
-
             if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null  && filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.ShowAll == false)
             {
                 ds = new List<BrockenModel>();
@@ -125,10 +98,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-
             Report = new rptAssetBrocken(tenant);
             Report.DataSource = ds;
-
             return Page();
         }
     }

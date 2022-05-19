@@ -35,8 +35,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptAddAsset(tenant);
             return Page();
         }
@@ -50,7 +48,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              AssetStatusTL=a.AssetStatus.AssetStatusTitle,
              ItemTL=a.Item.ItemTitle,
              VendorTL=a.Vendor.VendorTitle,
-             StoreTL=a.Store.StoreTitle,
+             StoreTL= _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Store.StoreTitle,
              StoreId=a.StoreId,
              ItemId=a.ItemId,
              VendorId=a.VendorId,
@@ -58,7 +56,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              DepartmentTL = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
              LocationId = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
              DepartmentId = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-             CategoryId = a.Item.CategoryId
+             CategoryId = a.Item.CategoryId,
+             AssetCost=a.AssetCost,
+             Photo=a.Photo
             }).ToList();
             
 
@@ -98,8 +98,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptAddAsset(tenant);
             Report.DataSource = ds;
             return Page();

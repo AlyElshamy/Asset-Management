@@ -37,17 +37,32 @@
 
 .Items(items =>
 {
-    items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e=>e.TextArea()).Label(l=>l.Text(sharedResource["Notes"]));
+    items.AddSimpleFor(m => m.Notes).Editor(e=>e.TextArea()).Label(l=>l.Text(sharedResource["Notes"]));
+    items.AddEmpty().CssClass("modal-footer");
+items.AddGroup().ColCount(2)
+                   .Items(groupItems =>
+                   {
+                   groupItems.AddButton()
+                                       .HorizontalAlignment(HorizontalAlignment.Left)
+                                       .ButtonOptions(b => b.Text(@sharedResource["Save"])
+                                           .Type(ButtonType.Default)
+                                           .UseSubmitBehavior(true)
+                                   );
+                   groupItems.AddButton()
+                                       .HorizontalAlignment(HorizontalAlignment.Left)
+                                       .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
+
+                        @*.UseSubmitBehavior(true)*@
+                );
+
+                       });
 })
     )
 
                             <br />
 
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
-                        </div>
+                        
                     </div>
                 </form>
             </div><!-- modal-dialog -->

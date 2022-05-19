@@ -33,27 +33,27 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptDepartmentReport(tenant);
             return Page();
         }
         public async Task<IActionResult> OnPost()
         {
             List<Department> ds = _context.Departments.ToList();
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.DepartmentTitle != null)
             {
                 ds = ds.Where(d => d.DepartmentTitle.Contains(filterModel.DepartmentTitle)).ToList();
             }
-            else
+            if(filterModel.ShowAll == false&&filterModel.DepartmentTitle == null)
             {
                 ds = new List<Department>();
             }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptDepartmentReport(tenant);
             Report.DataSource = ds;
             return Page();

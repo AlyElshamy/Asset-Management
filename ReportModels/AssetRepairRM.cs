@@ -18,5 +18,7 @@ namespace AssetProject.ReportModels
         public string AssetTagId { set; get; }
         public double AssetCost { set; get; }
         public string AssetSerialNo { set; get; }
+        public string photo { set; get; }
+
     }
 }

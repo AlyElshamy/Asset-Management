@@ -49,7 +49,7 @@ namespace AssetProject.Data
             modelBuilder.Entity<AssetStatus>().HasData(new AssetStatus { AssetStatusId = 6, AssetStatusTitle = "Leased" });
             modelBuilder.Entity<AssetStatus>().HasData(new AssetStatus { AssetStatusId = 7, AssetStatusTitle = "Sold" });
             modelBuilder.Entity<AssetStatus>().HasData(new AssetStatus { AssetStatusId = 8, AssetStatusTitle = "Broken" });
-            modelBuilder.Entity<AssetStatus>().HasData(new AssetStatus { AssetStatusId = 9, AssetStatusTitle = "InMaimtainance" });
+            modelBuilder.Entity<AssetStatus>().HasData(new AssetStatus { AssetStatusId = 9, AssetStatusTitle = "InMaintainance" });
 
             //Months
             modelBuilder.Entity<Month>().HasData(new Month { MonthId = 1,MonthTitle = "January" });

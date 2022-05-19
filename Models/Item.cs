@@ -6,7 +6,7 @@ namespace AssetProject.Models
     public class Item
     {
         public int ItemId { get; set; }
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Is Required"), MaxLength(50)]
         public string ItemTitle { get; set; }
         public int? CategoryId { get; set; }
         public virtual Category Category { get; set; }

@@ -46,6 +46,7 @@ namespace AssetProject.Reports
             this.table2 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrPictureBox6 = new DevExpress.XtraReports.UI.XRPictureBox();
             this.tableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -107,7 +108,7 @@ namespace AssetProject.Reports
             this.table1.Name = "table1";
             this.table1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow1});
-            this.table1.SizeF = new System.Drawing.SizeF(842.9999F, 28F);
+            this.table1.SizeF = new System.Drawing.SizeF(850.0001F, 28F);
             // 
             // tableRow1
             // 
@@ -128,7 +129,7 @@ namespace AssetProject.Reports
             this.tableCell1.StyleName = "DetailCaption1";
             this.tableCell1.StylePriority.UseBorders = false;
             this.tableCell1.StylePriority.UseTextAlignment = false;
-            this.tableCell1.Text = "Asset Description";
+            this.tableCell1.Text = "Photo";
             this.tableCell1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell1.Weight = 0.20930429311899038D;
             // 
@@ -164,7 +165,7 @@ namespace AssetProject.Reports
             this.tableCell5.Name = "tableCell5";
             this.tableCell5.StyleName = "DetailCaption1";
             this.tableCell5.StylePriority.UseTextAlignment = false;
-            this.tableCell5.Text = "Lost Date Lost";
+            this.tableCell5.Text = "Lost Date";
             this.tableCell5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell5.Weight = 0.1758033165564904D;
             // 
@@ -175,13 +176,13 @@ namespace AssetProject.Reports
             this.tableCell6.StylePriority.UseTextAlignment = false;
             this.tableCell6.Text = "Lost Notes";
             this.tableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell6.Weight = 0.13756596491887019D;
+            this.tableCell6.Weight = 0.14586986115843395D;
             // 
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.table2});
-            this.Detail.HeightF = 25F;
+            this.Detail.HeightF = 39.16667F;
             this.Detail.Name = "Detail";
             // 
             // table2
@@ -191,7 +192,7 @@ namespace AssetProject.Reports
             this.table2.OddStyleName = "DetailData3_Odd";
             this.table2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow2});
-            this.table2.SizeF = new System.Drawing.SizeF(842.9999F, 25F);
+            this.table2.SizeF = new System.Drawing.SizeF(850.0001F, 39.16667F);
             // 
             // tableRow2
             // 
@@ -208,14 +209,23 @@ namespace AssetProject.Reports
             // tableCell7
             // 
             this.tableCell7.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.tableCell7.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetDescription]")});
+            this.tableCell7.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrPictureBox6});
             this.tableCell7.Name = "tableCell7";
             this.tableCell7.StyleName = "DetailData1";
             this.tableCell7.StylePriority.UseBorders = false;
             this.tableCell7.StylePriority.UseTextAlignment = false;
             this.tableCell7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell7.Weight = 0.20930426964393029D;
+            // 
+            // xrPictureBox6
+            // 
+            this.xrPictureBox6.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "ImageUrl", "\'https://localhost:44311/\'+[photo]")});
+            this.xrPictureBox6.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.xrPictureBox6.Name = "xrPictureBox6";
+            this.xrPictureBox6.SizeF = new System.Drawing.SizeF(176.4435F, 39.16667F);
+            this.xrPictureBox6.Sizing = DevExpress.XtraPrinting.ImageSizeMode.ZoomImage;
             // 
             // tableCell8
             // 
@@ -250,12 +260,12 @@ namespace AssetProject.Reports
             // tableCell11
             // 
             this.tableCell11.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[LostDateLost]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[DateLost]")});
             this.tableCell11.Name = "tableCell11";
             this.tableCell11.StyleName = "DetailData1";
             this.tableCell11.StylePriority.UseTextAlignment = false;
             this.tableCell11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell11.TextFormatString = "{0:dd/mm/yyyy}";
+            this.tableCell11.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell11.Weight = 0.17580330481896034D;
             // 
             // tableCell12
@@ -266,7 +276,7 @@ namespace AssetProject.Reports
             this.tableCell12.StyleName = "DetailData1";
             this.tableCell12.StylePriority.UseTextAlignment = false;
             this.tableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell12.Weight = 0.1375660118689904D;
+            this.tableCell12.Weight = 0.1458699079136197D;
             // 
             // objectDataSource1
             // 
@@ -342,7 +352,7 @@ namespace AssetProject.Reports
             this.xrLabel17});
             this.panel1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.panel1.Name = "panel1";
-            this.panel1.SizeF = new System.Drawing.SizeF(842.9998F, 209.7917F);
+            this.panel1.SizeF = new System.Drawing.SizeF(850F, 209.7917F);
             this.panel1.StylePriority.UseBackColor = false;
             // 
             // pictureBox1
@@ -465,14 +475,14 @@ namespace AssetProject.Reports
             this.xrLabel13,
             this.pageInfo1,
             this.pageInfo2});
-            this.PageFooter.HeightF = 62.20825F;
+            this.PageFooter.HeightF = 119.7083F;
             this.PageFooter.Name = "PageFooter";
             // 
             // xrLine1
             // 
             this.xrLine1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 10F);
             this.xrLine1.Name = "xrLine1";
-            this.xrLine1.SizeF = new System.Drawing.SizeF(842.9998F, 5.833337F);
+            this.xrLine1.SizeF = new System.Drawing.SizeF(850F, 5.833337F);
             // 
             // xrLabel13
             // 
@@ -497,7 +507,7 @@ namespace AssetProject.Reports
             // 
             // pageInfo2
             // 
-            this.pageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(533.3333F, 30.58344F);
+            this.pageInfo2.LocationFloat = new DevExpress.Utils.PointFloat(540.3336F, 30.58344F);
             this.pageInfo2.Name = "pageInfo2";
             this.pageInfo2.SizeF = new System.Drawing.SizeF(309.6665F, 23.00001F);
             this.pageInfo2.StyleName = "PageInfo";
@@ -582,5 +592,6 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRLabel xrLabel13;
         private DevExpress.XtraReports.UI.XRPageInfo pageInfo1;
         private DevExpress.XtraReports.UI.XRPageInfo pageInfo2;
+        private DevExpress.XtraReports.UI.XRPictureBox xrPictureBox6;
     }
 }

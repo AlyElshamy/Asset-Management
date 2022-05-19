@@ -15,5 +15,6 @@ namespace AssetProject.ReportModels
         public DateTime DateDisposed { get; set; }
         public string DisposeTo { get; set; }
         public string DisposeNotes { get; set; }
+        public string photo { get; set; }
     }
 }

@@ -30,7 +30,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["AssetCost"]: <span class="tx-danger">*</span></label>
-                            <input asp-for="@Model.AssetCost" id="Acost" class="form-control" placeholder="Enter Asset Cost" value="@(Model.AssetCost > 0 ? Model.AssetCost :string.Empty)">
+                            <input asp-for="@Model.AssetCost" id="Acost" class="form-control" placeholder="Enter Asset Cost">
                             <span asp-validation-for="@Model.AssetCost" class="text-danger"></span>
                         </div>
                     </div><!-- col-4 -->
@@ -44,7 +44,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["AssetPurchaseDate"]: <span class="tx-danger">*</span></label>
-                            <input asp-for="@Model.AssetPurchaseDate" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date" value="@(Model.AssetPurchaseDate.Date.Day >= 1 ? Model.AssetPurchaseDate :string.Empty)">
+                            <input asp-for="@Model.AssetPurchaseDate" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date">
                             <span asp-validation-for="@Model.AssetPurchaseDate" class="text-danger"></span>
                         </div>
                     </div><!-- col-4 -->
@@ -140,7 +140,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["DepreciableCost"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.DepreciableCost" id="ADepreciable" class="form-control required" placeholder="Enter Depreciable Cost " value="@(Model.DepreciableCost > 0 ? Model.DepreciableCost :string.Empty)">
+                                <input asp-for="@Model.DepreciableCost" id="ADepreciable" class="form-control required" placeholder="Enter Depreciable Cost ">
                                 <span asp-validation-for="@Model.DepreciableCost" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -148,21 +148,21 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["SalvageValue"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.SalvageValue" id="ASalvageValue" class="form-control required" placeholder="Enter salvage Value " value="@(Model.SalvageValue > 0 ? Model.SalvageValue :string.Empty)">
+                                <input asp-for="@Model.SalvageValue" id="ASalvageValue" class="form-control required" placeholder="Enter salvage Value " >
                                 <span asp-validation-for="@Model.SalvageValue" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Asset Life (Months): <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetLife" id="ALife" class="form-control required" placeholder="Enter Asset Life " value="@(Model.AssetLife > 0 ? Model.AssetLife :string.Empty)">
+                                <input asp-for="@Model.AssetLife" id="ALife" class="form-control required" placeholder="Enter Asset Life " >
                                 <span asp-validation-for="@Model.AssetLife" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Date Acquired: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.DateAcquired" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired" value="string.Empty">
+                                <input asp-for="@Model.DateAcquired" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired">
                                 <span asp-validation-for="@Model.DateAcquired" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->

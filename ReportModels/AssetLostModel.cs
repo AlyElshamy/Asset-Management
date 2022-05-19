@@ -14,5 +14,6 @@ namespace AssetProject.ReportModels
         public string AssetSerialNo { set; get; }
         public DateTime DateLost { get; set; }
         public string LostNotes { get; set; }
+        public string photo { get; set; }
     }
 }

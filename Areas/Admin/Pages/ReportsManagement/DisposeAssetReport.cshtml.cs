@@ -38,8 +38,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptDisposeAsset(tenant);
             return Page();
         }
@@ -54,6 +52,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                     DateDisposed = i.DisposeAsset.DateDisposed,
                     DisposeNotes = i.DisposeAsset.Notes,
                     DisposeTo = i.DisposeAsset.DisposeTo
+                    ,photo=i.Asset.Photo
                 }).ToList();
 
                 if (filterModel.AssetTagId != null)
@@ -68,11 +67,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 {
                     ds = ds.Where(i => i.DateDisposed <= filterModel.ToDate && i.DateDisposed >= filterModel.FromDate).ToList();
                 }
-                if (filterModel.OnDay != null)
-                {
-                    ds = ds.Where(i => i.DateDisposed == filterModel.OnDay).ToList();
-                }
-                if (filterModel.OnDay == null&& filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.DisposeTo == null&& filterModel.AssetTagId == null)
+               
+                if (filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.DisposeTo == null&& filterModel.AssetTagId == null)
                 {
                     ds = null;
                 }
@@ -80,8 +76,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rptDisposeAsset(tenant);
             Report.DataSource = ds;
             return Page();

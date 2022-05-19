@@ -54,29 +54,44 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center).CssClass("btn btn
                                     <br/>
                                     <div class="modal-body pd-25">
                                         @(Html.DevExtreme().Form<AssetProject.Models.AssetsInsurance>()
-                .ID("addassetInsurance")
-                .ColCount(2)
-                .Width(300)
-                .Height(280)
-                .Items(items =>
-                {
-                    items.AddSimpleFor(m => m.InsuranceId).Label(l=>l.Text(sharedResource["Insurance"]))
+.ID("addassetInsurance")
+.ColCount(1)
+.Width(400)
+.Height(280)
+.Items(items =>
+{
+items.AddSimpleFor(m => m.InsuranceId).Label(l => l.Text(sharedResource["Insurance"]))
                     .IsRequired(true)
                     .Editor(e => e
                     .Lookup()
                     .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("InsurancesLookup").Key("Value"))
                     .ValueExpr("Value")
-                    .DisplayExpr("Text").Width(150)
+                    .DisplayExpr("Text").Width(250)
                     );
-                })
+items.AddEmpty().CssClass("modal-footer");
+items.AddGroup().ColCount(2)
+                   .Items(groupItems =>
+                   {
+                   groupItems.AddButton()
+                                       .HorizontalAlignment(HorizontalAlignment.Left)
+                                       .ButtonOptions(b => b.Text(@sharedResource["Save"])
+                                           .Type(ButtonType.Default)
+                                           .UseSubmitBehavior(true)
+                                   );
+                   groupItems.AddButton()
+                                       .HorizontalAlignment(HorizontalAlignment.Left)
+                                       .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
+
+                        @*.UseSubmitBehavior(true)*@
+                );
+
+                       });
+})
                 )
                                         <br />
 
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
-                                    </div>
+                                    
                                 </div>
                             </form>
                         </div><!-- modal-dialog -->

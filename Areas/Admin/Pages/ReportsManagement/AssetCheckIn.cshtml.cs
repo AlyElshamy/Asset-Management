@@ -38,8 +38,6 @@ namespace AssetProject.Areas.Admin.Pages.Reports
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rtpAssetCheckIn(tenant);
             return Page();
         }
@@ -49,27 +47,58 @@ namespace AssetProject.Areas.Admin.Pages.Reports
             var checkedinAssets = _context.Assets.Where(e => e.AssetStatusId == 1).Include(a=>a.AssetMovementDetails).ThenInclude(a=>a.AssetMovement);
             foreach(var asset in checkedinAssets)
             {
-                var lastAssetMovement = asset.AssetMovementDetails.OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
-                ds.Add(new AssetCheckOutList()
-                {
-                    TransactionDate = lastAssetMovement.AssetMovement.TransactionDate,
-                    EmployeeFullN = _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID)==null?null: _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID).FullName,
-                    LocationTl = _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId).LocationTitle,
-                    DepartmentTl =_context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId).DepartmentTitle,
-                    Photo = lastAssetMovement.Asset.Photo,
-                    StoreTl = _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId).StoreTitle,
-                    ActionTypeTl = _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId).ActionTypeTitle,
-                    AssetPurchaseDate = lastAssetMovement.Asset.AssetPurchaseDate,
-                    AssetSerialNo = lastAssetMovement.Asset.AssetSerialNo,
-                    AssetTagId = lastAssetMovement.Asset.AssetTagId,
-                    AssetMovementId = lastAssetMovement.AssetMovementId,
-                    EmployeeId = lastAssetMovement.AssetMovement.EmpolyeeID,
-                    LocationId = lastAssetMovement.AssetMovement.LocationId,
-                    StoreId=lastAssetMovement.AssetMovement.StoreId,
-                    DepartmentId=lastAssetMovement.AssetMovement.DepartmentId
-                    
-                });
 
+                var lastAssetMovement = asset.AssetMovementDetails.OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+
+                if (lastAssetMovement != null)
+                {
+                    ds.Add(new AssetCheckOutList()
+                    {
+                        TransactionDate = lastAssetMovement.AssetMovement.TransactionDate,
+                        EmployeeFullN = _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID) == null ? null : _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID).FullName,
+                        LocationTl = _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId).LocationTitle,
+                        DepartmentTl = _context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId).DepartmentTitle,
+                        Photo = lastAssetMovement.Asset.Photo,
+                        StoreTl = _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId).StoreTitle,
+                        ActionTypeTl = _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId).ActionTypeTitle,
+                        AssetPurchaseDate = lastAssetMovement.Asset.AssetPurchaseDate,
+                        AssetSerialNo = lastAssetMovement.Asset.AssetSerialNo,
+                        AssetTagId = lastAssetMovement.Asset.AssetTagId,
+                        AssetMovementId = lastAssetMovement.AssetMovementId,
+                        EmployeeId = lastAssetMovement.AssetMovement.EmpolyeeID,
+                        LocationId = lastAssetMovement.AssetMovement.LocationId,
+                        StoreId = lastAssetMovement.AssetMovement.StoreId,
+                        DepartmentId = lastAssetMovement.AssetMovement.DepartmentId
+
+                    });
+                }
+                else
+                {
+                    ds.Add(new AssetCheckOutList()
+                    {
+                        TransactionDate =null,
+                        EmployeeFullN = null,
+                        LocationTl = null,
+                        DepartmentTl =null,
+                        Photo = asset.Photo,
+                        StoreTl = _context.Stores.Find(asset.StoreId).StoreTitle,
+                        ActionTypeTl = null,
+                        AssetPurchaseDate = asset.AssetPurchaseDate,
+                        AssetSerialNo = asset.AssetSerialNo,
+                        AssetTagId = asset.AssetTagId,
+                        AssetMovementId = null,
+                        EmployeeId = null,
+                        LocationId = null,
+                        StoreId = asset.StoreId,
+                        DepartmentId = null
+
+                    });
+                }
+
+            }
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
             }
             if (filterModel.StoreId != null)
             {
@@ -83,16 +112,13 @@ namespace AssetProject.Areas.Admin.Pages.Reports
             {
                 ds = ds.Where(i => i.TransactionDate <= filterModel.ToDate && i.TransactionDate >= filterModel.FromDate).ToList();
             }
-      
-            if (filterModel.StoreId == null && filterModel.FromDate == null && filterModel.ToDate == null &&filterModel.AssetTagId == null )
+            if (filterModel.ShowAll == false&&filterModel.StoreId == null && filterModel.FromDate == null && filterModel.ToDate == null &&filterModel.AssetTagId == null )
             {
                 ds = null;
             }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            tenant.Email = user.Email;
-            tenant.Phone = user.PhoneNumber;
             Report = new rtpAssetCheckIn(tenant);
             Report.DataSource = ds;
             return Page();

@@ -63,7 +63,8 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                 .ColCount(2)
 
                     @*.OnContentReady("function(e){   getData(e,data)  }")  *@
-                .Items(items => {
+                .Items(items =>
+                {
                 //items.AddSimpleFor(m => m.AssetDocumentId).Editor(e => e.TextBox().ReadOnly(true));
                 items.AddSimpleFor(m => m.Description).Label(l => l.Text(sharedResource["Description"]));
                 items.AddSimpleFor(m => m.DocumentName).Label(l => l.Text(sharedResource["Document Name"]));
@@ -74,21 +75,37 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                      <div class="form-group">
                             @* <span> Asset Photo</span>*@
                               <div class="custom-file">
-                                  <input type="file" name="file" accept=".docx, .doc, .pdf" class="custom-file-input" onchange="changephotoname()" id="Photo">
+                                  <input type="file" name="file" accept=".docx, .doc, .pdf" class="custom-file-input" onchange="changephotoname()" id="Photo" required>
                                   <label class="custom-file-label" for="File" id="photolabel">@sharedResource["Choose New File"]</label>
                               </div>
                           </div>
                                 </text> );
+                items.AddEmpty().CssClass("modal-footer");
+                items.AddGroup().ColCount(2)
+               .Items(groupItems =>
+               {
+               groupItems.AddButton()
+                .HorizontalAlignment(HorizontalAlignment.Left)
+                .ButtonOptions(b => b.Text(@sharedResource["Save"])
+                    .Type(ButtonType.Default)
+                    .UseSubmitBehavior(true)
+            );
+               groupItems.AddButton()
+                .HorizontalAlignment(HorizontalAlignment.Left)
+                .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
-                })
+                        @*.UseSubmitBehavior(true)*@
+                );
+
+
+                   });
+                }
                 )
+)
                                 <br />
 
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">@sharedResource["Choose New File"]</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Close"]</button>
-                            </div>
+                            
                         </div>
                     </form>
                 </div><!-- modal-dialog -->
@@ -104,7 +121,11 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
 
         }
 
-        function deleteButtonClick(data) {            var grid = $('#gridDocumentContainer').dxDataGrid('instance');            var rowIndex = grid.getRowIndexByKey(data.AssetDocumentId)            grid.deleteRow(rowIndex);        }
+        function deleteButtonClick(data) {
+            var grid = $('#gridDocumentContainer').dxDataGrid('instance');
+            var rowIndex = grid.getRowIndexByKey(data.AssetDocumentId)
+            grid.deleteRow(rowIndex);
+        }
         function DeattachDocumentButtonClick(data) {
 
         $('#DeattacheAssetDocumentPoup').modal('show');
