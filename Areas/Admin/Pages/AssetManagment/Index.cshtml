@@ -54,8 +54,16 @@
                     });
 
                     columns.AddFor(m => m.AssetId).Visible(false).Caption(sharedResource["Asset"]);
+                        columns.AddFor(m => m.Photo).Width(100)
+                    .AllowFiltering(false)
+                    .AllowSorting(false)
+                    .CellTemplate(@<text>
+                            <div>
+                                <img src="<%- '/' + value %>" alt="" width="35" height="35" />
+                            </div>
+                        </text>).Caption(sharedResource["Photo"]);
                     columns.AddFor(m => m.AssetTagId).Fixed(true).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["AssetTagId"]); ;
-                        columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
+                        //columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
                         columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
                         columns.AddFor(m => m.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
@@ -117,11 +125,20 @@
             document.getElementById("AssetCost").innerHTML = response.AssetCost
             document.getElementById("AssetPurchaseDate").innerHTML = response.AssetPurchaseDate
             document.getElementById("AssetItem").innerHTML = response.Item.ItemTitle
+            if (response.DepreciableAsset)
+            {
             document.getElementById("DepreciableCost").innerHTML = response.DepreciableCost
             document.getElementById("SalvageValue").innerHTML = response.SalvageValue
             document.getElementById("AssetLife").innerHTML = response.AssetLife
             document.getElementById("DateAcquired").innerHTML = response.DateAcquired
             document.getElementById("DepreciationMethod").innerHTML = response.DepreciationMethod.DepreciationMethodTitle
+            }
+            else
+
+            {
+              document.getElementById("DepreciationInfo").style.display='none';
+            }
+         
              $('#AssetQuickViewPoup').modal('show');
             
         },
