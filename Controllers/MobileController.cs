@@ -1,4 +1,4 @@
-﻿using AssetProject.Data;
+﻿  using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +64,7 @@ namespace AssetProject.Controllers
                    i.Item.ItemTitle,
                    i.Store.StoreTitle,
                    i.Vendor.VendorTitle,
-                   i.Warranty.Length
+                   Warranty = i.Warranty == null ? 0 : i.Warranty.Length
                 });
                 if (items.Count() == 0)
                     return Ok("No Matches Found");

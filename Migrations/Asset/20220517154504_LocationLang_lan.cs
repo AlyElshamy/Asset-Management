@@ -17,11 +17,10 @@ namespace AssetProject.Migrations.Asset
                 table: "Locations",
                 type: "nvarchar(max)",
                 nullable: true);
-
             migrationBuilder.InsertData(
-                table: "ActionLogs",
-                columns: new[] { "ActionLogId", "ActionLogTitle" },
-                values: new object[] { 20, "Add Asset Wrantty" });
+              table: "ActionLogs",
+              columns: new[] { "ActionLogId", "ActionLogTitle" },
+              values: new object[] { 20, "Add Asset Wrantty" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1117,6 +1117,9 @@
   <data name="Lease Expires" xml:space="preserve">
     <value>انتهاء عقد الإيجار</value>
   </data>
+  <data name="Leased Cost" xml:space="preserve">
+    <value>تكلفه التأجير</value>
+  </data>
   <data name="Leasing" xml:space="preserve">
     <value>تأجير</value>
   </data>

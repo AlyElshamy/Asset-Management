@@ -39,7 +39,7 @@
     .ValueExpr("Value")
     .DisplayExpr("Text").Width(150)
     ).Label(l => l.Text(sharedResource["Customer"]));
-    items.AddSimpleFor(m=>m.LeasedCost).ValidationRules(r => r
+    items.AddSimpleFor(m=>m.LeasedCost).Label(l=>l.Text(sharedResource["Leased Cost"])).ValidationRules(r => r
     .AddRequired()
     .Message("Leased Cost is required"));
     items.AddSimpleFor(m => m.EndDate).ValidationRules(r => r
