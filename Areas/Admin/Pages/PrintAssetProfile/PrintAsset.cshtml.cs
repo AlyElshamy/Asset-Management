@@ -1,13 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
+using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.PrintAssetProfile
 {
@@ -16,22 +20,31 @@ namespace AssetProject.Areas.Admin.Pages.PrintAssetProfile
     {
         private readonly AssetContext _context;
 
-        public PrintAssetModel(AssetContext context)
+        public PrintAssetModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
+
         }
         [BindProperty]
         public int AssetId { get; set; }
         public rptAssetProfileList Report { get; set; }
+        public Tenant tenant { set; get; }
+        UserManager<ApplicationUser> UserManger;
 
 
-        public void OnGet(int AssetId)
+        public async Task<IActionResult> OnGet(int AssetId)
         {
-            Report = new rptAssetProfileList();
-            var ds = _context.Assets.ToList();
+            List<Asset> ds = _context.Assets.Include(a => a.Item).Include(a => a.Store).Include(a=>a.AssetStatus)
+                   .ToList();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            Report = new rptAssetProfileList(tenant);
             Report.DataSource = ds;
             Report.Parameters[0].Value = AssetId;
             Report.RequestParameters = false;
+            return Page();
         }
         
     }
