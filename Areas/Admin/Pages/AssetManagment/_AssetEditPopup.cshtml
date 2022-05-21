@@ -44,7 +44,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["AssetPurchaseDate"]: <span class="tx-danger">*</span></label>
-                            <input asp-for="@Model.AssetPurchaseDate" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date">
+                            <input asp-for="@Model.AssetPurchaseDate" type="date" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date">
                             <span asp-validation-for="@Model.AssetPurchaseDate" class="text-danger"></span>
                         </div>
                     </div><!-- col-4 -->
@@ -162,7 +162,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Date Acquired: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.DateAcquired" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired">
+                                <input asp-for="@Model.DateAcquired" type="date" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired">
                                 <span asp-validation-for="@Model.DateAcquired" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->

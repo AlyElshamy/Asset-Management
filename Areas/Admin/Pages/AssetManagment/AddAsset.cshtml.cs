@@ -47,7 +47,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             }
             if (Asset.DepreciableAsset )
             {
-                if(Asset.DepreciationMethodId==0)
+                if(Asset.DepreciationMethodId==null)
                 {
                     ModelState.AddModelError("", "Please Select Depreciation Method");
                     return Page();
