@@ -36,16 +36,16 @@
         //items.AddSimpleFor(m => m.ToDate).IsRequired(true);
 
 
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("Asset Tag Id"));
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
 
-        items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text("Location"))
+        items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-        items.AddSimpleFor(m => m.warrantyId).IsRequired(false).Label(l => l.Text("Warranty"))
+        items.AddSimpleFor(m => m.warrantyId).IsRequired(false).Label(l => l.Text(sharedResource["Warranty"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetWarrantyLookup").Key("Value"))
@@ -53,7 +53,7 @@
         .DisplayExpr("Text")
         );
 
-        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text("Category"))
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text(sharedResource["Category"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
@@ -61,7 +61,7 @@
         .DisplayExpr("Text")
         );
 
-        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text("Department"))
+        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))

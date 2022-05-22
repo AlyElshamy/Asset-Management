@@ -60,8 +60,8 @@ namespace AssetProject.Controllers
                    i.AssetContracts,
                    i.AssetPhotos,
                    i.AssetStatus.AssetStatusTitle,
-                   i.DepreciationMethod.DepreciationMethodTitle,
-                   i.Item.ItemTitle,
+                    DepreciationMethod = i.DepreciationMethod == null ? null : i.DepreciationMethod.DepreciationMethodTitle,
+                    i.Item.ItemTitle,
                    i.Store.StoreTitle,
                    i.Vendor.VendorTitle,
                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
@@ -90,11 +90,11 @@ namespace AssetProject.Controllers
                     i.AssetContracts,
                     i.AssetPhotos,
                     i.AssetStatus.AssetStatusTitle,
-                    i.DepreciationMethod.DepreciationMethodTitle,
+                    DepreciationMethod = i.DepreciationMethod == null ? null : i.DepreciationMethod.DepreciationMethodTitle,
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
-                    i.Warranty.Length
+                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
                 });
                 if (items.Count() == 0)
                     return Ok("Wrong AssetId");
@@ -120,12 +120,12 @@ namespace AssetProject.Controllers
                     i.AssetContracts,
                     i.AssetPhotos,
                     i.AssetStatus.AssetStatusTitle,
-                    i.DepreciationMethod.DepreciationMethodTitle,
+                    DepreciationMethod = i.DepreciationMethod == null ? null : i.DepreciationMethod.DepreciationMethodTitle,
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
-                    i.Warranty.Length
-                    
+                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
+
                 });
                 if (items.Count() == 0)
                     return Ok("Wrong Serial Number");
@@ -151,11 +151,11 @@ namespace AssetProject.Controllers
                     i.AssetContracts,
                     i.AssetPhotos,
                     i.AssetStatus.AssetStatusTitle,
-                    i.DepreciationMethod.DepreciationMethodTitle,
+                    DepreciationMethod=i.DepreciationMethod==null?null: i.DepreciationMethod.DepreciationMethodTitle,
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
-                    i.Warranty.Length
+                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
                 });
                 if (items.Count()==0)
                     return Ok("Wrong AssetTag");
@@ -183,11 +183,11 @@ namespace AssetProject.Controllers
                     i.Asset.AssetContracts,
                     i.Asset.AssetPhotos,
                     i.Asset.AssetStatus.AssetStatusTitle,
-                    i.Asset.DepreciationMethod.DepreciationMethodTitle,
+                    DepreciationMethod = i.Asset.DepreciationMethod == null ? null : i.Asset.DepreciationMethod.DepreciationMethodTitle,
                     i.Asset.Item.ItemTitle,
                     i.Asset.Store.StoreTitle,
                     i.Asset.Vendor.VendorTitle,
-                    i.Asset.Warranty.Length,
+                    Warranty = i.Asset.Warranty == null ? 0 : i.Asset.Warranty.Length,
                     i.AssetMovement.Location.LocationTitle,
                     i.AssetMovement.Employee.FullName,
                     i.AssetMovement.Department.DepartmentTitle,

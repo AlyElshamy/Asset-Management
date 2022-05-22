@@ -65,17 +65,17 @@
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption("Description");
+                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
 
-                        columns.AddFor(m => m.Asset.AssetTagId).Caption("TagId");
+                        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["TagId"]);
 
-                        columns.AddFor(m => m.Asset.AssetCost).Caption("Cost");
+                        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Cost"]);
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("SerialNo");
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["SerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption("PurchaseDate");
+                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["PurchaseDate"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption("Item").Lookup(lookup => lookup
+                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
                         .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")

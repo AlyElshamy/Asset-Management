@@ -7,11 +7,11 @@ using System.Drawing;
 
 namespace AssetProject.Reports
 {
-    public partial class rptsite : DevExpress.XtraReports.UI.XtraReport
+    public partial class RptStockTaken : DevExpress.XtraReports.UI.XtraReport
     {
         public Tenant TenantObj { get; set; }
 
-        public rptsite(Tenant tenant)
+        public RptStockTaken(Tenant tenant)
         {
             InitializeComponent();
             TenantObj = tenant;
@@ -26,16 +26,14 @@ namespace AssetProject.Reports
                 phone.Text = TenantObj.Phone;
                 email.Text = TenantObj.Email;
                 pictureBox1.ImageUrl = "https://localhost:44311/" + TenantObj.Logo;
+
             }
         }
-        private void rptsite_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+
+        private void RptStockTaken_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
             LoadTalent();
-        }
 
-        private void pictureBox1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
-        {
-            //pictureBox1.ImageUrl = "https://localhost:44311/images/logo/" + TenantObj.Logo;
         }
     }
 }

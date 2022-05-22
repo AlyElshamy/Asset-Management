@@ -34,9 +34,9 @@
         //items.AddSimpleFor(m => m.FromDate).IsRequired(false);
         //items.AddSimpleFor(m => m.ToDate).IsRequired(false);
 
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text("AssetTagId"));
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
 
-        items.AddSimpleFor(m => m.ContractId).IsRequired(false).Label(l => l.Text("Contract"))
+        items.AddSimpleFor(m => m.ContractId).IsRequired(false).Label(l => l.Text(sharedResource["Contract"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ContractsLookup").Key("Value"))

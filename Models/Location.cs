@@ -4,6 +4,7 @@ namespace AssetProject.Models
 {
     public partial class Location
     {
+        
         public Location()
         {
             InverseLocationParent = new HashSet<Location>();
