@@ -64,7 +64,7 @@ namespace AssetProject.Controllers
                     i.Item.ItemTitle,
                    i.Store.StoreTitle,
                    i.Vendor.VendorTitle,
-                   Warranty = i.Warranty == null ? 0 : i.Warranty.Length
+                    i.Warranty
                 });
                 if (items.Count() == 0)
                     return Ok("No Matches Found");
@@ -94,7 +94,7 @@ namespace AssetProject.Controllers
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
-                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
+                    i.Warranty
                 });
                 if (items.Count() == 0)
                     return Ok("Wrong AssetId");
@@ -124,7 +124,7 @@ namespace AssetProject.Controllers
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
-                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
+                    i.Warranty,
 
                 });
                 if (items.Count() == 0)
@@ -155,7 +155,7 @@ namespace AssetProject.Controllers
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
-                    Warranty = i.Warranty == null ? 0 : i.Warranty.Length
+                    i.Warranty
                 });
                 if (items.Count()==0)
                     return Ok("Wrong AssetTag");
@@ -187,7 +187,7 @@ namespace AssetProject.Controllers
                     i.Asset.Item.ItemTitle,
                     i.Asset.Store.StoreTitle,
                     i.Asset.Vendor.VendorTitle,
-                    Warranty = i.Asset.Warranty == null ? 0 : i.Asset.Warranty.Length,
+                    i.Asset.Warranty,
                     i.AssetMovement.Location.LocationTitle,
                     i.AssetMovement.Employee.FullName,
                     i.AssetMovement.Department.DepartmentTitle,

@@ -36,6 +36,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             Context = context;
             _hostEnvironment = hostEnvironment;
             _toastNotification = toastNotification;
+            asset = new Asset();
         }
         public IActionResult OnGet(int AssetId)
         {

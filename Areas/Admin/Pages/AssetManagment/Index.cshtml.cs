@@ -74,7 +74,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 {
                     if (Asset.DepreciationMethodId == null)
                     {
-                        ModelState.AddModelError("", "Please Select Depreciation Method");
+                        _toastNotification.AddErrorToastMessage("Asset Not Edited,must select Depreciation Method ");
                         return Page();
                     }
 
