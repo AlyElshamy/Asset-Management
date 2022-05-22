@@ -10,7 +10,7 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
                 <li class="breadcrumb-item"><a href="#">@sharedResource["ASSETS"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@sharedResource["InsuranceDetails"]Insurance Details</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["InsuranceDetails"]</li>
             </ol>
             <h6 class="slim-pagetitle">@sharedResource["InsurancePolicyInformation"]</h6>
         </div><!-- slim-pageheader -->
@@ -113,7 +113,7 @@
                     <input asp-for="@Model.insurance.IsActive" class="form-check-input" disabled>
                     <label class="form-check-label" asp-for="@Model.insurance.IsActive">  @sharedResource["IsActive"]  </label>
                 </div>
-                <label class="section-title d-inline mb-4 mt-4">Assets</label>
+                <label class="section-title d-inline mb-4 mt-4">@sharedResource["ASSETS"]</label>
 
                 <script>
     function grid_dataSource_beforeSend(op, ajax) {

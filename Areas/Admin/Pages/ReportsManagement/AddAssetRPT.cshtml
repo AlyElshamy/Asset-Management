@@ -30,8 +30,8 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
-        items.AddSimpleFor(m => m.FromDate).IsRequired(false);
-        items.AddSimpleFor(m => m.ToDate).IsRequired(false);
+        items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Date"]));
+        items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Date"]));
          items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
         .Editor(e => e
         .Lookup()

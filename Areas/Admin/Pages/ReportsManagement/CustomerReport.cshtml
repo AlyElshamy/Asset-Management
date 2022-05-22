@@ -30,8 +30,8 @@
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
 
-        items.AddSimpleFor(m => m.CompanyName).IsRequired(false).Label(l=>l.Text("Company Name"));
-        items.AddSimpleFor(m => m.CustomerName).IsRequired(false).Label(l=>l.Text("Customer Name"));
+        items.AddSimpleFor(m => m.CompanyName).IsRequired(false).Label(l=>l.Text(sharedResource["Company Name"]));
+        items.AddSimpleFor(m => m.CustomerName).IsRequired(false).Label(l=>l.Text(sharedResource["Customer Name"]));
 
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)

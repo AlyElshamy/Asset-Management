@@ -101,17 +101,17 @@
             .DisplayExpr("Text")
         );
 
-        columns.AddFor(m => m.Quantity);
+        columns.AddFor(m => m.Quantity).Caption(sharedResource[""]);
 
-        columns.AddFor(m => m.Price);
+        columns.AddFor(m => m.Price).Caption(sharedResource[""]);
 
-        columns.AddFor(m => m.Total);
+        columns.AddFor(m => m.Total).Caption(sharedResource[""]);
 
-        columns.AddFor(m => m.Discount);
+        columns.AddFor(m => m.Discount).Caption(sharedResource[""]);
 
-        columns.AddFor(m => m.Net);
+        columns.AddFor(m => m.Net).Caption(sharedResource[""]);
 
-        columns.AddFor(m => m.Remarks);
+        columns.AddFor(m => m.Remarks).Caption(sharedResource[""]);
     })
 
 )
@@ -119,14 +119,14 @@
    
                             <div class="col-lg-4 mt-4" >
                                 <div class="form-group">
-                                    <label class="form-control-label"> Total : <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label"> @sharedResource[""]Total : <span class="tx-danger">*</span></label>
                                     <input asp-for="@Model.purchase.Total" class="form-control" readonly>
                                     <span asp-validation-for="@Model.purchase.Total" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-lg-4 mt-4">
                                 <div class="form-group">
-                                    <label class="form-control-label"> Discount : <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label"> @sharedResource[""]Discount : <span class="tx-danger">*</span></label>
                                     <input asp-for="@Model.purchase.Discount" class="form-control" placeholder="Enter Discount">
                                     <span asp-validation-for="@Model.purchase.Discount" class="text-danger"></span>
                                 </div>
@@ -135,14 +135,14 @@
 
                             <div class="col-lg-4 mt-4">
                                 <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Net : <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@sharedResource["Net"] : <span class="tx-danger">*</span></label>
                                     <input asp-for="@Model.purchase.Net" class="form-control" readonly>
                                     <span asp-validation-for="@Model.purchase.Net" class="text-danger"></span>
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Notes</label>
+                                    <label for="exampleFormControlTextarea1">@sharedResource["Notes"]</label>
                                     <textarea asp-for="@Model.purchase.Remarks" class="form-control" placeholder="Enter Remarks" id="exampleFormControlTextarea1" rows="3"></textarea>
                                     <span asp-validation-for="@Model.purchase.Remarks" class="text-danger"></span>
                                 </div>
@@ -152,8 +152,8 @@
 
 
                         <div class="form-layout-footer mt-4 ">
-                            <button class="btn btn-primary bd-0">Submit</button>
-                            <a asp-area="admin" class="btn btn-secondary " asp-page="PurchaseList">Cancel</a>
+                            <button class="btn btn-primary bd-0">@sharedResource["Submit"]</button>
+                            <a asp-area="admin" class="btn btn-secondary " asp-page="PurchaseList">@sharedResource["Cancel"]</a>
                         </div><!-- form-layout-footer -->
 </form>
 

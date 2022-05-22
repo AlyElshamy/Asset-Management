@@ -38,15 +38,15 @@
             columns.Add().Caption(@sharedResource["SubCategories"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
                 <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
             </text>).Width(150);
-        })
+    })
     .Columns(columns => {
 
         columns.AddFor(m => m.CategoryTIAR).Caption(@sharedResource["CategoryTIAR"]);
     })
     .Editing(e => e
         .AllowAdding(true)
-        .AllowUpdating(true)
-        .AllowDeleting(true)
+        .AllowUpdating(true).Texts(a=>a.EditRow(sharedResource["Edit"]))
+        .AllowDeleting(true).Texts(a => a.DeleteRow(sharedResource["Delete"]))
     )
 )
                 </div>
