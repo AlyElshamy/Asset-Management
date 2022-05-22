@@ -206,7 +206,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult Getcheckedoutassetsbylocation([FromQuery] int LocationId)
         {
-            var checkedoutassets = new List<Asset>();
+            var checkedoutassets = new List<AssetModel>();
             if (LocationId!=0)
             {
                 var movementsForLocation = _context.AssetMovements.Where(a => a.LocationId == LocationId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
@@ -219,7 +219,30 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.LocationId == LocationId)
                             {
-                                checkedoutassets.Add(item2.Asset);
+                                checkedoutassets.Add(new AssetModel() { 
+                                    AssetCost= item2.Asset.AssetCost,
+                                    AssetDescription= item2.Asset.AssetDescription,
+                                    AssetId= item2.Asset.AssetId,
+                                    AssetLife= item2.Asset.AssetLife,
+                                    AssetPurchaseDate= item2.Asset.AssetPurchaseDate,
+                                    AssetSerialNo= item2.Asset.AssetSerialNo,
+                                    AssetStatus= item2.Asset.AssetStatus,
+                                    AssetStatusId= item2.Asset.AssetStatusId,
+                                    AssetTagId= item2.Asset.AssetTagId,
+                                    DateAcquired= item2.Asset.DateAcquired,
+                                    DepreciableAsset= item2.Asset.DepreciableAsset,
+                                    DepreciableCost= item2.Asset.DepreciableCost,
+                                    DepreciationMethod= item2.Asset.DepreciationMethod,
+                                    DepreciationMethodId= item2.Asset.DepreciationMethodId,
+                                    Item= item2.Asset.Item,
+                                    ItemId= item2.Asset.ItemId,
+                                    Photo= item2.Asset.Photo,
+                                    Store= item2.Asset.Store,
+                                    SalvageValue= item2.Asset.SalvageValue,
+                                    StoreId= item2.Asset.StoreId,
+                                    Vendor= item2.Asset.Vendor,
+                                    VendorId= item2.Asset.VendorId
+                                });
                             }
 }
                     }
@@ -227,12 +250,10 @@ namespace AssetProject.Controllers
             }
             return Ok(checkedoutassets.Distinct());
         }
-
-
         [HttpGet]
         public IActionResult GetcheckedoutassetsbyDepartment([FromQuery] int DepartmentId)
         {
-            var checkedoutassets = new List<Asset>();
+            var checkedoutassets = new List<AssetModel>();
             if (DepartmentId != 0)
             {
                 var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1&&a.EmpolyeeID==null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
@@ -245,7 +266,31 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.EmpolyeeID == null && lastassetmovement.AssetMovement.DepartmentId == DepartmentId)
                             {
-                                checkedoutassets.Add(item2.Asset);
+                                checkedoutassets.Add(new AssetModel()
+                                {
+                                    AssetCost = item2.Asset.AssetCost,
+                                    AssetDescription = item2.Asset.AssetDescription,
+                                    AssetId = item2.Asset.AssetId,
+                                    AssetLife = item2.Asset.AssetLife,
+                                    AssetPurchaseDate = item2.Asset.AssetPurchaseDate,
+                                    AssetSerialNo = item2.Asset.AssetSerialNo,
+                                    AssetStatus = item2.Asset.AssetStatus,
+                                    AssetStatusId = item2.Asset.AssetStatusId,
+                                    AssetTagId = item2.Asset.AssetTagId,
+                                    DateAcquired = item2.Asset.DateAcquired,
+                                    DepreciableAsset = item2.Asset.DepreciableAsset,
+                                    DepreciableCost = item2.Asset.DepreciableCost,
+                                    DepreciationMethod = item2.Asset.DepreciationMethod,
+                                    DepreciationMethodId = item2.Asset.DepreciationMethodId,
+                                    Item = item2.Asset.Item,
+                                    ItemId = item2.Asset.ItemId,
+                                    Photo = item2.Asset.Photo,
+                                    Store = item2.Asset.Store,
+                                    SalvageValue = item2.Asset.SalvageValue,
+                                    StoreId = item2.Asset.StoreId,
+                                    Vendor = item2.Asset.Vendor,
+                                    VendorId = item2.Asset.VendorId
+                                });
                             }
 }
                     }
@@ -256,7 +301,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetcheckedoutassetsbyEmployee([FromQuery] int EmpolyeeID)
         {
-            var checkedoutassets = new List<Asset>();
+            var checkedoutassets = new List<AssetModel>();
 
             if (EmpolyeeID != 0)
             {
@@ -270,7 +315,31 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.EmpolyeeID == EmpolyeeID)
                             {
-                                checkedoutassets.Add(item2.Asset);
+                                checkedoutassets.Add(new AssetModel()
+                                {
+                                    AssetCost = item2.Asset.AssetCost,
+                                    AssetDescription = item2.Asset.AssetDescription,
+                                    AssetId = item2.Asset.AssetId,
+                                    AssetLife = item2.Asset.AssetLife,
+                                    AssetPurchaseDate = item2.Asset.AssetPurchaseDate,
+                                    AssetSerialNo = item2.Asset.AssetSerialNo,
+                                    AssetStatus = item2.Asset.AssetStatus,
+                                    AssetStatusId = item2.Asset.AssetStatusId,
+                                    AssetTagId = item2.Asset.AssetTagId,
+                                    DateAcquired = item2.Asset.DateAcquired,
+                                    DepreciableAsset = item2.Asset.DepreciableAsset,
+                                    DepreciableCost = item2.Asset.DepreciableCost,
+                                    DepreciationMethod = item2.Asset.DepreciationMethod,
+                                    DepreciationMethodId = item2.Asset.DepreciationMethodId,
+                                    Item = item2.Asset.Item,
+                                    ItemId = item2.Asset.ItemId,
+                                    Photo = item2.Asset.Photo,
+                                    Store = item2.Asset.Store,
+                                    SalvageValue = item2.Asset.SalvageValue,
+                                    StoreId = item2.Asset.StoreId,
+                                    Vendor = item2.Asset.Vendor,
+                                    VendorId = item2.Asset.VendorId
+                                });
                             }
                         }
                     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AssetProject.Models
 {
@@ -22,7 +23,7 @@ namespace AssetProject.Models
 
         public string LocationLatitude{ get; set; }
         public string LocationLangtiude { get; set; }
-
+        [JsonIgnore]
         public virtual Location LocationParent { get; set; }
         public virtual ICollection<Location> InverseLocationParent { get; set; }
 
