@@ -58,6 +58,7 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
+            .ShowClearButton(true)
         )
                    <span asp-validation-for="@Model.TechnicianId" class="text-danger"></span>
                 </div>
@@ -73,6 +74,7 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
+            .ShowClearButton(true)
           )
                    <span asp-validation-for="@Model.MaintainanceStatusId" class="text-danger"></span>
                 </div>
@@ -118,6 +120,7 @@
             .OnSelectionChanged("FrequencyLookuP")
             .ValueExpr("Value")
             .DisplayExpr("Text")
+            .ShowClearButton(true)
           )
                    <span asp-validation-for="@Model.AssetMaintainanceFrequencyId" class="text-danger"></span>
                 </div>
@@ -140,6 +143,7 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
+            .ShowClearButton(true)
           )  </div>
                         
               <span asp-validation-for="@Model.WeekDayId" class="text-danger"></span>
@@ -172,6 +176,7 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
+            .ShowClearButton(true)
           )  </div>
                   <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
                   <label> @sharedResource["on"] </label>

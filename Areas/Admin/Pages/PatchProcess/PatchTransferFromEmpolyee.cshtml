@@ -115,6 +115,7 @@
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
                                        .OnSelectionChanged("GetAssets")
+                                       .ShowClearButton(true)
                                         )
                                         <span asp-validation-for="@Model.assetmovement.EmpolyeeID" class="text-danger"></span>
                                     </div>
@@ -200,6 +201,7 @@
                                         )
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
+                                        .ShowClearButton(true)
                                         )
                                         <span asp-validation-for="@Model.assetmovement.DepartmentId" class="text-danger"></span>
                                     </div>
@@ -217,6 +219,7 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
+            .ShowClearButton(true)
         )
          <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
             </div>
