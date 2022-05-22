@@ -32,26 +32,11 @@
     .Items(items => {
         items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Date"]));
         items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Date"]));
-         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
 
         items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text(sharedResource["Category"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-
-        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );

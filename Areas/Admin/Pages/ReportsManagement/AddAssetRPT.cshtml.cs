@@ -52,10 +52,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              StoreId=a.StoreId,
              ItemId=a.ItemId,
              VendorId=a.VendorId,
-             LocationTL = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
-             DepartmentTL = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-             LocationId = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-             DepartmentId = _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
              CategoryId = a.Item.CategoryId,
              AssetCost=a.AssetCost,
              Photo=a.Photo
@@ -65,15 +61,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
                 ds = ds.Where(i => i.AssetPurchaseDate <= filterModel.ToDate && i.AssetPurchaseDate >= filterModel.FromDate).ToList();
-            }
-           
-            if (filterModel.LocationId != null)
-            {
-                ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
-            }
-            if (filterModel.DepartmentId != null)
-            {
-                ds = ds.Where(i => i.DepartmentId == filterModel.DepartmentId).ToList();
             }
             if (filterModel.CategoryId != null)
             {

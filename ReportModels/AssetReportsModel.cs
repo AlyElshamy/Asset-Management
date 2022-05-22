@@ -26,7 +26,6 @@ namespace AssetProject.ReportModels
         public string StoreTL { get; set; }
         public int? CategoryId { get; set; }
         public string CategoryTL { get; set; }
-        public int MyProperty { get; set; }
         public string DepartmentTL { get; set; }
         public string LocationTL { get; set; }
         public int LocationId { get; set; }
@@ -40,5 +39,8 @@ namespace AssetProject.ReportModels
         public DateTime? TransactionDate { set; get; }
         public int WarrantyId { get; set; }
         public int WarrantyLenght { get; set; }
+        public int? EmployeeId { get; set; }
+        public string EmployeeFullName { get; set; }
+
     }
 }

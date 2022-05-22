@@ -1,9 +1,7 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.ReportsManagement.assetreportModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.LocationAssetsModel
 @{
 }
-
-
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
@@ -31,13 +29,6 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
-
-        //items.AddSimpleFor(m => m.FromDate).IsRequired(true);
-        //items.AddSimpleFor(m => m.ToDate).IsRequired(true);
-
-
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
-
         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
         .Editor(e => e
         .Lookup()
@@ -45,20 +36,9 @@
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-        items.AddSimpleFor(m => m.employeeId).IsRequired(false).Label(l => l.Text(sharedResource["Warranty"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmployeesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
+       
+
+
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
     .ButtonOptions(b => b.Text(sharedResource["Send"])
