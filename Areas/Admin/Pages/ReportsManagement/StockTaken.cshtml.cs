@@ -42,7 +42,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<AssetReportsModel> ds = _context.Assets.Where(e=>e.AssetStatusId==1).Include(e=>e.Store).Include(e=>e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).ThenInclude(e=>e.Store).Select(i => new AssetReportsModel
+            List<AssetReportsModel> ds = _context.Assets.Where(e=>e.AssetStatusId==1).Include(e => e.Item).Include(e => e.Vendor).Include(e=>e.Store).Include(e=>e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).ThenInclude(e=>e.Store).Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
                 AssetPurchaseDate = i.AssetPurchaseDate,
