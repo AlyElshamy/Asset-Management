@@ -25,6 +25,7 @@ columns.AddFor(m => m.InsuranceId).Caption(sharedResource["Insurance"]).Lookup(l
     .DataSource(ds => ds.WebApi().Controller("AssetsInsurances").LoadAction("InsurancesLookup").Key("Value"))
     .ValueExpr("Value")
     .DisplayExpr("Text")
+    
 );
 })
 .Columns(columns => {

@@ -57,7 +57,7 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
                 _context.Stores.Remove(Store);
                 try { 
                 await _context.SaveChangesAsync();
-                toastNotification.AddSuccessToastMessage("Contract Deleted successfully");
+                toastNotification.AddSuccessToastMessage("Store Deleted successfully");
                 return RedirectToPage("/StoreManagment/List");
                 }
                 catch (Exception e)

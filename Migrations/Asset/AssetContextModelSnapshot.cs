@@ -883,8 +883,7 @@ namespace AssetProject.Migrations.Asset
 
                     b.HasKey("WarrantyId");
 
-                    b.HasIndex("AssetId")
-                        .IsUnique();
+                    b.HasIndex("AssetId");
 
                     b.ToTable("AssetWarranties");
                 });
@@ -2093,8 +2092,8 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetWarranty", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithOne("Warranty")
-                        .HasForeignKey("AssetProject.Models.AssetWarranty", "AssetId")
+                        .WithMany("Warranty")
+                        .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -48,7 +48,7 @@
                         columns.AddFor(m => m.SellAsset.SoldTo).Caption(sharedResource["Soled to"]);
                         columns.AddFor(m => m.SellAsset.Notes).Caption(sharedResource["Notes"]);
                         
-                        columns.AddFor(m => m.Asset.Photo).Width(100)
+                        columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                 .AllowFiltering(false)
                 .AllowSorting(false)
 
