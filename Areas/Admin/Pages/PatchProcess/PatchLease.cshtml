@@ -2,6 +2,7 @@
 @model AssetProject.Areas.Admin.Pages.PatchProcess.PatchLeaseModel
 @{
 }
+@Html.AntiForgeryToken()
 <div class="slim-mainpanel" style="position: relative;">
     <div class="container">
         <div class="slim-pageheader">
@@ -57,21 +58,13 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
-                    columns.AddFor(m => m.AssetDescription).Caption(sharedResource["Asset Description"]);
 
                     columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
                     columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
                     columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-
-                    columns.AddFor(m => m.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
-
-                    columns.AddFor(m => m.ItemId).Caption("Item").Lookup(lookup => lookup
-                    .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-                    .ValueExpr("Value")
-                    .DisplayExpr("Text")
-                    ).Caption(sharedResource["Item"]);
+               
 
 
 
@@ -191,11 +184,17 @@
         if(data.length > 0) 
         {
              $.ajax({
-        type: "GET",
-        url: "/admin/PatchProcess/PatchLease?handler=FillAssetList",
-        data: { "values": myJSON },
-        contentType: "application/json",
+         type: "POST",
+        beforeSend: function (xhr) {
+         xhr.setRequestHeader("XSRF-TOKEN",
+             $('input:hidden[name="__RequestVerificationToken"]').val());
+        }
+        ,
+      url: "/admin/PatchProcess/PatchLease?handler=FillAssetList",
+         async: false,
+        data: JSON.stringify(data),
         dataType: "json",
+        contentType: "application/json; charset=utf-8",
         success: function (response) {
             console.log("get selected rows successfully"+response)
                 
