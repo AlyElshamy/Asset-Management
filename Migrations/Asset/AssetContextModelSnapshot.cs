@@ -132,7 +132,12 @@ namespace AssetProject.Migrations.Asset
                         new
                         {
                             ActionLogId = 20,
-                            ActionLogTitle = "Add Asset Wrantty"
+                            ActionLogTitle = "Add Asset Waranty"
+                        },
+                        new
+                        {
+                            ActionLogId = 21,
+                            ActionLogTitle = "Deattach Asset Waranty"
                         });
                 });
 
@@ -181,7 +186,7 @@ namespace AssetProject.Migrations.Asset
                         .HasColumnType("int");
 
                     b.Property<DateTime>("AssetPurchaseDate")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("AssetSerialNo")
                         .IsRequired()
@@ -195,7 +200,7 @@ namespace AssetProject.Migrations.Asset
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateAcquired")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("DepreciableAsset")
                         .HasColumnType("bit");
@@ -341,6 +346,7 @@ namespace AssetProject.Migrations.Asset
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DocumentName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DocumentType")
@@ -852,7 +858,7 @@ namespace AssetProject.Migrations.Asset
                         new
                         {
                             AssetStatusId = 9,
-                            AssetStatusTitle = "InMaimtainance"
+                            AssetStatusTitle = "InMaintainance"
                         });
                 });
 
@@ -1223,6 +1229,7 @@ namespace AssetProject.Migrations.Asset
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemTitle")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -1795,7 +1802,7 @@ namespace AssetProject.Migrations.Asset
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetBrokenDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1825,7 +1832,7 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetDisposeDetails", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetDisposeDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1866,7 +1873,7 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetLeasingDetails", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetLeasingDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1904,7 +1911,7 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetLostDetails", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetLostDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2048,7 +2055,7 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetRepairDetails", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetRepairDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2067,7 +2074,7 @@ namespace AssetProject.Migrations.Asset
             modelBuilder.Entity("AssetProject.Models.AssetSellDetails", b =>
                 {
                     b.HasOne("AssetProject.Models.Asset", "Asset")
-                        .WithMany()
+                        .WithMany("AssetSellDetails")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2213,11 +2220,23 @@ namespace AssetProject.Migrations.Asset
 
             modelBuilder.Entity("AssetProject.Models.Asset", b =>
                 {
+                    b.Navigation("AssetBrokenDetails");
+
                     b.Navigation("AssetContracts");
+
+                    b.Navigation("AssetDisposeDetails");
+
+                    b.Navigation("AssetLeasingDetails");
+
+                    b.Navigation("AssetLostDetails");
 
                     b.Navigation("AssetMovementDetails");
 
                     b.Navigation("AssetPhotos");
+
+                    b.Navigation("AssetRepairDetails");
+
+                    b.Navigation("AssetSellDetails");
 
                     b.Navigation("AssetsInsurances");
 

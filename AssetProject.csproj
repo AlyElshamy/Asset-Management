@@ -2,15 +2,14 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>aspnet-AssetProject-06054881-DD46-479E-84EE-27AF0B7A3B95</UserSecretsId>
+	  <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+	  <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
     <Content Remove="Data\Migrations\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <None Remove="Data\Migrations\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Areas\Admin\Pages\CustomerManagement\CustomerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />

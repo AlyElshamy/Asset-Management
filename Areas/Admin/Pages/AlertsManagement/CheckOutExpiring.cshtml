@@ -43,11 +43,13 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
+           
         );
     columns.AddFor(m => m.AssetMovement.LocationId).Caption(sharedResource["Location"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")
+
         );
     columns.AddFor(m => m.AssetMovement.DepartmentId).Caption(sharedResource["Department"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))

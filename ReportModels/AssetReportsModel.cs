@@ -12,7 +12,7 @@ namespace AssetProject.ReportModels
         public string AssetTagId { set; get; }
         public double AssetCost { set; get; }
         public string AssetSerialNo { set; get; }
-        public DateTime AssetPurchaseDate { set; get; }
+        public DateTime? AssetPurchaseDate { set; get; }
         public string ItemTL { set; get; }
         public string Photo { set; get; }
         public bool DepreciableAsset { set; get; }
@@ -37,7 +37,7 @@ namespace AssetProject.ReportModels
         public int? StoreId { get; set; }
         public int? ItemId { get; set; }
         public int? VendorId { get; set; }
-    
+        public DateTime? TransactionDate { set; get; }
         public int WarrantyId { get; set; }
         public int WarrantyLenght { get; set; }
     }

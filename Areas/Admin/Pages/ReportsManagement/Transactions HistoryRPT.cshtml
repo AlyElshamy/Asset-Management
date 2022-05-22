@@ -29,9 +29,9 @@
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
 
-        items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Day"]));
-        items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Day"]));
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagIg"]));
+        items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Date"]));
+        items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Date"]));
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
         items.AddSimpleFor(m => m.ActionLogId).IsRequired(false).Label(l => l.Text(sharedResource["Action Type"]))
         .Editor(e => e
         .Lookup()

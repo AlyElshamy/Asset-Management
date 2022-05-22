@@ -67,27 +67,28 @@
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption("AssetDescription");
+        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
-                        columns.AddFor(m => m.Asset.AssetTagId).Caption("AssetTagId");
+        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                        columns.AddFor(m => m.Asset.AssetCost).Caption("AssetCost");
+        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption("AssetSerialNo");
+        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption("Asset PurchaseDate");
+        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["Asset PurchaseDate"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        );
+        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        );
 
 
     })
     .Editing(e => e
-        .AllowUpdating(true)
+        .AllowUpdating(true).Texts(e=>e.EditRow(sharedResource["Edit"]))
         .AllowDeleting(true)
+        .Texts(texts => texts.DeleteRow(sharedResource["Delete"]))
     )
 )
                 </div>

@@ -17,7 +17,7 @@ namespace AssetProject.Models
         [Required]
         public string AssetSerialNo { set; get; }
 
-        [Column(TypeName = "date")]
+        //[Column(TypeName = "date")]
         public DateTime AssetPurchaseDate { set; get; }
         public Item Item { set; get; }
         public int ItemId { set; get; }
@@ -28,7 +28,7 @@ namespace AssetProject.Models
         public double? SalvageValue { set; get; }
         public int? AssetLife { set; get; }
 
-        [Column(TypeName = "date")]
+        //[Column(TypeName = "date")]
         public DateTime? DateAcquired { set; get; }
         public DepreciationMethod DepreciationMethod { set; get; }
         public int? DepreciationMethodId { set; get; }

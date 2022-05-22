@@ -1,146 +1,145 @@
 ﻿@page
 @model AssetProject.Areas.Admin.Pages.CustomerManagement.CustomerDetailsModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
-@{
-}
+@{ }
 
 <div class="slim-mainpanel">
-      <div class="container">
+    <div class="container">
         <div class="slim-pageheader">
-          <ol class="breadcrumb slim-breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">SETUP</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Customer Details</li>
-          </ol>
-          <h6 class="slim-pagetitle">Customer Information</h6>
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Customer Details"]</li>
+            </ol>
+            <h6 class="slim-pagetitle">@sharedResource["Customer Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
-          <div class="form-layout">
-                    <div class="row mg-t-25">
-                      <div class="col-lg-4">
+            <div class="form-layout">
+                <div class="row mg-t-25">
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">@sharedResource["FullName"] : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.FullName</h4></label>
-                          </div>
-                         
-                        </div>
-                      </div><!-- col-4 -->       
-                     <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">CompanyName : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.CompanyName</h4></label>
-                          </div>
-                         
-                        </div>
-                      </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">Address 1 : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.Address1</h4></label>
-                          </div>
-                         
-                        </div>
-                      </div><!-- col-4 -->
-                      </div>
-                        <div class="row mg-b-10">
-                       
-                         <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">Address 2 : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.Address1</h4></label>
-                          </div>
-                         
-                        </div>
-                      </div><!-- col-4 -->
-                   
-                    
-                        <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">Country : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.Country</h4></label>
-                          </div>
-                         
-                        </div>
-                      </div><!-- col-4 -->
+                            <label class="form-control-label">@sharedResource["FullName"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.FullName</h4></label>
+                            </div>
 
-                      <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">City : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.City</h4></label>
-                          </div>
-                         
                         </div>
-                      </div><!-- col-4 -->
-                       </div><!--End Row-->
-                        <div class="row mg-b-10">
-                      
-                      <div class="col-lg-4">
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">State : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.State</h4></label>
-                          </div>
-                         
+                            <label class="form-control-label">@sharedResource["Company Name"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.CompanyName</h4></label>
+                            </div>
+
                         </div>
-                      </div><!-- col-4 -->
-                        <div class="col-lg-4">
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Postal Code : <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.PostalCode</h4></label>
-                          </div>
-                         
+                            <label class="form-control-label">@sharedResource["First Address"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.Address1</h4></label>
+                            </div>
+
                         </div>
-                      </div><!-- col-4 -->
-                    
-                        <div class="col-lg-4">
+                    </div><!-- col-4 -->
+                </div>
+                <div class="row mg-b-10">
+
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Phone: <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.Phone</h4></label>
-                          </div>
-                         
+                            <label class="form-control-label">@sharedResource["Secound Address"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.Address1</h4></label>
+                            </div>
+
                         </div>
-                      </div><!-- col-4 -->
-                     </div>
-                     <div class="row mg-b-10">
-              
-                        <div class="col-lg-4">
+                    </div><!-- col-4 -->
+
+
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.Email</h4></label>
-                          </div>
-                         
+                            <label class="form-control-label">@sharedResource["Country"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.Country</h4></label>
+                            </div>
+
                         </div>
-                      </div><!-- col-4 -->
-                            
-                        <div class="col-lg-8">
+                    </div><!-- col-4 -->
+
+                    <div class="col-lg-4">
                         <div class="form-group">
-                          <label class="form-control-label">Notes: <span class="tx-danger">*</span></label>
-                          <div>
-                               <label ><h4>@Model.customer.Notes</h4></label>
-                          </div>
-                         
+                            <label class="form-control-label">@sharedResource["City"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.City</h4></label>
+                            </div>
+
                         </div>
-                      </div><!-- col-8 -->
-                    </div><!--End Row-->
-                    <script>
+                    </div><!-- col-4 -->
+                </div><!--End Row-->
+                <div class="row mg-b-10">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["State"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.State</h4></label>
+                            </div>
+
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["Postal Code"] : <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.PostalCode</h4></label>
+                            </div>
+
+                        </div>
+                    </div><!-- col-4 -->
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["Phone"]: <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.Phone</h4></label>
+                            </div>
+
+                        </div>
+                    </div><!-- col-4 -->
+                </div>
+                <div class="row mg-b-10">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["Email"]: <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.Email</h4></label>
+                            </div>
+
+                        </div>
+                    </div><!-- col-4 -->
+
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <label class="form-control-label">@sharedResource["Notes"]: <span class="tx-danger">*</span></label>
+                            <div>
+                                <label><h4>@Model.customer.Notes</h4></label>
+                            </div>
+
+                        </div>
+                    </div><!-- col-8 -->
+                </div><!--End Row-->
+                <script>
     function grid_dataSource_beforeSend(op, ajax) {
         ajax.headers = {
             RequestVerificationToken: "@Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken"
         };
     }
                 </script>
-                 <label class="section-title d-inline mb-4 mt-4">@sharedResource["Asset Leasing"]</label>
-                @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetLeasing>()
+                <label class="section-title d-inline mb-4 mt-4">@sharedResource["Asset Leasing"]</label>
+                @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetLeasingDetails>()
     .DataSource(ds => ds.RemoteController()
         .LoadUrl(Url.Page("CustomerDetails", "GridData"))
         .LoadParams(new { CustomerId = Model.customer.CustomerId})
@@ -166,15 +165,15 @@
         .ValueExpr("Value")
         .DisplayExpr("Text")
         );
-         columns.AddFor(m => m.StartDate).Caption(sharedResource["Leasing StartDate"]);
-         columns.AddFor(m => m.EndDate).Caption(sharedResource["Leasing EndDate"]);
+         columns.AddFor(m => m.AssetLeasing.StartDate).Caption(sharedResource["Leasing StartDate"]);
+         columns.AddFor(m => m.AssetLeasing.EndDate).Caption(sharedResource["Leasing EndDate"]);
     })
 
                         )
 
-                    <div class="form-layout-footer mt-4 ">
-                      <a asp-area="admin" class="btn btn-secondary " asp-page="CustomerList">@sharedResource["BacktoList"]</a>
-                     </div><!-- form-layout-footer -->
-          </div><!-- form-layout -->
-        </div><!-- section-wrapper --> 
-  </div><!-- container -->
+                <div class="form-layout-footer mt-4 ">
+                    <a asp-area="admin" class="btn btn-secondary " asp-page="CustomerList">@sharedResource["BacktoList"]</a>
+                </div><!-- form-layout-footer -->
+            </div><!-- form-layout -->
+        </div><!-- section-wrapper -->
+    </div><!-- container -->

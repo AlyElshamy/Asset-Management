@@ -44,6 +44,7 @@
                                 .OnSelectionChanged("AcionTypeLookuP")
                                 .ValueExpr("Value")
                                 .DisplayExpr("Text")
+                                .ShowClearButton(true)
                                 )
                                 <span asp-validation-for="@Model.ActionTypeId" class="text-danger"></span>
                             </div>
@@ -69,6 +70,7 @@
                                 )
                                 .ValueExpr("Value")
                                 .DisplayExpr("Text")
+                                .ShowClearButton(true)
                                 )
                                 <span asp-validation-for="@Model.EmpolyeeID" class="text-danger"></span>
                             </div>
@@ -154,6 +156,7 @@
                                 )
                                 .ValueExpr("Value") 
                                 .DisplayExpr("Text")
+                                .ShowClearButton(true)
                                 )
                                 <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
                             </div>

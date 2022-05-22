@@ -162,7 +162,7 @@
         contentType: "application/json",
         dataType: "json",
         success: function (response) {
-
+   console.log(response.AssetPurchaseDate)
               // $('#frmEdit').dxForm('instance').option('formData',response);
             document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetTagId
             document.getElementById("AtagId").value = response.AssetTagId
@@ -196,8 +196,7 @@
 
             }
                $('#AssetEditPoup').modal('show');
-               console.log("Elemnt"+document.getElementsByClassName("AssetClass")[0].nodeValue)
-                
+           
         },
         failure: function (response) {
             alert(response);
