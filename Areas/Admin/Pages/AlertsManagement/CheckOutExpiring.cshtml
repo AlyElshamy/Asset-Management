@@ -35,16 +35,16 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                             </div>
                         </text>);
 
-        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["Asset Serial Number"]);
-        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Asset Cost"]);
+    columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["Asset Serial Number"]);
+    columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Asset Cost"]);
 
 
-        columns.AddFor(m => m.Asset.AssetStatusId).Caption(sharedResource["Asset Status"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-           
-        );
+    columns.AddFor(m => m.Asset.AssetStatusId).Caption(sharedResource["Asset Status"]).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+
+    );
     columns.AddFor(m => m.AssetMovement.LocationId).Caption(sharedResource["Location"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
             .ValueExpr("Value")
@@ -56,31 +56,26 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
             .ValueExpr("Value")
             .DisplayExpr("Text")
         );
-        columns.AddFor(m => m.Asset.VendorId).Caption(sharedResource["Vendor"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-        columns.AddFor(m => m.Asset.Warranty.WarrantyId).Caption(sharedResource["Warranty"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetWarrantyLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ItemsLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-        columns.AddFor(m => m.Asset.StoreId).Caption(sharedResource["Store"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
+    columns.AddFor(m => m.Asset.VendorId).Caption(sharedResource["Vendor"]).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+    );
+    columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ItemsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+    );
+    columns.AddFor(m => m.Asset.StoreId).Caption(sharedResource["Store"]).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+    );
 
 
-        columns.AddFor(m => m.Remarks).Caption(sharedResource["Remarks"]);
-        columns.AddFor(m => m.AssetMovement.DueDate).Caption(sharedResource["Due Date"]);
-    })
+    columns.AddFor(m => m.Remarks).Caption(sharedResource["Remarks"]);
+    columns.AddFor(m => m.AssetMovement.DueDate).Caption(sharedResource["Due Date"]);
+})
 )
 
                 </div>
