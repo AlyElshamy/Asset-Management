@@ -44,7 +44,7 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["AssetPurchaseDate"]: <span class="tx-danger">*</span></label>
-                            <input asp-for="@Model.AssetPurchaseDate" type="date" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date">
+                            <input asp-for="@Model.AssetPurchaseDate" type="date" id="ApurshaseDate" class="form-control date" placeholder="Enter Asset Purchase Date" >
                             <span asp-validation-for="@Model.AssetPurchaseDate" class="text-danger"></span>
                         </div>
                     </div><!-- col-4 -->
@@ -131,8 +131,8 @@
                             <label class="form-control-label">@sharedResource["DepreciableAsset"] </label>
 
                             <div class="col-md-10" id="radiobtn">
-                                <label for="ch1"> @sharedResource["yes"]</label><input asp-for="@Model.DepreciableAsset" value="true" checked="checked" type="radio" id="ch1" onclick="myFunction()" />
-                                <label for="ch2"> @sharedResource["no"]</label> <input asp-for="@Model.DepreciableAsset" value="false" type="radio" id="ch2" onclick="myFunction()" />
+                                <label for="DA1"> @sharedResource["yes"]</label><input asp-for="@Model.DepreciableAsset" value="true"  type="radio" id="DA1" onclick="ChangeDepreciation()" />
+                                <label for="DA1"> @sharedResource["no"]</label> <input asp-for="@Model.DepreciableAsset" value="false" type="radio" id="DA2" onclick="ChangeDepreciation()"  />
                             </div>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Date Acquired: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.DateAcquired" type="date" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired">
+                                <input asp-for="@Model.DateAcquired" type="date" id="AdateAcquired" class="form-control required" placeholder="Enter Date Acquired" value=" ">
                                 <span asp-validation-for="@Model.DateAcquired" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -204,24 +204,25 @@
                     document.getElementById("photolabel").innerHTML=fileName;
                   
             }
-    function myFunction() {
-        var btn1 = document.getElementById('ch1');
-        var btn2 = document.getElementById('ch2');
 
-        const form = document.getElementById('depreciable');
+            
+                 function ChangeDepreciation() {
+                     var btn1 = document.getElementById('DA1');
+                     var btn2 = document.getElementById('DA2');
 
-        if (btn1.checked == true) {
-            // 👇 this SHOWS the form
-            form.style.display = 'flex';
-            document.getElementsByClassName("required").setAttribute("required", "");
+                     const form = document.getElementById('depreciable');
 
-        }
-        else if (btn2.checked == true) {
-            // 👇 this HIDES the form
-            form.style.display = 'none';
-        }
-    }
+                     if (btn1.checked == true) {
+                         // 👇 this SHOWS the form
+                         form.style.display = 'flex';
+                       document.getElementsByClassName("required").setAttribute("required", "");
 
-
+                     } 
+                     else if (btn2.checked == true)
+                     {
+                         // 👇 this HIDES the form
+                         form.style.display = 'none';
+                     }
+                 }
 
 </script>
