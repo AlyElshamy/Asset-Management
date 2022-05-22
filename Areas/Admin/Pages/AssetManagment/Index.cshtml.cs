@@ -70,7 +70,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     string folder = "Images/AssetPhotos/";
                     instance.Photo = await UploadImage(folder, file);
                 }
-                if (!instance.DepreciableAsset)
+                if (instance.DepreciableAsset)
+                {
+                    if (Asset.DepreciationMethodId == null)
+                    {
+                        ModelState.AddModelError("", "Please Select Depreciation Method");
+                        return Page();
+                    }
+
+                }
+               else 
                 {
                     Asset.DepreciableCost = null;
                     Asset.DateAcquired = null;
