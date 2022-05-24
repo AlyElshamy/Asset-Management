@@ -10,8 +10,8 @@
     var InsuranceCount = context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
     var LeasingCount = context.AssetLeasingDetails.Where(c => c.AssetLeasing.EndDate.Date < DateTime.Now.Date && c.Asset.AssetStatus.AssetStatusId == 6).Count();
     var WarrantyCount = context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
-    var MaintenanceCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Date == DateTime.Now.Date&& c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
-    var MaintenanceoverdueCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Date < DateTime.Now.Date  && c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
+    var MaintenanceCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Value.Date == DateTime.Now.Date&& c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
+    var MaintenanceoverdueCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Value.Date < DateTime.Now.Date  && c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
 
 }
 <div class="slim-navbar">
