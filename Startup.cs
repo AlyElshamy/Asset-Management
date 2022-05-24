@@ -69,6 +69,7 @@ namespace AssetProject
                 PreventDuplicates = true,
                 CloseButton = true
             });
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
             services.AddRazorPages().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null).AddDataAnnotationsLocalization(
                 options =>

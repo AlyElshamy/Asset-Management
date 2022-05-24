@@ -33,11 +33,12 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         {
            
         }
-        public IActionResult OnGetFillAssetList(string values)
+        
+        public IActionResult OnPostFillAssetList([FromBody] List<Asset>assets)
         {
-            var Assets = JsonConvert.DeserializeObject<List<Asset>>(values);
-            SelectedAssets = Assets;
-            return new JsonResult(Assets); 
+ 
+            SelectedAssets = assets;
+            return new JsonResult(assets); 
         }
 
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)

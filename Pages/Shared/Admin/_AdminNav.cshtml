@@ -180,13 +180,21 @@
                 </a>
                 <div class="sub-item">
                     <ul>
+                        <li class="sub-with-sub">
+                            <a href="#">Store Reports</a>
+                            <ul>
 
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/StockTaken">Store Taken Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/StoreIncoming">Store Incoming Report</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/StoreOutcoming">Store Outcoming Report</a></li>
+                            </ul>
+                        </li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/InsuranceReport">Insurances Policy Report</a></li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/ContractReport">Contracts Report</a></li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/LeasingReport">Leased Asset Report</a></li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/assetreport">Asset Report</a></li>
                         <li><a asp-area="Admin" asp-page="/ReportsManagement/AssetStatusReport">Status Report</a></li>
-                       
+
 
                         <li class="sub-with-sub">
                             <a href="#">Transaction Reports</a>

@@ -6,8 +6,6 @@
 @{
   
 }
-
-
  @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetLog>()
     .DataSource(ds => ds.Mvc()
         .Controller("AssetLogs")
@@ -15,8 +13,6 @@
         .LoadParams(new { AssetId = Model })
         .Key("AssetLogId")
     )
-    
-     .ColumnChooser(cc => cc.Enabled(true))
      .ColumnAutoWidth(true)
      .WordWrapEnabled(true)
      .ShowBorders(true)  

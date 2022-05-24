@@ -16,6 +16,7 @@
                 <div class="modal-header pd-y-20 pd-x-25">
                     @*<h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" id="AssetDescriptiontxt"></h6>*@
                     <button type="button" class="close" data-dismiss="modal" aria-label="@sharedResource["Close"]">
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body pd-25">
@@ -23,24 +24,22 @@
                 .ID("DisposeAssetAdd")
                 .ColCount(1)
 
-                    @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
                     //items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
                     items.AddSimpleFor(m => m.DateDisposed).IsRequired(true).Label(l => l.Text(sharedResource["Date Disposed"]));
                     items.AddSimpleFor(m => m.DisposeTo).IsRequired(true).Label(l => l.Text(sharedResource["Dispose To"]));
                     items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e => e.TextArea()).Label(l => l.Text(sharedResource["Notes"]));
-                     items.AddEmpty().CssClass("modal-footer");
     items.AddGroup().ColCount(2)
                        .Items(groupItems =>
                        {
                            groupItems.AddButton()
-                                           .HorizontalAlignment(HorizontalAlignment.Left)
+                                           .HorizontalAlignment(HorizontalAlignment.Center)
                                            .ButtonOptions(b => b.Text(@sharedResource["Save"])
                                                .Type(ButtonType.Default)
                                                .UseSubmitBehavior(true)
                                        );
                            groupItems.AddButton()
-                                           .HorizontalAlignment(HorizontalAlignment.Left)
+                                           .HorizontalAlignment(HorizontalAlignment.Center)
                                            .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
                         @*.UseSubmitBehavior(true)*@
