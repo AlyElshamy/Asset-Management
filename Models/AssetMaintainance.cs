@@ -29,5 +29,6 @@ namespace AssetProject.Models
         public Month Month { set; get; }
         public int? MonthId { set; get; }
         public int? YearlyDay { set; get; }
+        public DateTime ScheduleDate { get; set; }
     }
 }
