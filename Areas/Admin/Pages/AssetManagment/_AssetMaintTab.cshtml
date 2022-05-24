@@ -131,7 +131,7 @@
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.WeeklyPeriod" class="form-control" style="width:75px; display:inline-block">
+                                <input asp-for="@Model.WeeklyPeriod"  class="form-control" style="width:75px; display:inline-block">
                                 <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Week(s) on"] </label>
                                 <div style="display:inline-block">
@@ -159,7 +159,7 @@
                                 <input asp-for="@Model.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block">
                                 <span asp-validation-for="@Model.MonthlyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Month(s) on"] </label>
-                                <input asp-for="@Model.MonthlyDay" class="form-control" style="width:75px;display:inline-block">
+                                <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block">
                                 <span asp-validation-for="@Model.MonthlyDay" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -183,7 +183,7 @@
                                 </div>
                                 <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
                                 <label> @sharedResource["on"] </label>
-                                <input asp-for="@Model.YearlyDay" class="form-control" style="width:75px; display:inline-block">
+                                <input asp-for="@Model.YearlyDay" max="31" min="1" class="form-control" style="width:75px; display:inline-block">
                                 <span asp-validation-for="@Model.YearlyDay" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->

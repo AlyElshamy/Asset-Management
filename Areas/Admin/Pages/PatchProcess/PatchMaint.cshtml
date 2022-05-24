@@ -219,7 +219,7 @@
                                                 <input asp-for="@Model.assetMaintainance.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block">
                                                 <span asp-validation-for="@Model.assetMaintainance.WeeklyPeriod" class="text-danger"></span>
                                                 <label>@sharedResource["Month(s) on"] </label>
-                                                <input asp-for="@Model.assetMaintainance.MonthlyDay" class="form-control" style="width:75px;display:inline-block">
+                                                <input asp-for="@Model.assetMaintainance.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block">
                                                 <span asp-validation-for="@Model.assetMaintainance.MonthlyDay" class="text-danger"></span>
                                             </div>
                                         </div><!-- col-6 -->
@@ -243,8 +243,8 @@
                                                 </div>
                                                 <span asp-validation-for="@Model.assetMaintainance.MonthId" class="text-danger"></span>
                                                 <label> @sharedResource["on"] </label>
-                                                <input asp-for="@Model.assetMaintainance.YearlyDay" class="form-control" style="width:75px; display:inline-block">
-                                                <span asp-validation-for="@Model.assetMaintainance.MonthlyDay" class="text-danger"></span>
+                                                <input asp-for="@Model.assetMaintainance.YearlyDay" max="31" min="1" class="form-control" style="width:75px; display:inline-block">
+                                                <span asp-validation-for="@Model.assetMaintainance.YearlyDay" class="text-danger"></span>
                                             </div>
                                         </div><!-- col-6 -->
 
