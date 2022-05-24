@@ -33,11 +33,7 @@ namespace AssetProject.Controllers
                 var result = await _signInManager.CheckPasswordSignInAsync(user, Password, true);
                 if (result.Succeeded)
                 {
-                    var roles = await _userManager.GetRolesAsync(user);
-                    if (roles != null && roles.FirstOrDefault() == "Company")
-                    {
                         return Ok(new { Status = "Success", Message = "User Login successfully!", user });
-                    }
                 }
             }
             var invalidResponse = new { status = false };
