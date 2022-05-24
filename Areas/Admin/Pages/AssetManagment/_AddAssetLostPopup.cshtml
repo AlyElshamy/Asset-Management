@@ -23,24 +23,20 @@
                 @(Html.DevExtreme().Form<AssetProject.Models.AssetLost>()
                 .ID("addasstetlost")
                 .ColCount(1)
-
-                    @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items => {
-                    //items.AddSimpleFor(m => m.AssetId).Editor(e => e.TextBox().ReadOnly(true));
                     items.AddSimpleFor(m => m.DateLost).IsRequired(true).Label(l=>l.Text(sharedResource["Date Lost"]));
                     items.AddSimpleFor(m => m.Notes).IsRequired(true).Editor(e => e.TextArea()).Label(l => l.Text(sharedResource["Notes"]));
-                    items.AddEmpty().CssClass("modal-footer");
     items.AddGroup().ColCount(2)
                        .Items(groupItems =>
                        {
                            groupItems.AddButton()
-                                           .HorizontalAlignment(HorizontalAlignment.Left)
+                                           .HorizontalAlignment(HorizontalAlignment.Center)
                                            .ButtonOptions(b => b.Text(@sharedResource["Save"])
                                                .Type(ButtonType.Default)
                                                .UseSubmitBehavior(true)
                                        );
                            groupItems.AddButton()
-                                           .HorizontalAlignment(HorizontalAlignment.Left)
+                                           .HorizontalAlignment(HorizontalAlignment.Center)
                                            .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
                         @*.UseSubmitBehavior(true)*@

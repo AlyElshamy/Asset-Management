@@ -31,25 +31,24 @@
 
 
     items.AddSimpleFor(m => m.SoldTo).IsRequired(true).Label(l => l.Text(sharedResource["Sold To"]));
-    items.AddSimpleFor(m => m.SaleAmount).IsRequired(true).Label(l => l.Text(sharedResource["Sale Amount"]));
+    items.AddSimpleFor(m => m.SaleAmount).IsRequired(true).Label(l => l.Text(sharedResource["Sale Amount"])).Editor(e => e.NumberBox().Value(new JS("null")));
 
 })
 
 .Items(items =>
 {
     items.AddSimpleFor(m => m.Notes).Editor(e=>e.TextArea()).Label(l=>l.Text(sharedResource["Notes"]));
-    items.AddEmpty().CssClass("modal-footer");
 items.AddGroup().ColCount(2)
                    .Items(groupItems =>
                    {
                    groupItems.AddButton()
-                                       .HorizontalAlignment(HorizontalAlignment.Left)
+                                       .HorizontalAlignment(HorizontalAlignment.Center)
                                        .ButtonOptions(b => b.Text(@sharedResource["Save"])
                                            .Type(ButtonType.Default)
                                            .UseSubmitBehavior(true)
                                    );
                    groupItems.AddButton()
-                                       .HorizontalAlignment(HorizontalAlignment.Left)
+                                       .HorizontalAlignment(HorizontalAlignment.Center)
                                        .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
                         @*.UseSubmitBehavior(true)*@

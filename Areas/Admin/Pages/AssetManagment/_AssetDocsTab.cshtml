@@ -24,7 +24,17 @@
 .DeleteAction("Delete")
     .Key("AssetDocumentId")
 )
-.RemoteOperations(true).Columns(columns =>
+
+.RemoteOperations(true)
+ .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+      .HeaderFilter(headerFilter => headerFilter.Visible(true))
+.Columns(columns =>
 {
 
 
@@ -60,44 +70,34 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                             <div class="modal-body pd-25">
                                 @(Html.DevExtreme().Form<AssetProject.Models.AssetDocument>()
                 .ID("addassetdocument")
-                .ColCount(2)
+                .ColCount(1)
 
-                    @*.OnContentReady("function(e){   getData(e,data)  }")  *@
                 .Items(items =>
                 {
-                //items.AddSimpleFor(m => m.AssetDocumentId).Editor(e => e.TextBox().ReadOnly(true));
                 items.AddSimpleFor(m => m.Description).Label(l => l.Text(sharedResource["Description"]));
                 items.AddSimpleFor(m => m.DocumentName).Label(l => l.Text(sharedResource["Document Name"]));
-
-
-
                 items.AddSimpleFor(m => m.DocumentType).Label(k => k.Text(sharedResource["Document"])).Template(@<text>
                      <div class="form-group">
-                            @* <span> Asset Photo</span>*@
                               <div class="custom-file">
                                   <input type="file" name="file" accept=".docx, .doc, .pdf" class="custom-file-input" onchange="changephotoname()" id="Photo" required>
                                   <label class="custom-file-label" for="File" id="photolabel">@sharedResource["Choose New File"]</label>
                               </div>
                           </div>
                                 </text> );
-                items.AddEmpty().CssClass("modal-footer");
                 items.AddGroup().ColCount(2)
                .Items(groupItems =>
                {
                groupItems.AddButton()
-                .HorizontalAlignment(HorizontalAlignment.Left)
+                .HorizontalAlignment(HorizontalAlignment.Center)
                 .ButtonOptions(b => b.Text(@sharedResource["Save"])
                     .Type(ButtonType.Default)
                     .UseSubmitBehavior(true)
             );
                groupItems.AddButton()
-                .HorizontalAlignment(HorizontalAlignment.Left)
+                .HorizontalAlignment(HorizontalAlignment.Center)
                 .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
-                        @*.UseSubmitBehavior(true)*@
                 );
-
-
                    });
                 }
                 )
