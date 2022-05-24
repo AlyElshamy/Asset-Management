@@ -28,8 +28,8 @@ namespace AssetProject.ReportModels
         public string CategoryTL { get; set; }
         public string DepartmentTL { get; set; }
         public string LocationTL { get; set; }
-        public int LocationId { get; set; }
-        public int DepartmentId { get; set; }
+        public int? LocationId { get; set; }
+        public int? DepartmentId { get; set; }
         public string Status { get; set; }
         public int? StatusId { get; set; }
         public DateTime? LogActionDate { get; set; }
@@ -41,6 +41,7 @@ namespace AssetProject.ReportModels
         public int WarrantyLenght { get; set; }
         public int? EmployeeId { get; set; }
         public string EmployeeFullName { get; set; }
+        public DateTime? DueDate { set; get; }
 
     }
 }
