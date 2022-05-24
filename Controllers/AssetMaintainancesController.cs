@@ -46,7 +46,8 @@ namespace AssetProject.Controllers
                     i.MonthlyPeriod,
                     i.MonthlyDay,
                     i.MonthId,
-                    i.YearlyDay
+                    i.YearlyDay,
+                    i.ScheduleDate
                 });
                 return Json(await DataSourceLoader.LoadAsync(assetmaintainances, loadOptions));
             }

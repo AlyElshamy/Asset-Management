@@ -9,17 +9,17 @@ namespace AssetProject.Models
         [Required]
         public string AssetMaintainanceTitle { set; get; }
         public string AssetMaintainanceDetails { set; get; }
-        public DateTime AssetMaintainanceDueDate { set; get; }
+        public DateTime? AssetMaintainanceDueDate { set; get; }
         public MaintainanceStatus MaintainanceStatus { set; get; }
-        public int MaintainanceStatusId { set; get; }
-        public DateTime AssetMaintainanceDateCompleted { set; get; }
+        public int? MaintainanceStatusId { set; get; }
+        public DateTime? AssetMaintainanceDateCompleted { set; get; }
         public double AssetMaintainanceRepairesCost { set; get; }
         public bool AssetMaintainanceRepeating { set; get; }
         public AssetMaintainanceFrequency AssetMaintainanceFrequency { set; get; }
         public int? AssetMaintainanceFrequencyId { set; get; }
         public Technician Technician { set; get; }
-        public int TechnicianId { set; get; }
-        public Asset Asset { set; get; }
+        public int? TechnicianId { set; get; }
+        public virtual Asset Asset { set; get; }
         public int AssetId { set; get; }
         public int? WeeklyPeriod { set; get; }
         public WeekDay WeekDay { set; get; }

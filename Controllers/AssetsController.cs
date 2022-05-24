@@ -213,7 +213,33 @@ namespace AssetProject.Controllers
             return String.Join(" ", messages);
         }
 
-      
+
+        [HttpGet]
+        public async Task<IActionResult> GetAssetsWithoutMaint(DataSourceLoadOptions loadOptions)
+        {
+            var assets = _context.Assets.Where(a=>a.AssetStatusId==1|| a.AssetStatusId == 2).Select(i => new {
+                i.AssetId,
+                i.AssetDescription,
+                i.AssetTagId,
+                i.AssetCost,
+                i.AssetSerialNo,
+                i.AssetPurchaseDate,
+                i.ItemId,
+                i.Photo,
+                i.DepreciableAsset,
+                i.DepreciableCost,
+                i.SalvageValue,
+                i.AssetLife,
+                i.DateAcquired,
+                i.Item.ItemTitle,
+                i.DepreciationMethodId,
+                i.VendorId,
+                i.StoreId,
+                i.AssetStatusId,
+
+            });
+            return Json(await DataSourceLoader.LoadAsync(assets, loadOptions));
+        }
 
     }
 }
