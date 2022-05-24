@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
-
+using AssetProject.ReportModels;
 
 namespace AssetProject.Controllers
 {
@@ -49,13 +49,24 @@ namespace AssetProject.Controllers
         public async Task<IActionResult> GetExpiringCheckOut(DataSourceLoadOptions loadOptions)
         {
 
-            var AssetsCheckOut = _context.AssetMovementDetails.Where(c=>c.AssetMovement.DueDate<DateTime.Now&&c.Asset.AssetStatus.AssetStatusId==2).Include(i=>i.Asset).Include(i=>i.AssetMovement).Select(i => new
+            //     var AssetsCheckOut = _context.AssetMovementDetails.GroupBy(p => p.AssetId)
+            //     .Select(p => p.FirstOrDefault(w => w.AssetMovementDetailsId == p.Max(m => m.AssetMovementDetailsId)))
+            //.OrderBy(p => p.AssetId);
+
+            //var AssetsCheckOut = _context.AssetMovementDetails.GroupBy(x => x.AssetId)
+            //          .Select(x => x.OrderByDescending(y => y.AssetMovementDetailsId).First());
+            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new
             {
-              i.AssetMovementDetailsId,
-              i.AssetMovementId,
-              i.Remarks,
-              i.Asset,
-              i.AssetMovement
+                i.AssetId,
+                i.AssetCost,
+                i.AssetSerialNo,
+                i.AssetTagId,
+                i.Photo,
+                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.TransactionDate,
+                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate,
+                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DepartmentId,
+                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.LocationId,
+                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID
             });
             return Json(await DataSourceLoader.LoadAsync(AssetsCheckOut, loadOptions));
         }
@@ -98,11 +109,11 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate==DateTime.Now && c.MaintainanceStatus.MaintainanceStatusId!=4 && c.MaintainanceStatus.MaintainanceStatusId!=5).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
+            var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate==DateTime.Now && c.MaintainanceStatus.MaintainanceStatusId==1).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,
-                i.AssetMaintainanceDueDate,
+                i.ScheduleDate,
                 i.AssetMaintainanceDetails,
                 i.Technician,
                 i.AssetId,
@@ -112,11 +123,11 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceoverDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate<DateTime.Now && c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+            var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate<DateTime.Now && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,
-                i.AssetMaintainanceDueDate,
+                i.ScheduleDate,
                 i.AssetMaintainanceDetails,
                 i.Technician,
                 i.AssetId,
