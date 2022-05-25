@@ -48,55 +48,61 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetExpiringCheckOut(DataSourceLoadOptions loadOptions)
         {
-
-            //     var AssetsCheckOut = _context.AssetMovementDetails.GroupBy(p => p.AssetId)
-            //     .Select(p => p.FirstOrDefault(w => w.AssetMovementDetailsId == p.Max(m => m.AssetMovementDetailsId)))
-            //.OrderBy(p => p.AssetId);
-
-            //var AssetsCheckOut = _context.AssetMovementDetails.GroupBy(x => x.AssetId)
-            //          .Select(x => x.OrderByDescending(y => y.AssetMovementDetailsId).First());
-            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new
+            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new AssetReportsModel
             {
-                i.AssetId,
-                i.AssetCost,
-                i.AssetSerialNo,
-                i.AssetTagId,
-                i.Photo,
-                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.TransactionDate,
-                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate,
-                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DepartmentId,
-                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.LocationId,
-                i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID
-            });
+                AssetID=i.AssetId,
+                AssetCost = i.AssetCost,
+                AssetSerialNo = i.AssetSerialNo,
+                AssetTagId = i.AssetTagId,
+                Photo = i.Photo,
+                TransactionDate= i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.TransactionDate,
+                DueDate= i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate,
+                LocationTL = _context.Locations.Where(a => a.LocationId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.LocationId).FirstOrDefault().LocationTitle,
+                DepartmentTL = _context.Departments.Where(a => a.DepartmentId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DepartmentId).FirstOrDefault().DepartmentTitle,
+                EmployeeFullName = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID==null?null: _context.Employees.Where(a => a.ID == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID).FirstOrDefault().FullName,
+
+            }) ;
+
             return Json(await DataSourceLoader.LoadAsync(AssetsCheckOut, loadOptions));
         }
         [HttpGet]
         public async Task<IActionResult> GetInsurancesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var insurances = _context.AssetsInsurances.Where(c => c.Insurance.EndDate<DateTime.Now).Include(i => i.Asset).Include(i=>i.Insurance).Select(i => new
+            var insurances = _context.Insurances.Where(c => c.EndDate.Date<DateTime.Now.Date).Select(i => new
             {
                 i.InsuranceId,
-                i.AssetsInsuranceId,
-                i.Asset,
-                i.Insurance
+                i.Title,
+                i.ContactPerson,
+                i.InsuranceCompany,
+                i.StartDate,
+                i.EndDate,
+                i.PolicyNo
+               
             });
             return Json(await DataSourceLoader.LoadAsync(insurances, loadOptions));
         }
         public async Task<IActionResult> GetLeasesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var leasing = _context.AssetLeasingDetails.Where(c => c.AssetLeasing.EndDate < DateTime.Now && c.Asset.AssetStatus.AssetStatusId ==6 ).Include(i => i.Asset).Include(i => i.AssetLeasing).Select(i => new
+            var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new LeasingModel
             {
-                i.AssetLeasingDetailsId,
-                i.AssetLeasingId,
-                i.Asset,
-                i.AssetLeasing,
+                AssetId = i.AssetId,
+                AssetCost = i.AssetCost,
+                AssetSerialNo = i.AssetSerialNo,
+                AssetTagId = i.AssetTagId,
+                photo = i.Photo,
+                
+                LeasingEndDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate,
+                LeasingStartDate= i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.StartDate,
+                LeasingCost= i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.LeasedCost,
+                CustomerTL = _context.Customers.Where(a => a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().FullName,
+
 
             });
             return Json(await DataSourceLoader.LoadAsync(leasing, loadOptions));
         }
         public async Task<IActionResult> GetWarrantiesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var warranty = _context.AssetWarranties.Where(c => c.ExpirationDate < DateTime.Now).Include(i => i.Asset).Select(i => new
+            var warranty = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Include(i => i.Asset).Select(i => new
             {
                 i.WarrantyId,
                 i.AssetId,
@@ -109,7 +115,7 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate==DateTime.Now && c.MaintainanceStatus.MaintainanceStatusId==1).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
+            var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date==DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId==1).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,
@@ -123,7 +129,7 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceoverDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate<DateTime.Now && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+            var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date<DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,
