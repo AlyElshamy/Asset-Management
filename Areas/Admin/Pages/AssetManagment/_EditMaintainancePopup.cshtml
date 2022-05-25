@@ -2,20 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+}
 
-}
-@if (ViewData["AssetId"]!=null)
-{
-    var AssetId = ViewData["AssetId"];
-}
 @model AssetProject.Models.AssetMaintainance
 
-
- <a href="javascript:void(0)" onclick="ShowAddAssetMiantainancePopUp(@ViewData["AssetId"])" class="btn btn-primary" style="float:right">@sharedResource["Add New"] </a>
- <p id="Deletephotot"></p>
-<div id="AssetMiantainancePoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
+<div id="EditAssetMiantainancePoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
-        <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="AddAssetMaintainance" enctype="multipart/form-data">
+        <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="EditAssetMaintainance" enctype="multipart/form-data">
             <div class="modal-content bd-0 tx-14">
                 <div class="modal-header pd-y-20 pd-x-25">
                     <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold"> @sharedResource["Asset Maintaince"] </h6>
@@ -28,14 +21,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Title"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceTitle" class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceTitle" class="form-control " id="maintTitle">
                                 <span asp-validation-for="@Model.AssetMaintainanceTitle" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Details"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceDetails" class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceDetails" class="form-control " id="maintDetail">
                                 <span asp-validation-for="@Model.AssetMaintainanceDetails" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -43,7 +36,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Schedule Date"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.ScheduleDate" type="date" class="form-control date" value=" ">
+                                <input asp-for="@Model.ScheduleDate" type="date" class="form-control date" value=" " id="maintSceduleDate">
                                 <span asp-validation-for="@Model.ScheduleDate" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -52,6 +45,7 @@
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Maintaince By"] <span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.TechnicianId)
+                                .ID("TechLookup")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("TechniciansLookup")
@@ -67,7 +61,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Maintainance Status"]<span class="tx-danger">*</span></label>
-                                @(Html.DevExtreme().LookupFor(c=>c.MaintainanceStatusId).ID("maintstatusid")
+                                @(Html.DevExtreme().LookupFor(c=>c.MaintainanceStatusId).ID("maintstatus")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("MaintainanceStatusesLookup")
@@ -75,16 +69,16 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
-            .ShowClearButton(true).OnSelectionChanged("maintainanceLookuP")
+            .ShowClearButton(true).OnSelectionChanged("maintainanceStatus")
           )
                                 <span asp-validation-for="@Model.MaintainanceStatusId" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
 
-                        <div id="completeddate" class="col-lg-6">
+                        <div id="maintcompleteddate" class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label"> @sharedResource["Date Completed"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceDateCompleted" type="date" class="form-control date" value=" ">
+                                <input asp-for="@Model.AssetMaintainanceDateCompleted" type="date" class="form-control date" value=" " id="maintDateCompleted">
                                 <span asp-validation-for="@Model.AssetMaintainanceDateCompleted" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -92,7 +86,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceRepairesCost" class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceRepairesCost" class="form-control " id="maintCost">
                                 <span asp-validation-for="@Model.AssetMaintainanceRepairesCost" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -101,24 +95,24 @@
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Repeating"]</label>
                                 <div class="col-md-10">
-                                    <label for="ch1"> @sharedResource["yes"]</label><input asp-for="@Model.AssetMaintainanceRepeating" value="True" type="radio" id="ch1" onclick="myFunction()" />
+                                    <label for="R"> @sharedResource["yes"]</label><input asp-for="@Model.AssetMaintainanceRepeating" value="True" type="radio" id="R" onclick="myFunction()" />
                                     <br />
-                                    <label for="ch2"> @sharedResource["no"]</label> <input asp-for="@Model.AssetMaintainanceRepeating" value="False" checked="checked" type="radio" id="ch2" onclick="myFunction()" />
+                                    <label for="NR"> @sharedResource["no"]</label> <input asp-for="@Model.AssetMaintainanceRepeating" value="False" checked="checked" type="radio" id="NR" onclick="myFunction()" />
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6" id="MaintainanceFrequency" style="display:none">
+                        <div class="col-lg-6" id="MaintFrequency" style="display:none">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Frequency"]<span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.AssetMaintainanceFrequencyId)
-                              .ID("MaintFreqLookup")
+                              .ID("MaintFreq")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("AssetMaintainanceFrequenciesLookup")
                 .Key("Value")
             )
-            .OnSelectionChanged("FrequencyLookuP")
+            .OnSelectionChanged("FrequencyChange")
             .ValueExpr("Value")
             .DisplayExpr("Text")
             .ShowClearButton(true)
@@ -127,15 +121,16 @@
                             </div>
                         </div><!-- col-6 -->
 
-                        <div class="col-lg-6" id="WeeklyFrequency" style="display:none">
+                        <div class="col-lg-6" id="Weekly" style="display:none">
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.WeeklyPeriod"  class="form-control" style="width:75px; display:inline-block">
+                                <input asp-for="@Model.WeeklyPeriod"  class="form-control" style="width:75px; display:inline-block" id="WeekPeriod">
                                 <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Week(s) on"] </label>
                                 <div style="display:inline-block">
                                     @(Html.DevExtreme().LookupFor(c=>c.WeekDayId)
+                                    .ID("WeekDay")
                        .Width(170)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -152,24 +147,24 @@
                             </div>
                         </div><!-- col-6 -->
 
-                        <div class="col-lg-6" id="MonthlyFrequency" style="display:none">
+                        <div class="col-lg-6" id="Monthly" style="display:none">
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block">
+                                <input asp-for="@Model.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block" id="MonthPeriod">
                                 <span asp-validation-for="@Model.MonthlyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Month(s) on"] </label>
-                                <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block">
+                                <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block" id="MonthDay">
                                 <span asp-validation-for="@Model.MonthlyDay" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
 
-                        <div class="col-lg-6" id="YearlyFrequency" style="display:none">
+                        <div class="col-lg-6" id="Yearly" style="display:none">
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
                                 <div style="display:inline-block">
-                                    @(Html.DevExtreme().LookupFor(c=>c.MonthId)
+                                    @(Html.DevExtreme().LookupFor(c=>c.MonthId).ID("Month")
                        .Width(175)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -183,12 +178,12 @@
                                 </div>
                                 <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
                                 <label> @sharedResource["on"] </label>
-                                <input asp-for="@Model.YearlyDay" max="31" min="1" class="form-control" style="width:75px; display:inline-block">
+                                <input asp-for="@Model.YearlyDay" max="31" min="1" class="form-control" style="width:75px; display:inline-block" id="YearDay">
                                 <span asp-validation-for="@Model.YearlyDay" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
 
-                        <input id="MaintainanceAssetIdField" name="AssetId" hidden />
+                        <input id="MaintAssetIdField" name="AssetId" hidden />
                     </div> <!-- row-->
                 </div>
                 <div class="modal-footer">
@@ -200,57 +195,14 @@
     </div><!-- modal-dialog -->
 </div>
 
-<br />
-<br />
-<br />
-@(Html.DevExtreme().DataGrid<AssetProject.Models.AssetMaintainance>()
-    .DataSource(ds => ds.Mvc()
-        .Controller("AssetMaintainances")
-        .LoadAction("Get")
-        .UpdateAction("Put")
-        .DeleteAction("Delete")
-        .LoadParams(new {AssetId=ViewData["AssetId"]})
-        .Key("AssetMaintainanceId")
-    )
-    .RemoteOperations(true)
-    .ShowBorders(true)
-    .Paging(p=>p.PageSize(10))
-    .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .FilterRow(filterRow => filterRow
-        .Visible(true)
-        .ApplyFilter(GridApplyFilterMode.Auto)
-    )
-      .HeaderFilter(headerFilter => headerFilter.Visible(true))
-    .Columns(columns => {
-         columns.AddFor(m => m.AssetMaintainanceId).Visible(false);
-        columns.AddFor(m => m.AssetMaintainanceTitle).Caption(sharedResource["Title"]);
-        columns.AddFor(m => m.AssetMaintainanceDueDate).Caption(@sharedResource["Due Date"]);
-        columns.AddFor(m => m.ScheduleDate).Caption("Schedule Date");
-        columns.AddFor(m => m.MaintainanceStatusId).Caption(@sharedResource["Maintainance Status"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("AssetMaintainances").LoadAction("MaintainanceStatusesLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-        columns.AddFor(m => m.AssetMaintainanceDateCompleted).Caption(@sharedResource["Date Completed"]);
 
-        columns.AddFor(m => m.AssetMaintainanceRepairesCost).Caption(@sharedResource["Repaires Cost"]);
-        
-     columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-        <a href="javascript:void(0)" onclick="editMaintainance(<%- data.AssetMaintainanceId %>)"> @sharedResource["Edit"] |  </a>
-           </text>).Width(150);
-         })
- 
-    .Editing(e => e
-        .AllowDeleting(true)
-    )
-)
 
 
 <script>
     function myFunction() {
-        var Yes = document.getElementById("ch1")
-        var No = document.getElementById("ch2")
-        var Frequency = document.getElementById("MaintainanceFrequency")
+        var Yes = document.getElementById("R")
+        var No = document.getElementById("NR)
+        var Frequency = document.getElementById("MaintFrequency")
 
         if (Yes.checked == true) {
             Frequency.style.display = 'block'
@@ -258,54 +210,55 @@
 
         if (No.checked == true) {
             Frequency.style.display = 'none'
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'none'
+            document.getElementById("Weekly").style.display = 'none'
+            document.getElementById("Monthly").style.display = 'none'
+            document.getElementById("Yearly").style.display = 'none'
         }
 
     }
 
-    function FrequencyLookuP() {
+    function FrequencyChange() {
         console.log("inside the funcion")
-        var fequencyType = $("#MaintFreqLookup").dxLookup("instance");
+        var fequencyType = $("#MaintFreq").dxLookup("instance");
         console.log(fequencyType)
         var fequencyTypeValue = fequencyType.option("selectedItem");
         console.log(fequencyTypeValue)
         if (fequencyTypeValue.Text == "Daily") {
             console.log("Daily")
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'none'
+            document.getElementById("Weekly").style.display = 'none'
+            document.getElementById("Monthly").style.display = 'none'
+            document.getElementById("Yearly").style.display = 'none'
         }
         else if (fequencyTypeValue.Text == "Weekly") {
             console.log("Weekly")
-            document.getElementById("WeeklyFrequency").style.display = 'block'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'none'
+            document.getElementById("Weekly").style.display = 'block'
+            document.getElementById("Monthly").style.display = 'none'
+            document.getElementById("Yearly").style.display = 'none'
         }
         else if (fequencyTypeValue.Text == "Monthly") {
             console.log("Monthly")
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'block'
-            document.getElementById("YearlyFrequency").style.display = 'none'
+            document.getElementById("Weekly").style.display = 'none'
+            document.getElementById("Monthly").style.display = 'block'
+            document.getElementById("Yearly").style.display = 'none'
         }
         else if (fequencyTypeValue.Text == "Yearly") {
             console.log("Yearly")
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'block'
+            document.getElementById("Weekly").style.display = 'none'
+            document.getElementById("Monthly").style.display = 'none'
+            document.getElementById("Yearly").style.display = 'block'
         }
     }
 
-    function maintainanceLookuP() {
-        var maintstatus = $("#maintstatusid").dxLookup("instance");
+    function maintainanceStatus() {
+        var maintstatus = $("#maintstatus").dxLookup("instance");
         var maintstatusValue = maintstatus.option("selectedItem");
         if (maintstatusValue.Text == "Scheduled") {
-            document.getElementById("completeddate").style.display = 'none'
-            document.getElementById("completeddate").value = ' '
+            document.getElementById("maintcompleteddate").style.display = 'none'
+
         } else {
-            document.getElementById("completeddate").style.display = 'block'
+            document.getElementById("maintcompleteddate").style.display = 'block'
 
         }
     }
 </script>
+

@@ -709,7 +709,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             //AssetWarranty insurance = Context.AssetWarranties.Find(assetwarranty.WarrantyId);
             //AssetLog assetLog = new AssetLog()
             //{
-            //    ActionLogId = 7,
+            //    ActionLogId = 21,
             //    AssetId = assetInsurance.AssetId,
             //    ActionDate = DateTime.Now,
             //    Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
@@ -719,6 +719,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             Context.SaveChanges();
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetwarranty.AssetId });
 
+        }
+
+        public IActionResult OnGetEditMiantainance(int maintainanceId)
+        {
+            var maintainance = Context.AssetMaintainances.Find(maintainanceId);
+            return new JsonResult(maintainance);
+        }
+        public IActionResult OnPostEditAssetMaintainance()
+        {
+            return Page();
         }
     }
 }
