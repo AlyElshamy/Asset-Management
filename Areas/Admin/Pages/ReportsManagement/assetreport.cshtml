@@ -43,6 +43,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
         items.AddSimpleFor(m => m.employeeId).IsRequired(false).Label(l => l.Text(sharedResource["Employee"]))
         .Editor(e => e
@@ -50,6 +51,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmpolyeesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
         items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
         .Editor(e => e

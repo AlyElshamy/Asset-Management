@@ -47,6 +47,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("TechniciansLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
         items.AddSimpleFor(m => m.MaintStatusId).IsRequired(false).Label(l => l.Text(sharedResource["Maintainance Status"]))
         .Editor(e => e
@@ -54,6 +55,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("MaintainanceStatusesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
         items.AddButton()

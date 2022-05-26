@@ -39,6 +39,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
      items.AddSimpleFor(m => m.VendorId).IsRequired(false).Label(l => l.Text(sharedResource["Vendor"]))
@@ -47,6 +48,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
         items.AddSimpleFor(m => m.StoreId).IsRequired(false).Label(l => l.Text(sharedResource["Store"]))
@@ -55,6 +57,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
         items.AddSimpleFor(m => m.ItemId).IsRequired(false).Label(l => l.Text(sharedResource["Item"]))
@@ -63,6 +66,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ItemsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
 
