@@ -1,5 +1,6 @@
-﻿  using AssetProject.Data;
+﻿using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
 
 namespace AssetProject.Controllers
 {
@@ -15,11 +19,13 @@ namespace AssetProject.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
         public AssetContext _context { get; set; }
-        public MobileController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AssetContext Context)
+        public MobileController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AssetContext Context, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _hostEnvironment = hostEnvironment;
             _context = Context;
         }
         [HttpGet]
@@ -33,33 +39,33 @@ namespace AssetProject.Controllers
                 var result = await _signInManager.CheckPasswordSignInAsync(user, Password, true);
                 if (result.Succeeded)
                 {
-                        return Ok(new { Status = "Success", Message = "User Login successfully!", user });
+                    return Ok(new { Status = "Success", Message = "User Login successfully!", user });
                 }
             }
             var invalidResponse = new { status = false };
             return Ok(invalidResponse);
         }
         [HttpGet]
-        public  IActionResult Search([FromQuery] string Parcode)
-        {   
-            if (Parcode !=null)
+        public IActionResult Search([FromQuery] string Parcode)
+        {
+            if (Parcode != null)
             {
                 var items = _context.Assets.Where(c => c.AssetTagId.Contains(Parcode)
-                || c.AssetSerialNo.Contains(Parcode)||c.AssetId.ToString()==Parcode
+                || c.AssetSerialNo.Contains(Parcode) || c.AssetId.ToString() == Parcode
                 ).Select(i => new
                 {
-                   i.AssetTagId,
-                   i.AssetSerialNo,
-                   i.ItemId,
-                   i.AssetCost,
-                   i.AssetDescription,
-                   i.AssetContracts,
-                   i.AssetPhotos,
-                   i.AssetStatus.AssetStatusTitle,
+                    i.AssetTagId,
+                    i.AssetSerialNo,
+                    i.ItemId,
+                    i.AssetCost,
+                    i.AssetDescription,
+                    i.AssetContracts,
+                    i.AssetPhotos,
+                    i.AssetStatus.AssetStatusTitle,
                     DepreciationMethod = i.DepreciationMethod == null ? null : i.DepreciationMethod.DepreciationMethodTitle,
                     i.Item.ItemTitle,
-                   i.Store.StoreTitle,
-                   i.Vendor.VendorTitle,
+                    i.Store.StoreTitle,
+                    i.Vendor.VendorTitle,
                     i.Warranty
                 });
                 if (items.Count() == 0)
@@ -147,16 +153,16 @@ namespace AssetProject.Controllers
                     i.AssetContracts,
                     i.AssetPhotos,
                     i.AssetStatus.AssetStatusTitle,
-                    DepreciationMethod=i.DepreciationMethod==null?null: i.DepreciationMethod.DepreciationMethodTitle,
+                    DepreciationMethod = i.DepreciationMethod == null ? null : i.DepreciationMethod.DepreciationMethodTitle,
                     i.Item.ItemTitle,
                     i.Store.StoreTitle,
                     i.Vendor.VendorTitle,
                     i.Warranty
                 });
-                if (items.Count()==0)
+                if (items.Count() == 0)
                     return Ok("Wrong AssetTag");
                 else
-                return Ok(new { items });
+                    return Ok(new { items });
             }
             else
                 return Ok("Enter AssetTag");
@@ -167,8 +173,8 @@ namespace AssetProject.Controllers
             if (Search != null)
             {
                 var items = _context.AssetMovementDetails
-                   .Where(c =>c.Asset.AssetStatusId == 2&&(c.AssetMovement.Department.DepartmentTitle.Contains(Search)||c.AssetMovement.Employee.FullName.Contains(Search)||c.AssetMovement.Location.LocationTitle.Contains(Search)))
-                   .Include(a=>a.AssetMovement)                
+                   .Where(c => c.Asset.AssetStatusId == 2 && (c.AssetMovement.Department.DepartmentTitle.Contains(Search) || c.AssetMovement.Employee.FullName.Contains(Search) || c.AssetMovement.Location.LocationTitle.Contains(Search)))
+                   .Include(a => a.AssetMovement)
                 .Select(i => new
                 {
                     i.Asset.AssetTagId,
@@ -188,13 +194,13 @@ namespace AssetProject.Controllers
                     i.AssetMovement.Employee.FullName,
                     i.AssetMovement.Department.DepartmentTitle,
                     i.AssetMovement.AssetMovementDirection.AssetMovementDirectionTitle
-                        
+
                 });
 
                 if (items.Count() == 0)
                     return Ok("No Matches Found");
                 else
-                    return Ok( items );
+                    return Ok(items);
             }
             else
                 return Ok("Enter employee or location or department to search");
@@ -203,7 +209,7 @@ namespace AssetProject.Controllers
         public IActionResult Getcheckedoutassetsbylocation([FromQuery] int LocationId)
         {
             var checkedoutassets = new List<AssetModel>();
-            if (LocationId!=0)
+            if (LocationId != 0)
             {
                 var movementsForLocation = _context.AssetMovements.Where(a => a.LocationId == LocationId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForLocation)
@@ -215,32 +221,33 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.LocationId == LocationId)
                             {
-                                checkedoutassets.Add(new AssetModel() { 
-                                    AssetCost= item2.Asset.AssetCost,
-                                    AssetDescription= item2.Asset.AssetDescription,
-                                    AssetId= item2.Asset.AssetId,
-                                    AssetLife= item2.Asset.AssetLife,
-                                    AssetPurchaseDate= item2.Asset.AssetPurchaseDate,
-                                    AssetSerialNo= item2.Asset.AssetSerialNo,
-                                    AssetStatus= item2.Asset.AssetStatus,
-                                    AssetStatusId= item2.Asset.AssetStatusId,
-                                    AssetTagId= item2.Asset.AssetTagId,
-                                    DateAcquired= item2.Asset.DateAcquired,
-                                    DepreciableAsset= item2.Asset.DepreciableAsset,
-                                    DepreciableCost= item2.Asset.DepreciableCost,
-                                    DepreciationMethod= item2.Asset.DepreciationMethod,
-                                    DepreciationMethodId= item2.Asset.DepreciationMethodId,
-                                    Item= item2.Asset.Item,
-                                    ItemId= item2.Asset.ItemId,
-                                    Photo= item2.Asset.Photo,
-                                    Store= item2.Asset.Store,
-                                    SalvageValue= item2.Asset.SalvageValue,
-                                    StoreId= item2.Asset.StoreId,
-                                    Vendor= item2.Asset.Vendor,
-                                    VendorId= item2.Asset.VendorId
+                                checkedoutassets.Add(new AssetModel()
+                                {
+                                    AssetCost = item2.Asset.AssetCost,
+                                    AssetDescription = item2.Asset.AssetDescription,
+                                    AssetId = item2.Asset.AssetId,
+                                    AssetLife = item2.Asset.AssetLife,
+                                    AssetPurchaseDate = item2.Asset.AssetPurchaseDate,
+                                    AssetSerialNo = item2.Asset.AssetSerialNo,
+                                    AssetStatus = item2.Asset.AssetStatus,
+                                    AssetStatusId = item2.Asset.AssetStatusId,
+                                    AssetTagId = item2.Asset.AssetTagId,
+                                    DateAcquired = item2.Asset.DateAcquired,
+                                    DepreciableAsset = item2.Asset.DepreciableAsset,
+                                    DepreciableCost = item2.Asset.DepreciableCost,
+                                    DepreciationMethod = item2.Asset.DepreciationMethod,
+                                    DepreciationMethodId = item2.Asset.DepreciationMethodId,
+                                    Item = item2.Asset.Item,
+                                    ItemId = item2.Asset.ItemId,
+                                    Photo = item2.Asset.Photo,
+                                    Store = item2.Asset.Store,
+                                    SalvageValue = item2.Asset.SalvageValue,
+                                    StoreId = item2.Asset.StoreId,
+                                    Vendor = item2.Asset.Vendor,
+                                    VendorId = item2.Asset.VendorId
                                 });
                             }
-}
+                        }
                     }
                 }
             }
@@ -252,7 +259,7 @@ namespace AssetProject.Controllers
             var checkedoutassets = new List<AssetModel>();
             if (DepartmentId != 0)
             {
-                var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1&&a.EmpolyeeID==null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1 && a.EmpolyeeID == null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForDepartment)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
@@ -288,7 +295,7 @@ namespace AssetProject.Controllers
                                     VendorId = item2.Asset.VendorId
                                 });
                             }
-}
+                        }
                     }
                 }
             }
@@ -342,7 +349,7 @@ namespace AssetProject.Controllers
                 }
 
             }
-            return Ok(checkedoutassets.Distinct() );
+            return Ok(checkedoutassets.Distinct());
         }
         [HttpGet]
         public IActionResult GetDepartments()
@@ -362,5 +369,989 @@ namespace AssetProject.Controllers
             var Locations = _context.Locations.Select(e => e).ToList();
             return Ok(new { Locations });
         }
+        [HttpGet]
+        public IActionResult GetTotalAssetCount()
+        {
+            var AllAssetscount = _context.Assets.Count();
+            return Ok(new { AllAssetscount });
         }
+        [HttpGet]
+        public IActionResult GetTotalAssetCost()
+        {
+            var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
+            return Ok(new { TotalAssetCost });
+        }
+        [HttpGet]
+        public IActionResult GetAvaliableAssetsCount()
+        {
+            var AvaliableAssets = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+            return Ok(new { AvaliableAssets });
+        }
+        [HttpGet]
+        public IActionResult GetActiveAssetsCount()
+        {
+            var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
+            return Ok(new { ActiveAssets });
+        }
+        [HttpGet]
+        public IActionResult GetAssetBrockenCount()
+        {
+            var AssetBrockenCount = _context.Assets.Where(a => a.AssetStatusId == 8).Count();
+            return Ok(new { AssetBrockenCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetBrockenCost()
+        {
+            var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
+            return Ok(new { AssetBrockenCost });
+        }
+        [HttpGet]
+        public IActionResult GetSellAssetsCount()
+        {
+            var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
+            return Ok(new { SellAssetsCount });
+        }
+        [HttpGet]
+        public IActionResult GetSellAssetCost()
+        {
+            var SellAssetCost = _context.sellAssets.Sum(a => a.SaleAmount);
+            return Ok(new { SellAssetCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsUnderRepairCount()
+        {
+            var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
+            return Ok(new { AssetsUnderRepairCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsUnderRepairCost()
+        {
+            var listmaxassetrepairId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 3
+                 from r in _context.AssetRepairs
+                 from rd in _context.AssetRepairDetails
+                 where a.AssetId == rd.AssetId && r.AssetRepairId == rd.AssetRepairId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetRepairId).Max()
+                 };
+
+            double AssetsUnderRepairCost = 0;
+            foreach (var item in listmaxassetrepairId)
+            {
+                var costofmaxid = _context.AssetRepairs.Where(i => i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
+                AssetsUnderRepairCost += costofmaxid;
+            }
+            return Ok(new { AssetsUnderRepairCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsLeasedCount()
+        {
+            var AssetsLeasedCount = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
+            return Ok(new { AssetsLeasedCount });
+        }
+        [HttpGet]
+        public IActionResult GetLeasedAssetsCost()
+        {
+            var LeasedAssetsCost = _context.AssetLeasings.Sum(a => a.LeasedCost);
+            return Ok(new { LeasedAssetsCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsLostCount()
+        {
+            var AssetsLostCount = _context.Assets.Where(a => a.AssetStatusId == 4).Count();
+            return Ok(new { AssetsLostCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsLostCost()
+        {
+            var AssetsLostCost = _context.Assets.Where(a => a.AssetStatusId == 4).Sum(a => a.AssetCost);
+            return Ok(new { AssetsLostCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsDisposeCount()
+        {
+            var AssetsDisposeCount = _context.Assets.Where(a => a.AssetStatusId == 5).Count();
+            return Ok(new { AssetsDisposeCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsDisposeCost()
+        {
+            var AssetsDisposeCost = _context.Assets.Where(a => a.AssetStatusId == 5).Sum(a => a.AssetCost);
+            return Ok(new { AssetsDisposeCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsMaintCount()
+        {
+            var AssetsMaintCount = _context.Assets.Where(a => a.AssetStatusId == 9).Count();
+            return Ok(new { AssetsMaintCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsMaintCost()
+        {
+            var AssetsMaintCost = _context.AssetMaintainances.Sum(a => a.AssetMaintainanceRepairesCost);
+            return Ok(new { AssetsMaintCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetCheckOutCount()
+        {
+            var AssetCheckOutCount = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
+            return Ok(new { AssetCheckOutCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetCheckOutCost()
+        {
+            var AssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
+            return Ok(new { AssetCheckOutCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetLinkInsuranceCount()
+        {
+            var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
+            return Ok(new { AssetLinkInsuranceCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetLinkInsuranceCost()
+        {
+            var AssetLinkInsuranceCost = _context.AssetsInsurances.Include(e => e.Asset).Select(e => e.Asset.AssetCost).Sum();
+            return Ok(new { AssetLinkInsuranceCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetLinkContractCount()
+        {
+            var AssetLinkContractCount = _context.AssetContracts.Count();
+            return Ok(new { AssetLinkContractCount });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsPurchaseCurrentYear()
+        {
+            var AssetPurchaseCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
+            return Ok(new { AssetPurchaseCY });
+        }
+        [HttpGet]
+        public IActionResult GetAssetsPurchaseCurrentYearCost()
+        {
+            var AssetPurchaseCostCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a => a.AssetCost);
+            return Ok(new { AssetPurchaseCostCY });
+        }
+        //Alerts
+        [HttpGet]
+        public IActionResult GetContractsExpiringCount()
+        {
+            var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+            return Ok(new { ContractsExpiringCount });
+        }
+        [HttpGet]
+        public IActionResult GetInsurancesExpiringCount()
+        {
+            var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+            return Ok(new { InsurancesExpiringCount });
+        }
+        [HttpGet]
+        public IActionResult GetMaintainanceDueCount()
+        {
+            var MaintainanceDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
+            return Ok(new { MaintainanceDueCount });
+        }
+        [HttpGet]
+        public IActionResult GetMaintainanceOverDueCount()
+        {
+            var MaintainanceOverDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
+            return Ok(new { MaintainanceOverDueCount });
+        }
+        [HttpGet]
+        public IActionResult GetWarrantiesExpiringCount()
+        {
+            var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+            return Ok(new { WarrantiesExpiringCount });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult GetCheckOutList()
+        {
+            var CheckOutList = _context.Assets.Where(c => c.AssetStatusId == 2);
+            return Ok(new { CheckOutList });
+        }
+        [HttpGet]
+        public IActionResult GetCheckInList()
+        {
+            var CheckInList = _context.Assets.Where(c => c.AssetStatusId == 1);
+            return Ok(new { CheckInList });
+        }
+        [HttpGet]
+        public IActionResult GetUnderRepairList()
+        {
+            var UnderRepairList = _context.Assets.Where(c => c.AssetStatusId == 3);
+            return Ok(new { UnderRepairList });
+        }
+        [HttpGet]
+        public IActionResult GetAllAssets()
+        {
+            var AllAssets = _context.Assets;
+            return Ok(new { AllAssets });
+        }
+        [HttpGet]
+        public IActionResult GetAssetDetails(int? AssetId)
+        {
+            if (AssetId != null && AssetId != 0 && AssetId != 0)
+            {
+                var ischeckoutorin = _context.Assets.Find(AssetId);
+                if (ischeckoutorin != null)
+                {
+                    if (ischeckoutorin.AssetStatusId == 2 || ischeckoutorin.AssetStatusId == 1)
+                    {
+                        var MaxMovementId =
+                     (from r in _context.AssetMovements
+                      from rd in _context.AssetMovementDetails
+                      where AssetId == rd.AssetId && r.AssetMovementId == rd.AssetMovementId
+                      orderby rd.AssetMovementDetailsId descending
+                      select rd.AssetMovementId
+                      ).FirstOrDefault();
+                        var Assetdetails = _context.Assets.Where(a => a.AssetId == AssetId && (a.AssetStatusId == 1 || a.AssetStatusId == 2)).Select(i => new
+                        {
+                            i.AssetTagId,
+                            i.AssetSerialNo,
+                            i.AssetPurchaseDate,
+                            i.ItemId,
+                            i.AssetCost,
+                            i.AssetDescription,
+                            i.AssetStatus.AssetStatusTitle,
+                            DepricableCost = i.DepreciableAsset == false ? 0 : i.DepreciableCost,
+                            SalvageValue = i.DepreciableAsset == false ? 0 : i.SalvageValue,
+                            DateAcquired = i.DepreciableAsset == false ? null : i.DateAcquired,
+                            AssetLife = i.DepreciableAsset == false ? 0 : i.AssetLife,
+                            DepreciationMethod = i.DepreciableAsset == false ? null : i.DepreciationMethod.DepreciationMethodTitle,
+                            i.Item.ItemTitle,
+                            Store = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().Store.StoreTitle,
+                            i.Vendor.VendorTitle,
+                            i.Item.Brand.BrandTitle,
+                            i.Vendor.Website,
+                            i.Item.Category.CategoryTIAR,
+                            employee = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().EmpolyeeID == null ? null : _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().Employee.FullName,
+                            department = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().DepartmentId == null ? null : _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().Department.DepartmentTitle,
+                            Location = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().LocationId == null ? null : _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().Location.LocationTitle,
+                            TransactionDate = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault() == null ? null : _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().TransactionDate,
+                            DueDate = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault() == null ? null : _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().DueDate,
+                            Notes = _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault() == null ? null : _context.AssetMovements.Where(e => e.AssetMovementId == MaxMovementId).FirstOrDefault().Remarks
+                        });
+                        return Ok(Assetdetails);
+                    }
+                    else
+                    {
+                        var Assetdetails = _context.Assets.Where(a => a.AssetId == AssetId).Select(i => new
+                        {
+                            i.AssetTagId,
+                            i.AssetSerialNo,
+                            i.AssetPurchaseDate,
+                            i.ItemId,
+                            i.AssetCost,
+                            i.AssetDescription,
+                            i.AssetStatus.AssetStatusTitle,
+                            DepricableCost = i.DepreciableAsset == false ? 0 : i.DepreciableCost,
+                            SalvageValue = i.DepreciableAsset == false ? 0 : i.SalvageValue,
+                            DateAcquired = i.DepreciableAsset == false ? null : i.DateAcquired,
+                            AssetLife = i.DepreciableAsset == false ? 0 : i.AssetLife,
+                            DepreciationMethod = i.DepreciableAsset == false ? null : i.DepreciationMethod.DepreciationMethodTitle,
+                            i.Item.ItemTitle,
+                            i.Store.StoreTitle,
+                            i.Vendor.VendorTitle,
+                            i.Item.Brand.BrandTitle,
+                            i.Vendor.Website,
+                            i.Item.Category.CategoryTIAR,
+                        });
+                        return Ok(Assetdetails);
+                    }
+                }
+                return BadRequest($"Asset {AssetId} Not Found..");
+            }
+            return BadRequest("Enter AssetId..");
+        }
+        [HttpGet]
+        public IActionResult GetAssetHistory(int? AssetId)
+        {
+            if (AssetId != null && AssetId != 0)
+            {
+                try
+                {
+                    var assetlogs = _context.AssetLogs.Where(e => e.AssetId == AssetId).Select(i => new
+                    {
+                        i.ActionDate,
+                        i.Remark
+                    });
+                    return Ok(assetlogs);
+                }
+                catch (Exception)
+                {
+
+                    return BadRequest("Server Error..");
+                }
+
+            }
+            return BadRequest("Enter Asset Id");
+        }
+        [HttpPost]
+        public IActionResult PostAddAssetPhoto(IFormFile file, AssetPhotos photos)
+        {
+            if (file != null)
+            {
+                string folder = "Images/AssetPhotos/";
+                photos.PhotoUrl = UploadImage(folder, file);
+                if (photos.AssetId != 0)
+                {
+                    _context.AssetPhotos.Add(photos);
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 5,
+                        AssetId = photos.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($" Description : {photos.Remarks} ")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                    _context.SaveChanges();
+                    return Ok("Image Uploaded Successfully..");
+                }
+                return BadRequest("Please Enter Asset Id.. ");
+            }
+            return BadRequest("Please Choose Image.. ");
+        }
+        private string UploadImage(string folderPath, IFormFile file)
+        {
+
+            folderPath += Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string serverFolder = Path.Combine(_hostEnvironment.WebRootPath, folderPath);
+
+            file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+
+            return folderPath;
+        }
+        [HttpGet]
+        public IActionResult GetAssetPhotos(int? AssetId)
+        {
+
+            if (AssetId != null && AssetId != 0)
+            {
+
+                var ListPhotos = _context.AssetPhotos.Where(a => a.AssetId == AssetId);
+                if (ListPhotos == null)
+                {
+                    return BadRequest("Asset Not Found..");
+                }
+                return Ok(ListPhotos);
+
+            }
+            return BadRequest("Enter Asset Id..");
+
+        }
+        [HttpDelete]
+        public IActionResult DeleteAssetPhoto(int? AssetId, int? AssetPhotoId)
+        {
+            if (AssetId != null && AssetId != 0)
+            {
+                if (AssetPhotoId != null)
+                {
+                    var Result = _context.AssetPhotos.Where(a => a.AssetId == AssetId && a.AssetPhotoId == AssetPhotoId).FirstOrDefault();
+                    if (Result != null)
+                    {
+                        try
+                        {
+                            _context.AssetPhotos.Remove(Result);
+                            AssetLog assetLog = new AssetLog()
+                            {
+                                ActionLogId = 9,
+                                AssetId = AssetId.Value,
+                                ActionDate = DateTime.Now,
+                            };
+                            _context.AssetLogs.Add(assetLog);
+                            _context.SaveChanges();
+                            if (Result.PhotoUrl != null)
+                            {
+                                var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, Result.PhotoUrl);
+                                if (System.IO.File.Exists(ImagePath))
+                                {
+                                    System.IO.File.Delete(ImagePath);
+                                }
+                            }
+                            return Ok("Photo Deleted Successfully..");
+                        }
+                        catch (Exception)
+                        {
+
+                            return BadRequest("Server Error..");
+                        }
+
+                    }
+                    return BadRequest("photo Not Found..");
+
+                }
+                return BadRequest("Enter Asset Photo Id..");
+            }
+            return BadRequest("Enter Asset Id..");
+        }
+
+        [HttpGet]
+        public IActionResult GetAssetDocuments(int? AssetId)
+        {
+            if (AssetId != null && AssetId != 0)
+            {
+                try
+                {
+                    var assetdocuments = _context.assetDocuments.Where(e => e.AssetId == AssetId).Select(i => new
+                    {
+                        i.DocumentName,
+                        i.DocumentType,
+                        i.Description
+                    });
+                    return Ok(assetdocuments);
+                }
+                catch (Exception)
+                {
+
+                    return BadRequest("Server Error..");
+                }
+            }
+            return BadRequest("Enter Correct Asset Id..");
+        }
+        [HttpPost]
+        public IActionResult PostAddAssetDocument(AssetDocument instance, IFormFile file)
+        {
+
+            if (file != null)
+            {
+                string folder = "Documents/AssetDocuments/";
+                instance.DocumentType = UploadImage(folder, file);
+                if (instance.AssetId != 0)
+                {
+                    if (instance.DocumentName != null)
+                    {
+                        try
+                        {
+                            _context.assetDocuments.Add(instance);
+                            AssetLog assetLog = new AssetLog()
+                            {
+                                ActionLogId = 4,
+                                AssetId = instance.AssetId,
+                                ActionDate = DateTime.Now,
+                                Remark = string.Format($"Document Name : {instance.DocumentName} ")
+                            };
+                            _context.AssetLogs.Add(assetLog);
+                            _context.SaveChanges();
+                            return Ok("Document Uploaded Successfully..");
+                        }
+                        catch (Exception)
+                        {
+
+                            return BadRequest("Server Error...");
+                        }
+
+                    }
+                    return BadRequest("Please Enter Document Name.. ");
+
+                }
+                return BadRequest("Please Enter Asset Id.. ");
+            }
+            return BadRequest("Please Choose Document.. ");
+        }
+        [HttpDelete]
+        public IActionResult DeattachAssetDocument(int? AssetDocumentID)
+        {
+
+            if (AssetDocumentID != 0 && AssetDocumentID != null)
+            {
+
+                AssetDocument _assetDocument = _context.assetDocuments.Find(AssetDocumentID);
+                if (_assetDocument != null)
+                {
+                    string AssetDocName = _assetDocument.DocumentName;
+                    try
+                    {
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 8,
+                            AssetId = _assetDocument.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"Dettached Asset Document With Document Name : {AssetDocName} ")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                        _context.assetDocuments.Remove(_assetDocument);
+                        _context.SaveChanges();
+                        return Ok("Asset Document Deleted Succeffully");
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest(e.Message);
+                    }
+                }
+                else
+                    return BadRequest("Document not Found..");
+            }
+            return BadRequest("Enter Asset Document Id..");
+        }
+
+
+        [HttpGet]
+        public IActionResult GetAllContracts()
+        {
+
+            try
+            {
+                var Allcontracts = _context.Contracts.Select(i => new
+                {
+                    i.Title,
+                    i.Description,
+                    i.ContractNo,
+                    i.Cost,
+                    i.StartDate,
+                    i.EndDate,
+                    i.Vendor.VendorTitle
+                });
+                return Ok(Allcontracts);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAssetContractById(int? AssetId)
+        {
+
+            if (AssetId != null && AssetId != 0)
+            {
+                try
+                {
+                    var Allcontracts = _context.AssetContracts.Where(e => e.AssetId == AssetId).Select(i => new
+                    {
+                        i.Contract.Description,
+                        i.Contract.ContractNo,
+                        i.Contract.Cost,
+                        i.Contract.StartDate,
+                        i.Contract.EndDate,
+                        i.Contract.Title,
+                        i.Contract.Vendor.VendorTitle,
+                    });
+                    return Ok(Allcontracts);
+
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Asset Id.. ");
+        }
+
+        [HttpPost]
+        public IActionResult PostLinkAssetContract(AssetContract assetcontract)
+        {
+            if (assetcontract.AssetId != 0)
+            {
+
+                if (assetcontract.ContractId != null)
+                {
+                    try
+                    {
+                        var Assetcont = new AssetContract { AssetId = assetcontract.AssetId, ContractId = assetcontract.ContractId };
+                        _context.AssetContracts.Add(Assetcont);
+                        string ContractTitle = "Contract Title : ";
+                        string ContractSDate = "Contract Start Date : ";
+                        string ContractEDate = "Contract End Date : ";
+                        Contract SelectedContract = _context.Contracts.Find(assetcontract.ContractId);
+                        string ContractStartDate = SelectedContract.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                        string ContractEndDate = SelectedContract.EndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 2,
+                            AssetId = assetcontract.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"{ContractTitle}{SelectedContract.Title} , {ContractSDate}{ContractStartDate} and {ContractEDate}{ContractEndDate}")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                        _context.SaveChanges();
+                        return Ok("Link Asset Contract Successfully..");
+                    }
+                    catch (Exception e)
+                    {
+
+                        return BadRequest(e.Message);
+                    }
+                }
+                return BadRequest("Enter Contract ID..");
+            }
+            return BadRequest("Enter Asset ID..");
+        }
+        [HttpDelete]
+        public IActionResult DeleteAssetContract(AssetContract assetContract)
+        {
+            if (assetContract.AssetId != 0)
+            {
+                if (assetContract.ContractId != null && assetContract.ContractId != 0)
+                {
+                    AssetContract _assetContract = _context.AssetContracts.Where(e => e.ContractId == assetContract.ContractId && e.AssetId == assetContract.AssetId).FirstOrDefault();
+                    if (_assetContract == null)
+                    {
+                        return BadRequest("Asset Contract Not Found..");
+                    }
+                    try
+                    {
+                        _context.AssetContracts.Remove(_assetContract);
+                        Contract contract = _context.Contracts.Find(assetContract.ContractId);
+
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 6,
+                            AssetId = assetContract.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"Dettached Asset Contract With Contract Name : {contract.Title} and Contract Number : {contract.ContractNo}")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                        _context.SaveChanges();
+                        return Ok("Asset Contract Dettached Succeffully");
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest(e.Message);
+                    }
+                }
+                return BadRequest("Enter Contract Id..");
+            }
+            return BadRequest("Enter Asset Id..");
+        }
+
+        [HttpGet]
+        public IActionResult GetAllInsurances()
+        {
+            try
+            {
+                var insurances = _context.Insurances.Select(i => new
+                {
+                    i.Title,
+                    i.Description,
+                    i.InsuranceCompany,
+                    i.ContactPerson,
+                    i.PolicyNo,
+                    i.Phone,
+                    i.StartDate,
+                    i.EndDate,
+                    i.Deductible,
+                    i.Permium,
+                    i.IsActive
+                });
+                return Ok(insurances);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAssetInsuranceById(int? AssetId)
+        {
+            if (AssetId != null && AssetId != 0)
+            {
+                try
+                {
+                    var assetsinsurances = _context.AssetsInsurances.Where(e => e.AssetId == AssetId).Select(i => new
+                    {
+                        i.Insurance.Title,
+                        i.Insurance.Description,
+                        i.Insurance.InsuranceCompany,
+                        i.Insurance.ContactPerson,
+                        i.Insurance.PolicyNo,
+                        i.Insurance.Phone,
+                        i.Insurance.StartDate,
+                        i.Insurance.EndDate,
+                        i.Insurance.Deductible,
+                        i.Insurance.Permium,
+                        i.Insurance.IsActive
+                    });
+                    return Ok(assetsinsurances);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Asset Id..");
+        }
+
+        [HttpPost]
+        public IActionResult postAddAssetInsurance(AssetsInsurance assetsInsurance)
+        {
+            if (assetsInsurance.InsuranceId != null && assetsInsurance.InsuranceId != 0)
+            {
+                if (assetsInsurance.AssetId != 0)
+                {
+                    try
+                    {
+                        AssetsInsurance AssetIns = new AssetsInsurance { AssetId = assetsInsurance.AssetId, InsuranceId = assetsInsurance.InsuranceId };
+                        _context.AssetsInsurances.Add(AssetIns);
+                        string InsuranceTitle = "Insurance Title : ";
+                        string InsuranceCompany = "Insurance Company : ";
+                        Insurance SelectedInsurance = _context.Insurances.Find(assetsInsurance.InsuranceId);
+                        string InsuranceTit = SelectedInsurance.Title;
+                        string InsuranceComp = SelectedInsurance.InsuranceCompany;
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 3,
+                            AssetId = assetsInsurance.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"{InsuranceTitle}{InsuranceTit} and {InsuranceCompany}{InsuranceComp} ")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                        _context.SaveChanges();
+                        return Ok("Link Asset Insurance Successfully");
+                    }
+                    catch (Exception e)
+                    {
+
+                        return BadRequest(e.Message);
+                    }
+                }
+                return BadRequest("Enter Asset Id..");
+            }
+            return BadRequest("Enter Insurance Id..");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteAssetInsurance(AssetsInsurance assetInsurance)
+        {
+            if (assetInsurance.InsuranceId != null)
+            {
+                if (assetInsurance.AssetId != 0)
+                {
+                    AssetsInsurance _assetInsurance = _context.AssetsInsurances.Where(e => e.InsuranceId == assetInsurance.InsuranceId && e.AssetId == assetInsurance.AssetId).FirstOrDefault();
+                    if (_assetInsurance == null)
+                    {
+                        return BadRequest("Asset Insurance Not Found..");
+                    }
+                    try
+                    {
+                        _context.AssetsInsurances.Remove(_assetInsurance);
+                        Insurance insurance = _context.Insurances.Find(assetInsurance.InsuranceId);
+
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 7,
+                            AssetId = assetInsurance.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                        _context.SaveChanges();
+                        return Ok("Successfully Delete Insurance..");
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest(e.Message);
+                    }
+                }
+                return BadRequest("Enter Asset Id..");
+            }
+            return BadRequest("Enter Insurance Id..");
+        }
+
+        [HttpGet]
+        public IActionResult GetAssetWarrantiesById(int? AssetId)
+        {
+            if (AssetId != null && AssetId != 0)
+            {
+                try
+                {
+                    var assetwarranties = _context.AssetWarranties.Where(a => a.AssetId == AssetId).Select(i => new
+                    {
+                        i.Length,
+                        i.ExpirationDate,
+                        i.Notes,
+                    });
+                    return Ok(assetwarranties);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Asset Id..");
+        }
+
+
+        [HttpPost]
+        public IActionResult OnPostAddAssetWarranty(AssetWarranty assetWarranty)
+        {
+
+            if (assetWarranty.AssetId != 0)
+            {
+                if (assetWarranty.Length != 0)
+                {
+                    try
+                    {
+                        _context.AssetWarranties.Add(assetWarranty);
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 20,
+                            AssetId = assetWarranty.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format("Create Warranty")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                        _context.SaveChanges();
+                        return Ok("Asset Warranty Added Successfully..");
+                    }
+                    catch (Exception e)
+                    {
+                        return BadRequest(e.Message);
+                    }
+                }
+                return BadRequest("Enter Warranty Length..");
+            }
+            return BadRequest("Enter Asset Id..");
+        }
+
+
+
+        [HttpDelete]
+        public IActionResult DeleteAssetWarranty(int? AssetWarrantyId)
+        {
+            if (AssetWarrantyId != 0 && AssetWarrantyId != null)
+            {
+                AssetWarranty _assetwarranty = _context.AssetWarranties.Find(AssetWarrantyId);
+                if (_assetwarranty == null)
+                {
+                    return BadRequest("Asset Warranty Not Found..");
+                }
+                try
+                {
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 21,
+                        AssetId = _assetwarranty.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"Dettached Asset Warranty With Warranty Length: {_assetwarranty.Length} and Expiration Date : {_assetwarranty.ExpirationDate}")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                    _context.AssetWarranties.Remove(_assetwarranty);
+                    _context.SaveChanges();
+                    return Ok("Asset Warranty Deattached Successfully..");
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Asset Warranty Id..");
+        }
+
+        [HttpGet]
+        public IActionResult GetAllCategories()
+        {
+            try
+            {
+                var Categories = _context.Categories;
+                return Ok(Categories);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Server Error..");
+            }
+
+        }
+        [HttpGet]
+        public IActionResult GetCategoryById(int? CategoryId)
+        {
+            if (CategoryId != null)
+            {
+                var Category = _context.Categories.Find(CategoryId);
+                if (Category != null)
+                {
+                    return Ok(Category);
+                }
+                return BadRequest("Category Not Found..");
+            }
+            return BadRequest("Enter Category Id..");
+        }
+        [HttpPost]
+        public IActionResult PostAddCategory(Category category)
+        {
+            if (category.CategoryTIAR != null)
+            {
+                try
+                {
+                    _context.Categories.Add(category);
+                    _context.SaveChanges();
+                    return Ok("Created Successfully..");
+                }
+                catch (Exception)
+                {
+
+                    return BadRequest($"Can't Add {category.CategoryTIAR}");
+                }
+            }
+            return BadRequest("");
+        }
+        [HttpPut]
+        public IActionResult PutCategory(int? Categoryid, Category Category)
+        {
+            if (Categoryid != null)
+            {
+                if (Category.CategoryTIAR != null || Category.CategoryTIAR != "")
+                {
+                    var category = _context.Categories.Where(sup => sup.CategoryId == Categoryid).FirstOrDefault();
+                    if (category != null)
+                    {
+                        category.CategoryTIAR = Category.CategoryTIAR;
+                        try
+                        {
+                            _context.SaveChanges();
+                            return NoContent();
+                        }
+                        catch (Exception EX)
+                        {
+                            return BadRequest(EX.Message);
+                        }
+                    }
+                    return BadRequest("Can't Find Category..");
+                }
+                return BadRequest("Enter Category Title ..");
+
+            }
+            return BadRequest("Enter Category Id ..");
+
+        }
+        [HttpDelete]
+        public IActionResult DeleteCategory(int Categoryid)
+        {
+            try
+            {
+                var category = _context.Categories.Find(Categoryid);
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+                return Ok("Deleted Successfully..");
+            }
+            catch (Exception EX)
+            {
+                return BadRequest(EX.Message);
+            }
+        }
+
+
+    }
 }

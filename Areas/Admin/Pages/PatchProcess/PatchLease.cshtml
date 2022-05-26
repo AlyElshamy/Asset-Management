@@ -25,7 +25,7 @@
                      .ID("grid-container")
                     .DataSource(ds => ds.Mvc()
                     .Controller("Assets")
-                    .LoadAction("Get")
+                    .LoadAction("GetAssetsforleasing")
                    .InsertAction("Post")
                    .UpdateAction("Put")
                    .DeleteAction("Delete")
@@ -59,19 +59,21 @@
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
 
-                    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                    columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
+                        columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-               
+                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                        columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
+
+
 
 
 
 
                     })
                     .RemoteOperations(true)
-                
+
 
                     )
                     </div><!-- table-responsive -->
@@ -87,26 +89,27 @@
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
                         <form asp-area="Admin" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="row mg-b-25">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["StartDate"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetLeasing.StartDate" type="date" class="form-control date">
+                                        <input asp-for="@Model.assetLeasing.StartDate" type="date" class="form-control date" value="@(Model.assetLeasing.StartDate >= DateTime.Now ? Model.assetLeasing.StartDate :string.Empty)">
                                         <span asp-validation-for="@Model.assetLeasing.StartDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["EndDate"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetLeasing.EndDate" type="date" class="form-control date">
+                                        <input asp-for="@Model.assetLeasing.EndDate" type="date" class="form-control"value=""  >
                                         <span asp-validation-for="@Model.assetLeasing.EndDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-                            <div class="col-lg-12">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Leased Cost"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetLeasing.LeasedCost"  class="form-control">
+                                        <input asp-for="@Model.assetLeasing.LeasedCost" min="0" class="form-control" value="">
                                         <span asp-validation-for="@Model.assetLeasing.LeasedCost" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
@@ -121,7 +124,7 @@
                                         .LoadAction("CustomersLookup")
                                         .Key("Value")
                                         )
-                                        
+
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
                                         .ShowClearButton(true)
@@ -136,14 +139,13 @@
                                         <span asp-validation-for="@Model.assetLeasing.Notes" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-
-                               @* <input name="AssetId" hidden id="checkoutAssetIdField" />*@
+                                @* <input name="AssetId" hidden id="checkoutAssetIdField" />*@
                             </div><!-- row -->
 
                             <div class="row mg-t-30">
                                 <div class="col-sm-8 mg-l-auto">
                                     <div class="form-layout-footer">
-                                       <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                                        <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
                                     </div><!-- form-layout-footer -->
                                 </div><!-- col-8 -->
@@ -211,6 +213,15 @@
             
         }
 
-    }
+        }
+        $(function () {
+            var date = new Date().toISOString().slice(0, 10);
+
+            //To restrict past date
+
+            $('.date').attr('min', date);
+
+
+        });
 
     </script>

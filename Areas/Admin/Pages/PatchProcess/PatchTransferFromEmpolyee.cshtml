@@ -91,7 +91,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date"  value="@(Model.assetmovement.TransactionDate.Date.Day >0? Model.assetmovement.TransactionDate.ToShortDateString():string.Empty)">
+                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date"  value="@(Model.assetmovement.TransactionDate.Value.Date.Day >0? Model.assetmovement.TransactionDate.Value.ToShortDateString():string.Empty)">
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->

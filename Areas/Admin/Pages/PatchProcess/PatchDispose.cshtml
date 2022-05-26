@@ -25,7 +25,7 @@
                      .ID("grid-container")
                     .DataSource(ds => ds.Mvc()
                     .Controller("Assets")
-                    .LoadAction("Get")
+                    .LoadAction("GetAssetsWithoutdispose")
                    .InsertAction("Post")
                    .UpdateAction("Put")
                    .DeleteAction("Delete")
@@ -64,6 +64,7 @@
                     columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
                     columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                    columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
 
 
 
@@ -88,6 +89,7 @@
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
                         <form asp-area="Admin" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="row mg-b-25">
                                 <div class="col-lg-12">
@@ -100,7 +102,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Dispose To"] <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.disposeAsset.DisposeTo"  class="form-control ">
+                                        <input asp-for="@Model.disposeAsset.DisposeTo" class="form-control ">
                                         <span asp-validation-for="@Model.disposeAsset.DisposeTo" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
@@ -112,14 +114,13 @@
                                         <span asp-validation-for="@Model.disposeAsset.Notes" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-
-                               @* <input name="AssetId" hidden id="checkoutAssetIdField" />*@
+                                @* <input name="AssetId" hidden id="checkoutAssetIdField" />*@
                             </div><!-- row -->
 
                             <div class="row mg-t-30">
                                 <div class="col-sm-8 mg-l-auto">
                                     <div class="form-layout-footer">
-                                       <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
+                                        <button type="submit" class="btn btn-primary">@sharedResource["Save"]</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">@sharedResource["Cancel"]</button>
                                     </div><!-- form-layout-footer -->
                                 </div><!-- col-8 -->
