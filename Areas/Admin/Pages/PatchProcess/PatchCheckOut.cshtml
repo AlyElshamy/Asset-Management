@@ -55,6 +55,8 @@
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
+      .RemoteOperations(true)
+
 
                     .Columns(columns => {
 
@@ -95,7 +97,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date" value="@(Model.assetmovement.TransactionDate.Value.Date.Day >0? Model.assetmovement.TransactionDate.Value.ToShortDateString():string.Empty)">
+                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date">
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
@@ -251,7 +253,13 @@
                                         <span asp-validation-for="@Model.assetmovement.Remarks" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@sharedResource["Due Date"]: <span class="tx-danger">*</span></label>
+                                        <input asp-for="@Model.assetmovement.DueDate" type="date" class="form-control date" value=" ">
+                                        <span asp-validation-for="@Model.assetmovement.DueDate" class="text-danger"></span>
+                                    </div>
+                                </div><!-- col-4 -->
                             </div><!-- row -->
 
                             <div class="row mg-t-30">

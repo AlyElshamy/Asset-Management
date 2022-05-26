@@ -22,35 +22,35 @@
                     </div><!-- card-header -->
                     <div class="table-responsive">
                         @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
-                     .ID("grid-container")
-                    .DataSource(ds => ds.Mvc()
-                    .Controller("Assets")
-                    .LoadAction("GetAssetsWithoutMaint")
-                   .InsertAction("Post")
-                   .UpdateAction("Put")
-                   .DeleteAction("Delete")
-                    .Key("AssetId")
-                    )
-                         .Selection(s => s.Mode(SelectionMode.Multiple))
-                          .OnSelectionChanged("selection_changed")
+ .ID("grid-container")
+.DataSource(ds => ds.Mvc()
+.Controller("Assets")
+.LoadAction("GetAssetsWithoutMaint")
+.InsertAction("Post")
+.UpdateAction("Put")
+.DeleteAction("Delete")
+.Key("AssetId")
+)
+     .Selection(s => s.Mode(SelectionMode.Multiple))
+      .OnSelectionChanged("selection_changed")
 
-                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                    .ColumnAutoWidth(true)
-                    .WordWrapEnabled(true)
-                     .ShowBorders(true)
-    .Paging(p=>p.PageSize(10))
-    .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
-    .FilterRow(filterRow => filterRow
-        .Visible(true)
-        .ApplyFilter(GridApplyFilterMode.Auto)
-    )
-      .HeaderFilter(headerFilter => headerFilter.Visible(true))
+.HeaderFilter(headerFilter => headerFilter.Visible(true))
+.ColumnAutoWidth(true)
+.WordWrapEnabled(true)
+ .ShowBorders(true)
+.Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+.SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
+.FilterRow(filterRow => filterRow
+.Visible(true)
+.ApplyFilter(GridApplyFilterMode.Auto)
+)
+.HeaderFilter(headerFilter => headerFilter.Visible(true))
 
-                    .Columns(columns => {
+.Columns(columns => {
 
 
-                    columns.AddFor(m => m.Photo).Width(100)
+columns.AddFor(m => m.Photo).Width(100)
                     .AllowFiltering(false)
                     .AllowSorting(false)
                     .CellTemplate(@<text>
@@ -58,16 +58,15 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
-                     columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                    columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
+    columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-                      })
-                    .RemoteOperations(true)
+    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
+})
+)
 
-                    )
                     </div><!-- table-responsive -->
 
                 </div>
@@ -80,7 +79,7 @@
                     <label class="section-title">@sharedResource["Maintainance Information"]</label>
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
-                        <form asp-area="Admin" method="post"  enctype="multipart/form-data">
+                        <form asp-area="Admin" method="post" enctype="multipart/form-data">
                             <div class="modal-content bd-0 tx-14">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="modal-body pd-10">
@@ -152,7 +151,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
-                                                <input asp-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="form-control " value="">
+                                                <input asp-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="form-control " value=" ">
                                                 <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="text-danger"></span>
                                             </div>
                                         </div><!-- col-6 -->
@@ -191,7 +190,7 @@
                                             <label>@sharedResource["Recur on"]</label>
                                             <div class="form-group">
                                                 <label>@sharedResource["Every"]</label>
-                                                <input asp-for="@Model.assetMaintainance.WeeklyPeriod" class="form-control" style="width:75px; display:inline-block">
+                                                <input asp-for="@Model.assetMaintainance.WeeklyPeriod" min="1" class="form-control" style="width:75px; display:inline-block">
                                                 <span asp-validation-for="@Model.assetMaintainance.WeeklyPeriod" class="text-danger"></span>
                                                 <label>@sharedResource["Week(s) on"] </label>
                                                 <div style="display:inline-block">
@@ -216,8 +215,8 @@
                                             <label>@sharedResource["Recur on"]</label>
                                             <div class="form-group">
                                                 <label>@sharedResource["Every"]</label>
-                                                <input asp-for="@Model.assetMaintainance.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block">
-                                                <span asp-validation-for="@Model.assetMaintainance.WeeklyPeriod" class="text-danger"></span>
+                                                <input asp-for="@Model.assetMaintainance.MonthlyPeriod" min="1" class="form-control" style="width:75px;display:inline-block">
+                                                <span asp-validation-for="@Model.assetMaintainance.MonthlyPeriod" class="text-danger"></span>
                                                 <label>@sharedResource["Month(s) on"] </label>
                                                 <input asp-for="@Model.assetMaintainance.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block">
                                                 <span asp-validation-for="@Model.assetMaintainance.MonthlyDay" class="text-danger"></span>
@@ -292,30 +291,37 @@
         console.log(fequencyType)
         var fequencyTypeValue = fequencyType.option("selectedItem");
         console.log(fequencyTypeValue)
-        if (fequencyTypeValue.Text == "Daily") {
-            console.log("Daily")
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'none'
+        if (fequencyTypeValue != null) {
+            if (fequencyTypeValue.Text == "Daily") {
+                console.log("Daily")
+                document.getElementById("WeeklyFrequency").style.display = 'none'
+                document.getElementById("MonthlyFrequency").style.display = 'none'
+                document.getElementById("YearlyFrequency").style.display = 'none'
+            }
+            else if (fequencyTypeValue.Text == "Weekly") {
+                console.log("Weekly")
+                document.getElementById("WeeklyFrequency").style.display = 'block'
+                document.getElementById("MonthlyFrequency").style.display = 'none'
+                document.getElementById("YearlyFrequency").style.display = 'none'
+                document.getElementById("WeeklyPeriod").setAttribute('required', '')
+            }
+            else if (fequencyTypeValue.Text == "Monthly") {
+                console.log("Monthly")
+                document.getElementById("WeeklyFrequency").style.display = 'none'
+                document.getElementById("MonthlyFrequency").style.display = 'block'
+                document.getElementById("YearlyFrequency").style.display = 'none'
+                document.getElementById("MonthlyPeriod").setAttribute('required', '')
+                document.getElementById("MonthlyDay").setAttribute('required', '')
+            }
+            else if (fequencyTypeValue.Text == "Yearly") {
+                console.log("Yearly")
+                document.getElementById("WeeklyFrequency").style.display = 'none'
+                document.getElementById("MonthlyFrequency").style.display = 'none'
+                document.getElementById("YearlyFrequency").style.display = 'block'
+                document.getElementById("YearlyDay").setAttribute('required', '')
+            }
         }
-        else if (fequencyTypeValue.Text == "Weekly") {
-            console.log("Weekly")
-            document.getElementById("WeeklyFrequency").style.display = 'block'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Monthly") {
-            console.log("Monthly")
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'block'
-            document.getElementById("YearlyFrequency").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Yearly") {
-            console.log("Yearly")
-            document.getElementById("WeeklyFrequency").style.display = 'none'
-            document.getElementById("MonthlyFrequency").style.display = 'none'
-            document.getElementById("YearlyFrequency").style.display = 'block'
-        }
+
     }
 
 
@@ -365,27 +371,29 @@
 
     }
 
-        $(function(){
-    var date = new Date().toISOString().slice(0,10);
+    $(function () {
+        var date = new Date().toISOString().slice(0, 10);
 
         //To restrict past date
 
         $('.date').attr('min', date);
 
 
-        });
+    });
 
     function maintainanceLookuP() {
         var maintstatus = $("#maintstatusid").dxLookup("instance");
         var maintstatusValue = maintstatus.option("selectedItem");
-        if (maintstatusValue.Text == "Scheduled") {
-            document.getElementById("completeddate").style.display = 'none'
-            document.getElementById("completeddate").value = ' '
-        } else {
-            document.getElementById("completeddate").style.display = 'block'
-
+        if (maintstatusValue != null) {
+            if (maintstatusValue.Text == "Completed") {
+                document.getElementById("completeddate").style.display = 'block'
+                document.getElementById("completeddate").setAttribute('required', '')
+            } else {
+                document.getElementById("completeddate").style.display = 'none'
+            }
         }
+
     }
 
-    </script>
+</script>
 
