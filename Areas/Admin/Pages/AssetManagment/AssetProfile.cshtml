@@ -231,6 +231,8 @@
         dataType: "json",
         success: function (response) {
             console.log(response)
+        
+
          document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetTagId
             document.getElementById("AtagId").value = response.AssetTagId
             document.getElementById("AssetId").value = response.AssetId
@@ -238,7 +240,9 @@
             document.getElementById("AssetStatusId").value = response.AssetStatusId
             document.getElementById("Acost").value = response.AssetCost
             document.getElementById("AserialNum").value = response.AssetSerialNo
-            document.getElementById("ApurshaseDate").valueAsDate  = new Date(response.AssetPurchaseDate)
+            console.log(Purchase)
+
+            document.getElementById("ApurshaseDate").value = DateFormat(response.AssetPurchaseDate)
             $("#AItem").dxLookup("instance").option("value", response.ItemId);
             $("#AStore").dxLookup("instance").option("value", response.StoreId);
             $("#Avendor").dxLookup("instance").option("value", response.VendorId);
@@ -261,7 +265,7 @@
                 console.log(btn1)
                 console.log(btn2)
                 console.log(form)
-                document.getElementById("AdateAcquired").valueAsDate =new Date(response.DateAcquired) 
+                document.getElementById("AdateAcquired").value = DateFormat(response.DateAcquired)
                 form.style.display = 'flex';
             
                 console.log(response.DepreciableAsset)
@@ -380,7 +384,7 @@ function DeletePhoto(AssetId,AssetPhotoId)
         console.log( document.getElementById("checkInAssetIdField").value)
     }
 
-    function editMaintainance(id)
+    function editMaintainance (id)
     {
          $.ajax({
         type: "GET",
@@ -392,24 +396,46 @@ function DeletePhoto(AssetId,AssetPhotoId)
             console.log(response)
             document.getElementById("maintTitle").value = response.AssetMaintainanceTitle
             document.getElementById("maintDetail").value = response.AssetMaintainanceDetails
-            document.getElementById("maintSceduleDate").valueAsDate = new Date(response.ScheduleDate)
-            document.getElementById("maintDateCompleted").valueAsDate  = new Date(response.AssetMaintainanceDateCompleted)
+            document.getElementById("maintSceduleDate").value = DateFormat(response.ScheduleDate)
             document.getElementById("maintCost").value = response.AssetMaintainanceRepairesCost
             document.getElementById("WeekPeriod").value = response.WeeklyPeriod
             document.getElementById("MonthPeriod").value = response.MonthlyPeriod
             document.getElementById("MonthDay").value  =response.MonthlyDay
             document.getElementById("YearDay").value = response.YearlyDay
+            console.log(document.getElementById("MaintAssetIdField"))
+            document.getElementById("MaintAssetIdField").value = response.AssetId;
+            document.getElementById("MaintId").value = response.AssetMaintainanceId;
 
-            $("#Month").dxLookup("instance").option("value", response.MonthId );
-             $("#WeekDay").dxLookup("instance").option("value", response.WeekDayId);
+            console.log($("#TechLookup").dxLookup("instance"))
             $("#TechLookup").dxLookup("instance").option("value", response.TechnicianId);
-            $("#maintstatus").dxLookup("instance").option("value", response.MaintainanceStatusId);
-            $("#MaintFreq").dxLookup("instance").option("value", response.AssetMaintainanceFrequencyId);
+            console.log($("#maintstatus").dxLookup("instance"))
 
-            var freq = document.getElementById("MaintFrequency")
+            $("#maintstatus").dxLookup("instance").option("value", response.MaintainanceStatusId);
+
+            console.log($("#MFreq").dxLookup("instance"))
+
+            $("#MFreq").dxLookup("instance").option("value", response.AssetMaintainanceFrequencyId);
+
+
+            $("#MonthLookup").dxLookup("instance").option("value", response.MonthId);
+            console.log("2")
+            $("#WeekDay").dxLookup("instance").option("value", response.WeekDayId);
+            console.log("3")
+            console.log("4")
+            console.log("5")
+            console.log("6")
+            console.log(new Date(response.ScheduleDate))
+            console.log(document.getElementById("maintSceduleDate").valueAsDate)
+            var freq = document.getElementById("MF")
             var btn1 = document.getElementById("R");
             var btn2 = document.getElementById("NR");
-
+            var MaintStatusValue = $("#maintstatus").dxLookup("instance").option("value");
+            console.log(MaintStatusValue)
+            if (MaintStatusValue == 5) {
+                    console.log(MaintStatusValue)
+                document.getElementById("maintDateCompleted").value = DateFormat(response.AssetMaintainanceDateCompleted)
+                
+            }
             if (response.AssetMaintainanceRepeating)
             {
                 btn1.removeAttribute('checked');
@@ -419,37 +445,41 @@ function DeletePhoto(AssetId,AssetPhotoId)
                 console.log(btn2)
                 console.log(freq)
                 freq.style.display = 'block';
-                var fequencyType = $("#MaintFreq").dxLookup("instance");
-                var fequencyTypeValue = fequencyType.option("selectedItem");
-                if (fequencyTypeValue.Text == "Daily") {
-            console.log("Daily")
-            document.getElementById("Weekly").style.display = 'none'
-            document.getElementById("Monthly").style.display = 'none'
-            document.getElementById("Yearly").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Weekly") {
-            console.log("Weekly")
-            document.getElementById("Weekly").style.display = 'block'
-            document.getElementById("Monthly").style.display = 'none'
-            document.getElementById("Yearly").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Monthly") {
-            console.log("Monthly")
-            document.getElementById("Weekly").style.display = 'none'
-            document.getElementById("Monthly").style.display = 'block'
-            document.getElementById("Yearly").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Yearly") {
-            console.log("Yearly")
-            document.getElementById("Weekly").style.display = 'none'
-            document.getElementById("Monthly").style.display = 'none'
-            document.getElementById("Yearly").style.display = 'block'
-        }
+                var fequencyType = $("#MFreq").dxLookup("instance");
+                var fequencyTypeValue = fequencyType.option("value");
+                console.log(fequencyTypeValue)
+                if (fequencyTypeValue != null) {
+                    if (fequencyTypeValue == 1) {
+                        console.log("Daily")
+                        document.getElementById("Weekly").style.display = 'none'
+                        document.getElementById("Monthly").style.display = 'none'
+                        document.getElementById("Yearly").style.display = 'none'
+                    }
+                    else if (fequencyTypeValue == 2) {
+                        console.log("Weekly")
+                        document.getElementById("Weekly").style.display = 'block'
+                        document.getElementById("Monthly").style.display = 'none'
+                        document.getElementById("Yearly").style.display = 'none'
+                    }
+                    else if (fequencyTypeValue == 3) {
+                        console.log("Monthly")
+                        document.getElementById("Weekly").style.display = 'none'
+                        document.getElementById("Monthly").style.display = 'block'
+                        document.getElementById("Yearly").style.display = 'none'
+                    }
+                    else if (fequencyTypeValue == 4) {
+                        console.log("Yearly")
+                        document.getElementById("Weekly").style.display = 'none'
+                        document.getElementById("Monthly").style.display = 'none'
+                        document.getElementById("Yearly").style.display = 'block'
+                    }
+                }                
             } 
             else
             {
                 btn1.removeAttribute('checked');
                 btn2.setAttribute('checked', 'checked');
+                console.log(freq)
                 freq.style.display = 'none';
             document.getElementById("Weekly").style.display = 'none'
             document.getElementById("Monthly").style.display = 'none'
@@ -463,7 +493,11 @@ function DeletePhoto(AssetId,AssetPhotoId)
         }
     });
     }
-   
+    function DateFormat(incomingdate) {
+        var d = new Date(incomingdate),            month = '' + (d.getMonth() + 1),            day = '' + d.getDate(),            year = d.getFullYear();
+        if (month.length < 2)            month = '0' + month;        if (day.length < 2)            day = '0' + day;        var outcomingdate = [year, month, day].join('-');
+        return outcomingdate;
+    }
 </script>
 
 @section Scripts {

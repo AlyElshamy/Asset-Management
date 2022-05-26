@@ -34,16 +34,16 @@
                           @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
                      .ID("grid-container")
                  .DataSource(ds => ds.RemoteController()
-                 .LoadUrl(Url.Page("PatchCheckOut", "GridData")) 
+                 .LoadUrl(Url.Page("PatchCheckOut", "GridData"))
                       .Key("AssetId")
                     .OnBeforeSend("grid_dataSource_beforeSend")
 
                   )
                          .Selection(s => s.Mode(SelectionMode.Multiple))
                           .OnSelectionChanged("selection_changed")
-                         
+
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                  
+
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -55,6 +55,8 @@
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
+      .RemoteOperations(true)
+
 
                     .Columns(columns => {
 
@@ -75,7 +77,6 @@
                     columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
                     })
-                    .RemoteOperations(true)               
                     )
                     </div><!-- table-responsive -->
                 
@@ -92,7 +93,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date"  value="@(Model.assetmovement.TransactionDate.Date.Day >0? Model.assetmovement.TransactionDate.ToShortDateString():string.Empty)">
+                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date" value="@(Model.assetmovement.TransactionDate.Date.Day >0? Model.assetmovement.TransactionDate.ToShortDateString():string.Empty)">
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
@@ -143,15 +144,15 @@
                                         <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
                                         @*  @(Html.DevExtreme().LookupFor(c=>c.LocationId)
-                                            .DataSource(d => d.WebApi()
-                                            .Controller("Lookups")
-                                            .LoadAction("LocationsLookup")
-                                            .Key("Value")
-                                            )
-                                            .ValueExpr("Value")
-                                            .DisplayExpr("Text")
+                .DataSource(d => d.WebApi()
+                .Controller("Lookups")
+                .LoadAction("LocationsLookup")
+                .Key("Value")
+                )
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
 
-                                            )*@
+                )*@
                                         @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
@@ -223,11 +224,11 @@
                                     </div>
                                 </div>
 
-      <div class="col-lg-12">
-    <div class="form-group">
-        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
-              
-        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
+
+                                        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("StoresLookup")
@@ -237,9 +238,9 @@
             .DisplayExpr("Text")
             .ShowClearButton(true)
         )
-         <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
-            </div>
-        </div>
+                                        <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -248,7 +249,13 @@
                                         <span asp-validation-for="@Model.assetmovement.Remarks" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@sharedResource["Due Date"]: <span class="tx-danger">*</span></label>
+                                        <input asp-for="@Model.assetmovement.DueDate" type="date" class="form-control date" value=" ">
+                                        <span asp-validation-for="@Model.assetmovement.DueDate" class="text-danger"></span>
+                                    </div>
+                                </div><!-- col-4 -->
                             </div><!-- row -->
 
                             <div class="row mg-t-30">

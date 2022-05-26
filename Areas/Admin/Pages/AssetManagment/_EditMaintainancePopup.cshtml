@@ -69,7 +69,8 @@
             )
             .ValueExpr("Value")
             .DisplayExpr("Text")
-            .ShowClearButton(true).OnSelectionChanged("maintainanceStatus")
+            .ShowClearButton(true)
+            .OnSelectionChanged("maintainanceStatus")
           )
                                 <span asp-validation-for="@Model.MaintainanceStatusId" class="text-danger"></span>
                             </div>
@@ -95,37 +96,37 @@
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Repeating"]</label>
                                 <div class="col-md-10">
-                                    <label for="R"> @sharedResource["yes"]</label><input asp-for="@Model.AssetMaintainanceRepeating" value="True" type="radio" id="R" onclick="myFunction()" />
+                                    <label for="R"> @sharedResource["yes"]</label><input asp-for="@Model.AssetMaintainanceRepeating" value="True" type="radio" id="R" onclick="FrequencySelection()" />
                                     <br />
-                                    <label for="NR"> @sharedResource["no"]</label> <input asp-for="@Model.AssetMaintainanceRepeating" value="False" checked="checked" type="radio" id="NR" onclick="myFunction()" />
+                                    <label for="NR"> @sharedResource["no"]</label> <input asp-for="@Model.AssetMaintainanceRepeating" value="False" checked="checked" type="radio" id="NR" onclick="FrequencySelection()" />
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6" id="MaintFrequency" style="display:none">
+                        <div id="MF" class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-control-label">@sharedResource["Frequency"]<span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Asset Maintainance Frequency"] <span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.AssetMaintainanceFrequencyId)
-                              .ID("MaintFreq")
+                                .ID("MFreq")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("AssetMaintainanceFrequenciesLookup")
                 .Key("Value")
             )
-            .OnSelectionChanged("FrequencyChange")
             .ValueExpr("Value")
             .DisplayExpr("Text")
             .ShowClearButton(true)
-          )
+            .OnSelectionChanged("FrequencyChange")
+        )
                                 <span asp-validation-for="@Model.AssetMaintainanceFrequencyId" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
+
 
                         <div class="col-lg-6" id="Weekly" style="display:none">
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.WeeklyPeriod"  class="form-control" style="width:75px; display:inline-block" id="WeekPeriod">
+                                <input asp-for="@Model.WeeklyPeriod" class="form-control" style="width:75px; display:inline-block" id="WeekPeriod" min="1">
                                 <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Week(s) on"] </label>
                                 <div style="display:inline-block">
@@ -151,7 +152,7 @@
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.MonthlyPeriod" class="form-control" style="width:75px;display:inline-block" id="MonthPeriod">
+                                <input asp-for="@Model.MonthlyPeriod" min="1" class="form-control" style="width:75px;display:inline-block" id="MonthPeriod">
                                 <span asp-validation-for="@Model.MonthlyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Month(s) on"] </label>
                                 <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block" id="MonthDay">
@@ -164,7 +165,7 @@
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
                                 <div style="display:inline-block">
-                                    @(Html.DevExtreme().LookupFor(c=>c.MonthId).ID("Month")
+                                    @(Html.DevExtreme().LookupFor(c=>c.MonthId).ID("MonthLookup")
                        .Width(175)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
@@ -184,6 +185,8 @@
                         </div><!-- col-6 -->
 
                         <input id="MaintAssetIdField" name="AssetId" hidden />
+                        <input asp-for="@Model.AssetMaintainanceId" id="MaintId" hidden />
+
                     </div> <!-- row-->
                 </div>
                 <div class="modal-footer">
@@ -199,10 +202,10 @@
 
 
 <script>
-    function myFunction() {
-        var Yes = document.getElementById("R")
-        var No = document.getElementById("NR)
-        var Frequency = document.getElementById("MaintFrequency")
+    function FrequencySelection() {
+        var Yes = document.getElementById("R");
+        var No = document.getElementById("NR");
+        var Frequency = document.getElementById("MF")
 
         if (Yes.checked == true) {
             Frequency.style.display = 'block'
@@ -216,49 +219,62 @@
         }
 
     }
-
     function FrequencyChange() {
         console.log("inside the funcion")
-        var fequencyType = $("#MaintFreq").dxLookup("instance");
+        var fequencyType = $("#MFreq").dxLookup("instance");
         console.log(fequencyType)
         var fequencyTypeValue = fequencyType.option("selectedItem");
         console.log(fequencyTypeValue)
-        if (fequencyTypeValue.Text == "Daily") {
-            console.log("Daily")
-            document.getElementById("Weekly").style.display = 'none'
-            document.getElementById("Monthly").style.display = 'none'
-            document.getElementById("Yearly").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Weekly") {
-            console.log("Weekly")
-            document.getElementById("Weekly").style.display = 'block'
-            document.getElementById("Monthly").style.display = 'none'
-            document.getElementById("Yearly").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Monthly") {
-            console.log("Monthly")
-            document.getElementById("Weekly").style.display = 'none'
-            document.getElementById("Monthly").style.display = 'block'
-            document.getElementById("Yearly").style.display = 'none'
-        }
-        else if (fequencyTypeValue.Text == "Yearly") {
-            console.log("Yearly")
-            document.getElementById("Weekly").style.display = 'none'
-            document.getElementById("Monthly").style.display = 'none'
-            document.getElementById("Yearly").style.display = 'block'
-        }
-    }
+        if (fequencyTypeValue != null) {
+            if (fequencyTypeValue.Text == "Daily") {
+                console.log("Daily")
+                document.getElementById("Weekly").style.display = 'none'
+                document.getElementById("Monthly").style.display = 'none'
+                document.getElementById("Yearly").style.display = 'none'
+            }
+            else if (fequencyTypeValue.Text == "Weekly") {
+                console.log("Weekly")
+                document.getElementById("Weekly").style.display = 'block'
+                document.getElementById("Monthly").style.display = 'none'
+                document.getElementById("Yearly").style.display = 'none'
+                document.getElementById("WeekPeriod").setAttribute('required', '')
 
+            }
+            else if (fequencyTypeValue.Text == "Monthly") {
+                console.log("Monthly")
+                document.getElementById("Weekly").style.display = 'none'
+                document.getElementById("Monthly").style.display = 'block'
+                document.getElementById("Yearly").style.display = 'none'
+                document.getElementById("MonthPeriod").setAttribute('required', '')
+                document.getElementById("MonthDay").setAttribute('required', '')
+            }
+            else if (fequencyTypeValue.Text == "Yearly") {
+                console.log("Yearly")
+                document.getElementById("Weekly").style.display = 'none'
+                document.getElementById("Monthly").style.display = 'none'
+                document.getElementById("Yearly").style.display = 'block'
+                document.getElementById("YearDay").setAttribute('required', '')
+
+            }
+        }
+        
+    }
     function maintainanceStatus() {
         var maintstatus = $("#maintstatus").dxLookup("instance");
         var maintstatusValue = maintstatus.option("selectedItem");
-        if (maintstatusValue.Text == "Scheduled") {
-            document.getElementById("maintcompleteddate").style.display = 'none'
+        if (maintstatusValue != null) {
+            if (maintstatusValue.Text == "Completed") {
+                document.getElementById("maintcompleteddate").style.display = 'block'
+                document.getElementById("maintcompleteddate").setAttribute('required', '')
 
-        } else {
-            document.getElementById("maintcompleteddate").style.display = 'block'
 
+            } else {
+                document.getElementById("maintcompleteddate").style.display = 'none'
+
+            }
         }
+        
     }
+
 </script>
 

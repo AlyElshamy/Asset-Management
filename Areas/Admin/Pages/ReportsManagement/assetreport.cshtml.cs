@@ -59,6 +59,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 EmployeeFullName = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Employee.FullName,
                 EmployeeId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Employee.ID,
             }).ToList();
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.AssetTagId!=null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -75,7 +79,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.EmployeeId == filterModel.employeeId).ToList();
             }
-            if (filterModel.employeeId == null&&filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null)
+            if (filterModel.employeeId == null && filterModel.ShowAll == false && filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null)
             {
                 ds =new List<AssetReportsModel>();
             }

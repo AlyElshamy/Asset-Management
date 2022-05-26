@@ -36,6 +36,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             _hostEnvironment = hostEnvironment;
             _toastNotification = toastNotification;
             asset = new Asset();
+            AssetMaintainance = new AssetMaintainance();
         }
         public IActionResult OnGet(int AssetId)
         {
@@ -498,20 +499,27 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public IActionResult OnPostAddAssetMaintainance(AssetMaintainance assetMaintainance)
         {
+            var assetobj = Context.Assets.Where(e=>e.AssetId==assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
+
+            if (assetobj.AssetStatusId != 1)
+            {
+                _toastNotification.AddErrorToastMessage("Asset Now is"+ assetobj.AssetStatus.AssetStatusTitle );
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+            }
             if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
             {
                 _toastNotification.AddErrorToastMessage("Schedule Date Must be less than Completed Date..");
-                return Page();
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.TechnicianId == null)
             {
                 _toastNotification.AddErrorToastMessage("Technican Name Is Required..");
-                return Page();
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.MaintainanceStatusId == null)
             {
                 _toastNotification.AddErrorToastMessage("Status  Name Is Required..");
-                return Page();
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.MaintainanceStatusId != 5)
             {
@@ -529,28 +537,49 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             }
             else
             {
+                if (assetMaintainance.AssetMaintainanceFrequencyId == 1)
+                {
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 2)
                 {
-                    if (assetMaintainance.WeeklyPeriod == null && assetMaintainance.WeekDayId == null)
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                    if (assetMaintainance.WeeklyPeriod == null || assetMaintainance.WeekDayId == null)
                     {
                         _toastNotification.AddErrorToastMessage("Week Frequency Informations Is Required..");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
                     }
                 }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 3)
                 {
-                    if (assetMaintainance.MonthlyPeriod == null && assetMaintainance.MonthlyDay == null)
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                    if (assetMaintainance.MonthlyPeriod == null || assetMaintainance.MonthlyDay == null)
                     {
                         _toastNotification.AddErrorToastMessage("Month Frequency Informations Is Required..");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
                     }
                 }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 4)
                 {
-                    if (assetMaintainance.YearlyDay == null && assetMaintainance.MonthId == null)
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    if (assetMaintainance.YearlyDay == null || assetMaintainance.MonthId == null)
                     {
                         _toastNotification.AddErrorToastMessage("Year Frequency Informations Is Required..");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
                     }
                 }
             }
@@ -558,7 +587,6 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 assetMaintainance.AssetMaintainanceDueDate = DateTime.Now;
                 Context.AssetMaintainances.Add(assetMaintainance);
-                var assetobj = Context.Assets.Find(assetMaintainance.AssetId);
 
                 assetobj.AssetStatusId = 9;
                 var UpdatedAsset = Context.Assets.Attach(assetobj);
@@ -731,22 +759,29 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
             {
                 _toastNotification.AddErrorToastMessage("Schedule Date Must be less than Completed Date..");
-                return Page();
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.TechnicianId == null)
             {
                 _toastNotification.AddErrorToastMessage("Technican Name Is Required..");
-                return Page();
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.MaintainanceStatusId == null)
             {
                 _toastNotification.AddErrorToastMessage("Status  Name Is Required..");
-                return Page();
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.MaintainanceStatusId != 5)
             {
                 assetMaintainance.AssetMaintainanceDateCompleted = null;
             }
+            if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4) {
+                var assetobj = Context.Assets.Find(assetMaintainance.AssetId);
+
+                assetobj.AssetStatusId = 1;
+                var UpdatedAsset = Context.Assets.Attach(assetobj);
+                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            } 
             if (!assetMaintainance.AssetMaintainanceRepeating)
             {
                 assetMaintainance.AssetMaintainanceFrequencyId = null;
@@ -759,53 +794,68 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             }
             else
             {
+                if (assetMaintainance.AssetMaintainanceFrequencyId == 1)
+                {
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 2)
                 {
-                    if (assetMaintainance.WeeklyPeriod == null && assetMaintainance.WeekDayId == null)
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                    if (assetMaintainance.WeeklyPeriod == null || assetMaintainance.WeekDayId == null)
                     {
                         _toastNotification.AddErrorToastMessage("Week Frequency Informations Is Required..");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
                     }
                 }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 3)
                 {
-                    if (assetMaintainance.MonthlyPeriod == null && assetMaintainance.MonthlyDay == null)
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                    if (assetMaintainance.MonthlyPeriod == null || assetMaintainance.MonthlyDay == null)
                     {
                         _toastNotification.AddErrorToastMessage("Month Frequency Informations Is Required..");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
                     }
                 }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 4)
                 {
-                    if (assetMaintainance.YearlyDay == null && assetMaintainance.MonthId == null)
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    if (assetMaintainance.YearlyDay == null || assetMaintainance.MonthId == null)
                     {
                         _toastNotification.AddErrorToastMessage("Year Frequency Informations Is Required..");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
                     }
                 }
             }
             if (ModelState.IsValid)
             {
-                assetMaintainance.AssetMaintainanceDueDate = DateTime.Now;
-                Context.AssetMaintainances.Add(assetMaintainance);
-                var assetobj = Context.Assets.Find(assetMaintainance.AssetId);
-
-                assetobj.AssetStatusId = 9;
-                var UpdatedAsset = Context.Assets.Attach(assetobj);
-                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                string DueDate = assetMaintainance.AssetMaintainanceDueDate?.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                string CompletedDate = assetMaintainance.AssetMaintainanceDateCompleted?.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                var UpdatedMaintainance = Context.AssetMaintainances.Attach(assetMaintainance);
+                UpdatedMaintainance.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                var Status = Context.MaintainanceStatuses.Find(assetMaintainance.MaintainanceStatusId).MaintainanceStatusTitle;
 
                 AssetLog assetLog = new AssetLog()
                 {
-                    ActionLogId = 18,
-                    AssetId = AssetId,
+                    ActionLogId = 22,
+                    AssetId = assetMaintainance.AssetId,
                     ActionDate = DateTime.Now,
-                    Remark = string.Format($"Maintainance Asset with Title {assetMaintainance.AssetMaintainanceTitle} and DueDate {DueDate} and Completed Date {CompletedDate}")
+                    Remark = string.Format($"Edit Asset Maintainance with Status {Status}")
                 };
                 Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Asset Maintainance Added successfully");
+                _toastNotification.AddSuccessToastMessage("Maintainance Edited successfully");
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             _toastNotification.AddErrorToastMessage("Asset Maintainance Not Added ,Try again");

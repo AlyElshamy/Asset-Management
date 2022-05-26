@@ -56,7 +56,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 SelectedAssets = null;
                 return Page();
             }
-            if (assetMaintainance.MaintainanceStatusId == 1)
+            if (assetMaintainance.MaintainanceStatusId != 5)
             {
                 assetMaintainance.AssetMaintainanceDateCompleted = null;
             }
@@ -70,11 +70,24 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 assetMaintainance.YearlyDay = null;
                 assetMaintainance.MonthId = null;
             }
-            else 
+            else
             {
+                if (assetMaintainance.AssetMaintainanceFrequencyId == 1)
+                {
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                }
                 if (assetMaintainance.AssetMaintainanceFrequencyId ==2)
                 {
-                    if (assetMaintainance.WeeklyPeriod==null&&assetMaintainance.WeekDayId==null)
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                    if (assetMaintainance.WeeklyPeriod==null||assetMaintainance.WeekDayId==null)
                     {
                         ModelState.AddModelError("", "Week Frequency Informations Is Required..");
                         SelectedAssets = null;
@@ -83,7 +96,11 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 3)
                 {
-                    if (assetMaintainance.MonthlyPeriod == null && assetMaintainance.MonthlyDay == null)
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                    if (assetMaintainance.MonthlyPeriod == null || assetMaintainance.MonthlyDay == null)
                     {
                         ModelState.AddModelError("", "Month Frequency Informations Is Required..");
                         SelectedAssets = null;
@@ -92,7 +109,11 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 }
                 if (assetMaintainance.AssetMaintainanceFrequencyId == 4)
                 {
-                    if (assetMaintainance.YearlyDay == null && assetMaintainance.MonthId == null)
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    if (assetMaintainance.YearlyDay == null || assetMaintainance.MonthId == null)
                     {
                         ModelState.AddModelError("", "Year Frequency Informations Is Required..");
                         SelectedAssets = null;
@@ -110,6 +131,11 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     {
                         foreach (var asset in SelectedAssets)
                         {
+                            if (asset.AssetStatusId == 9)
+                            {
+                                _toastNotification.AddErrorToastMessage(asset.AssetTagId + "Already in Maintainance");
+                                return Page();
+                            }
                             AssetMaintainance assetMaintainanceObj = new AssetMaintainance
                             {
                                 AssetMaintainanceDetails = assetMaintainance.AssetMaintainanceDetails,

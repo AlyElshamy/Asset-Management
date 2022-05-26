@@ -22,5 +22,10 @@ namespace AssetProject.ReportModels
         public string WeekDayTl { set; get; }
         public string MonthTl { set; get; }
         public int? TechnicianId { set; get; }
+        public DateTime? ScheduleDate { set; get; }
+        public int? MaintStatusId { set; get; }
+        public string photo { set; get; }
+
+
     }
 }

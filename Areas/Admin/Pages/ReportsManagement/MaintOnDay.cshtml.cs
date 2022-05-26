@@ -15,12 +15,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
-    [Authorize]
-    public class MaintainanceReportModel : PageModel
+    public class MaintOnDayModel : PageModel
     {
         private readonly AssetContext _context;
 
-        public MaintainanceReportModel(AssetContext context, UserManager<ApplicationUser> userManager)
+        public MaintOnDayModel(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             UserManger = userManager;
@@ -29,7 +28,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         [BindProperty]
         public FilterModel filterModel { get; set; }
         public int AssetId { get; set; }
-        public rptMaintainance Report { get; set; }
+        public rptMaintOnDay Report { get; set; }
         UserManager<ApplicationUser> UserManger;
         public Tenant tenant { set; get; }
 
@@ -38,13 +37,13 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-           
-            Report = new rptMaintainance(tenant);
+
+            Report = new rptMaintOnDay(tenant);
             return Page();
         }
         public async Task<IActionResult> OnPost()
         {
-            List<MaintainanceModel> ds = _context.AssetMaintainances.Include(e=>e.AssetMaintainanceFrequency).Include(e=>e.MaintainanceStatus).Include(e=>e.Technician).Select(i => new MaintainanceModel
+            List<MaintainanceModel> ds = _context.AssetMaintainances.Include(e => e.AssetMaintainanceFrequency).Include(e => e.MaintainanceStatus).Include(e => e.Technician).Select(i => new MaintainanceModel
             {
                 AssetCost = i.Asset.AssetCost,
                 AssetSerialNo = i.Asset.AssetSerialNo,
@@ -57,20 +56,19 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 MaintainanceStatusTL = i.MaintainanceStatus.MaintainanceStatusTitle,
                 TechnicianName = i.Technician.FullName,
                 TechnicianId = i.TechnicianId,
-                AssetMaintainanceDateCompleted=i.AssetMaintainanceDateCompleted,
-                MaintStatusId=i.MaintainanceStatusId
+                AssetMaintainanceDateCompleted = i.AssetMaintainanceDateCompleted,
+                MaintStatusId = i.MaintainanceStatusId
             }).ToList();
 
             if (filterModel.radiobtn != null)
             {
-            
-                if (filterModel.radiobtn == "Schedule Date"&& filterModel.FromDate != null && filterModel.ToDate != null)
+                if (filterModel.radiobtn == "Schedule Date" && filterModel.OnDay != null )
                 {
-                    ds = ds.Where(i => i.ScheduleDate <= filterModel.ToDate && i.ScheduleDate >= filterModel.FromDate).ToList();
+                    ds = ds.Where(i => i.ScheduleDate == filterModel.OnDay).ToList();
                 }
-                else if (filterModel.radiobtn == "Completed Date" && filterModel.FromDate != null && filterModel.ToDate != null)
+                else if (filterModel.radiobtn == "Completed Date" && filterModel.OnDay != null)
                 {
-                    ds = ds.Where(i => i.AssetMaintainanceDateCompleted <= filterModel.ToDate && i.AssetMaintainanceDateCompleted >= filterModel.FromDate).ToList();
+                    ds = ds.Where(i => i.AssetMaintainanceDateCompleted == filterModel.OnDay).ToList();
                 }
             }
             if (filterModel.AssetTagId != null)
@@ -85,23 +83,24 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.MaintStatusId == filterModel.MaintStatusId).ToList();
             }
-            if ( filterModel.FromDate != null && filterModel.ToDate != null && filterModel.radiobtn == null)
+            
+            if (filterModel.OnDay != null&& filterModel.radiobtn==null)
             {
-                ds = ds.Where(i => i.ScheduleDate <= filterModel.ToDate && i.ScheduleDate >= filterModel.FromDate).ToList();
+                ds = ds.Where(i => i.ScheduleDate == filterModel.OnDay).ToList();
             }
-            if (filterModel.radiobtn == null  && filterModel.MaintStatusId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.TechnicianId == null&& filterModel.AssetTagId == null)
+            if (filterModel.radiobtn == null && filterModel.MaintStatusId == null && filterModel.OnDay == null && filterModel.TechnicianId == null && filterModel.AssetTagId == null)
             {
                 ds = null;
             }
-            if (filterModel.radiobtn != null && filterModel.MaintStatusId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.TechnicianId == null && filterModel.AssetTagId == null)
+            if (filterModel.radiobtn != null && filterModel.MaintStatusId == null && filterModel.OnDay == null && filterModel.TechnicianId == null && filterModel.AssetTagId == null)
             {
                 ds = null;
             }
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-           
-            Report = new rptMaintainance(tenant);
+
+            Report = new rptMaintOnDay(tenant);
             Report.DataSource = ds;
             return Page();
         }
