@@ -241,7 +241,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 string DirectionTitle = "Direction Title : ";
                 ActionType SelectedActionType = Context.ActionTypes.Find(assetMovement.ActionTypeId);
                 AssetMovementDirection Direction = Context.AssetMovementDirections.Find(assetMovement.AssetMovementDirectionId);
-                string TransactionDate = assetMovement.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string TransactionDate = assetMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 AssetLog assetLog = new AssetLog()
                 {
                     ActionLogId = 17,
@@ -283,7 +283,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 string DirectionTitle = "Direction Title : ";
                 string TransDate = "Transaction Date : ";
                 AssetMovementDirection Direction = Context.AssetMovementDirections.Find(assetMovement.AssetMovementDirectionId);
-                string TransactionDate = assetMovement.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string TransactionDate = assetMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 AssetLog assetLog = new AssetLog()
                 {
                     ActionLogId = 16,
@@ -727,7 +727,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             AssetWarranty _assetwarranty = Context.AssetWarranties.Where(e => e.WarrantyId == assetwarranty.WarrantyId).FirstOrDefault();
             try
             {
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 21,
+                    AssetId = _assetwarranty.AssetId,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"Dettached Asset Warranty With Warranty Length: {_assetwarranty.Length} and Expiration Date : {_assetwarranty.ExpirationDate}")
+                };
+                Context.AssetLogs.Add(assetLog);
                 Context.AssetWarranties.Remove(_assetwarranty);
+                Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Asset Warranty Dettached Succeffully");
             }
             catch (Exception)
@@ -737,7 +746,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             //AssetWarranty insurance = Context.AssetWarranties.Find(assetwarranty.WarrantyId);
             //AssetLog assetLog = new AssetLog()
             //{
-            //    ActionLogId = 21,
+            //    ActionLogId = 7,
             //    AssetId = assetInsurance.AssetId,
             //    ActionDate = DateTime.Now,
             //    Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")

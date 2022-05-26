@@ -9,7 +9,7 @@ namespace AssetProject.Models
     {
         [Key]
         public int AssetMovementId { set; get; }
-        public DateTime TransactionDate { set; get; }
+        public DateTime? TransactionDate { set; get; }
         [ForeignKey("Employee")]
         public int? EmpolyeeID { set; get; }
         public Employee Employee { set; get; }
