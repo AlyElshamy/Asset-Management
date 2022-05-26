@@ -17,11 +17,11 @@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
 
-                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
+                    @(Html.DevExtreme().DataGrid<AssetProject.ReportModels.AssetReportsModel>()
 .DataSource(ds => ds.Mvc()
     .Controller("Alerts")
     .LoadAction("GetExpiringCheckOut")
-    .Key("AssetId")
+    .Key("AssetID")
 )
 .RemoteOperations(true)
  .ShowBorders(true)
@@ -45,25 +45,13 @@ columns.AddFor(m => m.Photo).Caption(sharedResource["Photo"]).Width(100)
     columns.AddFor(m => m.AssetTagId).Caption(sharedResource["Asset TagId"]);
     columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["Asset Serial Number"]);
     columns.AddFor(m => m.AssetCost).Caption(sharedResource["Asset Cost"]);
+    columns.AddFor(m => m.LocationTL).Caption(sharedResource["Location"]);
+    columns.AddFor(m => m.EmployeeFullName).Caption(sharedResource["Employee"]);
+    columns.AddFor(m => m.DepartmentTL).Caption(sharedResource["Department"]);
+    columns.AddFor(m => m.TransactionDate).Caption(sharedResource["Transaction Date"]);
+    columns.AddFor(m => m.DueDate).Caption(sharedResource["Due Date"]);
 
-    //columns.AddFor(m => m.AssetMovement.LocationId).Caption(sharedResource["Location"]).Lookup(lookup => lookup
-    //        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
-    //        .ValueExpr("Value")
-    //        .DisplayExpr("Text")
 
-    //    );
-    //columns.AddFor(m => m.AssetMovement.DepartmentId).Caption(sharedResource["Department"]).Lookup(lookup => lookup
-    //        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
-    //        .ValueExpr("Value")
-    //        .DisplayExpr("Text")
-    //    );
-    //columns.AddFor(m => m.AssetMovement.EmpolyeeID).Caption(sharedResource["Employee"]).Lookup(lookup => lookup
-    //    .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("EmployeesLookup").Key("Value"))
-    //    .ValueExpr("Value")
-    //    .DisplayExpr("Text")
-    //);
-    //columns.AddFor(m => m.AssetMovement.TransactionDate).Caption(sharedResource["Transaction Date"]);
-    //columns.AddFor(m => m.AssetMovement.DueDate).Caption(sharedResource["Due Date"]);
 })
 )
 
