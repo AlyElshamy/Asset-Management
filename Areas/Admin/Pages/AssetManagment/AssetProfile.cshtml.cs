@@ -743,17 +743,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
-            //AssetWarranty insurance = Context.AssetWarranties.Find(assetwarranty.WarrantyId);
-            //AssetLog assetLog = new AssetLog()
-            //{
-            //    ActionLogId = 7,
-            //    AssetId = assetInsurance.AssetId,
-            //    ActionDate = DateTime.Now,
-            //    Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
-            //};
-            //Context.AssetLogs.Add(assetLog);
-
-            Context.SaveChanges();
+              Context.SaveChanges();
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetwarranty.AssetId });
 
         }
