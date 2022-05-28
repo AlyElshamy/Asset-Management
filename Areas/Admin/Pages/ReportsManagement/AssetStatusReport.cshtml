@@ -37,6 +37,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
         items.AddButton()

@@ -34,6 +34,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)

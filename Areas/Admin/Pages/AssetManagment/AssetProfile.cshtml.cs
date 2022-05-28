@@ -501,7 +501,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         {
             var assetobj = Context.Assets.Where(e=>e.AssetId==assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
 
-            if (assetobj.AssetStatusId != 1)
+            if (assetobj.AssetStatusId != 1 || assetobj.AssetStatusId != 2)
             {
                 _toastNotification.AddErrorToastMessage("Asset Now is"+ assetobj.AssetStatus.AssetStatusTitle );
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });

@@ -13,6 +13,9 @@ namespace AssetProject.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Asset>().HasIndex(u => u.AssetSerialNo).IsUnique();
+            modelBuilder.Entity<Asset>().HasIndex(u => u.AssetTagId).IsUnique();
+
 
             //DepreciationMethod
             modelBuilder.Entity<DepreciationMethod>().HasData(new DepreciationMethod {DepreciationMethodId = 1,DepreciationMethodTitle= "Straight Line"});

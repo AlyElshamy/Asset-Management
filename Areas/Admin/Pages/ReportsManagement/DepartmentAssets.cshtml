@@ -35,6 +35,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
 

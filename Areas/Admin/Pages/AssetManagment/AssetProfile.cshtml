@@ -95,18 +95,22 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 @if (Model.Asset.AssetStatusId == 1)
                                 {
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">@sharedResource["Check Out"]</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckOutPopUp(@Model.Asset.AssetId)">@sharedResource["Check Out"]</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetSellPopUp()">@sharedResource["Asset Sell"] </a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()">@sharedResource["lease Asset"] </a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()">@sharedResource["Link Asset Dispose"]  </a>
                                 }
-                                else if(Model.Asset.AssetStatusId == 2)
+                                else if (Model.Asset.AssetStatusId == 2)
                                 {
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
                                 }
+                                else if (Model.Asset.AssetStatusId == 6)
+                                {
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
 
+                                }
                                 <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">@sharedResource["Repair Asset"]</a>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">@sharedResource["Link Asset Lost"]  </a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()">@sharedResource["Link Asset Dispose"]  </a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()">@sharedResource["lease Asset"] </a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetSellPopUp()">@sharedResource["Asset Sell"] </a>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">@sharedResource["Link AssetBroken"]  </a>
                             </div>
                         </div>
@@ -494,8 +498,15 @@ function DeletePhoto(AssetId,AssetPhotoId)
     });
     }
     function DateFormat(incomingdate) {
-        var d = new Date(incomingdate),            month = '' + (d.getMonth() + 1),            day = '' + d.getDate(),            year = d.getFullYear();
-        if (month.length < 2)            month = '0' + month;        if (day.length < 2)            day = '0' + day;        var outcomingdate = [year, month, day].join('-');
+        var d = new Date(incomingdate),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        var outcomingdate = [year, month, day].join('-');
         return outcomingdate;
     }
 </script>

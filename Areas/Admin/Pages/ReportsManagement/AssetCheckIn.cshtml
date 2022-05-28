@@ -44,6 +44,7 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
 
