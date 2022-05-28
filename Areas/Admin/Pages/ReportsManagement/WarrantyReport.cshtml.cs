@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class WarrantyReportModel : PageModel
     {
         private readonly AssetContext _context;
@@ -54,7 +55,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                Length=i.Length,
                WarrantyId= i.WarrantyId
             }).ToList();
-
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
+            }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
                 ds = ds.Where(i => i.ExpirationDate <= filterModel.ToDate && i.ExpirationDate >= filterModel.FromDate).ToList();

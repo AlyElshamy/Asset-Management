@@ -244,7 +244,7 @@
             document.getElementById("AssetStatusId").value = response.AssetStatusId
             document.getElementById("Acost").value = response.AssetCost
             document.getElementById("AserialNum").value = response.AssetSerialNo
-            console.log(Purchase)
+            console.log(DateFormat(response.AssetPurchaseDate))
 
             document.getElementById("ApurshaseDate").value = DateFormat(response.AssetPurchaseDate)
             $("#AItem").dxLookup("instance").option("value", response.ItemId);

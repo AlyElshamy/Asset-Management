@@ -73,6 +73,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.ToList();
             }
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
+            }
             if (filterModel.FromDate != null&& filterModel.ToDate != null)
             {
                 ds = ds.Where(i => (i.LogActionDate.Value.Date) > filterModel.FromDate.Value.Date&& i.LogActionDate.Value.Date< filterModel.ToDate.Value.Date).ToList();

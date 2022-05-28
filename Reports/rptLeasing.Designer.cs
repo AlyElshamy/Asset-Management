@@ -40,7 +40,6 @@ namespace AssetProject.Reports
             this.tableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -52,7 +51,6 @@ namespace AssetProject.Reports
             this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell11 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.tableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell16 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -121,7 +119,6 @@ namespace AssetProject.Reports
             this.tableCell1,
             this.tableCell2,
             this.tableCell3,
-            this.tableCell4,
             this.tableCell6,
             this.tableCell7,
             this.tableCell8});
@@ -158,7 +155,7 @@ namespace AssetProject.Reports
             this.tableCell2.StylePriority.UseTextAlignment = false;
             this.tableCell2.Text = "Asset Tag Id";
             this.tableCell2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell2.Weight = 0.10531843919020432D;
+            this.tableCell2.Weight = 0.17159259490618756D;
             // 
             // tableCell3
             // 
@@ -167,16 +164,7 @@ namespace AssetProject.Reports
             this.tableCell3.StylePriority.UseTextAlignment = false;
             this.tableCell3.Text = "Asset Cost";
             this.tableCell3.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell3.Weight = 0.094717917809119589D;
-            // 
-            // tableCell4
-            // 
-            this.tableCell4.Name = "tableCell4";
-            this.tableCell4.StyleName = "DetailCaption1";
-            this.tableCell4.StylePriority.UseTextAlignment = false;
-            this.tableCell4.Text = "Asset Serial No";
-            this.tableCell4.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell4.Weight = 0.1540384119608158D;
+            this.tableCell3.Weight = 0.16719051353993158D;
             // 
             // tableCell6
             // 
@@ -185,7 +173,7 @@ namespace AssetProject.Reports
             this.tableCell6.StylePriority.UseTextAlignment = false;
             this.tableCell6.Text = "Leasing Start Date";
             this.tableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell6.Weight = 0.20110137854846508D;
+            this.tableCell6.Weight = 0.21639303906248564D;
             // 
             // tableCell7
             // 
@@ -228,7 +216,6 @@ namespace AssetProject.Reports
             this.tableCell9,
             this.tableCell10,
             this.tableCell11,
-            this.tableCell12,
             this.tableCell14,
             this.tableCell15,
             this.tableCell16});
@@ -276,7 +263,7 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetTagId]")});
             this.tableCell10.Name = "tableCell10";
             this.tableCell10.StyleName = "DetailData1";
-            this.tableCell10.Weight = 0.10531843919020432D;
+            this.tableCell10.Weight = 0.17159257737026762D;
             // 
             // tableCell11
             // 
@@ -285,16 +272,8 @@ namespace AssetProject.Reports
             this.tableCell11.Name = "tableCell11";
             this.tableCell11.StyleName = "DetailData1";
             this.tableCell11.StylePriority.UseTextAlignment = false;
-            this.tableCell11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.tableCell11.Weight = 0.094717923677884619D;
-            // 
-            // tableCell12
-            // 
-            this.tableCell12.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetSerialNo]")});
-            this.tableCell12.Name = "tableCell12";
-            this.tableCell12.StyleName = "DetailData1";
-            this.tableCell12.Weight = 0.15403833419620053D;
+            this.tableCell11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            this.tableCell11.Weight = 0.16719043787213958D;
             // 
             // tableCell14
             // 
@@ -303,7 +282,7 @@ namespace AssetProject.Reports
             this.tableCell14.Name = "tableCell14";
             this.tableCell14.StyleName = "DetailData1";
             this.tableCell14.TextFormatString = "{0:dd-MM-yyyy}";
-            this.tableCell14.Weight = 0.201101528420508D;
+            this.tableCell14.Weight = 0.21639321024239025D;
             // 
             // tableCell15
             // 
@@ -597,7 +576,6 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRTableRow tableRow1;
         private DevExpress.XtraReports.UI.XRTableCell tableCell2;
         private DevExpress.XtraReports.UI.XRTableCell tableCell3;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell4;
         private DevExpress.XtraReports.UI.XRTableCell tableCell6;
         private DevExpress.XtraReports.UI.XRTableCell tableCell7;
         private DevExpress.XtraReports.UI.XRTableCell tableCell8;
@@ -606,7 +584,6 @@ namespace AssetProject.Reports
         private DevExpress.XtraReports.UI.XRTableRow tableRow2;
         private DevExpress.XtraReports.UI.XRTableCell tableCell10;
         private DevExpress.XtraReports.UI.XRTableCell tableCell11;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell12;
         private DevExpress.XtraReports.UI.XRTableCell tableCell14;
         private DevExpress.XtraReports.UI.XRTableCell tableCell15;
         private DevExpress.XtraReports.UI.XRTableCell tableCell16;

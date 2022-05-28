@@ -104,7 +104,7 @@ namespace AssetProject.Reports
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrPictureBox5,
             this.xrTable2});
-            this.Detail.HeightF = 170.0835F;
+            this.Detail.HeightF = 40.625F;
             this.Detail.Name = "Detail";
             // 
             // xrPictureBox5

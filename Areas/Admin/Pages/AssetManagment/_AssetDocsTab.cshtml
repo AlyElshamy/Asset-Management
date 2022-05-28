@@ -79,8 +79,8 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                 items.AddSimpleFor(m => m.DocumentType).Label(k => k.Text(sharedResource["Document"])).Template(@<text>
                      <div class="form-group">
                               <div class="custom-file">
-                                  <input type="file" name="file" accept=".docx, .doc, .pdf" class="custom-file-input" onchange="changephotoname()" id="Photo" required>
-                                  <label class="custom-file-label" for="File" id="photolabel">@sharedResource["Choose New File"]</label>
+                                  <input type="file" name="file" accept=".docx, .doc, .pdf" class="custom-file-input" id="dc" onchange="docName()" required>
+                                  <label class="custom-file-label" for="File" id="doclabel">@sharedResource["Choose New File"]</label>
                               </div>
                           </div>
                                 </text> );
@@ -114,13 +114,15 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
     </div>
     </div>
     <script>
-        function changephotoname() {
-            console.log("in photo")
-            var fileName = document.getElementById("Photo").value.split("\\").pop();;
-            document.getElementById("photolabel").innerHTML = fileName;
 
+        function docName() {
+            
+            var fileName = document.getElementById("dc").value.split("\\").pop();
+            console.log(document.getElementById("dc").value.split("\\").pop())
+            
+            document.getElementById("doclabel").innerHTML = fileName;
         }
-
+        
         function deleteButtonClick(data) {
             var grid = $('#gridDocumentContainer').dxDataGrid('instance');
             var rowIndex = grid.getRowIndexByKey(data.AssetDocumentId)

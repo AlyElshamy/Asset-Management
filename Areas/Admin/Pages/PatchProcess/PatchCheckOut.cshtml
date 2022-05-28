@@ -1,8 +1,5 @@
 ﻿@page
-@{
-    var day = Model.assetmovement.TransactionDate.Value.Date.Day;
-    var date = Model.assetmovement.TransactionDate.Value.ToShortDateString();
-}
+
 @Html.AntiForgeryToken()
 @model AssetProject.Areas.Admin.Pages.PatchProcess.PatchCheckOutModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf

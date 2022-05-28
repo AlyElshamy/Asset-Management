@@ -37,15 +37,9 @@
 .Columns(columns =>
 {
     columns.AddFor(m => m.Contract.Title).Caption(sharedResource["Contract Title"]);
-    columns.AddFor(m => m.Contract.Vendor.VendorTitle).Caption(sharedResource["Vendor Title"]);
     columns.AddFor(m => m.Contract.StartDate).Caption(sharedResource["StartDate"]);
     columns.AddFor(m => m.Contract.EndDate).Caption(sharedResource["EndDate"]);
     columns.AddFor(m => m.Contract.Description).Caption(sharedResource["Contract Description"]);
-    columns.AddFor(m => m.ContractId).Caption(sharedResource["Contract"]).Lookup(lookup => lookup
-                    .DataSource(ds => ds.WebApi().Controller("AssetContracts").LoadAction("ContractsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-    );
 
 columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
 .CellTemplate(@<text>

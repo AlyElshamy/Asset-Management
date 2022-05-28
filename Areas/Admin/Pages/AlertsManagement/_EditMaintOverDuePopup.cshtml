@@ -264,6 +264,7 @@
         if (maintstatusValue != null) {
             if (maintstatusValue.Text == "Completed") {
                 document.getElementById("maintcompleteddate").style.display = 'block'
+                document.getElementById("maintDateCompleted").setAttribute('required', '')
 
             } else {
                 document.getElementById("maintcompleteddate").style.display = 'none'

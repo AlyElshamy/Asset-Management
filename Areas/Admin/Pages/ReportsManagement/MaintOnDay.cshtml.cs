@@ -14,7 +14,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
-{
+{    
+    [Authorize]
     public class MaintOnDayModel : PageModel
     {
         private readonly AssetContext _context;

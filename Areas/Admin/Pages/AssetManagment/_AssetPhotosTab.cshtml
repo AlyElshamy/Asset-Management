@@ -5,56 +5,7 @@
 }
 @model int
 @inject AssetContext Context;
-
-    <head>
-        <style>
-            .photo-galery-with-zoom {
-                display: flex;
-                width: 100%;
-                flex-wrap: wrap;
-                justify-content: equally-spaced;
-            }
-
-                .photo-galery-with-zoom label {
-                    position: relative;
-                }
-
-                .photo-galery-with-zoom img {
-                    height: 19vh;
-                    width: 19vh;
-                    object-fit: contain;
-                }
-
-                .photo-galery-with-zoom input:checked + img {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    z-index: 5;
-                    width: 100vw;
-                    height: 100vh;
-                    object-fit: contain;
-                }
-
-                .photo-galery-with-zoom input {
-                    width: 19vh;
-                    height: 19vh;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    opacity: 0;
-                    z-index: 2;
-                }
-
-                    .photo-galery-with-zoom input:checked {
-                        width: 100vw;
-                        height: 100vh;
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                    }
-        </style>
-
-    </head>
+    
 
  <a href="javascript:void(0)" onclick="ShowAddAssetPhotoPopUp()" class="btn btn-primary" style="float:right">@sharedResource["Add New Photo"] </a>
  <p id="Deletephotot"></p>
@@ -121,7 +72,7 @@
     {
 
         var AssetPhoto = "/" + item.PhotoUrl;
-        <div class="product">
+        @*<div class="product">
             <div id="divimage" class="product-header">
 
                 <div class="photo-galery-with-zoom" data-scale="1.6">
@@ -131,12 +82,12 @@
                     </label>
                 </div>
             </div>
-        </div>
+        </div>*@
 
 
 
 
-        @*<div class="product">
+        <div class="product">
                 <div id="divimage" class="product-header">
 
                     <img id="@item.AssetPhotoId"  src="@AssetPhoto" />
@@ -147,13 +98,13 @@
                             </a>
 
                         </li>
-                        <li class="">
+                        @*<li class="">
 
                             <i class="fa fa-search-plus" onclick="ZoomImage(@item.AssetPhotoId)" aria-hidden="true"></i>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
-            </div>*@
+            </div>
     }
 </div>
 
@@ -182,7 +133,7 @@
                 }
                 function changephotoname() {
                     console.log("in photo")
-                    var fileName = document.getElementById("Photo").value.split("\\").pop();;
+                    var fileName = document.getElementById("Photo").value.split("\\").pop();
                     document.getElementById("photolabel").innerHTML = fileName;
 
                 }

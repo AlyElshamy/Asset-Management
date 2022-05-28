@@ -202,12 +202,18 @@
 </div>
 
 <script>
-     function changephotoname() {
-         console.log("in photo")
-                var fileName = document.getElementById("Photo").value.split("\\").pop();;
-                    document.getElementById("photolabel").innerHTML=fileName;
+
+    $("#text").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+     //function changephotoname() {
+     //    console.log("in photo")
+     //           var fileName = document.getElementById("Photo").value.split("\\").pop();;
+     //               document.getElementById("photolabel").innerHTML=fileName;
                   
-            }
+     //       }
 
             
                  function ChangeDepreciation() {

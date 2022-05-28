@@ -72,7 +72,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
                 if (instance.DepreciableAsset)
                 {
-                    if (Asset.DepreciationMethodId == null)
+                    if (instance.DepreciationMethodId == null)
                     {
                         _toastNotification.AddErrorToastMessage("Asset Not Edited,must select Depreciation Method ");
                         return Page();

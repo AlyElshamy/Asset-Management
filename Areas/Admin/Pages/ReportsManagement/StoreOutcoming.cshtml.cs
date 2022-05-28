@@ -7,6 +7,7 @@ using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class StoreOutcomingModel : PageModel
     {
         private readonly AssetContext _context;
@@ -70,6 +72,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             if (filterModel.StoreId != null)
             {
                 ds = ds.Where(i => i.StoreId == filterModel.StoreId).ToList();
+            }
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
             }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {

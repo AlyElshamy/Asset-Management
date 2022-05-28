@@ -31,7 +31,7 @@ namespace AssetProject.Controllers
             var assetcontracts = _context.AssetContracts.Where(e=>e.AssetId==AssetId).Select(i => new {
                 i.AssetContractID,
                 i.Contract,
-                i.ContractId
+                i.ContractId,
             });
 
 

@@ -67,6 +67,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.CustomerId == filterModel.CustomerId).ToList();
             }
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
+            }
             if (filterModel.FromDate!=null&&filterModel.ToDate!=null)
             {
                 ds = ds.Where(i => i.LeasingStartDate <= filterModel.ToDate && i.LeasingStartDate >= filterModel.FromDate).ToList();
