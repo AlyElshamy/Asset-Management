@@ -537,51 +537,302 @@ namespace AssetProject.Controllers
             var AssetPurchaseCostCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a => a.AssetCost);
             return Ok(new { AssetPurchaseCostCY });
         }
-        //Alerts
+
+
+
+        //start Alerts
         [HttpGet]
         public IActionResult GetContractsExpiringCount()
         {
-            var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
-            return Ok(new { ContractsExpiringCount });
+            try
+            {
+                var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                return Ok(new { ContractsExpiringCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetContractsExpiringList()
+        {
+            try
+            {
+
+                var contracts = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Select(i => new
+                {
+                    i.Title,
+                    i.Description,
+                    i.ContractNo,
+                    i.Cost,
+                    i.StartDate,
+                    i.EndDate,
+                    i.Vendor.VendorTitle
+                });
+                return Ok(contracts);
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
         [HttpGet]
         public IActionResult GetInsurancesExpiringCount()
         {
-            var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
-            return Ok(new { InsurancesExpiringCount });
+            try
+            {
+                var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                return Ok(new { InsurancesExpiringCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetInsurancesExpiringList()
+        {
+            try
+            {
+
+
+                var insurances = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Select(i => new
+                {
+                    i.Title,
+                    i.ContactPerson,
+                    i.InsuranceCompany,
+                    i.StartDate,
+                    i.EndDate,
+                    i.PolicyNo
+
+                });
+                return Ok(insurances);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
         [HttpGet]
         public IActionResult GetMaintainanceDueCount()
         {
-            var MaintainanceDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
-            return Ok(new { MaintainanceDueCount });
+            try
+            {
+                var MaintainanceDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
+                return Ok(new { MaintainanceDueCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetMaintenanceDueList()
+        {
+            try
+            {
+
+
+                var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+                {
+                    i.AssetMaintainanceId,
+                    i.AssetMaintainanceTitle,
+                    i.AssetMaintainanceRepairesCost,
+                    i.ScheduleDate,
+                    i.AssetMaintainanceDetails,
+                    i.Technician,
+                    i.Asset.AssetTagId,
+                    i.Asset.Photo,
+                    i.Asset.AssetCost,
+                    i.Asset.AssetSerialNo
+
+                });
+                return Ok(Maintainances);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
         [HttpGet]
         public IActionResult GetMaintainanceOverDueCount()
         {
-            var MaintainanceOverDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
-            return Ok(new { MaintainanceOverDueCount });
+            try
+            {
+                var MaintainanceOverDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
+                return Ok(new { MaintainanceOverDueCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetMaintenanceoverDueList()
+        {
+            try
+            {
+
+                var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+                {
+                    i.AssetMaintainanceId,
+                    i.AssetMaintainanceTitle,
+                    i.AssetMaintainanceRepairesCost,
+                    i.ScheduleDate,
+                    i.AssetMaintainanceDetails,
+                    i.Technician,
+                    i.Asset.AssetTagId,
+                    i.Asset.Photo,
+                    i.Asset.AssetCost,
+                    i.Asset.AssetSerialNo
+                });
+                return Ok(Maintainances);
+
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
         [HttpGet]
         public IActionResult GetWarrantiesExpiringCount()
         {
-            var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
-            return Ok(new { WarrantiesExpiringCount });
+            try
+            {
+                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+                return Ok(new { WarrantiesExpiringCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetWarrantiesExpiringList()
+        {
+            try
+            {
+
+
+                var warranty = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Include(i => i.Asset).Select(i => new
+                {
+                    i.ExpirationDate,
+                    i.Length,
+                    i.Notes,
+                    i.Asset.AssetCost,
+                    i.Asset.AssetSerialNo,
+                    i.Asset.Photo,
+                    i.Asset.AssetTagId
+                });
+                return Ok(warranty);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAssetsPastDueCount()
+        {
+            try
+            {
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Count();
+                return Ok(new { AssetsCheckOut });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+
+        }
+        [HttpGet]
+        public IActionResult GetAssetsPastDueList()
+        {
+            try
+            {
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new AssetProject.ReportModels.AssetReportsModel
+                {
+                    AssetID = i.AssetId,
+                    AssetCost = i.AssetCost,
+                    AssetSerialNo = i.AssetSerialNo,
+                    AssetTagId = i.AssetTagId,
+                    Photo = i.Photo,
+                    TransactionDate = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.TransactionDate,
+                    DueDate = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate,
+                    LocationTL = _context.Locations.Where(a => a.LocationId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.LocationId).FirstOrDefault().LocationTitle,
+                    DepartmentTL = _context.Departments.Where(a => a.DepartmentId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DepartmentId).FirstOrDefault().DepartmentTitle,
+                    EmployeeFullName = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID == null ? null : _context.Employees.Where(a => a.ID == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID).FirstOrDefault().FullName,
+
+                });
+
+                return Ok(AssetsCheckOut);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetLeasesExpiringCount()
+        {
+            try
+            {
+                var LeasingCount = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Count();
+                return Ok(new { LeasingCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetLeasesExpiringList()
+        {
+            try
+            {
+                var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.LeasingModel
+                {
+                    AssetId = i.AssetId,
+                    AssetCost = i.AssetCost,
+                    AssetSerialNo = i.AssetSerialNo,
+                    AssetTagId = i.AssetTagId,
+                    photo = i.Photo,
+
+                    LeasingEndDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate,
+                    LeasingStartDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.StartDate,
+                    LeasingCost = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.LeasedCost,
+                    CustomerTL = _context.Customers.Where(a => a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().FullName,
+
+
+                });
+                return Ok(leasing);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+
         }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+        //end Alerts
 
         [HttpGet]
         public IActionResult GetCheckOutList()
@@ -805,7 +1056,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id..");
         }
-
         [HttpGet]
         public IActionResult GetAssetDocuments(int? AssetId)
         {
@@ -904,8 +1154,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Document Id..");
         }
-
-
         [HttpGet]
         public IActionResult GetAllContracts()
         {
@@ -958,7 +1206,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id.. ");
         }
-
         [HttpPost]
         public IActionResult PostLinkAssetContract(AssetContract assetcontract)
         {
@@ -1035,7 +1282,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id..");
         }
-
         [HttpGet]
         public IActionResult GetAllInsurances()
         {
@@ -1093,7 +1339,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id..");
         }
-
         [HttpPost]
         public IActionResult postAddAssetInsurance(AssetsInsurance assetsInsurance)
         {
@@ -1131,7 +1376,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Insurance Id..");
         }
-
         [HttpDelete]
         public IActionResult DeleteAssetInsurance(AssetsInsurance assetInsurance)
         {
@@ -1169,7 +1413,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Insurance Id..");
         }
-
         [HttpGet]
         public IActionResult GetAssetWarrantiesById(int? AssetId)
         {
@@ -1192,8 +1435,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id..");
         }
-
-
         [HttpPost]
         public IActionResult OnPostAddAssetWarranty(AssetWarranty assetWarranty)
         {
@@ -1225,11 +1466,8 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id..");
         }
-
-
-
         [HttpDelete]
-        public IActionResult DeleteAssetWarranty(int? AssetWarrantyId)
+        public IActionResult DeattachAssetWarranty(int? AssetWarrantyId)
         {
             if (AssetWarrantyId != 0 && AssetWarrantyId != null)
             {
@@ -1259,7 +1497,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Warranty Id..");
         }
-
         [HttpGet]
         public IActionResult GetAllCategories()
         {
@@ -1352,6 +1589,395 @@ namespace AssetProject.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult PostAddAssetMaintainance(AssetMaintainance assetMaintainance)
+        {
+            try
+            {
+                var assetobj = _context.Assets.Where(e => e.AssetId == assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
+                if (assetobj == null)
+                {
+                    return BadRequest("Enter Correct Asset Id..");
+
+                }
+                if (assetobj.AssetStatusId != 1 || assetobj.AssetStatusId != 2)
+                {
+                    return BadRequest($"This Asset noW {assetobj.AssetStatus.AssetStatusTitle}..");
+                }
+                if (assetMaintainance.AssetId == 0)
+                {
+                    return BadRequest("Enter Correct Asset Id..");
+                }
+                if (assetMaintainance.AssetMaintainanceTitle == null)
+                {
+                    return BadRequest("Asset Maintainance Title Is Required..");
+                }
+                if (assetMaintainance.AssetMaintainanceRepairesCost <= 0)
+                {
+                    return BadRequest("Asset Maintainance Repaire Cost Must Be Grater Than 0..");
+                }
+                if (assetMaintainance.MaintainanceStatusId == null)
+                {
+                    return BadRequest("Maintainance Status is Required..");
+
+                }
+                if (assetMaintainance.MaintainanceStatusId == 5)
+                {
+                    if (assetMaintainance.AssetMaintainanceDateCompleted != null)
+                    {
+                        return BadRequest("Asset Maintainance Date Completed Required ..");
+                    }
+                }
+                if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
+                {
+                    return BadRequest("Schedule Date Must be less than Completed Date..");
+                }
+                if (assetMaintainance.TechnicianId == null)
+                {
+                    return BadRequest("Technican Name Is Required..");
+                }
+                if (!assetMaintainance.AssetMaintainanceRepeating)
+                {
+                    assetMaintainance.AssetMaintainanceFrequencyId = null;
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                }
+                else
+                {
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 1)
+                    {
+                        assetMaintainance.WeekDayId = null;
+                        assetMaintainance.WeeklyPeriod = null;
+                        assetMaintainance.MonthlyDay = null;
+                        assetMaintainance.MonthlyPeriod = null;
+                        assetMaintainance.YearlyDay = null;
+                        assetMaintainance.MonthId = null;
+                    }
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 2)
+                    {
+                        assetMaintainance.MonthlyDay = null;
+                        assetMaintainance.MonthlyPeriod = null;
+                        assetMaintainance.YearlyDay = null;
+                        assetMaintainance.MonthId = null;
+                        if (assetMaintainance.WeeklyPeriod == null || assetMaintainance.WeekDayId == null)
+                        {
+                            return BadRequest("Week Frequency Informations Is Required..");
+                        }
+                    }
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 3)
+                    {
+                        assetMaintainance.WeekDayId = null;
+                        assetMaintainance.WeeklyPeriod = null;
+                        assetMaintainance.YearlyDay = null;
+                        assetMaintainance.MonthId = null;
+                        if (assetMaintainance.MonthlyPeriod == null || assetMaintainance.MonthlyDay == null)
+                        {
+                            return BadRequest("Month Frequency Informations Is Required..");
+                        }
+                    }
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 4)
+                    {
+                        assetMaintainance.WeekDayId = null;
+                        assetMaintainance.WeeklyPeriod = null;
+                        assetMaintainance.MonthlyDay = null;
+                        assetMaintainance.MonthlyPeriod = null;
+                        if (assetMaintainance.YearlyDay == null || assetMaintainance.MonthId == null)
+                        {
+                            return BadRequest("Year Frequency Informations Is Required..");
+                        }
+                    }
+                }
+                if (ModelState.IsValid)
+                {
+
+
+
+                    assetMaintainance.AssetMaintainanceDueDate = DateTime.Now;
+                    _context.AssetMaintainances.Add(assetMaintainance);
+                    assetobj.AssetStatusId = 9;
+                    var UpdatedAsset = _context.Assets.Attach(assetobj);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    string DueDate = assetMaintainance.AssetMaintainanceDueDate?.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    string CompletedDate = assetMaintainance.AssetMaintainanceDateCompleted?.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 18,
+                        AssetId = assetMaintainance.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"Maintainance Asset with Title {assetMaintainance.AssetMaintainanceTitle} and DueDate {DueDate} and Completed Date {CompletedDate}")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                    _context.SaveChanges();
+
+                    return BadRequest("Asset Maintainance Added successfully");
+                }
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            return BadRequest("Asset Maintainance Not Added ,Try again");
+        }
+
+
+        [HttpPut]
+        public IActionResult OnPostEditAssetMaintainance(AssetMaintainance assetMaintainance)
+        {
+            try
+            {
+                if (assetMaintainance.AssetId == 0)
+                {
+                    return BadRequest("Enter Correct Asset Id..");
+                }
+                if (assetMaintainance.AssetMaintainanceTitle == null)
+                {
+                    return BadRequest("Asset Maintainance Title Is Required..");
+                }
+                if (assetMaintainance.AssetMaintainanceRepairesCost <= 0)
+                {
+                    return BadRequest("Asset Maintainance Repaire Cost Must Be Grater Than 0..");
+                }
+                if (assetMaintainance.MaintainanceStatusId == null)
+                {
+                    return BadRequest("Maintainance Status is Required..");
+
+                }
+                if (assetMaintainance.MaintainanceStatusId == 5)
+                {
+                    if (assetMaintainance.AssetMaintainanceDateCompleted != null)
+                    {
+                        return BadRequest("Asset Maintainance Date Completed Required ..");
+                    }
+                }
+                if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
+                {
+                    return BadRequest("Schedule Date Must be less than Completed Date..");
+                }
+                if (assetMaintainance.TechnicianId == null)
+                {
+                    return BadRequest("Technican Name Is Required..");
+                }
+                if (!assetMaintainance.AssetMaintainanceRepeating)
+                {
+                    assetMaintainance.AssetMaintainanceFrequencyId = null;
+                    assetMaintainance.WeekDayId = null;
+                    assetMaintainance.WeeklyPeriod = null;
+                    assetMaintainance.MonthlyDay = null;
+                    assetMaintainance.MonthlyPeriod = null;
+                    assetMaintainance.YearlyDay = null;
+                    assetMaintainance.MonthId = null;
+                }
+                else
+                {
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 1)
+                    {
+                        assetMaintainance.WeekDayId = null;
+                        assetMaintainance.WeeklyPeriod = null;
+                        assetMaintainance.MonthlyDay = null;
+                        assetMaintainance.MonthlyPeriod = null;
+                        assetMaintainance.YearlyDay = null;
+                        assetMaintainance.MonthId = null;
+                    }
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 2)
+                    {
+                        assetMaintainance.MonthlyDay = null;
+                        assetMaintainance.MonthlyPeriod = null;
+                        assetMaintainance.YearlyDay = null;
+                        assetMaintainance.MonthId = null;
+                        if (assetMaintainance.WeeklyPeriod == null || assetMaintainance.WeekDayId == null)
+                        {
+                            return BadRequest("Week Frequency Informations Is Required..");
+                        }
+                    }
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 3)
+                    {
+                        assetMaintainance.WeekDayId = null;
+                        assetMaintainance.WeeklyPeriod = null;
+                        assetMaintainance.YearlyDay = null;
+                        assetMaintainance.MonthId = null;
+                        if (assetMaintainance.MonthlyPeriod == null || assetMaintainance.MonthlyDay == null)
+                        {
+                            return BadRequest("Month Frequency Informations Is Required..");
+                        }
+                    }
+                    if (assetMaintainance.AssetMaintainanceFrequencyId == 4)
+                    {
+                        assetMaintainance.WeekDayId = null;
+                        assetMaintainance.WeeklyPeriod = null;
+                        assetMaintainance.MonthlyDay = null;
+                        assetMaintainance.MonthlyPeriod = null;
+                        if (assetMaintainance.YearlyDay == null || assetMaintainance.MonthId == null)
+                        {
+                            return BadRequest("Year Frequency Informations Is Required..");
+                        }
+                    }
+                }
+                if (ModelState.IsValid)
+                {
+                    var UpdatedMaintainance = _context.AssetMaintainances.Attach(assetMaintainance);
+                    UpdatedMaintainance.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    var Status = _context.MaintainanceStatuses.Find(assetMaintainance.MaintainanceStatusId).MaintainanceStatusTitle;
+
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 22,
+                        AssetId = assetMaintainance.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"Edit Asset Maintainance with Status {Status}")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                    _context.SaveChanges();
+                    return BadRequest("Asset Maintainance Added successfully");
+                }
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            return BadRequest("Asset Maintainance Not Added ,Try again");
+        }
+
+        [HttpGet]
+        public IActionResult GetAssetMaintainance(int? AssetId)
+        {
+            if (AssetId != null)
+            {
+                try
+                {
+                    var assetmaintainances = _context.AssetMaintainances.Where(a => a.AssetId == AssetId).Select(i => new
+                    {
+                        i.AssetMaintainanceId,
+                        i.AssetMaintainanceTitle,
+                        i.AssetMaintainanceDetails,
+                        i.AssetMaintainanceDueDate,
+                        i.MaintainanceStatusId,
+                        i.AssetMaintainanceDateCompleted,
+                        i.AssetMaintainanceRepairesCost,
+                        i.AssetMaintainanceRepeating,
+                        i.AssetMaintainanceFrequencyId,
+                        i.TechnicianId,
+                        i.AssetId,
+                        i.WeeklyPeriod,
+                        i.WeekDayId,
+                        i.MonthlyPeriod,
+                        i.MonthlyDay,
+                        i.MonthId,
+                        i.YearlyDay,
+                        i.ScheduleDate
+                    });
+                    return Ok(assetmaintainances);
+
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+
+                }
+
+            }
+            return BadRequest("Enter Asset Id..");
+        }
+        [HttpGet]
+        public IActionResult GetDocumentById(int? DocumentId)
+        {
+            if (DocumentId != null)
+            {
+                try
+                {
+                    var Document = _context.assetDocuments.Where(a => a.AssetDocumentId == DocumentId).Select(i => new
+                    {
+                        i.DocumentName,
+                        i.DocumentType,
+                        i.Description,
+                        i.Asset.AssetCost,
+                        i.Asset.AssetTagId,
+                        i.Asset.AssetSerialNo,
+                        i.Asset.Photo,
+                    });
+                    return Ok(Document);
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+
+                }
+
+            }
+            return BadRequest("Enter Document Id..");
+        }
+        [HttpGet]
+        public IActionResult GetContractById(int? ContractId)
+        {
+
+            if (ContractId != null)
+            {
+                try
+                {
+                    var contract = _context.AssetContracts.Where(e => e.AssetContractID == ContractId).Select(i => new
+                    {
+                        i.Contract.Description,
+                        i.Contract.ContractNo,
+                        i.Contract.Cost,
+                        i.Contract.StartDate,
+                        i.Contract.EndDate,
+                        i.Contract.Title,
+                        i.Contract.Vendor.VendorTitle,
+                        i.Asset.AssetCost,
+                        i.Asset.AssetTagId,
+                        i.Asset.AssetSerialNo,
+                        i.Asset.Photo
+                    });
+                    return Ok(contract);
+
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return BadRequest("Enter Contract Id.. ");
+        }
+        [HttpGet]
+        public IActionResult GetWarrantyById(int? WarrantyId)
+        {
+            if (WarrantyId != null)
+            {
+                try
+                {
+                    var Warranty = _context.AssetWarranties.Where(a => a.WarrantyId == WarrantyId).Select(i => new
+                    {
+                        i.Length,
+                        i.ExpirationDate,
+                        i.Notes,
+                        i.Asset.AssetCost,
+                        i.Asset.AssetTagId,
+                        i.Asset.AssetSerialNo,
+                        i.Asset.Photo,
+                    });
+                    return Ok(Warranty);
+                }
+                catch (Exception e)
+                {
+
+                    return BadRequest(e.Message);
+
+                }
+
+            }
+            return BadRequest("Enter Warranty Id..");
+        }
+
+
 
     }
 }
+
