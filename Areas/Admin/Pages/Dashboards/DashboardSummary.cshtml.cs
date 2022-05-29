@@ -49,7 +49,7 @@ namespace AssetProject.Areas.Admin.Pages.Dashboards
 
             TotalAssetCount = _context.Assets.Count();
             TotalAssetValue = _context.Assets.Sum(a=>a.AssetCost);
-            TotalAssetActive = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+            TotalAssetActive = _context.Assets.Where(a => a.AssetStatusId == 1|| a.AssetStatusId==2|| a.AssetStatusId==3|| a.AssetStatusId==9).Count();
             TotalAssetAvaliable = _context.Assets.Where(a => a.AssetStatusId ==1).Count();
             TotalAssetBrocken = _context.Assets.Where(a => a.AssetStatusId ==8).Count();
             TotalAssetBrockenValue = _context.Assets.Where(a => a.AssetStatusId ==8).Sum(a => a.AssetCost);
