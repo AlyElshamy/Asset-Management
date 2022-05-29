@@ -44,7 +44,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
 
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
         {
-            var Assets=_context.Assets.Where(a=>a.AssetStatusId==1).Include(a => a.AssetStatus).Select(i => new {
+            var Assets=_context.Assets.Where(a=>a.AssetStatusId==1).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,
@@ -63,7 +63,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 i.VendorId,
                 i.StoreId,
                 i.AssetStatusId,
-                i.AssetStatus
+                
 
 
             });

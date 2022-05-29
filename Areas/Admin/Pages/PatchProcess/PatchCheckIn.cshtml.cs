@@ -41,7 +41,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         }
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
         {
-            var Assets = _context.Assets.Where(a => a.AssetStatusId == 2||a.AssetStatusId==6|| a.AssetStatusId ==9|| a.AssetStatusId ==3).Include(a=>a.AssetStatus).Select(i => new {
+            var Assets = _context.Assets.Where(a => a.AssetStatusId == 2||a.AssetStatusId==6|| a.AssetStatusId ==9|| a.AssetStatusId ==3).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,
@@ -59,10 +59,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 i.DepreciationMethodId,
                 i.VendorId,
                 i.StoreId,
-                i.AssetStatusId,
-                i.AssetStatus
-
-
+                i.AssetStatusId
             });
 
             return new JsonResult(DataSourceLoader.Load(Assets, loadOptions));
