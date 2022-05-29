@@ -99,19 +99,27 @@
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetSellPopUp()">@sharedResource["Asset Sell"] </a>
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLeasingPopUp()">@sharedResource["lease Asset"] </a>
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="ShowDisposeAssetPopUp()">@sharedResource["Link Asset Dispose"]  </a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">@sharedResource["Repair Asset"]</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">@sharedResource["Link Asset Lost"]  </a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">@sharedResource["Link AssetBroken"]  </a>
                                 }
                                 else if (Model.Asset.AssetStatusId == 2)
                                 {
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">@sharedResource["Repair Asset"]</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">@sharedResource["Link Asset Lost"]  </a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">@sharedResource["Link AssetBroken"]  </a>
                                 }
                                 else if (Model.Asset.AssetStatusId == 6)
                                 {
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
 
                                 }
-                                <a class="dropdown-item" href="javascript:void(0)" onclick=" AssetRepairPopUp(@Model.Asset.AssetId)">@sharedResource["Repair Asset"]</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetLostPopUp()">@sharedResource["Link Asset Lost"]  </a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="ShowAssetBrokenPopup()">@sharedResource["Link AssetBroken"]  </a>
+                                else if (Model.Asset.AssetStatusId == 3)
+                                {
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="AssetCheckInPopUp(@Model.Asset.AssetId)">@sharedResource["Check In"]</a>
+
+                                }
                             </div>
                         </div>
                     </div><!-- card -->

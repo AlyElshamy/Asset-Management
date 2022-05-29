@@ -59,13 +59,17 @@
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
 
-                    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                    columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
+                        columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-                    columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
-
+                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                        //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
+                        columns.AddFor(m => m.AssetStatusId).Caption("Status").Lookup(lookup => lookup
+          .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
+          .ValueExpr("Value")
+          .DisplayExpr("Text")
+      );
 
 
 
@@ -73,7 +77,7 @@
 
                     })
                     .RemoteOperations(true)
-                
+
 
                     )
                     </div><!-- table-responsive -->
