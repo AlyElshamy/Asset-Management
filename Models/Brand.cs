@@ -8,7 +8,6 @@ namespace AssetProject.Models
         public int BrandId { set; get; }
         [Required]
         public string BrandTitle { set; get; }
-        public virtual ICollection<Type> Types { get; set; }
         public virtual ICollection<Item> Items { get; set; }
     }
 }

@@ -43,35 +43,26 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         public async Task<IActionResult> OnPost()
         {
 
-            List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
+            List<AssetReportsModel> ds = _context.Assets.Include(e => e.AssetStatus).Include(e => e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
-                AssetDescription = i.AssetDescription,
-                AssetLife = i.AssetLife,
                 AssetPurchaseDate = i.AssetPurchaseDate,
                 AssetSerialNo = i.AssetSerialNo,
                 AssetStatusTL = i.AssetStatus.AssetStatusTitle,
                 AssetTagId = i.AssetTagId,
-                CategoryTL = i.Item.Category.CategoryTIAR,
-                DateAcquired = i.DateAcquired,
-                DepreciableCost = i.DepreciableCost,
-                DepreciationMethodTL = i.DepreciationMethod.DepreciationMethodTitle,
-                ItemTL = i.Item.ItemTitle,
                 Photo = i.Photo,
-                StoreTL = i.Store.StoreTitle,
-                VendorTL = i.Vendor.VendorTitle,
-                SalvageValue = i.SalvageValue,
-                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
-                DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId&&a.AssetMovement.AssetMovementDirectionId==1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-                LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-                DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
-                EmployeeFullName = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Employee.FullName,
-                EmployeeId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Employee.ID,
-                CategoryId = i.Item.CategoryId,
-                WarrantyId = _context.AssetWarranties.Where(a => a.AssetId == i.AssetId ).OrderByDescending(a => a.WarrantyId).FirstOrDefault() == null ? 0 : _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault().WarrantyId,
-                WarrantyLenght = _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault() == null ? 0 : _context.AssetWarranties.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.WarrantyId).FirstOrDefault().Length
-
+                //StoreTL = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault()== null ?_context.Stores.Find(i.StoreId).StoreTitle: (_context.Stores.Find(i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.StoreId).StoreTitle),
+                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
+                DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
+                LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
+                DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
+                EmployeeFullName = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Employee.FullName,
+                EmployeeId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Employee.ID,
             }).ToList();
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.AssetTagId!=null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -88,7 +79,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.EmployeeId == filterModel.employeeId).ToList();
             }
-            if (filterModel.employeeId == null&&filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null)
+            if (filterModel.employeeId == null && filterModel.ShowAll == false && filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null)
             {
                 ds =new List<AssetReportsModel>();
             }

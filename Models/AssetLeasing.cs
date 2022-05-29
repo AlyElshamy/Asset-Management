@@ -12,7 +12,7 @@ namespace AssetProject.Models
         public DateTime EndDate { get; set; }
         public double LeasedCost { get; set; }
         public string Notes { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
         public ICollection<AssetLeasingDetails> AssetLeasingDetails { get; set; }

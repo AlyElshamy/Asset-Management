@@ -52,7 +52,7 @@ namespace AssetProject.ReportModels
         public int? ActionLogId { set; get; }
         public int? StoreId { set; get; }
 
-
+        public int? MaintStatusId { set; get; }
         public string SoldTo { set; get; }
         public int? warrantyId { get; set; }
         public string radiobtn { get; set; }

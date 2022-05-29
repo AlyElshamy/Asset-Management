@@ -57,7 +57,14 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              Photo=a.Photo
             }).ToList();
             
-
+            if(filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
+            }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
                 ds = ds.Where(i => i.AssetPurchaseDate <= filterModel.ToDate && i.AssetPurchaseDate >= filterModel.FromDate).ToList();

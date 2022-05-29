@@ -25,6 +25,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         {
             _context = context;
             _toastNotification = toastNotification;
+            assetLeasing = new AssetLeasing();
         }
 
         public void OnGet()
@@ -39,51 +40,67 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
 
         public IActionResult OnPost()
         {
-
+            if (assetLeasing.StartDate>=assetLeasing.EndDate)
+            {
+                ModelState.AddModelError("", "End Date Must Be Larger Than Start Date..");
+                SelectedAssets = null;
+                return Page();
+            }
+            if (assetLeasing.CustomerId==null)
+            {
+                ModelState.AddModelError("","Please Select Customer Name..");
+                SelectedAssets = null;
+                return Page();
+            }
+            
             if (ModelState.IsValid)
             {
-                if (SelectedAssets.Count != 0)
+                if (SelectedAssets != null)
                 {
-                    assetLeasing.AssetLeasingDetails = new List<AssetLeasingDetails>();
-                    string StartLeasingDate = assetLeasing.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                    string EndLeasingDate = assetLeasing.EndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-
-                    foreach (var asset in SelectedAssets)
+                    if (SelectedAssets.Count != 0)
                     {
+                        assetLeasing.AssetLeasingDetails = new List<AssetLeasingDetails>();
+                        string StartLeasingDate = assetLeasing.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                        string EndLeasingDate = assetLeasing.EndDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
 
-                        asset.AssetStatusId = 6;
-                        var UpdatedAsset = _context.Assets.Attach(asset);
-                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                        assetLeasing.AssetLeasingDetails.Add(new AssetLeasingDetails() { AssetId = asset.AssetId, Remarks = "" });
-
-                        AssetLog assetLog = new AssetLog()
+                        foreach (var asset in SelectedAssets)
                         {
-                            ActionLogId = 15,
-                            AssetId = asset.AssetId,
-                            ActionDate = DateTime.Now,
-                            Remark = string.Format($"Leasing Asset Date is Between {StartLeasingDate} and {EndLeasingDate}")
-                        };
-                        _context.AssetLogs.Add(assetLog);
-                    }
-                    _context.AssetLeasings.Add(assetLeasing);
 
-                
-                try
-                    {
-                        _context.SaveChanges();
+                            asset.AssetStatusId = 6;
+                            var UpdatedAsset = _context.Assets.Attach(asset);
+                            UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            assetLeasing.AssetLeasingDetails.Add(new AssetLeasingDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                            AssetLog assetLog = new AssetLog()
+                            {
+                                ActionLogId = 15,
+                                AssetId = asset.AssetId,
+                                ActionDate = DateTime.Now,
+                                Remark = string.Format($"Leasing Asset Date is Between {StartLeasingDate} and {EndLeasingDate}")
+                            };
+                            _context.AssetLogs.Add(assetLog);
+                        }
+                        _context.AssetLeasings.Add(assetLeasing);
+
+
+                        try
+                        {
+                            _context.SaveChanges();
+                        }
+                        catch (Exception e)
+                        {
+                            _toastNotification.AddErrorToastMessage("Something went Error,Try again");
+                            return Page();
+                        }
+                        _toastNotification.AddSuccessToastMessage("Asset Leasing Patched Added successfully");
+                        return RedirectToPage();
                     }
-                    catch (Exception e)
-                    {
-                        _toastNotification.AddErrorToastMessage("Something went Error,Try again");
-                        return Page();
-                    }
-                    _toastNotification.AddSuccessToastMessage("Asset Leasing Patched Added successfully");
-                    return RedirectToPage();
                 }
                 _toastNotification.AddErrorToastMessage("Please Select at Least one Asset");
                 return Page();
             }
             _toastNotification.AddErrorToastMessage("Something went Error,Try again");
+            SelectedAssets = null;
             return Page();
         }
     }

@@ -7,12 +7,14 @@ using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ReportModels;
 using AssetProject.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
+    [Authorize]
     public class AssetHistoryModel : PageModel
     {
         public AssetHistoryModel(AssetContext context, UserManager<ApplicationUser> userManager)

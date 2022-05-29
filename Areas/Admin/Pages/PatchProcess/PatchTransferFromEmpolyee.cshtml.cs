@@ -145,7 +145,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 string DirectionTitle = "Direction Title : ";
                 string TransDate = "Transaction Date : ";
                 AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
-                string TransactionDate = assetMovementObj.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 foreach (var asset in selectedAssetsList)
                 {
                     asset.AssetStatusId = 1;
@@ -198,7 +198,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 string DirectionTitle = "Direction Title : ";
                 ActionType SelectedActionType = _context.ActionTypes.Find(newAssetMovement.ActionTypeId);
                 AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
-                string TransactionDate = assetMovementObj.TransactionDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 foreach (var asset in selectedAssetsList)
                 {
                     asset.AssetStatusId = 2;

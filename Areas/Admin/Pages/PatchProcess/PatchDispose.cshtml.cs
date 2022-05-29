@@ -40,6 +40,9 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
 
             if (ModelState.IsValid)
             {
+                if (SelectedAssets!=null)
+                {
+
                 if (SelectedAssets.Count != 0)
                 {
                     disposeAsset.AssetDisposeDetails= new List<AssetDisposeDetails>();
@@ -72,19 +75,25 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     try
                     {
                         _context.SaveChanges();
+                        SelectedAssets = null;
                     }
                     catch (Exception e)
                     {
                         _toastNotification.AddErrorToastMessage("Something went Error,Try again");
+                        SelectedAssets = null;
                         return Page();
                     }
                     _toastNotification.AddSuccessToastMessage("Asset Disposd Patched Added successfully");
+                    SelectedAssets = null;
                     return RedirectToPage();
                 }
+                }
+
                 _toastNotification.AddErrorToastMessage("Please Select at Least one Asset");
                 return Page();
             }
             _toastNotification.AddErrorToastMessage("Something went Error,Try again");
+            SelectedAssets = null;
             return Page();
         }
     }

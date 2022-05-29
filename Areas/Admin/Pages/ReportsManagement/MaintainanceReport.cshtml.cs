@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -43,23 +44,35 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<MaintainanceModel> ds = _context.AssetMaintainances.Select(i => new MaintainanceModel
+            List<MaintainanceModel> ds = _context.AssetMaintainances.Include(e=>e.AssetMaintainanceFrequency).Include(e=>e.MaintainanceStatus).Include(e=>e.Technician).Select(i => new MaintainanceModel
             {
                 AssetCost = i.Asset.AssetCost,
-                AssetDescription = i.Asset.AssetDescription,
                 AssetSerialNo = i.Asset.AssetSerialNo,
                 AssetTagId = i.Asset.AssetTagId,
-                AssetMaintainanceDateCompleted = i.AssetMaintainanceDateCompleted,
-                AssetMaintainanceDueDate = i.AssetMaintainanceDueDate,
+                ScheduleDate = i.ScheduleDate,
+                photo = i.Asset.Photo,
                 AssetMaintainanceFrequencyTl = i.AssetMaintainanceFrequency.AssetMaintainanceFrequencyTitle,
                 AssetMaintainanceRepairesCost = i.AssetMaintainanceRepairesCost,
                 AssetMaintainanceTitle = i.AssetMaintainanceTitle,
-                MaintainanceStatusTL = i.AssetMaintainanceTitle,
+                MaintainanceStatusTL = i.MaintainanceStatus.MaintainanceStatusTitle,
                 TechnicianName = i.Technician.FullName,
-                MonthTl = i.Month.MonthTitle,
-                WeekDayTl = i.WeekDay.WeekDayTitle,
-                TechnicianId = i.TechnicianId
+                TechnicianId = i.TechnicianId,
+                AssetMaintainanceDateCompleted=i.AssetMaintainanceDateCompleted,
+                MaintStatusId=i.MaintainanceStatusId
             }).ToList();
+
+            if (filterModel.radiobtn != null)
+            {
+            
+                if (filterModel.radiobtn == "Schedule Date"&& filterModel.FromDate != null && filterModel.ToDate != null)
+                {
+                    ds = ds.Where(i => i.ScheduleDate <= filterModel.ToDate && i.ScheduleDate >= filterModel.FromDate).ToList();
+                }
+                else if (filterModel.radiobtn == "Completed Date" && filterModel.FromDate != null && filterModel.ToDate != null)
+                {
+                    ds = ds.Where(i => i.AssetMaintainanceDateCompleted <= filterModel.ToDate && i.AssetMaintainanceDateCompleted >= filterModel.FromDate).ToList();
+                }
+            }
             if (filterModel.AssetTagId != null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -68,11 +81,27 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.TechnicianId == filterModel.TechnicianId).ToList();
             }
-            if (filterModel.FromDate != null && filterModel.ToDate != null)
+            if (filterModel.MaintStatusId != null)
             {
-                ds = ds.Where(i => i.AssetMaintainanceDueDate <= filterModel.ToDate && i.AssetMaintainanceDueDate >= filterModel.FromDate).ToList();
+                ds = ds.Where(i => i.MaintStatusId == filterModel.MaintStatusId).ToList();
             }
-            if (filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.TechnicianId == null&& filterModel.AssetTagId == null)
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
+            }
+            if ( filterModel.FromDate != null && filterModel.ToDate != null && filterModel.radiobtn == null)
+            {
+                ds = ds.Where(i => i.ScheduleDate <= filterModel.ToDate && i.ScheduleDate >= filterModel.FromDate).ToList();
+            }
+            if (filterModel.radiobtn == null  && filterModel.MaintStatusId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.TechnicianId == null&& filterModel.AssetTagId == null)
+            {
+                ds = null;
+            }
+            if (filterModel.radiobtn != null && filterModel.MaintStatusId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.TechnicianId == null && filterModel.AssetTagId == null)
             {
                 ds = null;
             }

@@ -162,7 +162,7 @@
         contentType: "application/json",
         dataType: "json",
         success: function (response) {
-
+          
               // $('#frmEdit').dxForm('instance').option('formData',response);
             document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetTagId
             document.getElementById("AtagId").value = response.AssetTagId
@@ -171,7 +171,7 @@
             document.getElementById("AssetStatusId").value = response.AssetStatusId
             document.getElementById("Acost").value = response.AssetCost
             document.getElementById("AserialNum").value = response.AssetSerialNo
-            document.getElementById("ApurshaseDate").valueAsDate  = new Date(response.AssetPurchaseDate)
+            document.getElementById("ApurshaseDate").value = DateFormat(response.AssetPurchaseDate)
             $("#AItem").dxLookup("instance").option("value", response.ItemId);
             $("#AStore").dxLookup("instance").option("value", response.StoreId);
             $("#Avendor").dxLookup("instance").option("value", response.VendorId);
@@ -189,7 +189,7 @@
                 btn1.removeAttribute('checked');
                 btn1.setAttribute('checked', 'checked');
                 btn2.removeAttribute('checked');
-                document.getElementById("AdateAcquired").valueAsDate =new Date(response.DateAcquired) 
+                document.getElementById("AdateAcquired").value = DateFormat(response.DateAcquired)
                 form.style.display = 'flex';
             } else
             {
@@ -218,11 +218,20 @@
 
        console.log(e.row.data);
        document.location = '/Admin/AssetManagment/AssetProfile?AssetId=' + e.row.data.AssetId;
-
-
     }
 
-      
+    function DateFormat(incomingdate) {
+        var d = new Date(incomingdate),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        var outcomingdate = [year, month, day].join('-');
+        return outcomingdate;
+    }
 
 </script>
 

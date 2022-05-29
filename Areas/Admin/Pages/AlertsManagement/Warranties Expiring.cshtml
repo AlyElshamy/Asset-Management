@@ -51,7 +51,7 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-        //columns.AddFor(m => m.Asset.AssetStatus.AssetStatusTitle).Caption(@sharedResource["Asset Status"]);
+        columns.AddFor(m => m.Asset.AssetTagId).Caption(@sharedResource["Asset TagId"]);
         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(@sharedResource["SerialNo."]);
         columns.AddFor(m => m.Asset.AssetCost).Caption(@sharedResource["Asset Cost"]);
         columns.AddFor(m => m.Asset.AssetStatusId).Caption("Asset Status").Lookup(lookup => lookup
@@ -63,7 +63,6 @@
 
         columns.AddFor(m => m.Length).Caption(@sharedResource["Warranty Length "]);
 
-        columns.AddFor(m => m.Notes).Caption(@sharedResource["EndDate"]);
     })
 )
                 </div>

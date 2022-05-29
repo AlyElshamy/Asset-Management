@@ -1,17 +1,16 @@
-﻿@using AssetProject.Models
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
+@using AssetProject.Models;
+@using Microsoft.EntityFrameworkCore;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject AssetContext context;
 @{
     var contractCount = context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
-    var AssetsCheckOut = context.AssetMovementDetails.Where(c => c.AssetMovement.DueDate < DateTime.Now&&c.Asset.AssetStatusId==2).Count();
+    var AssetsCheckOut = context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate< DateTime.Now).Count();
     var InsuranceCount = context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
-    var LeasingCount = context.AssetLeasingDetails.Where(c => c.AssetLeasing.EndDate.Date < DateTime.Now.Date && c.Asset.AssetStatus.AssetStatusId == 6).Count();
+    var LeasingCount = context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date< DateTime.Now.Date).Count();
     var WarrantyCount = context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
-    var MaintenanceCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Date == DateTime.Now.Date&& c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
-    var MaintenanceoverdueCount = context.AssetMaintainances.Where(c => c.AssetMaintainanceDueDate.Date < DateTime.Now.Date  && c.MaintainanceStatus.MaintainanceStatusId != 4 && c.MaintainanceStatus.MaintainanceStatusId != 5).Count();
+    var MaintenanceCount = context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+    var MaintenanceoverdueCount = context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
 
 }
 <div class="slim-navbar">
@@ -26,9 +25,9 @@
                     <ul>
                         <li><a asp-area="Admin" asp-page="/Dashboards/DashboardSummary">Dashboard - Summary</a></li>
                         <li><a asp-area="Admin" asp-page="/Dashboards/DashboardGeo">Dashboard - Geo</a></li>
-                      @*  <li><a href="index3.html">Dashboard 03</a></li>
-                        <li><a href="index4.html">Dashboard 04</a></li>
-                        <li><a href="index5.html">Dashboard 05</a></li>*@
+                        @*  <li><a href="index3.html">Dashboard 03</a></li>
+                            <li><a href="index4.html">Dashboard 04</a></li>
+                            <li><a href="index5.html">Dashboard 05</a></li>*@
                     </ul>
                 </div><!-- sub-item -->
             </li>
@@ -57,6 +56,7 @@
                                         <li><a asp-area="Admin" asp-page="/PatchProcess/PatchCheckOut">Patch CheckOut</a></li>
                                         <li><a asp-area="Admin" asp-page="/PatchProcess/PatchLease">Patch Lease</a></li>
                                         <li><a asp-area="Admin" asp-page="/PatchProcess/PatchMaint">PatchMaintainance</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchDispose">Patch Dispose</a></li>
                                         <li><a asp-area="Admin" asp-page="/PatchProcess/PatchTransferFromDepartment">Patch Transfer From Department</a></li>
                                         <li><a asp-area="Admin" asp-page="/PatchProcess/PatchTransferFromEmpolyee">Patch Transfer From Empolyee</a></li>
                                         <li><a asp-area="Admin" asp-page="/AssetManagment/SearchCheckedOutAssetsByDepartment">Search CheckedOut Assets By Department</a></li>
@@ -212,6 +212,7 @@
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/LeasingReport">Leased Out Asset Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/Transactions HistoryRPT">Transactions History Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/MaintainanceReport">Maintenance Reports</a></li>
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/MaintOnDay">Maintenance OnDay Reports</a></li>
 
 
                             </ul>
@@ -223,7 +224,7 @@
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/EmployeeReport">Employees Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/CustomerReport">Customers Report</a></li>
                                 <li><a asp-area="Admin" asp-page="/ReportsManagement/PrintCategory">Category Report</a></li>
-                                @*<li><a asp-area="Admin" asp-page="/ReportsManagement/LocationReport">Location Report</a></li>*@
+                                <li><a asp-area="Admin" asp-page="/ReportsManagement/WarrantyReport">Warranty Report</a></li>
 
                             </ul>
                         </li>
@@ -241,7 +242,7 @@
                 <div class="sub-item">
                     <ul>
                         <li><a asp-area="Admin" asp-page="/AlertsManagement/CheckOutExpiring">Assets Past Due<span class="AlertMenuItem">@AssetsCheckOut</span></a></li>
-                         <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">@contractCount</span></a></li>
+                        <li><a asp-area="Admin" asp-page="/AlertsManagement/ContractsExpiring">Contracts Expiring<span class="AlertMenuItem">@contractCount</span></a></li>
                         <li><a asp-area="Admin" asp-page="/AlertsManagement/InsurancesExpiring">Insurances Expiring<span class="AlertMenuItem">@InsuranceCount</span></a></li>
                         <li><a asp-area="Admin" asp-page="/AlertsManagement/LeasesExpiring">Leases Expiring<span class="AlertMenuItem">@LeasingCount</span></a></li>
                         <li><a asp-area="Admin" asp-page="/AlertsManagement/MaintenanceDue">Maintenance Due<span class="AlertMenuItem">@MaintenanceCount</span></a></li>

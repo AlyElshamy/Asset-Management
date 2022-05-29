@@ -108,6 +108,14 @@ namespace AssetProject.Areas.Admin.Pages.Reports
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
             }
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
+            {
+                ds = null;
+            }
+            if (filterModel.FromDate == null && filterModel.ToDate != null)
+            {
+                ds = null;
+            }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
                 ds = ds.Where(i => i.TransactionDate <= filterModel.ToDate && i.TransactionDate >= filterModel.FromDate).ToList();

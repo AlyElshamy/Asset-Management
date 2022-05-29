@@ -2,6 +2,10 @@
 @model AssetProject.Areas.Admin.Pages.ReportsManagement.MaintainanceReportModel
 @{
 }
+@{
+
+    var priorities = new[] { "Completed Date", "Schedule Date" };
+};
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
@@ -29,6 +33,9 @@
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
+        items.AddSimpleFor(m => m.radiobtn).IsRequired(false).Editor(e => e.RadioGroup().Items(priorities)
+                  
+                    .Layout(Orientation.Horizontal));
         items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Day"]));
         items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Day"]));
 
@@ -40,6 +47,15 @@
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("TechniciansLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
+        .ShowClearButton(true)
+        );
+        items.AddSimpleFor(m => m.MaintStatusId).IsRequired(false).Label(l => l.Text(sharedResource["Maintainance Status"]))
+        .Editor(e => e
+        .Lookup()
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("MaintainanceStatusesLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        .ShowClearButton(true)
         );
 
         items.AddButton()

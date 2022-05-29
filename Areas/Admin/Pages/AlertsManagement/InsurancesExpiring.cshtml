@@ -18,7 +18,7 @@
             @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-                    @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetsInsurance>()
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Insurance>()
     .DataSource(ds => ds.Mvc()
         .Controller("Alerts")
         .LoadAction("GetInsurancesExpiring")
@@ -44,44 +44,22 @@
                 <a href="/Admin/InsuranceManagement/DetailsInsurance?id=<%- data.InsuranceId %>"> @sharedResource["Details"] </a>
             </text>).Width(150);*@
 
-         columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
-                    .AllowFiltering(false)
-                    .AllowSorting(false)
-                    .CellTemplate(@<text>
-                            <div>
-                                <img src="/<%- value %>" alt="" width="35" height="35" />
-                            </div>
-                        </text>);
-        //columns.AddFor(m => m.Asset.AssetStatus.AssetStatusTitle).Caption(@sharedResource["Asset Status"]);
-        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(@sharedResource["SerialNo."]);
-        columns.AddFor(m => m.Asset.AssetCost).Caption(@sharedResource["Asset Cost"]);
-        columns.AddFor(m => m.Asset.AssetStatusId).Caption("Asset Status").Lookup(lookup => lookup
-          .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
-          .ValueExpr("Value")
-          .DisplayExpr("Text")
-      );
+        
+       
 
-        columns.AddFor(m => m.Insurance.Title).Caption(@sharedResource["Title"]);
+        columns.AddFor(m => m.Title).Caption(@sharedResource["Title"]);
 
-        columns.AddFor(m => m.Insurance.Description).Caption(@sharedResource["Description"]);
 
-        columns.AddFor(m => m.Insurance.InsuranceCompany).Caption(@sharedResource["InsuranceCompany"]);
+        columns.AddFor(m => m.InsuranceCompany).Caption(@sharedResource["InsuranceCompany"]);
 
-        columns.AddFor(m => m.Insurance.ContactPerson).Caption(@sharedResource["ContactPerson"]);
+        columns.AddFor(m => m.ContactPerson).Caption(@sharedResource["ContactPerson"]);
 
-        columns.AddFor(m => m.Insurance.PolicyNo).Caption(@sharedResource["PolicyNumber"]);
+        columns.AddFor(m => m.PolicyNo).Caption(@sharedResource["PolicyNumber"]);
 
-        //columns.AddFor(m => m.Phone).Caption(@sharedResource["Phone"]);
+        columns.AddFor(m => m.StartDate).Caption(@sharedResource["StartDate"]);
 
-        columns.AddFor(m => m.Insurance.StartDate).Caption(@sharedResource["StartDate"]);
+        columns.AddFor(m => m.EndDate).Caption(@sharedResource["EndDate"]);
 
-        columns.AddFor(m => m.Insurance.EndDate).Caption(@sharedResource["EndDate"]);
-
-        //columns.AddFor(m => m.Deductible).Caption(@sharedResource["Deductible"]);
-
-        //columns.AddFor(m => m.Permium).Caption(@sharedResource["Permium"]);
-
-        //columns.AddFor(m => m.IsActive).Caption(@sharedResource["IsActive"]);
     })
 )
                 </div>

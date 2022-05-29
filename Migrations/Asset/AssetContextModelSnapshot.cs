@@ -138,6 +138,11 @@ namespace AssetProject.Migrations.Asset
                         {
                             ActionLogId = 21,
                             ActionLogTitle = "Deattach Asset Waranty"
+                        },
+                        new
+                        {
+                            ActionLogId = 22,
+                            ActionLogTitle = "Edit Asset Maintainance"
                         });
                 });
 
@@ -190,14 +195,14 @@ namespace AssetProject.Migrations.Asset
 
                     b.Property<string>("AssetSerialNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("AssetStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("AssetTagId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("DateAcquired")
                         .HasColumnType("datetime2");
@@ -228,7 +233,13 @@ namespace AssetProject.Migrations.Asset
 
                     b.HasKey("AssetId");
 
+                    b.HasIndex("AssetSerialNo")
+                        .IsUnique();
+
                     b.HasIndex("AssetStatusId");
+
+                    b.HasIndex("AssetTagId")
+                        .IsUnique();
 
                     b.HasIndex("DepreciationMethodId");
 
@@ -366,7 +377,7 @@ namespace AssetProject.Migrations.Asset
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
@@ -494,13 +505,13 @@ namespace AssetProject.Migrations.Asset
                     b.Property<int>("AssetId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("AssetMaintainanceDateCompleted")
+                    b.Property<DateTime?>("AssetMaintainanceDateCompleted")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AssetMaintainanceDetails")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("AssetMaintainanceDueDate")
+                    b.Property<DateTime?>("AssetMaintainanceDueDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("AssetMaintainanceFrequencyId")
@@ -516,7 +527,7 @@ namespace AssetProject.Migrations.Asset
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MaintainanceStatusId")
+                    b.Property<int?>("MaintainanceStatusId")
                         .HasColumnType("int");
 
                     b.Property<int?>("MonthId")
@@ -528,7 +539,10 @@ namespace AssetProject.Migrations.Asset
                     b.Property<int?>("MonthlyPeriod")
                         .HasColumnType("int");
 
-                    b.Property<int>("TechnicianId")
+                    b.Property<DateTime>("ScheduleDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TechnicianId")
                         .HasColumnType("int");
 
                     b.Property<int?>("WeekDayId")
@@ -625,7 +639,7 @@ namespace AssetProject.Migrations.Asset
                     b.Property<int?>("StoreId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TransactionDate")
+                    b.Property<DateTime?>("TransactionDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("AssetMovementId");
@@ -1113,6 +1127,7 @@ namespace AssetProject.Migrations.Asset
                         .HasColumnType("date");
 
                     b.Property<string>("DisposeTo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
@@ -1862,9 +1877,7 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Customer", "Customer")
                         .WithMany("AssetLeasings")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
@@ -1940,9 +1953,7 @@ namespace AssetProject.Migrations.Asset
 
                     b.HasOne("AssetProject.Models.MaintainanceStatus", "MaintainanceStatus")
                         .WithMany()
-                        .HasForeignKey("MaintainanceStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaintainanceStatusId");
 
                     b.HasOne("AssetProject.Models.Month", "Month")
                         .WithMany()
@@ -1950,9 +1961,7 @@ namespace AssetProject.Migrations.Asset
 
                     b.HasOne("AssetProject.Models.Technician", "Technician")
                         .WithMany()
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TechnicianId");
 
                     b.HasOne("AssetProject.Models.WeekDay", "WeekDay")
                         .WithMany()

@@ -1,8 +1,5 @@
 ﻿@page
-@{
-    var day = Model.assetmovement.TransactionDate.Date.Day;
-    var date = Model.assetmovement.TransactionDate.ToShortDateString();
-}
+
 @Html.AntiForgeryToken()
 @model AssetProject.Areas.Admin.Pages.PatchProcess.PatchCheckOutModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
@@ -24,26 +21,26 @@
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
- <script>
+                        <script>
     function grid_dataSource_beforeSend(op, ajax) {
         ajax.headers = {
             RequestVerificationToken: "@Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken"
         };
     }
-</script>
-                          @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
+                        </script>
+                        @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
                      .ID("grid-container")
                  .DataSource(ds => ds.RemoteController()
-                 .LoadUrl(Url.Page("PatchCheckOut", "GridData")) 
+                 .LoadUrl(Url.Page("PatchCheckOut", "GridData"))
                       .Key("AssetId")
                     .OnBeforeSend("grid_dataSource_beforeSend")
 
                   )
                          .Selection(s => s.Mode(SelectionMode.Multiple))
                           .OnSelectionChanged("selection_changed")
-                         
+
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                  
+
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -55,6 +52,8 @@
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
+      .RemoteOperations(true)
+
 
                     .Columns(columns => {
 
@@ -68,17 +67,19 @@
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
 
-                    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                    columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
+                        columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
-                    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                        columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
+
 
                     })
-                    .RemoteOperations(true)               
+                    .RemoteOperations(true)
                     )
                     </div><!-- table-responsive -->
-                
+
                 </div>
             </div>
             <div class="col-lg-5 mg-t-20 mg-lg-t-0">
@@ -87,12 +88,13 @@
                     @*<p class="mg-b-20 mg-sm-b-40">Please fill below check-out information.</p>*@
                     <div class="form-layout form-layout-5">
                         <form asp-area="Admin" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="row mg-b-25">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
-                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date"  value="@(Model.assetmovement.TransactionDate.Date.Day >0? Model.assetmovement.TransactionDate.ToShortDateString():string.Empty)">
+                                        <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date">
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
@@ -143,15 +145,15 @@
                                         <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
                                         @*  @(Html.DevExtreme().LookupFor(c=>c.LocationId)
-                                            .DataSource(d => d.WebApi()
-                                            .Controller("Lookups")
-                                            .LoadAction("LocationsLookup")
-                                            .Key("Value")
-                                            )
-                                            .ValueExpr("Value")
-                                            .DisplayExpr("Text")
+                    .DataSource(d => d.WebApi()
+                    .Controller("Lookups")
+                    .LoadAction("LocationsLookup")
+                    .Key("Value")
+                    )
+                    .ValueExpr("Value")
+                    .DisplayExpr("Text")
 
-                                            )*@
+                    )*@
                                         @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
@@ -223,11 +225,11 @@
                                     </div>
                                 </div>
 
-      <div class="col-lg-12">
-    <div class="form-group">
-        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
-              
-        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
+
+                                        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("StoresLookup")
@@ -237,9 +239,9 @@
             .DisplayExpr("Text")
             .ShowClearButton(true)
         )
-         <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
-            </div>
-        </div>
+                                        <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -248,13 +250,19 @@
                                         <span asp-validation-for="@Model.assetmovement.Remarks" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
-
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@sharedResource["Due Date"]: <span class="tx-danger">*</span></label>
+                                        <input asp-for="@Model.assetmovement.DueDate" type="date" class="form-control date" value=" ">
+                                        <span asp-validation-for="@Model.assetmovement.DueDate" class="text-danger"></span>
+                                    </div>
+                                </div><!-- col-4 -->
                             </div><!-- row -->
 
                             <div class="row mg-t-30">
                                 <div class="col-sm-8 mg-l-auto">
                                     <div class="form-layout-footer">
-                                        <button type="submit" class="btn btn-primary" >@sharedResource["Check Out"]</button>
+                                        <button type="submit" class="btn btn-primary">@sharedResource["Check Out"]</button>
                                     </div><!-- form-layout-footer -->
                                 </div><!-- col-8 -->
                             </div>
@@ -266,55 +274,55 @@
             </div><!-- col-6 -->
         </div>
     </div>
-    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function AcionTypeLookuP() {
+        console.log("inside the funcion")
+        var ActionType = $("#ActionTypeLookup").dxLookup("instance");
+        console.log(ActionType)
+        var ActionTypeValue = ActionType.option("selectedItem");
+        console.log(ActionTypeValue)
+        if (ActionTypeValue.Value == 1) {
+            console.log("In TO Empolyee ")
+            document.getElementById("AssetToEmpolyee").style.display = 'block'
+            document.getElementById("AssetToLocation").style.display = 'block'
+            document.getElementById("AssetToDepartment").style.display = 'block'
+        }
+        else if (ActionTypeValue.Value == 2) {
+            console.log("In TO Department ")
+            document.getElementById("AssetToDepartment").style.display = 'block'
+            document.getElementById("AssetToEmpolyee").style.display = 'none'
+            document.getElementById("AssetToLocation").style.display = 'block'
+        }
+    }
 
-    <script>
-        function AcionTypeLookuP(){
-            console.log("inside the funcion")
-            var ActionType = $("#ActionTypeLookup").dxLookup("instance");
-             console.log(ActionType)
-           var ActionTypeValue = ActionType.option("selectedItem");
-           console.log(ActionTypeValue)
-               if( ActionTypeValue.Value==1)
-               {
-                   console.log("In TO Empolyee ")
-                    document.getElementById("AssetToEmpolyee").style.display='block'
-                     document.getElementById("AssetToLocation").style.display='block'
-                     document.getElementById("AssetToDepartment").style.display='block'
-               }
-               else if (ActionTypeValue.Value==2){
-                     console.log("In TO Department ")
-                      document.getElementById("AssetToDepartment").style.display='block'
-                      document.getElementById("AssetToEmpolyee").style.display='none'
-                     document.getElementById("AssetToLocation").style.display='block'
-               }
-           }
+    function syncTreeViewSelection(treeView, value) {
+        console.log(treeView)
+        console.log(value)
+        if (!value) {
+            treeView.unselectAll();
+        } else {
+            treeView.selectItem(value);
+        }
+    }
 
-              function syncTreeViewSelection(treeView, value) {
-                  console.log(treeView)
-                  console.log(value)
-               if (!value) {
-                   treeView.unselectAll();
-               } else {
-                   treeView.selectItem(value);
-               }
-           }
+    function treeBox_valueChanged(e) {
+        console.log("tree")
+        var $treeView = e.component.content().find(".dx-treeview");
+        console.log($treeView)
+        if ($treeView.length) {
+            syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
+        }
+    }
 
-           function treeBox_valueChanged(e) {
-               console.log("tree")
-               var $treeView = e.component.content().find(".dx-treeview");
-               console.log($treeView)
-               if($treeView.length) {
-                   syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
-               }
-           }
-
-               function getDataGridInstance() {
+    function getDataGridInstance() {
         return $("#grid-container").dxDataGrid("instance");
     }
 
-    function selection_changed(selectedItems) 
-    {
+    function selection_changed(selectedItems) {
         var dataGrid = getDataGridInstance();
         var data = selectedItems.selectedRowsData;
         console.log(data)
@@ -322,41 +330,39 @@
 
         console.log(typeof data)
         const myJSON = JSON.stringify(data)
-          console.log(myJSON)
+        console.log(myJSON)
         console.log(myJSON.length)
 
         console.log(typeof myJSON)
-        if(data.length > 0) 
-        {
-            
-             $.ajax({
-        type: "POST",
-        beforeSend: function (xhr) {
-         xhr.setRequestHeader("XSRF-TOKEN",
-             $('input:hidden[name="__RequestVerificationToken"]').val());
-        }
-        ,
-        url: "/admin/PatchProcess/PatchCheckOut?handler=FillAssetList",
-        async: false,
-        data: JSON.stringify(data),
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            console.log("get selected rows successfully"+response)
-                
-        },
-        failure: function (response) {
-            alert(response);
-        }
-    });
+        if (data.length > 0) {
 
-        } 
-        else
-        {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/admin/PatchProcess/PatchCheckOut?handler=FillAssetList",
+                async: false,
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
+
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
             console.log("Nobody has been selected")
             //$("#selectedItemsContainer").text("Nobody has been selected");
         }
 
     }
 
-    </script>
+</script>

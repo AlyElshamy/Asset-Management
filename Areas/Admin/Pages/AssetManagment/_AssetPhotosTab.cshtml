@@ -5,6 +5,8 @@
 }
 @model int
 @inject AssetContext Context;
+    
+
  <a href="javascript:void(0)" onclick="ShowAddAssetPhotoPopUp()" class="btn btn-primary" style="float:right">@sharedResource["Add New Photo"] </a>
  <p id="Deletephotot"></p>
 <div id="AssetPhotoPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
@@ -22,7 +24,9 @@
                 .ID("AssetPhotoFrm")
                 .ColCount(1)
                 .Items(items => {
-                    items.AddSimpleFor(m => m.PhotoUrl).ValidationRules(r => r         .AddRequired()       .Message("Photo is required"))
+                    items.AddSimpleFor(m => m.PhotoUrl).ValidationRules(r => r
+         .AddRequired()
+       .Message("Photo is required"))
       .Label(k => k.Text(sharedResource["Photo"])).Template(@<text>
                      <div class="form-group">
                               <div class="custom-file">
@@ -66,46 +70,74 @@
 <div class="product-center Productcontainer">
     @foreach (var item in AssetPhotos)
     {
-        
+
         var AssetPhoto = "/" + item.PhotoUrl;
-        <div class="product">
-            <div class="product-header">
-                
-              <img src="@AssetPhoto" />
-                <ul class="icons">
-                    <li>
-                        <a href="javascript:void(0)" onclick="DeletePhoto(@item.AssetId,@item.AssetPhotoId)">
-                            <i class="fa fa-trash"></i>
-                        </a>
+        @*<div class="product">
+            <div id="divimage" class="product-header">
 
-                    </li>
-                    <li class="">
-
-                        <i class="fa fa-search-plus" onclick="ZoomImage(@item.AssetPhotoId)" aria-hidden="true"></i>
-                    </li>
-                </ul>
+                <div class="photo-galery-with-zoom" data-scale="1.6">
+                    <label>
+                        <input type="checkbox" name="galery" onclick="event.stopPropagation();" />
+                        <img src="@AssetPhoto" />
+                    </label>
+                </div>
             </div>
-        </div>  
-}
+        </div>*@
+
+
+
+
+        <div class="product">
+                <div id="divimage" class="product-header">
+
+                    <img id="@item.AssetPhotoId"  src="@AssetPhoto" />
+                    <ul class="icons">
+                        <li>
+                            <a href="javascript:void(0)" onclick="DeletePhoto(@item.AssetId,@item.AssetPhotoId)">
+                                <i class="fa fa-trash"></i>
+                            </a>
+
+                        </li>
+                        @*<li class="">
+
+                            <i class="fa fa-search-plus" onclick="ZoomImage(@item.AssetPhotoId)" aria-hidden="true"></i>
+                        </li>*@
+                    </ul>
+                </div>
+            </div>
+    }
 </div>
 
 
-       
-<script>
 
-    function ZoomImage(Id) {
-        var image = document.getElementById(Id);
-        var currWidth = image.clientWidth;
-        image.style.width = (currWidth + 100) + "px";
-        console.log(image)
-    }
-     function changephotoname() {
-         console.log("in photo")
-                var fileName = document.getElementById("Photo").value.split("\\").pop();;
-                    document.getElementById("photolabel").innerHTML=fileName;
-                  
-            }
+            <script>
 
-           
 
-</script>
+                $('#divimage').click(
+                    function () {
+                        $(this).animate({ 'zoom': 1.2 }, 400);
+                    },
+                    function () {
+                        $(this).animate({ 'zoom': 1 }, 400);
+                    });
+
+
+
+
+                function ZoomImage(Id) {
+                    console.log(Id)
+                    var image = document.getElementById(Id);
+
+                    $(Id).animate({ 'zoom': 1.2 }, 400);
+
+                }
+                function changephotoname() {
+                    console.log("in photo")
+                    var fileName = document.getElementById("Photo").value.split("\\").pop();
+                    document.getElementById("photolabel").innerHTML = fileName;
+
+                }
+
+
+
+            </script>
