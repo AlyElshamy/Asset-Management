@@ -456,6 +456,9 @@
   <data name="City" xml:space="preserve">
     <value>المدينة</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>حذف</value>
+  </data>
   <data name="click here to log in" xml:space="preserve">
     <value>انقر هنا لتسجيل الدخول</value>
   </data>
@@ -1399,10 +1402,31 @@
   <data name="Secound Address" xml:space="preserve">
     <value>العنوان الثاني</value>
   </data>
+  <data name="Select Action Type" xml:space="preserve">
+    <value>حدد نوع الإجراء</value>
+  </data>
+  <data name="Select Department" xml:space="preserve">
+    <value>إختر قسم</value>
+  </data>
+  <data name="Select Depreciation Method" xml:space="preserve">
+    <value>حدد طريقة الإهلاك</value>
+  </data>
+  <data name="Select Employee" xml:space="preserve">
+    <value>إختر موظف</value>
+  </data>
+  <data name="Select Item" xml:space="preserve">
+    <value>إختر عنصر</value>
+  </data>
+  <data name="Select Store" xml:space="preserve">
+    <value>إختر متجر</value>
+  </data>
+  <data name="Select Vendor" xml:space="preserve">
+    <value>إختر بائع</value>
+  </data>
   <data name="Sell Asset" xml:space="preserve">
     <value>بيع الأصول</value>
   </data>
-  <data name="Sell Asset list" xml:space="preserve">
+  <data name="Sell Asset List" xml:space="preserve">
     <value>قائمة الأصول المباعة</value>
   </data>
   <data name="Sell Asset Report" xml:space="preserve">
@@ -1448,9 +1472,12 @@
     <value>الاشتراك باستخدام تويتر</value>
   </data>
   <data name="slim paragraph" xml:space="preserve">
-    <value>نحن متحمسون لإطلاق شركتنا والمنتج الجديد Slim. بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن ThemePixels ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة Startup Fictional Business لهذا العام</value>
+    <value>نحن متحمسون لإطلاق شركتنا والمنتج الجديد Slim. بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة بدء الأعمال الخيالية لهذا العام</value>
   </data>
   <data name="Sold To" xml:space="preserve">
+    <value>بيعت ل</value>
+  </data>
+  <data name="Soled To" xml:space="preserve">
     <value>بيعت ل</value>
   </data>
   <data name="Start Date" xml:space="preserve">

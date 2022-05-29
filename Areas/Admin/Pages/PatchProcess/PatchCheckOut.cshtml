@@ -46,7 +46,7 @@
                      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -117,8 +117,11 @@
                                         )
                                         .OnSelectionChanged("AcionTypeLookuP")
                                         .ValueExpr("Value")
-                                        .DisplayExpr("Text")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Action Type"])
                                         .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
                                         )
                                         <span asp-validation-for="@Model.assetmovement.ActionTypeId" class="text-danger"></span>
                                     </div>
@@ -137,8 +140,11 @@
                                         .Key("Value")
                                         )
                                         .ValueExpr("Value")
-                                        .DisplayExpr("Text")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Employee"])
                                         .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
                                         )
                                         <span asp-validation-for="@Model.assetmovement.EmpolyeeID" class="text-danger"></span>
                                     </div>
@@ -223,8 +229,11 @@
                                         .Key("Value")
                                         )
                                         .ValueExpr("Value")
-                                        .DisplayExpr("Text")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Department"])
                                         .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
                                         )
                                         <span asp-validation-for="@Model.assetmovement.DepartmentId" class="text-danger"></span>
                                     </div>
@@ -232,18 +241,21 @@
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">Store: <span class="tx-danger">*</span></label>
+                                        <label class="form-control-label">@sharedResource["Store"]: <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("StoresLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-        )
+                                        .DataSource(d => d.WebApi()
+                                            .Controller("Lookups")
+                                            .LoadAction("StoresLookup")
+                                            .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Store"])
+                                    .ShowClearButton(true)
+                                    .ClearButtonText(sharedResource["Clear"])
+                                    .CancelButtonText(sharedResource["Cancel"])
+                                    .SearchPlaceholder(sharedResource["searching"])
+                                    )
                                         <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
                                     </div>
                                 </div>
