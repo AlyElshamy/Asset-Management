@@ -17,14 +17,14 @@
  
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
-   
-               @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetRepairDetails>()
+
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetRepairDetails>()
     .DataSource(ds => ds.Mvc()
         .Controller("AssetRepairs")
         .LoadAction("Get")
         .UpdateAction("Put")
         .DeleteAction("Delete")
-        .Key("AssetRepairId")
+        .Key("AssetRepairDetailsId")
     )
     .RemoteOperations(true)
                     .ShowBorders(true)
@@ -38,28 +38,7 @@
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
 
-      @*  columns.AddFor(m => m.AssetRepairId);*@
-
-        columns.AddFor(m => m.AssetRepair.ScheduleDate).Caption(sharedResource["Schedule Date"]);
-
-        columns.AddFor(m => m.AssetRepair.CompletedDate).Caption(sharedResource["Completed Date"]);
-
-        columns.AddFor(m => m.AssetRepair.RepairCost).Caption(sharedResource["Repair Cost"]);
-
-        columns.AddFor(m => m.AssetRepair.Notes).Caption(sharedResource["Notes"]);
-
-        columns.AddFor(m => m.AssetId).Caption(sharedResource["Asset"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("AssetsLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-
-        columns.AddFor(m => m.AssetRepair.TechnicianId).Caption(sharedResource["Technician"]).Lookup(lookup => lookup
-            .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("TechniciansLookup").Key("Value"))
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-        );
-        columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
+ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                     .AllowFiltering(false)
                     .AllowSorting(false)
                     .CellTemplate(@<text>
@@ -67,29 +46,28 @@
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
         columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+        columns.AddFor(m => m.AssetRepair.ScheduleDate).Caption(sharedResource["Schedule Date"]);
 
-        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["Asset PurchaseDate"]);
+        columns.AddFor(m => m.AssetRepair.CompletedDate).Caption(sharedResource["Completed Date"]);
 
-        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
+        columns.AddFor(m => m.AssetRepair.RepairCost).Caption(sharedResource["Repair Cost"]);
+        columns.AddFor(m => m.AssetRepair.TechnicianId).Caption(sharedResource["Technician"]).Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("AssetRepairs").LoadAction("TechniciansLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
         );
-
-
     })
-    .Editing(e => e
-        .AllowUpdating(true).Texts(e=>e.EditRow(sharedResource["Edit"]))
-        .AllowDeleting(true)
-        .Texts(texts => texts.DeleteRow(sharedResource["Delete"]))
-    )
+    @*//.Editing(e => e
+    //    .AllowUpdating(true).Texts(e=>e.EditRow(sharedResource["Edit"]))
+    //    .AllowDeleting(true)
+    //    .Texts(texts => texts.DeleteRow(sharedResource["Delete"]))
+    )*@
 )
                 </div>
             </div><!-- table-wrapper -->

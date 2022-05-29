@@ -13,7 +13,6 @@
             <h6 class="slim-pagetitle">@sharedResource["Contract List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <a asp-area="Admin" asp-page="/ContractManagment/AddContract" class="btn btn-primary" style="float:right"> @sharedResource["Create Contract"]</a>
             <p class="mg-b-20 mg-sm-b-40"> @sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
@@ -39,10 +38,7 @@
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
                     .Columns(columns => {
 
-                    columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-
-                            <a href="/Admin/ContractManagment/DetailsContract?id=<%- data.ContractId %>" class="btn btn-success">@sharedResource["Details"]  </a>
-                        </text>).Width(150);
+                    
                     })
 
                     .Columns(columns => {

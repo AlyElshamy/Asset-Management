@@ -159,7 +159,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Asset Life (Months)"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetLife" class="form-control required" placeholder="@sharedResource["Enter Asset Life"] " value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
+                                <input asp-for="Asset.AssetLife" class="form-control required" placeholder="@sharedResource["Enter Asset Life"] " min="1" value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
                                 <span asp-validation-for="Asset.AssetLife" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->

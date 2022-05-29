@@ -22,7 +22,7 @@
                     .DataSource(ds => ds.Mvc()
                     .Controller("AssetLeasings")
                     .LoadAction("Get")
-                    .Key("AssetLeasingId")
+                    .Key("AssetLeasingDetailsId")
                     )
 
                     .ColumnChooser(cc => cc.Enabled(true))
@@ -38,56 +38,34 @@
                     .Visible(true)
                     .ApplyFilter(GridApplyFilterMode.Auto)
                     )
-                    @*.HeaderFilter(headerFilter => headerFilter.Visible(true))
-                    .Columns(columns => {
+                    
 
-                    columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                            <a href="/Admin/ContractManagment/EditContract?id=<%- data.ContractId %>"> @sharedResource["Edit"] |  </a>
-                            <a href="/Admin/ContractManagment/DeleteContract?id=<%- data.ContractId %>"> @sharedResource["Delete"] | </a>
-                            <a href="/Admin/ContractManagment/DetailsContract?id=<%- data.ContractId %>">@sharedResource["Details"]  </a>
-                        </text>).Width(150);
-                    })*@
+                .Columns(columns => {
 
-                    .Columns(columns => {
-
-                        
-
-                        columns.AddFor(m => m.AssetLeasing.StartDate).Caption(sharedResource["Leasing StartDate"]);
-
-                        columns.AddFor(m => m.AssetLeasing.EndDate).Caption(sharedResource["Leasing EndtDate"]);
-                        columns.AddFor(m => m.AssetLeasing.Customer.FullName).Caption(sharedResource["Cusromer Name"]);
-                        columns.AddFor(m => m.AssetLeasing.Customer.Phone).Caption(sharedResource["Cusromer Phone"]);
-                        columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
-                    .AllowFiltering(false)
-                    .AllowSorting(false)
-                    .CellTemplate(@<text>
+                    columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
+                .AllowFiltering(false)
+                .AllowSorting(false)
+                .CellTemplate(@<text>
                 <div>
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
 
                         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["TagId"]);
 
-                        columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Cost"]);
 
                         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["SerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["PurchaseDate"]);
+                columns.AddFor(m => m.AssetLeasing.StartDate).Caption(sharedResource["Leasing StartDate"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        
-                        );
+                columns.AddFor(m => m.AssetLeasing.EndDate).Caption(sharedResource["Leasing EndtDate"]);
+                columns.AddFor(m => m.AssetLeasing.CustomerId).Caption("Customer").Lookup(lookup => lookup
+            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+        );
+                columns.AddFor(m => m.AssetLeasing.LeasedCost).Caption(sharedResource["Cost"]);
 
-
-                        //columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup
-                        //.DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
-                        //.ValueExpr("Value")
-                        //.DisplayExpr("Text")
-                        //);
                     })
                     )
 

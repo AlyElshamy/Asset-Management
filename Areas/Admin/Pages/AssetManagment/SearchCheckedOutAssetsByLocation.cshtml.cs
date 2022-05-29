@@ -62,6 +62,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if ( lastassetmovement.AssetMovement.LocationId == LocationId)
                             {
+                                item2.Asset.AssetMovementDetails = null;
                                 checkedoutassets.Add(item2.Asset);
                             }
 

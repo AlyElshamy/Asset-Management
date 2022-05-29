@@ -29,7 +29,7 @@
                    .InsertAction("Post")
                     .UpdateAction("Put")
                    .DeleteAction("Delete")
-                    .Key("DisposeAssetId")
+                    .Key("AssetDisposeDetailsId")
                     )
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
                     .ColumnAutoWidth(true)
@@ -56,23 +56,12 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photos"]);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
                         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
                         columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
                         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
-
-                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        );
-
-
                         columns.AddFor(m => m.DisposeAsset.DateDisposed).Caption(sharedResource["Date Disposed"]);
                         columns.AddFor(m => m.DisposeAsset.DisposeTo).Caption(sharedResource["Dispose To"]);
                         columns.AddFor(m => m.DisposeAsset.Notes).Caption(sharedResource["Notes"]);
@@ -84,8 +73,6 @@
                     .ContentTemplate(@<text>
 
                         <div class="row">
-
-
 
                        <div class="row mg-b-25">
                              <div class="col-lg-5">

@@ -28,7 +28,7 @@
                    .InsertAction("Post")
                     .UpdateAction("Put")
                    .DeleteAction("Delete")
-                    .Key("AssetLostId")
+                    .Key("AssetLostDetailsId")
                     )
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
                     .ColumnAutoWidth(true)
@@ -46,9 +46,7 @@
 
                     .Columns(columns =>
                     {
-                        columns.AddFor(m => m.AssetLost.DateLost).Caption(sharedResource["Date Lost"]);
-                        columns.AddFor(m => m.AssetLost.Notes).Caption(sharedResource["Notes"]);
-                    columns.AddFor(m => m.Asset.Photo).Width(100).Caption(sharedResource["Photo"])
+                          columns.AddFor(m => m.Asset.Photo).Width(100).Caption(sharedResource["Photo"])
                 .AllowFiltering(false)
                 .AllowSorting(false)
 
@@ -57,39 +55,18 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
                         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
                         columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
                         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
-
-                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        );
-
-
-
-
-
+                        columns.AddFor(m => m.AssetLost.DateLost).Caption(sharedResource["Date Lost"]);
+                        columns.AddFor(m => m.AssetLost.Notes).Caption(sharedResource["Notes"]);
 
 
                     })
-                    .RemoteOperations(true).Columns(columns =>
-                    {
-                    columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
-                    .CellTemplate(@<text>
-                            @*@Html.DevExtreme().Button().Text("Edit").OnClick("function (e) { editButtonClick(data) }")*@
-                            @Html.DevExtreme().Button().Text(sharedResource["Delete"]).OnClick("function (e) { deleteButtonClick(data) }")
-                            @Html.DevExtreme().Button().Text(sharedResource["View"]).OnClick("function (e) { viewButtonClick(data) }")
-                        </text>);
-
-                    })
+                    .RemoteOperations(true)
 
                     )
                     @(Html.DevExtreme().Popup().ID("customPopup").Width(700)
@@ -235,7 +212,7 @@
                                   <tr />
                               <tr>
                                   <td>
-                                     @sharedResource["Asset Serial No"] 
+                                     @sharedResource["Asset Serial No"]
                                   </td>
                                   <td id="AssetSerialNo">
                                   </td>
@@ -248,7 +225,7 @@
                             </tr>
                               <tr>
                                   <td>
-                                      @sharedResource["Item"] 
+                                      @sharedResource["Item"]
                                   </td>
                                   <td id="AssetItem"></td>
                               </tr>

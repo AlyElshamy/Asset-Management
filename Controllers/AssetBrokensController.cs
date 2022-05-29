@@ -27,12 +27,7 @@ namespace AssetProject.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            //var assetbrokens = _context.assetBrokens.Select(i => new {
-            //    i.AssetBrokenId,
-            //    i.DateBroken,
-            //    i.Notes,
-            //    i.AssetBrokenDetails
-            //});
+       
             var assetbrokens = _context.AssetBrokenDetails.Select(
                 i=>new 
                 {

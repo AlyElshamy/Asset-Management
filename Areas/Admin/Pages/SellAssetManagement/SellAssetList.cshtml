@@ -41,13 +41,9 @@
                     .ApplyFilter(GridApplyFilterMode.Auto)
                     )
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                    
+
                     .Columns(columns => {
 
-                        columns.AddFor(m => m.SellAsset.SaleAmount).Caption(sharedResource["Sale Amount"]);
-                        columns.AddFor(m => m.SellAsset.SoldTo).Caption(sharedResource["Soled to"]);
-                        columns.AddFor(m => m.SellAsset.Notes).Caption(sharedResource["Notes"]);
-                        
                         columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                 .AllowFiltering(false)
                 .AllowSorting(false)
@@ -57,7 +53,6 @@
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-                        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["AssetDescription"]);
 
                         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
@@ -65,13 +60,12 @@
 
                         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-                        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
+                        columns.AddFor(m => m.SellAsset.SaleAmount).Caption(sharedResource["Sale Amount"]);
+                        columns.AddFor(m => m.SellAsset.SoldTo).Caption(sharedResource["Soled to"]);
+                        columns.AddFor(m => m.SellAsset.Notes).Caption(sharedResource["Notes"]);
 
-                        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-                        .ValueExpr("Value")
-                        .DisplayExpr("Text")
-                        );
+
+
 
                         //columns.AddFor(m => m.AssetId).Caption("Asset").Lookup(lookup => lookup
                         //.DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
