@@ -105,8 +105,11 @@
                 .Key("CountryId")
             )
             .ValueExpr("CountryId")
-            .DisplayExpr("CountryTitle")
-            .ShowClearButton(true)
+             .DisplayExpr("Text").Placeholder(sharedResource["Select Country"])
+                                .ShowClearButton(true)
+                                .ClearButtonText(sharedResource["Clear"])
+                                .CancelButtonText(sharedResource["Cancel"])
+                                .SearchPlaceholder(sharedResource["searching"])
         )
                       </div>
                   </div>

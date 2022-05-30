@@ -40,8 +40,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Category"])
+                                .ShowClearButton(true)
+                                .ClearButtonText(sharedResource["Clear"])
+                                .CancelButtonText(sharedResource["Cancel"])
+                                .SearchPlaceholder(sharedResource["searching"])
         )
                                 <span asp-validation-for="Item.CategoryId" class="text-danger"></span>
                             </div>
@@ -59,8 +62,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Brand"])
+                                .ShowClearButton(true)
+                                .ClearButtonText(sharedResource["Clear"])
+                                .CancelButtonText(sharedResource["Cancel"])
+                                .SearchPlaceholder(sharedResource["searching"])
         )
                                 <span asp-validation-for="Item.BrandId" class="text-danger"></span>
                             </div>

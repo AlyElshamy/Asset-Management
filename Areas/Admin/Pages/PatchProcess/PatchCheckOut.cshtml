@@ -69,11 +69,11 @@
 
                         columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
-                        columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
+                        columns.AddFor(m => m.AssetCost).Caption(sharedResource["Asset Cost"]);
 
-                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["Asset Serial Number"]);
                         //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
-                        columns.AddFor(m => m.AssetStatusId).Caption("Status").Lookup(lookup => lookup
+                        columns.AddFor(m => m.AssetStatusId).Caption(sharedResource["Status"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")

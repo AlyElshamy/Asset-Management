@@ -27,7 +27,6 @@
                     .Key("SellAssetId")
                     )
 
-                    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -61,7 +60,7 @@
                         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
                         columns.AddFor(m => m.SellAsset.SaleAmount).Caption(sharedResource["Sale Amount"]);
-                        columns.AddFor(m => m.SellAsset.SoldTo).Caption(sharedResource["Soled to"]);
+                        columns.AddFor(m => m.SellAsset.SoldTo).Caption(sharedResource["Soled To"]);
                         columns.AddFor(m => m.SellAsset.Notes).Caption(sharedResource["Notes"]);
 
 
