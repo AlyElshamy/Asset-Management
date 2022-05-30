@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using NToastNotify;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
@@ -16,10 +17,11 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
     public class EditModel : PageModel
     {
         private readonly AssetProject.Data.AssetContext _context;
-
-        public EditModel(AssetProject.Data.AssetContext context)
+        private readonly IToastNotification toastNotification;
+        public EditModel(AssetProject.Data.AssetContext context, IToastNotification toastNotification)
         {
             _context = context;
+            this.toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -27,16 +29,12 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
+           
             Store = await _context.Stores.FirstOrDefaultAsync(m => m.StoreId == id);
 
             if (Store == null)
             {
-                return NotFound();
+                return Redirect("../../Error");
             }
             return Page();
         }
@@ -55,25 +53,15 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
             try
             {
                 await _context.SaveChangesAsync();
+                toastNotification.AddSuccessToastMessage("Store Edited successfully");
+                return RedirectToPage("/StoreManagment/Details",new {id=Store.StoreId });
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!StoreExists(Store.StoreId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                toastNotification.AddErrorToastMessage("Something went wrong");
+                return RedirectToPage("/StoreManagment/Edit", new { id = Store.StoreId });
             }
 
-            return RedirectToPage("./List");
-        }
-
-        private bool StoreExists(int id)
-        {
-            return _context.Stores.Any(e => e.StoreId == id);
         }
     }
 }

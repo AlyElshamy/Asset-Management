@@ -45,7 +45,7 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
                 catch (Exception e)
                 {
                     _toastNotification.AddErrorToastMessage("Something went wrong");
-                    return Page();
+                    return RedirectToPage("/VendorManagment/DeleteVendor",new { id=Vendor.VendorId});
                 }
             }
             return Redirect("../Error");

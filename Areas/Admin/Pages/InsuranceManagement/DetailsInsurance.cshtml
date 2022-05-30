@@ -74,7 +74,7 @@
                     </div><!-- col-4 -->
                 </div><!--End Row-->
                 <div class="row mg-b-20">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["StartDate"] : <span class="tx-danger">*</span></label>
                             <div>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                     </div><!-- col-6 -->
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["EndDate"] : <span class="tx-danger">*</span></label>
                             <div>
@@ -90,9 +90,7 @@
                             </div>
                         </div>
                     </div><!-- col-6 -->
-                </div><!--End Row-->
-                <div class="row mg-b-20">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["Deductible"] : <span class="tx-danger">*</span></label>
                             <div>
@@ -100,7 +98,10 @@
                             </div>
                         </div>
                     </div><!-- col-6 -->
-                    <div class="col-lg-6">
+                </div><!--End Row-->
+                <div class="row mg-b-20">
+                   
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="form-control-label">@sharedResource["Permium"] : <span class="tx-danger">*</span></label>
                             <div>
@@ -108,11 +109,12 @@
                             </div>
                         </div>
                     </div><!-- col-6 -->
+                    <div class="form-check mb-4">
+                        <input asp-for="@Model.insurance.IsActive" class="form-check-input" disabled>
+                        <label class="form-check-label" asp-for="@Model.insurance.IsActive">  @sharedResource["IsActive"]  </label>
+                    </div>
                 </div><!-- End row -->
-                <div class="form-check mb-4">
-                    <input asp-for="@Model.insurance.IsActive" class="form-check-input" disabled>
-                    <label class="form-check-label" asp-for="@Model.insurance.IsActive">  @sharedResource["IsActive"]  </label>
-                </div>
+               
                 <label class="section-title d-inline mb-4 mt-4">@sharedResource["ASSETS"]</label>
 
                 <script>
@@ -122,14 +124,25 @@
         };
     }
                 </script>
-                @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetContract>()
-    .DataSource(ds => ds.RemoteController()
-        .LoadUrl(Url.Page("DetailsInsurance", "GridData"))
-        .LoadParams(new { InsuranceId = Model.insurance.InsuranceId })
-    )
-    .RemoteOperations(true)
-    .Columns(columns =>
-    {
+
+
+                @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetsInsurance>()
+.DataSource(ds => ds.RemoteController()
+.LoadUrl(Url.Page("DetailsInsurance", "GridData"))
+.LoadParams(new { InsuranceId = Model.insurance.InsuranceId })
+)
+.RemoteOperations(true)
+.ShowBorders(true)
+.Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+.SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
+.FilterRow(filterRow => filterRow
+.Visible(true)
+.ApplyFilter(GridApplyFilterMode.Auto)
+)
+.HeaderFilter(headerFilter => headerFilter.Visible(true)).
+Columns(columns =>
+{
 
                     columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                     .AllowFiltering(false)
@@ -139,7 +152,6 @@
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["TagId"]);
                     columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Cost"]);
         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["Serial"]);

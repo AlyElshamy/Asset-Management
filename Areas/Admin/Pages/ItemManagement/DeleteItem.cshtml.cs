@@ -58,7 +58,7 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
                 catch (Exception)
                 {
                     _toastNotification.AddErrorToastMessage("Something went wrong");
-                    return Page();
+                    return RedirectToPage("/ItemManagement/DeleteItem", new { id=Item.ItemId});
                 }
             }
 

@@ -42,6 +42,11 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
         }
         public IActionResult OnPost()
         {
+            if (insurance.EndDate <= insurance.StartDate)
+            {
+                ModelState.AddModelError("", "EndDate mustbe greater than StartDate  ");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
             try
@@ -49,13 +54,14 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
                 _context.Entry(insurance).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Insurance Policy Update Successfuly");
-               
+                return RedirectToPage("/InsuranceManagement/DetailsInsurance", new { id = insurance.InsuranceId });
+
             }
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
+                return RedirectToPage("/InsuranceManagement/EditInsurance", new { id = insurance.InsuranceId});
             }
-            return RedirectToPage("InsuranceList");
         }
     }
 }

@@ -46,7 +46,8 @@ namespace AssetProject.Areas.Admin.Pages.BrandManagment
                 catch (Exception e)
                 {
                     _toastNotification.AddErrorToastMessage("Something went wrong");
-                    return Page();
+                    return RedirectToPage("/BrandManagment/DeleteBrand", new { id = Brand.BrandId});
+
                 }
             }
 

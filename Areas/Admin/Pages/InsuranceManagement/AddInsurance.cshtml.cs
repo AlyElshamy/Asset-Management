@@ -28,6 +28,11 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
         }
         public IActionResult OnPost()
         {
+            if (insurance.EndDate <= insurance.StartDate)
+            {
+                ModelState.AddModelError("", "EndDate mustbe greater than StartDate  ");
+                return Page();
+            }
             if (!ModelState.IsValid)
                 return Page();
                 try

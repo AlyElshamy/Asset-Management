@@ -43,9 +43,17 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
                     return Page();
                 }
                 Context.Items.Add(Item);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Item Added successfully");
-                return RedirectToPage("/ItemManagement/ItemList");
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Item Added successfully");
+                    return RedirectToPage("/ItemManagement/ItemList");
+                }
+                catch(Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/ItemManagement/ItemList");
+                }
             }
             return Page();
         }
