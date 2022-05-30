@@ -423,6 +423,10 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetAllDashBoardData()
         {
+            try
+            {
+
+           
             var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
             var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
             var AssetPurchaseCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
@@ -504,6 +508,11 @@ namespace AssetProject.Controllers
             AssetsUnderRepairCount,AssetsUnderRepairCost,totalinsurance,AssetLinkInsuranceCount,AssetLinkInsuranceCost,
                 AvaliableAssetsCount,AvaliableAssetsCost,AssetsLeasedCount,AssetsLeasingCost,AssetsDisposeCount,AssetsDisposeCost,AssetsLostCount,AssetsLostCost
             });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
         [HttpGet]
         public IActionResult GetAssetsUnderRepairCount()
@@ -690,6 +699,23 @@ namespace AssetProject.Controllers
 
 
         //start Alerts
+        [HttpGet]
+        public IActionResult GetAlertsCounts()
+        {
+            try
+            {
+                var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                var MaintenancedueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+                var MaintenanceoverdueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+                return Ok(new { ContractsExpiringCount, InsurancesExpiringCount, MaintenancedueCount, MaintenanceoverdueCount, WarrantiesExpiringCount });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpGet]
         public IActionResult GetContractsExpiringCount()
         {
@@ -897,7 +923,7 @@ namespace AssetProject.Controllers
         {
             try
             {
-                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Count();
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Count();
                 return Ok(new { AssetsCheckOut });
             }
             catch (Exception e)
@@ -912,7 +938,7 @@ namespace AssetProject.Controllers
         {
             try
             {
-                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new AssetProject.ReportModels.AssetReportsModel
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.AssetReportsModel
                 {
                     AssetID = i.AssetId,
                     AssetCost = i.AssetCost,
@@ -978,9 +1004,6 @@ namespace AssetProject.Controllers
             }
 
         }
-
-
-
         //end Alerts
 
         [HttpGet]
