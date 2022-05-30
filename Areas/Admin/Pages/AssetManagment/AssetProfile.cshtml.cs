@@ -210,7 +210,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     if(assetMovement.EmpolyeeID==null)
                     {
                         _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
-                        return Page();
+                        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
                     }
                 }
                 var asset = Context.Assets.Find(AssetId);
