@@ -421,6 +421,91 @@ namespace AssetProject.Controllers
             return Ok(new { SellAssetCost });
         }
         [HttpGet]
+        public IActionResult GetAllDashBoardData()
+        {
+            var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
+            var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
+            var AssetPurchaseCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
+            var AssetPurchaseCYCost = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a=>a.AssetCost);
+            var AssetBrockenCount = _context.Assets.Where(a => a.AssetStatusId == 8).Count();
+            var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
+            var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
+            var SellAssetCost = _context.sellAssets.Sum(a => a.SaleAmount);
+            var AssetCheckOutCount = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
+            var AssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
+            var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
+            var AssetLinkWarrantyCost = _context.AssetWarranties.Sum(a => a.Asset.AssetCost);
+            //var AssetIdWithoutWarranty = from c in _context.Assets
+            //                             where !(from o in _context.AssetWarranties
+            //                                     select o.AssetId)
+            //                                    .Contains(c.AssetId)
+            //                             select c;
+            //double AssetWithoutInsuranceCost = 0;
+            //foreach (var item in AssetIdWithoutWarranty)
+            //{
+            //    AssetWithoutInsuranceCost += item.AssetCost;
+            //}
+
+            //var AssetWithoutInsuranceCount = AssetIdWithoutWarranty.Count();
+
+            var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
+            var listmaxassetrepairId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 3
+                 from r in _context.AssetRepairs
+                 from rd in _context.AssetRepairDetails
+                 where a.AssetId == rd.AssetId && r.AssetRepairId == rd.AssetRepairId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetRepairId).Max()
+                 };
+
+            double AssetsUnderRepairCost = 0;
+            foreach (var item in listmaxassetrepairId)
+            {
+                var costofmaxid = _context.AssetRepairs.Where(i => i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
+                AssetsUnderRepairCost += costofmaxid;
+            }
+            //insurance
+            var totalinsurance = _context.Insurances.Count();
+            var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
+            var AssetLinkInsuranceCost = _context.AssetsInsurances.Sum(a => a.Asset.AssetCost);
+
+            var AvaliableAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+            var AvaliableAssetsCost = _context.Assets.Where(a => a.AssetStatusId == 1).Sum(a=>a.AssetCost);
+
+            var AssetsLeasedCount = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
+            var listmaxassetLeasingId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 6
+                 from r in _context.AssetLeasings
+                 from rd in _context.AssetLeasingDetails
+                 where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetLeasingId).Max()
+                 };
+            double AssetsLeasingCost = 0;
+            foreach (var item in listmaxassetLeasingId)
+            {
+                var costofmaxid = _context.AssetLeasings.Where(i => i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
+                AssetsLeasingCost += costofmaxid;
+            }
+            var AssetsDisposeCount = _context.Assets.Where(a => a.AssetStatusId == 5).Count();
+            var AssetsDisposeCost = _context.Assets.Where(a => a.AssetStatusId == 5).Sum(a => a.AssetCost);
+            var AssetsLostCount = _context.Assets.Where(a => a.AssetStatusId == 4).Count();
+            var AssetsLostCost = _context.Assets.Where(a => a.AssetStatusId == 4).Sum(a => a.AssetCost);
+
+            return Ok(new { ActiveAssets , TotalAssetCost , AssetPurchaseCY ,AssetPurchaseCYCost, AssetBrockenCount, AssetBrockenCost , SellAssetsCount, SellAssetCost, AssetCheckOutCount, AssetCheckOutCost, AssetLinkWarrantyCount, AssetLinkWarrantyCost,
+            AssetsUnderRepairCount,AssetsUnderRepairCost,totalinsurance,AssetLinkInsuranceCount,AssetLinkInsuranceCost,
+                AvaliableAssetsCount,AvaliableAssetsCost,AssetsLeasedCount,AssetsLeasingCost,AssetsDisposeCount,AssetsDisposeCost,AssetsLostCount,AssetsLostCost
+            });
+        }
+        [HttpGet]
         public IActionResult GetAssetsUnderRepairCount()
         {
             var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
@@ -459,8 +544,25 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetLeasedAssetsCost()
         {
-            var LeasedAssetsCost = _context.AssetLeasings.Sum(a => a.LeasedCost);
-            return Ok(new { LeasedAssetsCost });
+            var listmaxassetLeasingId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 6
+                 from r in _context.AssetLeasings
+                 from rd in _context.AssetLeasingDetails
+                 where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetLeasingId).Max()
+                 };
+            double AssetsLeasingCost = 0;
+            foreach (var item in listmaxassetLeasingId)
+            {
+                var costofmaxid = _context.AssetLeasings.Where(i => i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
+                AssetsLeasingCost += costofmaxid;
+            }
+            return Ok(new { AssetsLeasingCost });
         }
         [HttpGet]
         public IActionResult GetAssetsLostCount()
@@ -549,13 +651,13 @@ namespace AssetProject.Controllers
                                                  select o.AssetId)
                                                 .Contains(c.AssetId)
                                          select c;
-            double cost = 0;
+            double AssetWithoutInsuranceCost = 0;
             foreach (var item in AssetIdWithoutWarranty)
             {
-                cost += item.AssetCost;
+                AssetWithoutInsuranceCost += item.AssetCost;
             }
             var AssetWithoutInsuranceCount = AssetIdWithoutWarranty.Count();
-            return Ok(new { Count = AssetWithoutInsuranceCount, Cost = cost });
+            return Ok(new { Count = AssetWithoutInsuranceCount, Cost = AssetWithoutInsuranceCost });
         }
 
 
