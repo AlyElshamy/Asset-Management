@@ -51,12 +51,15 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
                 _context.Entry(customer).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Customer Update Successfuly");
+                return RedirectToPage("/CustomerManagement/CustomerDetails", new { id = customer.CustomerId });
+
             }
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
+                return RedirectToPage("/CustomerManagement/EditCustomer", new { id = customer.CustomerId });
+
             }
-            return RedirectToPage("CustomerList");
         }
     }
 }

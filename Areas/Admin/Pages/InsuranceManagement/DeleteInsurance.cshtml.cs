@@ -60,10 +60,9 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
                 catch (Exception)
                 {
                     _toastNotification.AddErrorToastMessage("Something went error");
-                }
-            return Page();
+                return RedirectToPage("/InsuranceManagement/DeleteInsurance", new { id = insurance.InsuranceId });
 
-            
+            }            
         }
     }
     

@@ -42,7 +42,7 @@ namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
         public IActionResult OnPost()
         {
             if (employee == null)
-                return Page();
+                return RedirectToPage("/EmployeeManagement/DeleteEmployee", new { id = employee.ID });
             try
             {
                 _context.Employees.Remove(employee);
@@ -53,8 +53,10 @@ namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
+                return RedirectToPage("/EmployeeManagement/DeleteEmployee", new { id = employee.ID });
+
             }
-            return Page();
+           
             
         }
     }

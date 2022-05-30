@@ -755,6 +755,21 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         }
         public IActionResult OnPostEditAssetMaintainance(AssetMaintainance assetMaintainance)
         {
+            var assetobj = Context.Assets.Find(assetMaintainance.AssetId);
+            if (assetobj.AssetStatusId != 9)
+            {
+                _toastNotification.AddErrorToastMessage("Cannot Edit Previous Asset Maintainance..");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+            }
+            else if (assetobj.AssetStatusId==9)
+            {
+                var lastassetMaintainance = Context.AssetMaintainances.Where(e => e.AssetId == assetMaintainance.AssetId).OrderByDescending(e => e.AssetMaintainanceId).FirstOrDefault();
+                if (assetMaintainance.AssetMaintainanceId != lastassetMaintainance.AssetMaintainanceId)
+                {
+                    _toastNotification.AddErrorToastMessage("Cannot Edit Previous Asset Maintainance..");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+                }
+            }
             if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
             {
                 _toastNotification.AddErrorToastMessage("Schedule Date Must be less than Completed Date..");
@@ -775,7 +790,6 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 assetMaintainance.AssetMaintainanceDateCompleted = null;
             }
             if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4) {
-                var assetobj = Context.Assets.Find(assetMaintainance.AssetId);
 
                 assetobj.AssetStatusId = 1;
                 var UpdatedAsset = Context.Assets.Attach(assetobj);

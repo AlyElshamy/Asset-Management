@@ -19,61 +19,64 @@
  @*<label class="section-title">Please fill your company information</label>
      <p class="mg-b-20 mg-sm-b-40">Please fill your company information</p>*@
 
-<div class="form-layout">
-    <div class="row mg-b-25">
-        <div class="col-lg-4">
-            <label class="form-control-label">@sharedResource["Vendor Title"]: <span class="tx-danger">*</span></label>
-            <div style="font-size:large">@Model.Vendor.VendorTitle</div>
+    <div class="form-layout">
+        <div class="row mg-b-25">
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Vendor Title"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.VendorTitle</div>
+            </div>
+
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Vendor Phone"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.Phone</div>
+            </div>
+
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Vendor Email"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.Email</div>
+            </div>
+
         </div>
+        <div class="row mg-b-25">
 
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Vendor Phone"]: <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.Phone</div>
-</div>
-        
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Vendor Email"]: <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.Email</div>
-</div>
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Mobile Number"] : <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.Mobile</div>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Vendor WebSite"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.Website</div>
+            </div>
 
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Mobile Number"] : <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.Mobile</div>
-</div>
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Contact Personal Name"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.ContactPersonName</div>
+            </div>
 
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Vendor WebSite"]: <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.Website</div>
-</div>
+           
+        </div>
+        <div class="row mg-b-25">
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Contact Personal Email"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.ContactPersonEmail</div>
+            </div>
+            <div class="col-lg-4">
+                <label class="form-control-label">@sharedResource["Contact Personal Phone"]: <span class="tx-danger">*</span></label>
+                <div style="font-size:large">@Model.Vendor.ContactPersonPhone</div>
+            </div>
 
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Contact Personal Name"]: <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.ContactPersonName</div>
-</div>
+        </div>
+        <div class="form-layout-footer">
+            <form method="post" asp-route-id="@Model.Vendor.VendorId">
+                <input type="submit" value='@sharedResource["Delete"]' class="btn btn-danger bd-0">
+                <a asp-area="Admin" asp-page="/VendorManagment/VendorList">
+                    <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
+                </a>
+            </form>
 
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Contact Personal Email"]: <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.ContactPersonEmail</div>
-</div>
 
-<div class="col-lg-4">
-    <label class="form-control-label">@sharedResource["Contact Personal Phone"]: <span class="tx-danger">*</span></label>
-    <div style="font-size:large">@Model.Vendor.ContactPersonPhone</div>
-</div>
-
-</div>  
-    <div class="form-layout-footer">
-        <form method="post" asp-route-id="@Model.Vendor.VendorId">
-            <input type="submit" value='@sharedResource["Delete"]' class="btn btn-primary bd-0">
-
-            <a asp-area="Admin" asp-page="/VendorManagment/VendorList">
-                <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
-            </a>
-        </form>
-        
-
-    </div>
-</div> 
+        </div>
+    </div> 
 </div> 
 </div> 
 </div>

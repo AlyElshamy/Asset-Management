@@ -54,7 +54,7 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
                 catch (Exception e)
                 {
                     _toastNotification.AddErrorToastMessage("Something went wrong");
-                    return Page();
+                    return RedirectToPage("/ContractManagment/DeleteContract", new { id = Contract.ContractId });
                 }
             }
 

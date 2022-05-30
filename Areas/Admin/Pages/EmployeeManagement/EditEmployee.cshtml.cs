@@ -45,7 +45,7 @@ namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
-                return Page();
+                return RedirectToPage("/EmployeeManagement/EditEmployee", new { id = employee.ID });
             try
             {
                 _context.Entry(employee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;

@@ -140,34 +140,38 @@
                 </script>
                 <label class="section-title d-inline mb-4 mt-4">@sharedResource["Asset Leasing"]</label>
                 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetLeasingDetails>()
-    .DataSource(ds => ds.RemoteController()
-        .LoadUrl(Url.Page("CustomerDetails", "GridData"))
-        .LoadParams(new { CustomerId = Model.customer.CustomerId})
-    )
-    .RemoteOperations(true)
-    .Columns(columns =>
-    {
+.DataSource(ds => ds.RemoteController()
+.LoadUrl(Url.Page("CustomerDetails", "GridData"))
+.LoadParams(new { CustomerId = Model.customer.CustomerId})
+)
+.RemoteOperations(true)
+.ShowBorders(true)
+.Paging(p => p.PageSize(10))
+.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+.SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
+.FilterRow(filterRow => filterRow
+.Visible(true)
+.ApplyFilter(GridApplyFilterMode.Auto)
+)
+.HeaderFilter(headerFilter => headerFilter.Visible(true)).Columns(columns =>
+{
 
-                    columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
-                    .AllowFiltering(false)
-                    .AllowSorting(false)
-                    .CellTemplate(@<text>
+columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
+    .AllowFiltering(false)
+    .AllowSorting(false)
+    .CellTemplate(@<text>
                 <div>
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
-        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
-                    columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
-        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
-         columns.AddFor(m => m.AssetLeasing.StartDate).Caption(sharedResource["Leasing StartDate"]);
-         columns.AddFor(m => m.AssetLeasing.EndDate).Caption(sharedResource["Leasing EndDate"]);
-    })
+    columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
+    columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
+    columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
+
+    columns.AddFor(m => m.AssetLeasing.LeasedCost).Caption("Leasing Cost");
+    columns.AddFor(m => m.AssetLeasing.StartDate).Caption(sharedResource["Leasing StartDate"]);
+    columns.AddFor(m => m.AssetLeasing.EndDate).Caption(sharedResource["Leasing EndDate"]);
+})
 
                         )
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System;
 
 namespace AssetProject.Areas.Admin.Pages.BrandManagment
 {
@@ -29,9 +30,17 @@ namespace AssetProject.Areas.Admin.Pages.BrandManagment
             if (ModelState.IsValid)
             {
                 Context.Brands.Add(Brand);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Brand Added successfully");
-                return RedirectToPage("/BrandManagment/BrandList");
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Brand Added successfully");
+                    return RedirectToPage("/BrandManagment/BrandList");
+                }
+               catch(Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/BrandManagment/BrandList");
+                }
             }
             return Page();
         }

@@ -76,23 +76,31 @@
                 </script>
 
                 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetContract>()
-    .DataSource(ds => ds.RemoteController()
-        .LoadUrl(Url.Page("DetailsContract", "GridData"))
-        .LoadParams(new { ContractId = Model.Contract.ContractId })
+.DataSource(ds => ds.RemoteController()
+.LoadUrl(Url.Page("DetailsContract", "GridData"))
+.LoadParams(new { ContractId = Model.Contract.ContractId })
+)
+.RemoteOperations(true)
+    .ShowBorders(true)
+    .Paging(p => p.PageSize(10))
+    .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+    .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
     )
-    .RemoteOperations(true)
-    .Columns(columns =>
-    {
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+.Columns(columns =>
+{
 
-                    columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
-                    .AllowFiltering(false)
-                    .AllowSorting(false)
-                    .CellTemplate(@<text>
+columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
+    .AllowFiltering(false)
+    .AllowSorting(false)
+    .CellTemplate(@<text>
                             <div>
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
                     columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);

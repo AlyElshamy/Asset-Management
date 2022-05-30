@@ -30,7 +30,6 @@
     .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
-                     .ShowBorders(true)
     .RemoteOperations(true)
      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
@@ -50,8 +49,6 @@
             </text>).Width(150);
         columns.AddFor(m => m.Title).Caption(@sharedResource["Title"]);
 
-        columns.AddFor(m => m.Description).Caption(@sharedResource["Description"]);
-
         columns.AddFor(m => m.InsuranceCompany).Caption(@sharedResource["InsuranceCompany"]);
 
         columns.AddFor(m => m.ContactPerson).Caption(@sharedResource["ContactPerson"]);
@@ -64,11 +61,7 @@
 
         columns.AddFor(m => m.EndDate).Caption(@sharedResource["EndDate"]);
 
-        columns.AddFor(m => m.Deductible).Caption(@sharedResource["Deductible"]);
-
-        columns.AddFor(m => m.Permium).Caption(@sharedResource["Permium"]);
-
-        columns.AddFor(m => m.IsActive).Caption(@sharedResource["IsActive"]);
+        
     })
 )
                 </div>

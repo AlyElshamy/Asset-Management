@@ -1,5 +1,6 @@
 ﻿using AssetProject.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AssetProject.Data
 {
@@ -13,6 +14,12 @@ namespace AssetProject.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
             modelBuilder.Entity<Asset>().HasIndex(u => u.AssetSerialNo).IsUnique();
             modelBuilder.Entity<Asset>().HasIndex(u => u.AssetTagId).IsUnique();
 

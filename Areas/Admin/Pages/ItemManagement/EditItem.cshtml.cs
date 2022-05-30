@@ -36,19 +36,33 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
 
         public IActionResult OnPost()
         {
-            if (Item.ItemId == null)
-            {
-
-                ModelState.AddModelError("", "Please select Item");
-                return Page();
-            }
+            
+                if (Item.CategoryId == null)
+                {
+                    ModelState.AddModelError("", "Please Select Category");
+                    return Page();
+                }
+                if (Item.BrandId == null)
+                {
+                    ModelState.AddModelError("", "Please Select Brand");
+                    return Page();
+                }
+            
             if (ModelState.IsValid)
             {
                 var UpdatedContract = Context.Items.Attach(Item);
                 UpdatedContract.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Item Edited successfully");
-                return RedirectToPage("/itemManagement/Detailsitem", new { id = Item.ItemId });
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Item Edited successfully");
+                    return RedirectToPage("/itemManagement/Detailsitem", new { id = Item.ItemId });
+                }
+                catch(Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went error");
+                    return RedirectToPage("/itemManagement/EditItem", new { id = Item.ItemId });
+                }
             }
             return Page();
         }

@@ -53,9 +53,9 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
-            }
-            return Page();
+                return RedirectToPage("/CustomerManagement/DeleteCustomer", new { id = customer.CustomerId });
 
+            }
         }
     }
 }
