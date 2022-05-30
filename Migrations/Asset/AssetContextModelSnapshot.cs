@@ -1776,29 +1776,25 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.AssetStatus", "AssetStatus")
                         .WithMany()
-                        .HasForeignKey("AssetStatusId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AssetStatusId");
 
                     b.HasOne("AssetProject.Models.DepreciationMethod", "DepreciationMethod")
                         .WithMany()
-                        .HasForeignKey("DepreciationMethodId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("DepreciationMethodId");
 
                     b.HasOne("AssetProject.Models.Item", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("AssetProject.Models.Vendor", "Vendor")
                         .WithMany()
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("VendorId");
 
                     b.Navigation("AssetStatus");
 
@@ -1816,13 +1812,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.AssetBroken", "AssetBroken")
                         .WithMany("AssetBrokenDetails")
                         .HasForeignKey("AssetBrokenId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetBrokenDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -1835,13 +1831,12 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetContracts")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Contract", "Contract")
                         .WithMany()
-                        .HasForeignKey("ContractId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ContractId");
 
                     b.Navigation("Asset");
 
@@ -1853,13 +1848,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetDisposeDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.DisposeAsset", "DisposeAsset")
                         .WithMany("AssetDisposeDetails")
                         .HasForeignKey("DisposeAssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -1872,7 +1867,7 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("documents")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -1882,8 +1877,7 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Customer", "Customer")
                         .WithMany("AssetLeasings")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
@@ -1893,13 +1887,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetLeasingDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.AssetLeasing", "AssetLeasing")
                         .WithMany("AssetLeasingDetails")
                         .HasForeignKey("AssetLeasingId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -1912,13 +1906,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.ActionLog", "ActionLog")
                         .WithMany()
                         .HasForeignKey("ActionLogId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ActionLog");
@@ -1931,13 +1925,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetLostDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.AssetLost", "AssetLost")
                         .WithMany("AssetLostDetails")
                         .HasForeignKey("AssetLostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -1950,33 +1944,28 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany()
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.AssetMaintainanceFrequency", "AssetMaintainanceFrequency")
                         .WithMany()
-                        .HasForeignKey("AssetMaintainanceFrequencyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AssetMaintainanceFrequencyId");
 
                     b.HasOne("AssetProject.Models.MaintainanceStatus", "MaintainanceStatus")
                         .WithMany()
-                        .HasForeignKey("MaintainanceStatusId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("MaintainanceStatusId");
 
                     b.HasOne("AssetProject.Models.Month", "Month")
                         .WithMany()
-                        .HasForeignKey("MonthId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("MonthId");
 
                     b.HasOne("AssetProject.Models.Technician", "Technician")
                         .WithMany()
-                        .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TechnicianId");
 
                     b.HasOne("AssetProject.Models.WeekDay", "WeekDay")
                         .WithMany()
-                        .HasForeignKey("WeekDayId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("WeekDayId");
 
                     b.Navigation("Asset");
 
@@ -1995,33 +1984,27 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.ActionType", "ActionType")
                         .WithMany()
-                        .HasForeignKey("ActionTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ActionTypeId");
 
                     b.HasOne("AssetProject.Models.AssetMovementDirection", "AssetMovementDirection")
                         .WithMany()
-                        .HasForeignKey("AssetMovementDirectionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AssetMovementDirectionId");
 
                     b.HasOne("AssetProject.Models.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("AssetProject.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmpolyeeID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("EmpolyeeID");
 
                     b.HasOne("AssetProject.Models.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("LocationId");
 
                     b.HasOne("AssetProject.Models.Store", "Store")
                         .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StoreId");
 
                     b.Navigation("ActionType");
 
@@ -2041,13 +2024,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetMovementDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.AssetMovement", "AssetMovement")
                         .WithMany("AssetMovementDetails")
                         .HasForeignKey("AssetMovementId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -2060,7 +2043,7 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetPhotos")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -2071,7 +2054,7 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Technician", "Technician")
                         .WithMany("AssetRepairs")
                         .HasForeignKey("TechnicianId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Technician");
@@ -2082,13 +2065,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetRepairDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.AssetRepair", "AssetRepair")
                         .WithMany("AssetRepairDetails")
                         .HasForeignKey("AssetRepairId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -2101,13 +2084,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetSellDetails")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.SellAsset", "SellAsset")
                         .WithMany("AssetSellDetails")
                         .HasForeignKey("SellAssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -2120,7 +2103,7 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("Warranty")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asset");
@@ -2131,13 +2114,12 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Asset", "Asset")
                         .WithMany("AssetsInsurances")
                         .HasForeignKey("AssetId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Insurance", "Insurance")
                         .WithMany()
-                        .HasForeignKey("InsuranceId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("InsuranceId");
 
                     b.Navigation("Asset");
 
@@ -2148,8 +2130,7 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Vendor", "Vendor")
                         .WithMany("Cotracts")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("VendorId");
 
                     b.Navigation("Vendor");
                 });
@@ -2158,18 +2139,15 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Brand", "Brand")
                         .WithMany("Items")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("BrandId");
 
                     b.HasOne("AssetProject.Models.Category", "Category")
                         .WithMany("Items")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("AssetProject.Models.Type", null)
                         .WithMany("Items")
-                        .HasForeignKey("TypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TypeId");
 
                     b.Navigation("Brand");
 
@@ -2180,8 +2158,7 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Location", "LocationParent")
                         .WithMany("InverseLocationParent")
-                        .HasForeignKey("LocationParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("LocationParentId");
 
                     b.Navigation("LocationParent");
                 });
@@ -2190,13 +2167,11 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Store", "Store")
                         .WithMany("Purchases")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StoreId");
 
                     b.HasOne("AssetProject.Models.Vendor", "Vendor")
                         .WithMany("Purchases")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("VendorId");
 
                     b.Navigation("Store");
 
@@ -2208,13 +2183,13 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Item", "Item")
                         .WithMany("PurchaseAssets")
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AssetProject.Models.Purchase", "Purchase")
                         .WithMany("PurchaseAssets")
                         .HasForeignKey("PurchaseId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Item");
@@ -2227,7 +2202,7 @@ namespace AssetProject.Migrations.Asset
                     b.HasOne("AssetProject.Models.Category", "Category")
                         .WithMany("SubCategories")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -2237,8 +2212,7 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Country", "Country")
                         .WithMany("Tenants")
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
                 });
@@ -2247,8 +2221,7 @@ namespace AssetProject.Migrations.Asset
                 {
                     b.HasOne("AssetProject.Models.Brand", "Brand")
                         .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("BrandId");
 
                     b.Navigation("Brand");
                 });
