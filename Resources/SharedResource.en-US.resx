@@ -171,6 +171,9 @@
   <data name="Asset Life" xml:space="preserve">
     <value>Asset Life (Month)</value>
   </data>
+  <data name="Asset Maintaince" xml:space="preserve">
+    <value>Asset Maintainance</value>
+  </data>
   <data name="AssetCost" xml:space="preserve">
     <value>AssetCost</value>
   </data>

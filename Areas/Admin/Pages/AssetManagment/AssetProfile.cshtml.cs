@@ -144,7 +144,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 var Assetcont = new AssetContract { AssetId = assetcontract.AssetId, ContractId = assetcontract.ContractId };
                 Context.AssetContracts.Add(Assetcont);
-               
+
                 string ContractTitle = "Contract Title : ";
                 string ContractSDate = "Contract Start Date : ";
                 string ContractEDate = "Contract End Date : ";
@@ -155,7 +155,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 AssetLog assetLog = new AssetLog()
                 {
                     ActionLogId = 2,
-                    AssetId    = assetcontract.AssetId,
+                    AssetId = assetcontract.AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"{ContractTitle}{SelectedContract.Title} , {ContractSDate}{ContractStartDate} and {ContractEDate}{ContractEndDate}")
                 };
@@ -174,7 +174,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 AssetsInsurance AssetIns = new AssetsInsurance { AssetId = assetsInsurance.AssetId, InsuranceId = assetsInsurance.InsuranceId };
                 Context.AssetsInsurances.Add(AssetIns);
-                
+
                 string InsuranceTitle = "Insurance Title : ";
                 string InsuranceCompany = "Insurance Company : ";
                 Insurance SelectedInsurance = Context.Insurances.Find(assetsInsurance.InsuranceId);
@@ -201,13 +201,13 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public IActionResult OnPostAddAssetCheckOut(AssetMovement assetMovement)
         {
 
-            if (ModelState.IsValid&&assetMovement.ActionTypeId!=null
-                &&assetMovement.DepartmentId!=null&&assetMovement.LocationId!=null
+            if (ModelState.IsValid && assetMovement.ActionTypeId != null
+                && assetMovement.DepartmentId != null && assetMovement.LocationId != null
                 )
             {
                 if (assetMovement.ActionTypeId == 1)
                 {
-                    if(assetMovement.EmpolyeeID==null)
+                    if (assetMovement.EmpolyeeID == null)
                     {
                         _toastNotification.AddErrorToastMessage("Asset Movement Not Added ,Try again");
                         return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
@@ -234,8 +234,8 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 var UpdatedAsset = Context.Assets.Attach(asset);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 assetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
-                assetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = AssetId, Remarks = "" });           
-                Context.AssetMovements.Add(assetMovement);                        
+                assetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = AssetId, Remarks = "" });
+                Context.AssetMovements.Add(assetMovement);
                 string ActionTitle = "Action Title : ";
                 string TransDate = "Transaction Date : ";
                 string DirectionTitle = "Direction Title : ";
@@ -245,7 +245,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 AssetLog assetLog = new AssetLog()
                 {
                     ActionLogId = 17,
-                    AssetId =AssetId ,
+                    AssetId = AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"{TransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle} and {DirectionTitle}{Direction.AssetMovementDirectionTitle}")
                 };
@@ -261,7 +261,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public IActionResult OnPostAddAssetCheckIn(AssetMovement assetMovement)
         {
 
-            if (ModelState.IsValid&&assetMovement.StoreId!=null)
+            if (ModelState.IsValid && assetMovement.StoreId != null)
             {
                 var asset = Context.Assets.Find(AssetId);
                 var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a => a.AssetId == AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
@@ -302,7 +302,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public IActionResult OnPostAddAssetRepair(AssetRepair assetRepair)
         {
-            if (ModelState.IsValid&&assetRepair.TechnicianId!=0)
+            if (ModelState.IsValid && assetRepair.TechnicianId != 0)
             {
 
                 //Update Asset Status
@@ -312,7 +312,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 assetRepair.AssetRepairDetails = new List<AssetRepairDetails>();
                 assetRepair.AssetRepairDetails.Add(new AssetRepairDetails { AssetId = AssetId, Remarks = "" });
-                Context.AssetRepairs.Add(assetRepair);             
+                Context.AssetRepairs.Add(assetRepair);
                 Technician technician = Context.Technicians.Find(assetRepair.TechnicianId);
                 string ScheduleDate = "Schedule Date : ";
                 string CompletedDate = "Completed Date : ";
@@ -321,7 +321,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 AssetLog assetLog = new AssetLog()
                 {
                     ActionLogId = 13,
-                    AssetId =AssetId,
+                    AssetId = AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"Repair Asset Asigned to {technician.FullName} with {ScheduleDate}{ScheduleD} and {CompletedDate}{CompletedD}")
                 };
@@ -471,12 +471,12 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         {
 
             if (ModelState.IsValid)
-            {              
+            {
                 var asset = Context.Assets.Find(AssetId);
                 assetBroken.AssetBrokenDetails = new List<AssetBrokenDetails>();
                 assetBroken.AssetBrokenDetails.Add(new AssetBrokenDetails() { AssetId = AssetId, Remarks = "" });
                 Context.assetBrokens.Add(assetBroken);
-               
+
                 asset.AssetStatusId = 8;
                 var UpdatedAsset = Context.Assets.Attach(asset);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -491,19 +491,19 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Context.AssetLogs.Add(assetLog);
                 Context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Asset Broken Added successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
             }
 
-            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId =AssetId });
+            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
         }
 
         public IActionResult OnPostAddAssetMaintainance(AssetMaintainance assetMaintainance)
         {
-            var assetobj = Context.Assets.Where(e=>e.AssetId==assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
+            var assetobj = Context.Assets.Where(e => e.AssetId == assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
 
             if (assetobj.AssetStatusId != 1 && assetobj.AssetStatusId != 2)
             {
-                _toastNotification.AddErrorToastMessage("Asset Now is"+ assetobj.AssetStatus.AssetStatusTitle );
+                _toastNotification.AddErrorToastMessage("Asset Now is" + assetobj.AssetStatus.AssetStatusTitle);
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
             if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
@@ -623,7 +623,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
             Contract contract = Context.Contracts.Find(assetContract.ContractId);
-            
+
             AssetLog assetLog = new AssetLog()
             {
                 ActionLogId = 6,
@@ -650,7 +650,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
             Insurance insurance = Context.Insurances.Find(assetInsurance.InsuranceId);
-           
+
             AssetLog assetLog = new AssetLog()
             {
                 ActionLogId = 7,
@@ -677,7 +677,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
-           
+
             AssetLog assetLog = new AssetLog()
             {
                 ActionLogId = 8,
@@ -695,7 +695,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
             if (assetWarranty.AssetId != 0)
             {
-                AssetWarranty AssetWar = new AssetWarranty {AssetId=assetWarranty.AssetId, Length=assetWarranty.Length,Notes=assetWarranty.Notes,ExpirationDate=assetWarranty.ExpirationDate, };
+                AssetWarranty AssetWar = new AssetWarranty { AssetId = assetWarranty.AssetId, Length = assetWarranty.Length, Notes = assetWarranty.Notes, ExpirationDate = assetWarranty.ExpirationDate, };
                 Context.AssetWarranties.Add(AssetWar);
                 AssetLog assetLog = new AssetLog()
                 {
@@ -709,8 +709,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 try
                 {
                     Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Link Warranty Added Successfully");
-
+                    _toastNotification.AddSuccessToastMessage("Link Warranty Added Successfully");
                 }
                 catch (Exception)
                 {
@@ -743,7 +742,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
             }
-              Context.SaveChanges();
+            Context.SaveChanges();
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetwarranty.AssetId });
 
         }
@@ -789,12 +788,13 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 assetMaintainance.AssetMaintainanceDateCompleted = null;
             }
-            if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4) {
+            if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4)
+            {
 
                 assetobj.AssetStatusId = 1;
                 var UpdatedAsset = Context.Assets.Attach(assetobj);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            } 
+            }
             if (!assetMaintainance.AssetMaintainanceRepeating)
             {
                 assetMaintainance.AssetMaintainanceFrequencyId = null;

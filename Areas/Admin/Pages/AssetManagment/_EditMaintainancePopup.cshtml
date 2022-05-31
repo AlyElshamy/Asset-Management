@@ -52,8 +52,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Technician"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
         )
                                 <span asp-validation-for="@Model.TechnicianId" class="text-danger"></span>
                             </div>
@@ -62,16 +65,19 @@
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Maintainance Status"]<span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.MaintainanceStatusId).ID("maintstatus")
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("MaintainanceStatusesLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-            .OnSelectionChanged("maintainanceStatus")
-          )
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("MaintainanceStatusesLookup")
+                                        .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Maintainance Status"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+                                        .OnSelectionChanged("maintainanceStatus")
+                                )
                                 <span asp-validation-for="@Model.MaintainanceStatusId" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -113,8 +119,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
             .OnSelectionChanged("FrequencyChange")
         )
                                 <span asp-validation-for="@Model.AssetMaintainanceFrequencyId" class="text-danger"></span>
@@ -139,8 +148,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
           )
                                 </div>
 
@@ -173,8 +185,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
           )
                                 </div>
                                 <span asp-validation-for="@Model.MonthId" class="text-danger"></span>

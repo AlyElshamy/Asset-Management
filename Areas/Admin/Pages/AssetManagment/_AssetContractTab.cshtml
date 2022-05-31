@@ -78,7 +78,11 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                     .Lookup()
                     .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ContractsLookup").Key("Value"))
                     .ValueExpr("Value")
-                    .DisplayExpr("Text").Width(250)
+                    .DisplayExpr("Text").Placeholder(sharedResource["Select Contract"]).Width(250)
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
                     );
 items.AddGroup().ColCount(2)
                    .Items(groupItems =>

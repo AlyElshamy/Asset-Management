@@ -357,62 +357,152 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetDepartments()
         {
-            var departments = _context.Departments.Select(e => e).ToList();
-            return Ok(new { departments });
+            try
+            {
+                var departments = _context.Departments.Select(e => e).ToList();
+                return Ok(new { departments });
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
         }
         [HttpGet]
         public IActionResult GetEmployees()
         {
-            var Employees = _context.Employees.Select(e => e).ToList();
-            return Ok(new { Employees });
+            try
+            {
+                var Employees = _context.Employees.Select(e => e).ToList();
+                return Ok(new { Employees });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+           
         }
         [HttpGet]
         public IActionResult GetLocations()
         {
-            var Locations = _context.Locations.Select(e => e).ToList();
-            return Ok(new { Locations });
+            try
+            {
+                var Locations = _context.Locations.Select(e => e).ToList();
+                return Ok(new { Locations });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+          
         }
         [HttpGet]
         public IActionResult GetTotalAssetCount()
         {
-            var AllAssetscount = _context.Assets.Count();
-            return Ok(new { AllAssetscount });
+            try
+            {
+                var AllAssetscount = _context.Assets.Count();
+                return Ok(new { AllAssetscount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+           
         }
         [HttpGet]
         public IActionResult GetTotalAssetCost()
         {
-            var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
-            return Ok(new { TotalAssetCost });
+            try
+            {
+                var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
+                return Ok(new { TotalAssetCost });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            
         }
         [HttpGet]
         public IActionResult GetAvaliableAssetsCount()
         {
-            var AvaliableAssets = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
-            return Ok(new { AvaliableAssets });
+            try
+            {
+                var AvaliableAssets = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+                return Ok(new { AvaliableAssets });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            
         }
         [HttpGet]
         public IActionResult GetActiveAssetsCount()
         {
-            var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
-            return Ok(new { ActiveAssets });
+            try
+            {
+                var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
+                return Ok(new { ActiveAssets });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
         }
-        [HttpGet]
-        public IActionResult GetAssetBrockenCount()
+           
+       
+    [HttpGet]
+    public IActionResult GetAssetBrockenCount()
+    {
+        try
         {
             var AssetBrockenCount = _context.Assets.Where(a => a.AssetStatusId == 8).Count();
             return Ok(new { AssetBrockenCount });
         }
+
+        catch (Exception e)
+        {
+
+            return BadRequest(e.Message);
+        }
+    }
+           
         [HttpGet]
         public IActionResult GetAssetBrockenCost()
         {
-            var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
-            return Ok(new { AssetBrockenCost });
+            try
+            {
+                var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
+                return Ok(new { AssetBrockenCost });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+           
         }
         [HttpGet]
         public IActionResult GetSellAssetsCount()
         {
-            var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
-            return Ok(new { SellAssetsCount });
+            try
+            {
+                var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
+                return Ok(new { SellAssetsCount });
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+            
         }
         [HttpGet]
         public IActionResult GetSellAssetCost()
@@ -1896,8 +1986,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Asset Maintainance Not Added ,Try again");
         }
-
-
         [HttpPut]
         public IActionResult OnPostEditAssetMaintainance(AssetMaintainance assetMaintainance)
         {
@@ -2154,10 +2242,11 @@ namespace AssetProject.Controllers
             return Ok();
         }
 
-
+        
         [HttpPost]
-        public IActionResult GetcheckedoutassetsFromDepartment([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
+        public IActionResult PostcheckedoutassetsFromDepartment([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
         {
+           
             if (assetmovement.LocationId == null)
             {
                 return BadRequest("Please Select Location..");
@@ -2170,11 +2259,15 @@ namespace AssetProject.Controllers
             {
                 return BadRequest("Please Select Employee..");
             }
-
             if (assetmovement.StoreId == null)
             {
                 return BadRequest("Please Select Store..");
             }
+             if (assetmovement.TransactionDate == null)
+            {
+                return BadRequest("Please Enter TransActionDate..");
+            }
+
             if (SelectedAssets != null)
             {
                 int CheckInID = checkinAssetsfromDepartmentTostore(assetmovement, SelectedAssets);
@@ -2303,7 +2396,7 @@ namespace AssetProject.Controllers
             return newAssetMovement.AssetMovementId;
         }
         [HttpPost]
-        public IActionResult GetcheckedoutassetsFromEmployee(AssetMovement assetmovement, List<Asset> SelectedAssets)
+        public IActionResult PostcheckedoutassetsFromEmployee([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
         {
             if (assetmovement.LocationId == null)
             {
@@ -2321,6 +2414,10 @@ namespace AssetProject.Controllers
             if (assetmovement.StoreId == null)
             {
                 return BadRequest("Please Select Store..");
+            }
+            if (assetmovement.TransactionDate == null)
+            {
+                return BadRequest("Please Enter TransActionDate..");
             }
 
             //Inert two movement

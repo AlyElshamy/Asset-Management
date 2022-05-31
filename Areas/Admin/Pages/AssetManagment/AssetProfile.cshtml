@@ -25,10 +25,10 @@
                                 <div class="card-profile-name" style="font-size:x-large;display:inline-block">@sharedResource["Asset Description"]</div>
                                 <div style="display:inline-block; position: absolute;top: 40px;right:20px;color:#10ea55">
                                
-                              Status :@Model.Asset.AssetStatus.AssetStatusTitle
+                              @sharedResource["Status"] :@Model.Asset.AssetStatus.AssetStatusTitle
                                 </div>
                                
-                                <p class="card-profile-position">@sharedResource["Assettagid"] <a href="">@Model.Asset.AssetTagId</a></p>
+                                <p class="card-profile-position">@sharedResource["AssetTagId"] <a href="">@Model.Asset.AssetTagId</a></p>
                                 <p>@sharedResource["Serial"] <a href="">@Model.Asset.AssetSerialNo</a></p>
                                 <div class="row mg-t-20">
                                     <div class="col-md">
@@ -89,7 +89,7 @@
 
                         <div class="dropdown show">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                More Actions
+                                @sharedResource["More Actions"]
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -125,7 +125,7 @@
                     </div><!-- card -->
 
                 <div class="section-wrapper mg-t-20">
-                    <label class="slim-card-title">LATEST ACTIVITY</label>
+                    <label class="slim-card-title">@sharedResource["LATEST ACTIVITY"]</label>
                     @*<p class="mg-b-20 mg-sm-b-40">Add a tab navigation in header of a card.</p>*@
 
                     <div class="row">
