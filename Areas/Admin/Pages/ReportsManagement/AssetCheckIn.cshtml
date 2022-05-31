@@ -31,8 +31,8 @@
     .Items(items => {
         items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m => m.Text(sharedResource["Show All"]));
 
-        items.AddSimpleFor(m => m.FromDate).IsRequired(false);
-        items.AddSimpleFor(m => m.ToDate).IsRequired(false);
+        items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(m => m.Text(sharedResource["From Date"]));
+        items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(m => m.Text(sharedResource["To Date"]));
 
 
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
@@ -43,8 +43,11 @@
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
         .ValueExpr("Value")
-        .DisplayExpr("Text")
-        .ShowClearButton(true)
+        .DisplayExpr("Text").Placeholder(sharedResource["Select Store"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
         );
 
 

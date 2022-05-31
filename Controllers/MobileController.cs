@@ -1896,8 +1896,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Asset Maintainance Not Added ,Try again");
         }
-
-
         [HttpPut]
         public IActionResult OnPostEditAssetMaintainance(AssetMaintainance assetMaintainance)
         {
@@ -2154,10 +2152,11 @@ namespace AssetProject.Controllers
             return Ok();
         }
 
-
+        
         [HttpPost]
-        public IActionResult GetcheckedoutassetsFromDepartment([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
+        public IActionResult PostcheckedoutassetsFromDepartment([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
         {
+           
             if (assetmovement.LocationId == null)
             {
                 return BadRequest("Please Select Location..");
@@ -2170,11 +2169,15 @@ namespace AssetProject.Controllers
             {
                 return BadRequest("Please Select Employee..");
             }
-
             if (assetmovement.StoreId == null)
             {
                 return BadRequest("Please Select Store..");
             }
+             if (assetmovement.TransactionDate == null)
+            {
+                return BadRequest("Please Enter TransActionDate..");
+            }
+
             if (SelectedAssets != null)
             {
                 int CheckInID = checkinAssetsfromDepartmentTostore(assetmovement, SelectedAssets);
@@ -2303,7 +2306,7 @@ namespace AssetProject.Controllers
             return newAssetMovement.AssetMovementId;
         }
         [HttpPost]
-        public IActionResult GetcheckedoutassetsFromEmployee(AssetMovement assetmovement, List<Asset> SelectedAssets)
+        public IActionResult PostcheckedoutassetsFromEmployee([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
         {
             if (assetmovement.LocationId == null)
             {
@@ -2321,6 +2324,10 @@ namespace AssetProject.Controllers
             if (assetmovement.StoreId == null)
             {
                 return BadRequest("Please Select Store..");
+            }
+            if (assetmovement.TransactionDate == null)
+            {
+                return BadRequest("Please Enter TransActionDate..");
             }
 
             //Inert two movement
