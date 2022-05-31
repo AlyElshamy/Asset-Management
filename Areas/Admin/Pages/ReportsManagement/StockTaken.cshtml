@@ -32,8 +32,11 @@
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
         .ValueExpr("Value")
-        .DisplayExpr("Text").ShowClearButton(true)
-        .ShowClearButton(true)
+        .DisplayExpr("Text").Placeholder(sharedResource["Select Store"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
         );
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)

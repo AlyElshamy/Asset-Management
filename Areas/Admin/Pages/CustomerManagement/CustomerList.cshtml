@@ -26,7 +26,6 @@
         .Key("CustomerId")
         
     )
-    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -34,7 +33,7 @@
      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -57,21 +56,10 @@
 
         columns.AddFor(m => m.Address1).Caption(sharedResource["First Address"]);
 
-        columns.AddFor(m => m.Address2).Caption(sharedResource["Secound Address"]);
-
-        columns.AddFor(m => m.City).Caption(sharedResource["City"]);
-
-        columns.AddFor(m => m.State).Caption(sharedResource["State"]);
-
-        columns.AddFor(m => m.PostalCode).Caption(sharedResource["Postal Code"]);
-
-        columns.AddFor(m => m.Country).Caption(sharedResource["Country"]);
-
         columns.AddFor(m => m.Phone).Caption(sharedResource["Phone"]);
 
         columns.AddFor(m => m.Email).Caption(sharedResource["Email"]);
 
-        columns.AddFor(m => m.Notes).Caption(sharedResource["Notes"]);
     })
 )
     </div>

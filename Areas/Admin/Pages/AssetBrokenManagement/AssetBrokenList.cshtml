@@ -21,16 +21,12 @@
 .DataSource(ds => ds.Mvc()
     .Controller("AssetBrokens")
     .LoadAction("Get")
-    .Key("AssetBrokenId")
+    .Key("AssetBrokenDetailsId")
 )
+.ShowBorders(true)
 .RemoteOperations(true)
 .Columns(columns => {
-
-columns.AddFor(m => m.AssetBroken.DateBroken).Caption(sharedResource["Date Broken"]);
-
-columns.AddFor(m => m.AssetBroken.Notes).Caption(sharedResource["Notes"]);
-
-columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
+    columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
     .AllowFiltering(false)
     .AllowSorting(false)
     .CellTemplate(@<text>
@@ -38,7 +34,6 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
-        columns.AddFor(m => m.Asset.AssetDescription).Caption(sharedResource["Description"]);
 
         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
@@ -46,13 +41,9 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
 
         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
+columns.AddFor(m => m.AssetBroken.DateBroken).Caption(sharedResource["Date Broken"]);
 
-        columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
-        .DataSource(ds => ds.WebApi().Controller("Assets").LoadAction("ItemsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        );
+columns.AddFor(m => m.AssetBroken.Notes).Caption(sharedResource["Notes"]);
 
 
     })

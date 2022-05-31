@@ -16,7 +16,7 @@
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
-            <label class="section-title">@sharedResource["Please fill your Asset information"]</label>
+            <label class="section-title">@sharedResource["PLEASE FILL YOUR ASSET INFORMATION"]</label>
             
             <div class="form-layout">
                 <form method="post" enctype="multipart/form-data">
@@ -62,8 +62,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Item"])
             .ShowClearButton(true)
+            .ClearButtonText(sharedResource["Clear"])
+            .CancelButtonText(sharedResource["Cancel"])
+            .SearchPlaceholder(sharedResource["searching"])
         )
                                 <span asp-validation-for="Asset.ItemId" class="text-danger"></span>
                             </div>
@@ -80,8 +83,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Store"])
             .ShowClearButton(true)
+            .ClearButtonText(sharedResource["Clear"])
+            .CancelButtonText(sharedResource["Cancel"])
+            .SearchPlaceholder(sharedResource["searching"])
         )
                                 <span asp-validation-for="Asset.StoreId" class="text-danger"></span>
                             </div>
@@ -98,8 +104,11 @@
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Vendor"])
             .ShowClearButton(true)
+            .ClearButtonText(sharedResource["Clear"])
+            .CancelButtonText(sharedResource["Cancel"])
+            .SearchPlaceholder(sharedResource["searching"])
         )
                                 <span asp-validation-for="Asset.VendorId" class="text-danger"></span>
                             </div>
@@ -151,7 +160,7 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">@sharedResource["SalvageValue"]: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Salvage Value"]: <span class="tx-danger">*</span></label>
                                 <input asp-for="Asset.SalvageValue" class="form-control required" placeholder="@sharedResource["Enter salvage Value"]" value="@(Model.Asset.SalvageValue > 0 ? Model.Asset.SalvageValue :string.Empty)">
                                 <span asp-validation-for="Asset.SalvageValue" class="text-danger"></span>
                             </div>
@@ -159,7 +168,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Asset Life (Months)"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.AssetLife" class="form-control required" placeholder="@sharedResource["Enter Asset Life"] " value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
+                                <input asp-for="Asset.AssetLife" class="form-control required" placeholder="@sharedResource["Enter Asset Life"] " min="1" value="@(Model.Asset.AssetLife > 0 ? Model.Asset.AssetLife :string.Empty)">
                                 <span asp-validation-for="Asset.AssetLife" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -183,8 +192,11 @@
                         .Key("Value")
                     )
                     .ValueExpr("Value")
-                    .DisplayExpr("Text")
-                    .ShowClearButton(true)
+                   .DisplayExpr("Text").Placeholder(sharedResource["Select Depreciation Method"])
+            .ShowClearButton(true)
+            .ClearButtonText(sharedResource["Clear"])
+            .CancelButtonText(sharedResource["Cancel"])
+            .SearchPlaceholder(sharedResource["searching"])
                 )
                                 <span asp-validation-for="Asset.DepreciationMethodId" class="text-danger"></span>
                             </div>

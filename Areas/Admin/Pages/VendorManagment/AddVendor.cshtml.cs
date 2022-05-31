@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System;
 using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.VendorManagment
@@ -53,9 +54,17 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
             }
 
             Context.Vendors.Add(Vendor);
-            await Context.SaveChangesAsync();
-            _toastNotification.AddSuccessToastMessage("Vendor Added successfully");
-            return RedirectToPage("/VendorManagment/VendorList");
+            try
+            {
+                await Context.SaveChangesAsync();
+                _toastNotification.AddSuccessToastMessage("Vendor Added successfully");
+                return RedirectToPage("/VendorManagment/VendorList");
+            }
+            catch(Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Something went wrong");
+                return RedirectToPage("/VendorManagment/VendorList");
+            }
         }
     }
 }

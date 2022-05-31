@@ -48,7 +48,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetExpiringCheckOut(DataSourceLoadOptions loadOptions)
         {
-            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new AssetReportsModel
+            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate<DateTime.Now.Date).Select(i => new AssetReportsModel
             {
                 AssetID=i.AssetId,
                 AssetCost = i.AssetCost,

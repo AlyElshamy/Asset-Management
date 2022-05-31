@@ -85,7 +85,11 @@ items.AddSimpleFor(m => m.InsuranceId).Label(l => l.Text(sharedResource["Insuran
                     .Lookup()
                     .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("InsurancesLookup").Key("Value"))
                     .ValueExpr("Value")
-                    .DisplayExpr("Text").Width(250)
+                    .DisplayExpr("Text").Placeholder(sharedResource["Select Insurance"]).Width(250)
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
                     );
 items.AddGroup().ColCount(2)
                    .Items(groupItems =>

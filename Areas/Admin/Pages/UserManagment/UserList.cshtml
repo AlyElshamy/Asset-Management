@@ -21,7 +21,6 @@
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                    @(Html. DevExtreme().DataGrid<AssetProject.Models.ApplicationUser>()
     .DataSource(Model.Users,"Id")
-    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -29,7 +28,7 @@
       .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)

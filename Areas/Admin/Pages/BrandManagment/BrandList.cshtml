@@ -19,7 +19,7 @@
         <div class="section-wrapper">
             <label class="section-title d-inline">@sharedResource["BrandList"]</label>
             <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary" style="float:right"> @sharedResource["AddNewBrand"]  </a>
-            <p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>
+            <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"]</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Brand>()
@@ -28,13 +28,12 @@
                     .LoadAction("Get")
                     .Key("BrandId")
                     )
-                    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -46,7 +45,7 @@
             columns.Add().Caption("Actions").Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
                 <a href="/Admin/BrandManagment/EditBrand?id=<%- data.BrandId %>"> @sharedResource["Edit"] |  </a>
                 <a href="/Admin/BrandManagment/DeleteBrand?id=<%- data.BrandId %>"> @sharedResource["Delete"] | </a>
-                <a href="/Admin/BrandManagment/BrandDetails?id=<%- data.BrandId %>"> @sharedResource["Details"] | </a>
+                <a href="/Admin/BrandManagment/BrandDetails?id=<%- data.BrandId %>"> @sharedResource["Details"]  </a>
             </text>).Width(150);
         })
     .Columns(columns => {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace AssetProject.Controllers
 {
@@ -20,6 +21,8 @@ namespace AssetProject.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IWebHostEnvironment _hostEnvironment;
+        public static List<Asset> SelectedAssets = new List<Asset>();
+
         public AssetContext _context { get; set; }
         public MobileController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AssetContext Context, IWebHostEnvironment hostEnvironment)
         {
@@ -208,7 +211,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult Getcheckedoutassetsbylocation([FromQuery] int LocationId)
         {
-            var checkedoutassets = new List<AssetModel>();
+            var checkedoutassets = new List<Asset>();
             if (LocationId != 0)
             {
                 var movementsForLocation = _context.AssetMovements.Where(a => a.LocationId == LocationId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
@@ -221,7 +224,7 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.LocationId == LocationId)
                             {
-                                checkedoutassets.Add(new AssetModel()
+                                checkedoutassets.Add(new Asset()
                                 {
                                     AssetCost = item2.Asset.AssetCost,
                                     AssetDescription = item2.Asset.AssetDescription,
@@ -256,7 +259,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetcheckedoutassetsbyDepartment([FromQuery] int DepartmentId)
         {
-            var checkedoutassets = new List<AssetModel>();
+            var checkedoutassets = new List<Asset>();
             if (DepartmentId != 0)
             {
                 var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1 && a.EmpolyeeID == null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
@@ -269,7 +272,7 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.EmpolyeeID == null && lastassetmovement.AssetMovement.DepartmentId == DepartmentId)
                             {
-                                checkedoutassets.Add(new AssetModel()
+                                checkedoutassets.Add(new Asset()
                                 {
                                     AssetCost = item2.Asset.AssetCost,
                                     AssetDescription = item2.Asset.AssetDescription,
@@ -304,7 +307,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetcheckedoutassetsbyEmployee([FromQuery] int EmpolyeeID)
         {
-            var checkedoutassets = new List<AssetModel>();
+            var checkedoutassets = new List<Asset>();
 
             if (EmpolyeeID != 0)
             {
@@ -318,7 +321,7 @@ namespace AssetProject.Controllers
                             var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.EmpolyeeID == EmpolyeeID)
                             {
-                                checkedoutassets.Add(new AssetModel()
+                                checkedoutassets.Add(new Asset()
                                 {
                                     AssetCost = item2.Asset.AssetCost,
                                     AssetDescription = item2.Asset.AssetDescription,
@@ -508,6 +511,100 @@ namespace AssetProject.Controllers
             return Ok(new { SellAssetCost });
         }
         [HttpGet]
+        public IActionResult GetAllDashBoardData()
+        {
+            try
+            {
+
+           
+            var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
+            var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
+            var AssetPurchaseCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
+            var AssetPurchaseCYCost = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a=>a.AssetCost);
+            var AssetBrockenCount = _context.Assets.Where(a => a.AssetStatusId == 8).Count();
+            var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
+            var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
+            var SellAssetCost = _context.sellAssets.Sum(a => a.SaleAmount);
+            var AssetCheckOutCount = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
+            var AssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
+            var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
+            var AssetLinkWarrantyCost = _context.AssetWarranties.Sum(a => a.Asset.AssetCost);
+            //var AssetIdWithoutWarranty = from c in _context.Assets
+            //                             where !(from o in _context.AssetWarranties
+            //                                     select o.AssetId)
+            //                                    .Contains(c.AssetId)
+            //                             select c;
+            //double AssetWithoutInsuranceCost = 0;
+            //foreach (var item in AssetIdWithoutWarranty)
+            //{
+            //    AssetWithoutInsuranceCost += item.AssetCost;
+            //}
+
+            //var AssetWithoutInsuranceCount = AssetIdWithoutWarranty.Count();
+
+            var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
+            var listmaxassetrepairId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 3
+                 from r in _context.AssetRepairs
+                 from rd in _context.AssetRepairDetails
+                 where a.AssetId == rd.AssetId && r.AssetRepairId == rd.AssetRepairId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetRepairId).Max()
+                 };
+
+            double AssetsUnderRepairCost = 0;
+            foreach (var item in listmaxassetrepairId)
+            {
+                var costofmaxid = _context.AssetRepairs.Where(i => i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
+                AssetsUnderRepairCost += costofmaxid;
+            }
+            //insurance
+            var totalinsurance = _context.Insurances.Count();
+            var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
+            var AssetLinkInsuranceCost = _context.AssetsInsurances.Sum(a => a.Asset.AssetCost);
+
+            var AvaliableAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+            var AvaliableAssetsCost = _context.Assets.Where(a => a.AssetStatusId == 1).Sum(a=>a.AssetCost);
+
+            var AssetsLeasedCount = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
+            var listmaxassetLeasingId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 6
+                 from r in _context.AssetLeasings
+                 from rd in _context.AssetLeasingDetails
+                 where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetLeasingId).Max()
+                 };
+            double AssetsLeasingCost = 0;
+            foreach (var item in listmaxassetLeasingId)
+            {
+                var costofmaxid = _context.AssetLeasings.Where(i => i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
+                AssetsLeasingCost += costofmaxid;
+            }
+            var AssetsDisposeCount = _context.Assets.Where(a => a.AssetStatusId == 5).Count();
+            var AssetsDisposeCost = _context.Assets.Where(a => a.AssetStatusId == 5).Sum(a => a.AssetCost);
+            var AssetsLostCount = _context.Assets.Where(a => a.AssetStatusId == 4).Count();
+            var AssetsLostCost = _context.Assets.Where(a => a.AssetStatusId == 4).Sum(a => a.AssetCost);
+
+            return Ok(new { ActiveAssets , TotalAssetCost , AssetPurchaseCY ,AssetPurchaseCYCost, AssetBrockenCount, AssetBrockenCost , SellAssetsCount, SellAssetCost, AssetCheckOutCount, AssetCheckOutCost, AssetLinkWarrantyCount, AssetLinkWarrantyCost,
+            AssetsUnderRepairCount,AssetsUnderRepairCost,totalinsurance,AssetLinkInsuranceCount,AssetLinkInsuranceCost,
+                AvaliableAssetsCount,AvaliableAssetsCost,AssetsLeasedCount,AssetsLeasingCost,AssetsDisposeCount,AssetsDisposeCost,AssetsLostCount,AssetsLostCost
+            });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
         public IActionResult GetAssetsUnderRepairCount()
         {
             var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
@@ -546,8 +643,25 @@ namespace AssetProject.Controllers
         [HttpGet]
         public IActionResult GetLeasedAssetsCost()
         {
-            var LeasedAssetsCost = _context.AssetLeasings.Sum(a => a.LeasedCost);
-            return Ok(new { LeasedAssetsCost });
+            var listmaxassetLeasingId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 6
+                 from r in _context.AssetLeasings
+                 from rd in _context.AssetLeasingDetails
+                 where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetLeasingId).Max()
+                 };
+            double AssetsLeasingCost = 0;
+            foreach (var item in listmaxassetLeasingId)
+            {
+                var costofmaxid = _context.AssetLeasings.Where(i => i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
+                AssetsLeasingCost += costofmaxid;
+            }
+            return Ok(new { AssetsLeasingCost });
         }
         [HttpGet]
         public IActionResult GetAssetsLostCount()
@@ -598,11 +712,55 @@ namespace AssetProject.Controllers
             return Ok(new { AssetCheckOutCost });
         }
         [HttpGet]
-        public IActionResult GetAssetLinkInsuranceCount()
+        public IActionResult GetAssetLinkInsuranceCountAndCost()
         {
             var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
-            return Ok(new { AssetLinkInsuranceCount });
+            var AssetLinkInsuranceCost = _context.AssetsInsurances.Sum(a => a.Asset.AssetCost);
+            return Ok(new { Count = AssetLinkInsuranceCount, Cost = AssetLinkInsuranceCost });
         }
+        [HttpGet]
+        public IActionResult GetAssetWithoutInsuranceCountAndCost()
+        {
+            var AssetIdWithoutInsurance = from c in _context.Assets
+                                          where !(from o in _context.AssetsInsurances
+                                                  select o.AssetId)
+                                                 .Contains(c.AssetId)
+                                          select c;
+            double cost = 0;
+            foreach (var item in AssetIdWithoutInsurance)
+            {
+                cost += item.AssetCost;
+            }
+            var AssetWithoutInsuranceCount = AssetIdWithoutInsurance.Count();
+            return Ok(new { Count = AssetWithoutInsuranceCount, Cost = cost });
+        }
+
+        [HttpGet]
+        public IActionResult GetAssetLinkWarrantyCountAndCost()
+        {
+            var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
+            var AssetLinkWarrantyCost = _context.AssetWarranties.Sum(a => a.Asset.AssetCost);
+            return Ok(new { Count = AssetLinkWarrantyCount, Cost = AssetLinkWarrantyCost });
+        }
+        [HttpGet]
+        public IActionResult GetAssetWithoutWarrantyCountAndCost()
+        {
+            var AssetIdWithoutWarranty = from c in _context.Assets
+                                         where !(from o in _context.AssetWarranties
+                                                 select o.AssetId)
+                                                .Contains(c.AssetId)
+                                         select c;
+            double AssetWithoutInsuranceCost = 0;
+            foreach (var item in AssetIdWithoutWarranty)
+            {
+                AssetWithoutInsuranceCost += item.AssetCost;
+            }
+            var AssetWithoutInsuranceCount = AssetIdWithoutWarranty.Count();
+            return Ok(new { Count = AssetWithoutInsuranceCount, Cost = AssetWithoutInsuranceCost });
+        }
+
+
+
         [HttpGet]
         public IActionResult GetAssetLinkInsuranceCost()
         {
@@ -631,6 +789,23 @@ namespace AssetProject.Controllers
 
 
         //start Alerts
+        [HttpGet]
+        public IActionResult GetAlertsCounts()
+        {
+            try
+            {
+                var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                var MaintenancedueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+                var MaintenanceoverdueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+                return Ok(new { ContractsExpiringCount, InsurancesExpiringCount, MaintenancedueCount, MaintenanceoverdueCount, WarrantiesExpiringCount });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpGet]
         public IActionResult GetContractsExpiringCount()
         {
@@ -838,7 +1013,7 @@ namespace AssetProject.Controllers
         {
             try
             {
-                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Count();
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Count();
                 return Ok(new { AssetsCheckOut });
             }
             catch (Exception e)
@@ -853,7 +1028,7 @@ namespace AssetProject.Controllers
         {
             try
             {
-                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now).Select(i => new AssetProject.ReportModels.AssetReportsModel
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.AssetReportsModel
                 {
                     AssetID = i.AssetId,
                     AssetCost = i.AssetCost,
@@ -919,9 +1094,6 @@ namespace AssetProject.Controllers
             }
 
         }
-
-
-
         //end Alerts
 
         [HttpGet]
@@ -1814,8 +1986,6 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Asset Maintainance Not Added ,Try again");
         }
-
-
         [HttpPut]
         public IActionResult OnPostEditAssetMaintainance(AssetMaintainance assetMaintainance)
         {
@@ -2065,9 +2235,323 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Warranty Id..");
         }
+        [HttpPost]
+        public IActionResult PostLogOut()
+        {
+            _signInManager.SignOutAsync();
+            return Ok();
+        }
+
+        
+        [HttpPost]
+        public IActionResult PostcheckedoutassetsFromDepartment([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
+        {
+           
+            if (assetmovement.LocationId == null)
+            {
+                return BadRequest("Please Select Location..");
+            }
+            if (assetmovement.DepartmentId == null)
+            {
+                return BadRequest("Please Select Department..");
+            }
+            if (assetmovement.EmpolyeeID == null)
+            {
+                return BadRequest("Please Select Employee..");
+            }
+            if (assetmovement.StoreId == null)
+            {
+                return BadRequest("Please Select Store..");
+            }
+             if (assetmovement.TransactionDate == null)
+            {
+                return BadRequest("Please Enter TransActionDate..");
+            }
+
+            if (SelectedAssets != null)
+            {
+                int CheckInID = checkinAssetsfromDepartmentTostore(assetmovement, SelectedAssets);
+                if (CheckInID == 0)
+                {
+                    return BadRequest("Something went Error,Try again");
+                }
+                //Second move asset from store to department
+                int CheckoutID = checkoutAssetsToEmpolyee(assetmovement, SelectedAssets);
+                if (CheckoutID == 0)
+                {
+                    return BadRequest("Something went Error,Try again");
+                }
+
+                //Print check in form
+                return Ok("Asset Movements Added successfully");
+                //Print check out form
+
+            }
+            return BadRequest("Please Select at Least one Asset");
+
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public int checkinAssetsfromDepartmentTostore(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
+        {
+            AssetMovement newAssetMovement = null;
+            if (selectedAssetsList.Count != 0)
+            {
+                newAssetMovement = new AssetMovement()
+                {
+                    AssetMovementDirectionId = 2,
+                    ActionTypeId = 2,
+                    DepartmentId = assetMovementObj.DepartmentId,
+                    LocationId = assetMovementObj.LocationId,
+                    TransactionDate = assetMovementObj.TransactionDate,
+                    //DueDate=assetMovementObj.DueDate,
+                    Remarks = assetMovementObj.Remarks,
+                    StoreId = assetMovementObj.StoreId,
+                };
+                newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                string DirectionTitle = "Direction Title : ";
+                string TransDate = "Transaction Date : ";
+                AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
+                string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                foreach (var asset in selectedAssetsList)
+                {
+                    asset.AssetStatusId = 1;
+                    var UpdatedAsset = _context.Assets.Attach(asset);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    newAssetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 16,
+                        AssetId = asset.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"{TransDate}{TransactionDate} and {DirectionTitle}{Direction.AssetMovementDirectionTitle} Transfered")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                }
+
+                _context.AssetMovements.Add(newAssetMovement);
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            }
+            return newAssetMovement.AssetMovementId;
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public int checkoutAssetsToEmpolyee(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
+        {
+            AssetMovement newAssetMovement = null;
+            if (selectedAssetsList.Count != 0)
+            {
+                newAssetMovement = new AssetMovement()
+                {
+                    AssetMovementDirectionId = 1,
+                    ActionTypeId = 1,
+                    DepartmentId = assetMovementObj.DepartmentId,
+                    LocationId = assetMovementObj.LocationId,
+                    StoreId = assetMovementObj.StoreId,
+                    Remarks = assetMovementObj.Remarks,
+                    TransactionDate = assetMovementObj.TransactionDate,
+                    EmpolyeeID = assetMovementObj.EmpolyeeID
+
+                    //DueDate=assetMovementObj.DueDate
+                };
+
+                newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                string ActionTitle = "Action Title : ";
+                string TransDate = "Transaction Date : ";
+                string DirectionTitle = "Direction Title : ";
+                ActionType SelectedActionType = _context.ActionTypes.Find(newAssetMovement.ActionTypeId);
+                AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
+                string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                foreach (var asset in selectedAssetsList)
+                {
+                    asset.AssetStatusId = 2;
+                    var UpdatedAsset = _context.Assets.Attach(asset);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    newAssetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 17,
+                        AssetId = asset.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"{TransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle} and {DirectionTitle}{Direction.AssetMovementDirectionTitle} Transfered")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                }
+                _context.AssetMovements.Add(newAssetMovement);
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            }
+            return newAssetMovement.AssetMovementId;
+        }
+        [HttpPost]
+        public IActionResult PostcheckedoutassetsFromEmployee([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
+        {
+            if (assetmovement.LocationId == null)
+            {
+                return BadRequest("Please Select Location..");
+            }
+            if (assetmovement.DepartmentId == null)
+            {
+                return BadRequest("Please Select Department..");
+            }
+            if (assetmovement.EmpolyeeID == null)
+            {
+                return BadRequest("Please Select Employee..");
+            }
+
+            if (assetmovement.StoreId == null)
+            {
+                return BadRequest("Please Select Store..");
+            }
+            if (assetmovement.TransactionDate == null)
+            {
+                return BadRequest("Please Enter TransActionDate..");
+            }
+
+            //Inert two movement
+
+            //First move assets to store --> Check in
+            if (SelectedAssets != null)
+            {
+                int CheckInID = checkinAssetsfromEmpolyeeTostore(assetmovement, SelectedAssets);
+                if (CheckInID == 0)
+                {
+                    return BadRequest("Something went Error,Try again");
+                }
+
+                //Second move asset from store to department
+                int CheckoutID = checkoutAssetsToDepartment(assetmovement, SelectedAssets);
+                if (CheckoutID == 0)
+                {
+                    return BadRequest("Something went Error,Try again");
+                }
+
+                //Print check in form
+                return Ok("Asset Movements Added successfully");
+                //Print check out form
+
+            }
+            return BadRequest("Please Select at Least one Asset");
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public int checkinAssetsfromEmpolyeeTostore(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
+        {
+            AssetMovement newAssetMovement = null;
+            if (selectedAssetsList.Count != 0)
+            {
+                var LastassetmovementForEmpolyee = _context.AssetMovements.Where(a => a.EmpolyeeID == assetMovementObj.EmpolyeeID && a.AssetMovementDirectionId == 1).OrderByDescending(a => a.AssetMovementId).FirstOrDefault();
+                newAssetMovement = new AssetMovement()
+                {
+                    AssetMovementDirectionId = 2,
+                    ActionTypeId = 1,
+                    DepartmentId = LastassetmovementForEmpolyee.DepartmentId,
+                    LocationId = LastassetmovementForEmpolyee.LocationId,
+                    TransactionDate = assetMovementObj.TransactionDate,
+                    //DueDate=assetMovementObj.DueDate,
+                    Remarks = assetMovementObj.Remarks,
+                    StoreId = assetMovementObj.StoreId,
+                    EmpolyeeID = assetMovementObj.EmpolyeeID
+                };
 
 
+                newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                string DirectionTitle = "Direction Title : ";
+                string TransDate = "Transaction Date : ";
+                AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
+                string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                foreach (var asset in selectedAssetsList)
+                {
+                    asset.AssetStatusId = 1;
+                    var UpdatedAsset = _context.Assets.Attach(asset);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    newAssetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 16,
+                        AssetId = asset.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"{TransDate}{TransactionDate} and {DirectionTitle}{Direction.AssetMovementDirectionTitle} Transfered")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                }
 
+                _context.AssetMovements.Add(newAssetMovement);
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            }
+            return newAssetMovement.AssetMovementId;
+        }
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public int checkoutAssetsToDepartment(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
+        {
+            AssetMovement newAssetMovement = null;
+            if (selectedAssetsList.Count != 0)
+            {
+                newAssetMovement = new AssetMovement()
+                {
+                    AssetMovementDirectionId = 1,
+                    ActionTypeId = 2,
+                    DepartmentId = assetMovementObj.DepartmentId,
+                    LocationId = assetMovementObj.LocationId,
+                    StoreId = assetMovementObj.StoreId,
+                    Remarks = assetMovementObj.Remarks,
+                    TransactionDate = assetMovementObj.TransactionDate
+                    //DueDate=assetMovementObj.DueDate
+                };
+
+                newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                string ActionTitle = "Action Title : ";
+                string TransDate = "Transaction Date : ";
+                string DirectionTitle = "Direction Title : ";
+                ActionType SelectedActionType = _context.ActionTypes.Find(newAssetMovement.ActionTypeId);
+                AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
+                string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                foreach (var asset in selectedAssetsList)
+                {
+                    asset.AssetStatusId = 2;
+                    var UpdatedAsset = _context.Assets.Attach(asset);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    newAssetMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 17,
+                        AssetId = asset.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"{TransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle} and {DirectionTitle}{Direction.AssetMovementDirectionTitle} Transfered")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                }
+                _context.AssetMovements.Add(newAssetMovement);
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return 0;
+                }
+            }
+            return newAssetMovement.AssetMovementId;
+        }
     }
 }
 

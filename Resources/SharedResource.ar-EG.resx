@@ -165,6 +165,9 @@
   <data name="Add New Customer" xml:space="preserve">
     <value>إضافة عميل جديد</value>
   </data>
+  <data name="Add New Maintainance" xml:space="preserve">
+    <value>إضافة صيانة جديدة</value>
+  </data>
   <data name="Add New Photo" xml:space="preserve">
     <value>إضافة صورة جديدة</value>
   </data>
@@ -296,6 +299,9 @@
   </data>
   <data name="Asset Maintainance" xml:space="preserve">
     <value>صيانة الأصول</value>
+  </data>
+  <data name="Asset Maintainance Frequency" xml:space="preserve">
+    <value>تكرار صيانة الأصول</value>
   </data>
   <data name="Asset Maintainance Report" xml:space="preserve">
     <value>تقرير صيانة الأصول</value>
@@ -456,6 +462,9 @@
   <data name="City" xml:space="preserve">
     <value>المدينة</value>
   </data>
+  <data name="Clear" xml:space="preserve">
+    <value>حذف</value>
+  </data>
   <data name="click here to log in" xml:space="preserve">
     <value>انقر هنا لتسجيل الدخول</value>
   </data>
@@ -482,6 +491,9 @@
   </data>
   <data name="configure" xml:space="preserve">
     <value>لكيفية تكوين مرسل بريد إلكتروني حقيقي عادةً ما سيتم إرساله عبر البريد الإلكتروني</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>تأكيد</value>
   </data>
   <data name="Confirm email" xml:space="preserve">
     <value>تأكيد عنوان البريد الإلكتروني</value>
@@ -1123,6 +1135,9 @@
   <data name="LastName" xml:space="preserve">
     <value>الاسم الاخير</value>
   </data>
+  <data name="LATEST ACTIVITY" xml:space="preserve">
+    <value>الأنشطة الأخيرة</value>
+  </data>
   <data name="lease Asset" xml:space="preserve">
     <value>تأجير أصل</value>
   </data>
@@ -1219,6 +1234,12 @@
   <data name="Month(s) on" xml:space="preserve">
     <value>الشهور خلال :</value>
   </data>
+  <data name="Months" xml:space="preserve">
+    <value>شهور</value>
+  </data>
+  <data name="More Actions" xml:space="preserve">
+    <value>المزيد من الإجراءات</value>
+  </data>
   <data name="Movement Details" xml:space="preserve">
     <value>تفاصيل الحركة</value>
   </data>
@@ -1275,6 +1296,9 @@
   </data>
   <data name="Please check your email to reset your password" xml:space="preserve">
     <value>يرجى التحقق من بريدك الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك</value>
+  </data>
+  <data name="Please Enter Leased Cost" xml:space="preserve">
+    <value>من فضلك أدخل تكلفه التأجير</value>
   </data>
   <data name="PLEASE FILL Customer INFORMATION" xml:space="preserve">
     <value>يرجى ملء بيانات العميل</value>
@@ -1399,10 +1423,55 @@
   <data name="Secound Address" xml:space="preserve">
     <value>العنوان الثاني</value>
   </data>
+  <data name="Select a value..." xml:space="preserve">
+    <value>إختر موقع</value>
+  </data>
+  <data name="Select Action Type" xml:space="preserve">
+    <value>حدد نوع الإجراء</value>
+  </data>
+  <data name="Select Brand" xml:space="preserve">
+    <value>إختر ماركة</value>
+  </data>
+  <data name="Select Category" xml:space="preserve">
+    <value>إختر فئة</value>
+  </data>
+  <data name="Select Country" xml:space="preserve">
+    <value>إختر الدولة</value>
+  </data>
+  <data name="Select Department" xml:space="preserve">
+    <value>إختر قسم</value>
+  </data>
+  <data name="Select Depreciation Method" xml:space="preserve">
+    <value>حدد طريقة الإهلاك</value>
+  </data>
+  <data name="Select Employee" xml:space="preserve">
+    <value>إختر موظف</value>
+  </data>
+  <data name="Select Empolyee" xml:space="preserve">
+    <value>إختر موظف</value>
+  </data>
+  <data name="Select Frequency" xml:space="preserve">
+    <value>إختر التكرار</value>
+  </data>
+  <data name="Select Item" xml:space="preserve">
+    <value>إختر عنصر</value>
+  </data>
+  <data name="Select Maintainance Status" xml:space="preserve">
+    <value>إختر حاله الصيانة</value>
+  </data>
+  <data name="Select Store" xml:space="preserve">
+    <value>إختر متجر</value>
+  </data>
+  <data name="Select Technician" xml:space="preserve">
+    <value>إختر الفني</value>
+  </data>
+  <data name="Select Vendor" xml:space="preserve">
+    <value>إختر بائع</value>
+  </data>
   <data name="Sell Asset" xml:space="preserve">
     <value>بيع الأصول</value>
   </data>
-  <data name="Sell Asset list" xml:space="preserve">
+  <data name="Sell Asset List" xml:space="preserve">
     <value>قائمة الأصول المباعة</value>
   </data>
   <data name="Sell Asset Report" xml:space="preserve">
@@ -1412,7 +1481,7 @@
     <value>إرسال</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>سيريال</value>
+    <value>رقم السيريال</value>
   </data>
   <data name="SETUP" xml:space="preserve">
     <value>تأسيس</value>
@@ -1448,9 +1517,12 @@
     <value>الاشتراك باستخدام تويتر</value>
   </data>
   <data name="slim paragraph" xml:space="preserve">
-    <value>نحن متحمسون لإطلاق شركتنا والمنتج الجديد Slim. بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن ThemePixels ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة Startup Fictional Business لهذا العام</value>
+    <value>نحن متحمسون لإطلاق شركتنا والمنتج الجديد Slim. بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة بدء الأعمال الخيالية لهذا العام</value>
   </data>
   <data name="Sold To" xml:space="preserve">
+    <value>بيعت ل</value>
+  </data>
+  <data name="Soled To" xml:space="preserve">
     <value>بيعت ل</value>
   </data>
   <data name="Start Date" xml:space="preserve">
@@ -1522,6 +1594,9 @@
   <data name="To Day" xml:space="preserve">
     <value>إلي يوم</value>
   </data>
+  <data name="ToDate" xml:space="preserve">
+    <value />
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>تاريخ الصفقة</value>
   </data>
@@ -1530,6 +1605,9 @@
   </data>
   <data name="Transaction History Report" xml:space="preserve">
     <value>تقرير تاريخ المعاملات</value>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>نقل</value>
   </data>
   <data name="Transform" xml:space="preserve">
     <value>تحويل</value>
@@ -1588,8 +1666,14 @@
   <data name="View" xml:space="preserve">
     <value>عرض</value>
   </data>
+  <data name="Warranties" xml:space="preserve">
+    <value>الضمانات</value>
+  </data>
   <data name="Warranty" xml:space="preserve">
     <value>ضمان</value>
+  </data>
+  <data name="WebSite" xml:space="preserve">
+    <value>الموقع</value>
   </data>
   <data name="Week(s) on" xml:space="preserve">
     <value>الاسابيع خلال :</value>

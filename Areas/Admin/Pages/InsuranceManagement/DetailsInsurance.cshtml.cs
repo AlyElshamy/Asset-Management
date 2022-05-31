@@ -49,7 +49,7 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
 
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions, int InsuranceId)
         {
-            var assetcontracts = _context.AssetContracts.Where(e => e.ContractId == InsuranceId).Select(e => new
+            var assetcontracts = _context.AssetsInsurances.Where(e => e.InsuranceId == InsuranceId).Select(e => new
             {
                 e.Asset
             });

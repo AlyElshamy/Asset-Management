@@ -3,6 +3,7 @@ using AssetProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System;
 
 namespace AssetProject.Areas.Admin.Pages.BrandManagment
 {
@@ -36,9 +37,17 @@ namespace AssetProject.Areas.Admin.Pages.BrandManagment
             {
                 var UpdatedBrand = Context.Brands.Attach(Brand);
                 UpdatedBrand.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Brand Edited successfully");
-                return RedirectToPage("/BrandManagment/BrandDetails", new { id = Brand.BrandId });
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Brand Edited successfully");
+                    return RedirectToPage("/BrandManagment/BrandDetails", new { id = Brand.BrandId });
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/BrandManagment/EditBrand", new { id = Brand.BrandId });
+                }
             }
             return Page();
         }

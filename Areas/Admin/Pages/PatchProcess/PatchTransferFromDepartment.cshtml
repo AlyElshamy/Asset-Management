@@ -9,9 +9,9 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Check Out"]</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Transfer"]</li>
             </ol>
-            <h6 class="slim-pagetitle">@sharedResource["Check Out"]</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Transfer"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm">
@@ -22,32 +22,32 @@
                         @*<p>Please search and select</p>*@
                     </div><!-- card-header -->
                     <div class="table-responsive">
-  <script>
+                        <script>
     function grid_dataSource_beforeSend(op, ajax) {
         ajax.headers = {
             RequestVerificationToken: "@Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken"
         };
     }
-</script>
-                          @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
+                        </script>
+                        @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
                      .ID("grid-container")
                   .DataSource(ds => ds.RemoteController()
-               .LoadUrl(Url.Page("PatchTransferFromDepartment", "GridData")) 
+               .LoadUrl(Url.Page("PatchTransferFromDepartment", "GridData"))
                       .Key("AssetId")
                     .OnBeforeSend("grid_dataSource_beforeSend")
 
                   )
                   .Selection(s => s.Mode(SelectionMode.Multiple))
                           .OnSelectionChanged("selection_changed")
-                         
+
                     .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                  
+
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -72,12 +72,12 @@
 
                     columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
 
-                
+
                     })
-                    .RemoteOperations(true)               
+                    .RemoteOperations(true)
                     )
                     </div><!-- table-responsive -->
-                
+
                 </div>
             </div>
             <div class="col-lg-5 mg-t-20 mg-lg-t-0">
@@ -96,7 +96,7 @@
                                     </div>
                                 </div><!-- col-4 -->
 
-                                                <div class="col-lg-12" id="AssetToDepartment" style="display:block">
+                                <div class="col-lg-12" id="AssetToDepartment" style="display:block">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Department"] <span class="tx-danger">*</span></label>
 
@@ -108,15 +108,18 @@
                                         .Key("Value")
                                         )
                                         .ValueExpr("Value")
-                                        .DisplayExpr("Text")
-                                         .OnSelectionChanged("GetAssets")
-                                         .ShowClearButton(true)
+                                        .OnSelectionChanged("GetAssets")
+                                         .DisplayExpr("Text").Placeholder(sharedResource["Select Department"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
                                         )
                                         <span asp-validation-for="@Model.assetmovement.DepartmentId" class="text-danger"></span>
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-lg-12" id="AssetToLocation" style="display:block">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
@@ -131,7 +134,7 @@
                                         .LoadMode(DataSourceLoadMode.Raw)
                                         .Key("Value")
                                         )
-                                        .Placeholder("Select a value...")
+                                        .Placeholder(sharedResource["Select a value..."])
                                         .ShowClearButton(true)
                                         .OnValueChanged("treeBox_valueChanged")
                                         .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
@@ -174,7 +177,7 @@
                                 )
                                 }
 
-                
+
                                 <div class="col-lg-12" id="AssetToEmpolyee" style="display:block">
                                     <div class="form-group">
                                         <label class="form-control-label">@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
@@ -186,9 +189,12 @@
                                         .Key("Value")
                                         )
                                         .ValueExpr("Value")
-                                        .DisplayExpr("Text")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Empolyee"])
                                         .ShowClearButton(true)
-                                      
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+
                                         )
                                         <span asp-validation-for="@Model.assetmovement.EmpolyeeID" class="text-danger"></span>
                                     </div>
@@ -196,23 +202,27 @@
 
 
 
-      <div class="col-lg-12">
-    <div class="form-group">
-        <label class="form-control-label">@sharedResource["Store"]: <span class="tx-danger">*</span></label>
-              
-        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("StoresLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@sharedResource["Store"]: <span class="tx-danger">*</span></label>
+
+                                        @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("StoresLookup")
+                                        .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Store"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+
         )
-         <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
-            </div>
-        </div>
+                                        <span asp-validation-for="@Model.assetmovement.StoreId" class="text-danger"></span>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -227,7 +237,7 @@
                             <div class="row mg-t-30">
                                 <div class="col-sm-8 mg-l-auto">
                                     <div class="form-layout-footer">
-                                        <button type="submit" class="btn btn-primary" >@sharedResource["Check Out"]</button>
+                                        <button type="submit" class="btn btn-primary">@sharedResource["Transfer"]</button>
                                     </div><!-- form-layout-footer -->
                                 </div><!-- col-8 -->
                             </div>
@@ -239,35 +249,34 @@
             </div><!-- col-6 -->
         </div>
     </div>
-    </div>
+</div>
 
-    <script>
-        
-              function syncTreeViewSelection(treeView, value) {
-                  console.log(treeView)
-                  console.log(value)
-               if (!value) {
-                   treeView.unselectAll();
-               } else {
-                   treeView.selectItem(value);
-               }
-           }
+<script>
 
-           function treeBox_valueChanged(e) {
-               console.log("tree")
-               var $treeView = e.component.content().find(".dx-treeview");
-               console.log($treeView)
-               if($treeView.length) {
-                   syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
-               }
-           }
+    function syncTreeViewSelection(treeView, value) {
+        console.log(treeView)
+        console.log(value)
+        if (!value) {
+            treeView.unselectAll();
+        } else {
+            treeView.selectItem(value);
+        }
+    }
 
-               function getDataGridInstance() {
+    function treeBox_valueChanged(e) {
+        console.log("tree")
+        var $treeView = e.component.content().find(".dx-treeview");
+        console.log($treeView)
+        if ($treeView.length) {
+            syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
+        }
+    }
+
+    function getDataGridInstance() {
         return $("#grid-container").dxDataGrid("instance");
     }
 
-    function selection_changed(selectedItems) 
-    {
+    function selection_changed(selectedItems) {
         var dataGrid = getDataGridInstance();
         var data = selectedItems.selectedRowsData;
         console.log(data)
@@ -275,71 +284,68 @@
 
         console.log(typeof data)
         const myJSON = JSON.stringify(data)
-          console.log(myJSON)
+        console.log(myJSON)
         console.log(myJSON.length)
 
         console.log(typeof myJSON)
-        if(data.length > 0) 
-        {
-             $.ajax({
-         type: "POST",
-        beforeSend: function (xhr) {
-         xhr.setRequestHeader("XSRF-TOKEN",
-             $('input:hidden[name="__RequestVerificationToken"]').val());
-        }
-        ,
-        url: "/admin/PatchProcess/PatchTransferFromDepartment?handler=FillAssetList",
-       async: false,
-        data: JSON.stringify(data),
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            console.log("get selected rows successfully"+response)
-                
-        },
-        failure: function (response) {
-            alert(response);
-        }
-    });
+        if (data.length > 0) {
+            $.ajax({
+                type: "POST",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                }
+                ,
+                url: "/admin/PatchProcess/PatchTransferFromDepartment?handler=FillAssetList",
+                async: false,
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    console.log("get selected rows successfully" + response)
 
-        } 
-        else
-        {
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+
+        }
+        else {
             console.log("Nobody has been selected")
             //$("#selectedItemsContainer").text("Nobody has been selected");
         }
 
     }
 
-    function GetAssets()
-    {
-      console.log("inside the funcion")
+    function GetAssets() {
+        console.log("inside the funcion")
         var Departmnt = $("#DepartmntLookup").dxLookup("instance");
-         console.log(Departmnt)
-       var DepartmntValue = Departmnt.option("selectedItem");
-       console.log(DepartmntValue)
-       console.log(DepartmntValue.Value)
-      
-             $.ajax({
-        type: "GET",
-        url: "/admin/PatchProcess/PatchTransferFromDepartment?handler=AssetsForDepartment",
-        data: { "values": DepartmntValue.Value},
-        contentType: "application/json",
-        dataType: "json",
-        success: function (response) {
-            console.log("get Employee successfully"+response)
-           // $("#grid-container").dxDataGrid("instance").refresh()
-            $("#grid-container").dxDataGrid("instance").option("dataSource",response)
-            console.log($("#grid-container").dxDataGrid("instance"))
-  
-},
-        failure: function (response) {
-            alert(response);
-        }
-    });
+        console.log(Departmnt)
+        var DepartmntValue = Departmnt.option("selectedItem");
+        console.log(DepartmntValue)
+        console.log(DepartmntValue.Value)
 
-       
-     
+        $.ajax({
+            type: "GET",
+            url: "/admin/PatchProcess/PatchTransferFromDepartment?handler=AssetsForDepartment",
+            data: { "values": DepartmntValue.Value },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                console.log("get Employee successfully" + response)
+                // $("#grid-container").dxDataGrid("instance").refresh()
+                $("#grid-container").dxDataGrid("instance").option("dataSource", response)
+                console.log($("#grid-container").dxDataGrid("instance"))
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+
     }
 
-    </script>
+</script>

@@ -30,14 +30,13 @@
         .DeleteAction("Delete")
         .Key("LocationId")
     )
-    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
     .RootValue(null)
     .KeyExpr("LocationId")
     .ParentIdExpr("LocationParentId")
-     .SearchPanel(seachPanel => seachPanel.Visible(true))
+     .SearchPanel(seachPanel => seachPanel.Visible(true).Placeholder(sharedResource["searching"]))
     @*.RemoteOperations(o => o.Filtering(true).Grouping(true).Sorting(true))*@
     .Columns(columns => {
 
@@ -66,13 +65,13 @@
     .Editing(e => e
     .Mode(GridEditMode.Popup)
         .AllowAdding(true)
-        .AllowUpdating(true)
-        .AllowDeleting(true)
+        .AllowUpdating(true).Texts(a => a.EditRow(sharedResource["Edit"]))
+        .AllowDeleting(true).Texts(a => a.DeleteRow(sharedResource["Delete"]))
           .Popup(p => p
                 .Title("Location Info")
                 .ShowTitle(true)
                 .Width(500)
-                .Height(100)
+                .Height(250)
     )
     ).Selection(s => s.Mode(SelectionMode.Single))
 

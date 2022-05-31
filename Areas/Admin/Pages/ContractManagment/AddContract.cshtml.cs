@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System;
 
 namespace AssetProject.Areas.Admin.Pages.ContractManagment
 {
@@ -26,17 +27,32 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
 
         public IActionResult OnPost()
         {
+            if (Contract.VendorId == null)
+            {
+                ModelState.AddModelError("", "Please Select Vendor");
+                return Page();
+            }
+            if (Contract.EndDate <= Contract.StartDate)
+            {
+                ModelState.AddModelError("", "EndDate mustbe greater than StartDate  ");
+                return Page();
+            }
             if (ModelState.IsValid)
             {
-                if (Contract.VendorId == null)
-                {
-                    ModelState.AddModelError("", "Please Select Vendor");
-                    return Page();
-                }
+                
+               
                 Context.Contracts.Add(Contract);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Contract Added successfully");
-                return RedirectToPage("/ContractManagment/ContractList");
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Contract Added successfully");
+                    return RedirectToPage("/ContractManagment/ContractList");
+                }
+               catch(Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/ContractManagment/ContractList");
+                }
             }
             return Page();
         }

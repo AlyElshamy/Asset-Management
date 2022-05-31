@@ -55,10 +55,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 AssetId = i.AssetId,
                 Photo = i.Asset.Photo,
                 CategoryTL = i.Asset.Item.Category.CategoryTIAR,
-                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
-                DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
-                LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
-                DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
+               
                 CategoryId = i.Asset.Item.CategoryId,
                 ItemTL=i.Asset.Item.ItemTitle,
                 StoreTL=i.Asset.Store.StoreTitle,
@@ -87,19 +84,12 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.AssetTagId.Contains(filterModel.AssetTagId)).ToList();
             }
-            if (filterModel.LocationId != null)
-            {
-                ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
-            }
-            if (filterModel.DepartmentId != null)
-            {
-                ds = ds.Where(i => i.DepartmentId == filterModel.DepartmentId).ToList();
-            }
+          
             if (filterModel.CategoryId != null)
             {
                 ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
             }
-            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null  && filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.ShowAll == false)
+            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.CategoryId == null && filterModel.ShowAll == false)
             {
                 ds = new List<BrockenModel>();
             }

@@ -40,7 +40,7 @@
  .ShowBorders(true)
 .Paging(p => p.PageSize(10))
 .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
-.SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
+.SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
 .FilterRow(filterRow => filterRow
 .Visible(true)
 .ApplyFilter(GridApplyFilterMode.Auto)
@@ -63,7 +63,7 @@ columns.AddFor(m => m.Photo).Width(100)
     columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
     columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
-    columns.AddFor(m => m.AssetStatusId).Caption("Status").Lookup(lookup => lookup
+    columns.AddFor(m => m.AssetStatusId).Caption(sharedResource["Status"]).Lookup(lookup => lookup
           .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
           .ValueExpr("Value")
           .DisplayExpr("Text")
@@ -116,15 +116,18 @@ columns.AddFor(m => m.Photo).Width(100)
                                             <div class="form-group">
                                                 <label class="form-control-label">@sharedResource["Maintaince By"] <span class="tx-danger">*</span></label>
                                                 @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.TechnicianId)
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("TechniciansLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-        )
+                                                        .DataSource(d => d.WebApi()
+                                                            .Controller("Lookups")
+                                                            .LoadAction("TechniciansLookup")
+                                                            .Key("Value")
+                                                        )
+                                                        .ValueExpr("Value")
+                                                       .DisplayExpr("Text").Placeholder(sharedResource["Select Technician"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+                                                    )
                                                 <span asp-validation-for="@Model.assetMaintainance.TechnicianId" class="text-danger"></span>
                                             </div>
                                         </div><!-- col-6 -->
@@ -132,15 +135,18 @@ columns.AddFor(m => m.Photo).Width(100)
                                             <div class="form-group">
                                                 <label class="form-control-label">@sharedResource["Maintainance Status"]<span class="tx-danger">*</span></label>
                                                 @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.MaintainanceStatusId).ID("maintstatusid")
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("MaintainanceStatusesLookup")
-                .Key("Value")
-            ).OnSelectionChanged("maintainanceLookuP")
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-          )
+                                                        .DataSource(d => d.WebApi()
+                                                            .Controller("Lookups")
+                                                            .LoadAction("MaintainanceStatusesLookup")
+                                                            .Key("Value")
+                                                        ).OnSelectionChanged("maintainanceLookuP")
+                                                        .ValueExpr("Value")
+                                                       .DisplayExpr("Text").Placeholder(sharedResource["Select Maintainance Status"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+                                                        )
                                                 <span asp-validation-for="@Model.assetMaintainance.MaintainanceStatusId" class="text-danger"></span>
                                             </div>
                                         </div><!-- col-6 -->
@@ -156,7 +162,7 @@ columns.AddFor(m => m.Photo).Width(100)
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
-                                                <input asp-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="form-control " value=" ">
+                                                <input asp-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="form-control ">
                                                 <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceRepairesCost" class="text-danger"></span>
                                             </div>
                                         </div><!-- col-6 -->
@@ -172,7 +178,7 @@ columns.AddFor(m => m.Photo).Width(100)
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12" id="MaintainanceFrequency" style="display:none">
+                                         <div class="col-lg-12" id="MaintainanceFrequency" style="display:none">
                                             <div class="form-group">
                                                 <label class="form-control-label">@sharedResource["Frequency"]<span class="tx-danger">*</span></label>
                                                 @(Html.DevExtreme().LookupFor(c=>c.assetMaintainance.AssetMaintainanceFrequencyId)
@@ -184,8 +190,11 @@ columns.AddFor(m => m.Photo).Width(100)
             )
             .OnSelectionChanged("FrequencyLookuP")
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
           )
                                                 <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceFrequencyId" class="text-danger"></span>
                                             </div>
@@ -207,8 +216,11 @@ columns.AddFor(m => m.Photo).Width(100)
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
           )
                                                 </div>
 
@@ -241,8 +253,11 @@ columns.AddFor(m => m.Photo).Width(100)
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
           )
                                                 </div>
                                                 <span asp-validation-for="@Model.assetMaintainance.MonthId" class="text-danger"></span>
@@ -272,6 +287,16 @@ columns.AddFor(m => m.Photo).Width(100)
 }
 
 <script>
+    $(function () {
+        var date = new Date().toISOString().slice(0, 10);
+
+        //To restrict past date
+
+        $('.date').attr('min', date);
+
+
+    });
+
     function myFunction() {
         var Yes = document.getElementById("ch1")
         var No = document.getElementById("ch2")

@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["Patch Dispose"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Dispose</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Patch Dispose"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="row row-sm">
@@ -40,7 +40,7 @@
                      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -65,7 +65,7 @@
 
                         columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
                         //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
-                        columns.AddFor(m => m.AssetStatusId).Caption("Status").Lookup(lookup => lookup
+                        columns.AddFor(m => m.AssetStatusId).Caption(sharedResource["Status"]).Lookup(lookup => lookup
           .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
           .ValueExpr("Value")
           .DisplayExpr("Text")

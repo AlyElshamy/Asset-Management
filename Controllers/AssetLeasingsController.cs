@@ -35,7 +35,7 @@ namespace AssetProject.Controllers
                     i.AssetLeasingId,
                     i.Asset,
                     i.AssetId,
-                    i.AssetLeasing
+                    i.AssetLeasing,
                 });
 
 

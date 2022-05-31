@@ -4,15 +4,15 @@
 @{
 
 }
-@if (ViewData["AssetId"]!=null)
+@if (ViewData["AssetId"] != null)
 {
     var AssetId = ViewData["AssetId"];
 }
 @model AssetProject.Models.AssetMaintainance
 
 
- <a href="javascript:void(0)" onclick="ShowAddAssetMiantainancePopUp(@ViewData["AssetId"])" class="btn btn-primary" style="float:right">@sharedResource["Add New"] </a>
- <p id="Deletephotot"></p>
+<a href="javascript:void(0)" onclick="ShowAddAssetMiantainancePopUp(@ViewData["AssetId"])" class="btn btn-primary" style="float:right">@sharedResource["Add New Maintainance"] </a>
+<p id="Deletephotot"></p>
 <div id="AssetMiantainancePoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
         <form asp-area="Admin" asp-page="/AssetManagment/AssetProfile" asp-page-handler="AddAssetMaintainance" enctype="multipart/form-data">
@@ -52,15 +52,18 @@
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Maintaince By"] <span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.TechnicianId)
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("TechniciansLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-        )
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("TechniciansLookup")
+                                        .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Technician"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+                                )
                                 <span asp-validation-for="@Model.TechnicianId" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -68,15 +71,18 @@
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Maintainance Status"]<span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.MaintainanceStatusId).ID("maintstatusid")
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("MaintainanceStatusesLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true).OnSelectionChanged("maintainanceLookuP")
-          )
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("MaintainanceStatusesLookup")
+                                        .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Maintainance Status"])
+                                        .ShowClearButton(true).OnSelectionChanged("maintainanceLookuP")
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+                                 )
                                 <span asp-validation-for="@Model.MaintainanceStatusId" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -92,7 +98,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceRepairesCost"  class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceRepairesCost" class="form-control ">
                                 <span asp-validation-for="@Model.AssetMaintainanceRepairesCost" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -113,16 +119,19 @@
                                 <label class="form-control-label">@sharedResource["Frequency"]<span class="tx-danger">*</span></label>
                                 @(Html.DevExtreme().LookupFor(c=>c.AssetMaintainanceFrequencyId)
                               .ID("MaintFreqLookup")
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("AssetMaintainanceFrequenciesLookup")
-                .Key("Value")
-            )
-            .OnSelectionChanged("FrequencyLookuP")
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-          )
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("AssetMaintainanceFrequenciesLookup")
+                                        .Key("Value")
+                                        )
+                                        .OnSelectionChanged("FrequencyLookuP")
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+                                    )
                                 <span asp-validation-for="@Model.AssetMaintainanceFrequencyId" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -131,21 +140,24 @@
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.WeeklyPeriod"  min="1" class="form-control" style="width:75px; display:inline-block">
+                                <input asp-for="@Model.WeeklyPeriod" min="1" class="form-control" style="width:75px; display:inline-block">
                                 <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Week(s) on"] </label>
                                 <div style="display:inline-block">
                                     @(Html.DevExtreme().LookupFor(c=>c.WeekDayId)
-                       .Width(170)
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("WeekDaysLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
-          )
+                                        .Width(170)
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("WeekDaysLookup")
+                                        .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
+                                     )
                                 </div>
 
                                 <span asp-validation-for="@Model.WeekDayId" class="text-danger"></span>
@@ -156,7 +168,7 @@
                             <label>@sharedResource["Recur on"]</label>
                             <div class="form-group">
                                 <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.MonthlyPeriod"  min="1" class="form-control" style="width:75px;display:inline-block">
+                                <input asp-for="@Model.MonthlyPeriod" min="1" class="form-control" style="width:75px;display:inline-block">
                                 <span asp-validation-for="@Model.MonthlyPeriod" class="text-danger"></span>
                                 <label>@sharedResource["Month(s) on"] </label>
                                 <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block">
@@ -170,15 +182,18 @@
                                 <label>@sharedResource["Every"]</label>
                                 <div style="display:inline-block">
                                     @(Html.DevExtreme().LookupFor(c=>c.MonthId)
-                       .Width(175)
-            .DataSource(d => d.WebApi()
-                .Controller("Lookups")
-                .LoadAction("MonthsLookup")
-                .Key("Value")
-            )
-            .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+                                        .Width(175)
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Lookups")
+                                        .LoadAction("MonthsLookup")
+                                        .Key("Value")
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
           )
                                 </div>
                                 <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
@@ -225,7 +240,7 @@
          columns.AddFor(m => m.AssetMaintainanceId).Visible(false);
         columns.AddFor(m => m.AssetMaintainanceTitle).Caption(sharedResource["Title"]);
         columns.AddFor(m => m.AssetMaintainanceDueDate).Caption(@sharedResource["Due Date"]);
-        columns.AddFor(m => m.ScheduleDate).Caption("Schedule Date");
+        columns.AddFor(m => m.ScheduleDate).Caption(sharedResource["Schedule Date"]);
         columns.AddFor(m => m.MaintainanceStatusId).Caption(@sharedResource["Maintainance Status"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("AssetMaintainances").LoadAction("MaintainanceStatusesLookup").Key("Value"))
             .ValueExpr("Value")
@@ -234,19 +249,29 @@
         columns.AddFor(m => m.AssetMaintainanceDateCompleted).Caption(@sharedResource["Date Completed"]);
 
         columns.AddFor(m => m.AssetMaintainanceRepairesCost).Caption(@sharedResource["Repaires Cost"]);
-        
+
      columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
         <a href="javascript:void(0)" onclick="editMaintainance('<%- data.AssetMaintainanceId %>')"> @sharedResource["Edit"]</a>
            </text>).Width(150);
          })
- 
+
     .Editing(e => e
-        .AllowDeleting(true)
+        .AllowDeleting(true).Texts(e=>e.DeleteRow(sharedResource["Delete"]))
     )
 )
 
 
 <script>
+    $(function () {
+        var date = new Date().toISOString().slice(0, 10);
+
+        //To restrict past date
+
+        $('.date').attr('min', date);
+
+
+    });
+
     function myFunction() {
         var Yes = document.getElementById("ch1")
         var No = document.getElementById("ch2")
@@ -277,7 +302,7 @@
                 document.getElementById("WeeklyFrequency").style.display = 'none'
                 document.getElementById("MonthlyFrequency").style.display = 'none'
                 document.getElementById("YearlyFrequency").style.display = 'none'
-                
+
             }
             else if (fequencyTypeValue.Text == "Weekly") {
                 console.log("Weekly")
@@ -303,7 +328,7 @@
                 document.getElementById("YearlyDay").setAttribute('required', '')
             }
         }
-        
+
     }
 
     function maintainanceLookuP() {
@@ -319,7 +344,7 @@
 
             }
         }
-        
+
     }
-    
+
 </script>

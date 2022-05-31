@@ -63,7 +63,7 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
                 catch (Exception e)
                 {
                     toastNotification.AddErrorToastMessage("Something went wrong");
-                    return Page();
+                    return RedirectToPage("/StoreManagment/Delete",new { id=Store.StoreId});
                 }
             }
 

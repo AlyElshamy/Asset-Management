@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System;
 
 namespace AssetProject.Areas.Admin.Pages.VendorManagment
 {
@@ -20,14 +21,20 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
             Context = context;
            _toastNotification = toastNotification;
         }
-        public void OnGet(int id)
+        public IActionResult OnGet(int id)
         {
            Vendor =Context.Vendors.Find(id);
+            if (Vendor == null)
+            {
+                return Redirect("../../Error");
+            }
+            return Page();
+
         }
 
         public IActionResult OnPost()
         {
-            if (Vendor.VendorId==null)
+            if (Vendor.VendorId==0)
             {
 
                 ModelState.AddModelError("", "Please select Vendor");
@@ -37,9 +44,17 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
             {
                 var UpdatedVendor = Context.Vendors.Attach(Vendor);
                 UpdatedVendor.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Vendor Edited successfully");
-                return RedirectToPage("/VendorManagment/VendorList",new {id=Vendor.VendorId});
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Vendor Edited successfully");
+                    return RedirectToPage("/VendorManagment/DetailsVendor", new { id = Vendor.VendorId });
+                }
+               catch(Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/VendorManagment/EditVendor", new { id = Vendor.VendorId });
+                }
             }
             return Page();
         }

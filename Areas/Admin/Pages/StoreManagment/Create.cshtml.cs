@@ -39,11 +39,19 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
             {
                 return Page();
             }
+            try
+            {
+                _context.Stores.Add(Store);
+                await _context.SaveChangesAsync();
+                toastNotification.AddSuccessToastMessage("Store Added successfully");
+                return RedirectToPage("/StoreManagment/List");
 
-            _context.Stores.Add(Store);
-            await _context.SaveChangesAsync();
-            toastNotification.AddSuccessToastMessage("Store Added successfully");
-            return RedirectToPage("./List");
+            }
+            catch (Exception e)
+            {
+                toastNotification.AddErrorToastMessage("Something went wrong");
+                return RedirectToPage("/StoreManagment/List");
+            }
         }
     }
 }

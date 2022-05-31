@@ -23,7 +23,6 @@
         .LoadAction("Get")
         .Key("VendorId")
     )
-    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -31,7 +30,7 @@
      .ShowBorders(true)
     .Paging(p=>p.PageSize(10))
     .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
@@ -50,19 +49,15 @@
 
 @*        columns.AddFor(m => m.VendorId);*@
 
-        columns.AddFor(m => m.VendorTitle).Caption(sharedResource["Vendor Title"]);
+        columns.AddFor(m => m.VendorTitle).Caption(sharedResource["Title"]);
 
-        columns.AddFor(m => m.Phone).Caption(sharedResource["Vendor Phone"]);
+        columns.AddFor(m => m.Mobile).Caption(sharedResource["Mobile"]);
 
-        columns.AddFor(m => m.Mobile).Caption(sharedResource["Mobile Number"]);
 
-        columns.AddFor(m => m.Email).Caption(sharedResource["Vendor Email"]);
+        columns.AddFor(m => m.Website).Caption(sharedResource["WebSite"]);
 
-        columns.AddFor(m => m.Website).Caption(sharedResource["Vendor WebSite"]);
-
-        columns.AddFor(m => m.ContactPersonName).Caption(sharedResource["Contact Personal Name"]);
-        columns.AddFor(m => m.ContactPersonEmail).Caption(sharedResource["Contact Personal Email"]);
-        columns.AddFor(m => m.ContactPersonPhone).Caption(sharedResource["Contact Personal Phone"]);
+        columns.AddFor(m => m.ContactPersonName).Caption(sharedResource[" Personal Name"]);
+        columns.AddFor(m => m.ContactPersonPhone).Caption(sharedResource["Personal Phone"]);
 
        @* columns.AddFor(m => m.VendorId).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("VendorsLookup").Key("Value"))
