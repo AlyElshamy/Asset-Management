@@ -25,7 +25,6 @@
                     .Key("AssetLeasingDetailsId")
                     )
 
-                    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
@@ -42,7 +41,7 @@
 
                 .Columns(columns => {
 
-                    columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
+                    columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                 .AllowFiltering(false)
                 .AllowSorting(false)
                 .CellTemplate(@<text>
@@ -54,12 +53,12 @@
                         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["TagId"]);
 
 
-                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["SerialNo"]);
+                        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["Serial"]);
 
                 columns.AddFor(m => m.AssetLeasing.StartDate).Caption(sharedResource["Leasing StartDate"]);
 
                 columns.AddFor(m => m.AssetLeasing.EndDate).Caption(sharedResource["Leasing EndtDate"]);
-                columns.AddFor(m => m.AssetLeasing.CustomerId).Caption("Customer").Lookup(lookup => lookup
+                columns.AddFor(m => m.AssetLeasing.CustomerId).Caption(sharedResource["Customer"]).Lookup(lookup => lookup
             .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CustomersLookup").Key("Value"))
             .ValueExpr("Value")
             .DisplayExpr("Text")

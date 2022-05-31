@@ -144,18 +144,18 @@
 Columns(columns =>
 {
 
-columns.AddFor(m => m.Asset.Photo).Caption("Photo").Width(100)
-      .AllowFiltering(false)
-      .AllowSorting(false)
-      .CellTemplate(@<text>
+                    columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
+                    .AllowFiltering(false)
+                    .AllowSorting(false)
+                    .CellTemplate(@<text>
                 <div>
                     <img src="/<%- value %>" alt="" width="35" height="35" />
                 </div>
             </text>);
         columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["TagId"]);
                     columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["Cost"]);
-        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["SerialNo"]);
-        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["PurchaseDate"]);
+        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["Serial"]);
+        columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["Purchase Date"]);
 
 
         columns.AddFor(m => m.Asset.ItemId).Caption(sharedResource["Item"]).Lookup(lookup => lookup
