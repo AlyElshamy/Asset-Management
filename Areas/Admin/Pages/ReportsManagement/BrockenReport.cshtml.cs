@@ -85,11 +85,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = ds.Where(i => i.AssetTagId.Contains(filterModel.AssetTagId)).ToList();
             }
           
-            if (filterModel.CategoryId != null)
-            {
-                ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
-            }
-            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.CategoryId == null && filterModel.ShowAll == false)
+            
+            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.ShowAll == false)
             {
                 ds = new List<BrockenModel>();
             }

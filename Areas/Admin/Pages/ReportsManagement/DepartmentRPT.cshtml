@@ -30,8 +30,13 @@
     .Items(items => {
         items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m => m.Text(sharedResource["Show All"]));
 
-        items.AddSimpleFor(m => m.DepartmentTitle).IsRequired(false).Label(l=>l.Text(sharedResource["Department"]));
-
+        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
+               .Editor(e => e
+               .Lookup()
+               .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
+               .ValueExpr("Value")
+               .DisplayExpr("Text").ShowClearButton(true)
+               );
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
        .ButtonOptions(b => b.Text(sharedResource["Send"])
