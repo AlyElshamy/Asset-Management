@@ -35,12 +35,12 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 ModelState.AddModelError("", "Please Select Item");
                 return Page();
             }
-            if (Asset.StoreId == 0)
+            if (Asset.StoreId == null)
             {
                 ModelState.AddModelError("", "Please Select Store");
                 return Page();
             }
-            if (Asset.VendorId == 0)
+            if (Asset.VendorId == null)
             {
                 ModelState.AddModelError("", "Please Select Vendor");
                 return Page();
