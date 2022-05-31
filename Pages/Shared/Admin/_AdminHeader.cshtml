@@ -18,7 +18,7 @@
 
             <form class="form-inline" asp-area="Admin" asp-page="/AssetManagment/SearchAsset" method="post" id="SearchFrm">
                 <div class="search-box">
-                    <input type="text" required class="form-control" id="SearchAssetInput" placeholder="Search" name="AssetSearchItem">
+                    <input type="text" required class="form-control" id="SearchAssetInput" placeholder="@sharedResource["searching"]" name="AssetSearchItem">
                     <button class="btn btn-primary"><i class="fa fa-search"></i></button>
 
                 </div>
@@ -41,7 +41,7 @@
         <div class="slim-header-right">
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <span>Choose Language</span>
+                    <span>@sharedResource["Choose Language"]</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -235,11 +235,11 @@
                             <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
-                            <a asp-area="Identity" asp-page="/Account/ChangePassword" class="nav-link"><i class="icon ion-ios-bolt"></i> Change Password</a>
+                            <a asp-area="Identity" asp-page="/Account/ChangePassword" class="nav-link"><i class="icon ion-ios-bolt"></i> @sharedResource["Change Password"]</a>
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
 
                             <form id="form1" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                                <a href="#" class="nav-link" onclick="document.getElementById('form1').submit();"><i class="icon ion-forward"></i> Sign Out</a>
+                                <a href="#" class="nav-link" onclick="document.getElementById('form1').submit();"><i class="icon ion-forward"></i> @sharedResource["Sign Out"]</a>
                             </form>
                         </nav>
 

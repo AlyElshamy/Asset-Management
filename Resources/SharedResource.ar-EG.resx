@@ -174,6 +174,9 @@
   <data name="Add New Store" xml:space="preserve">
     <value>إنشاء متجر جديد</value>
   </data>
+  <data name="Add New User" xml:space="preserve">
+    <value>إضافه مستخدم جديد</value>
+  </data>
   <data name="Add New Vendor" xml:space="preserve">
     <value>إنشاء بائع جديد</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="AddBrand" xml:space="preserve">
     <value>اضافة ماركة</value>
+  </data>
+  <data name="Added Assets Report" xml:space="preserve">
+    <value>تقارير الأصول المضافه</value>
   </data>
   <data name="AddEmpolyee" xml:space="preserve">
     <value>اضافة موظف</value>
@@ -215,6 +221,12 @@
   </data>
   <data name="AddType" xml:space="preserve">
     <value>اضافة نوع</value>
+  </data>
+  <data name="After being featured in too many magazines to mention and having created an online stir, we know that" xml:space="preserve">
+    <value>بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن</value>
+  </data>
+  <data name="Alerts" xml:space="preserve">
+    <value>الإشعارات</value>
   </data>
   <data name="Already have an account" xml:space="preserve">
     <value>هل لديك حساب بالفعل</value>
@@ -357,6 +369,9 @@
   <data name="ASSETS" xml:space="preserve">
     <value>الأصول</value>
   </data>
+  <data name="Assets Dispose Report" xml:space="preserve">
+    <value>تقارير الأصول التالفة</value>
+  </data>
   <data name="Assets List" xml:space="preserve">
     <value>قائمة الأصول</value>
   </data>
@@ -365,6 +380,18 @@
   </data>
   <data name="Assets Lost List" xml:space="preserve">
     <value>قائمة الأصول المفقودة</value>
+  </data>
+  <data name="Assets Lost Report" xml:space="preserve">
+    <value>تقارير الأصول الضائعة</value>
+  </data>
+  <data name="Assets Past Due" xml:space="preserve">
+    <value>الأصول المستخرجه المتأخره</value>
+  </data>
+  <data name="Assets Repair Report" xml:space="preserve">
+    <value>تقارير الأصول المصلحة</value>
+  </data>
+  <data name="Assets Sell Report" xml:space="preserve">
+    <value>تقارير الأصول المباعة</value>
   </data>
   <data name="AssetSerialNo" xml:space="preserve">
     <value>رقم السيريال</value>
@@ -384,6 +411,9 @@
   <data name="Brand" xml:space="preserve">
     <value>الماركة</value>
   </data>
+  <data name="Brand Managment" xml:space="preserve">
+    <value>إداره الماركات</value>
+  </data>
   <data name="BrandDetails" xml:space="preserve">
     <value>تفاصيل الماركة</value>
   </data>
@@ -399,6 +429,9 @@
   <data name="BrandTitle" xml:space="preserve">
     <value>اسم الماركة</value>
   </data>
+  <data name="Brocken Asset Report" xml:space="preserve">
+    <value>تقارير الأصول المكسوره</value>
+  </data>
   <data name="Browse our site and see for yourself why you need Slim" xml:space="preserve">
     <value>تصفح موقعنا وشاهد بنفسك لماذا تحتاج Slim</value>
   </data>
@@ -407,6 +440,9 @@
   </data>
   <data name="Category" xml:space="preserve">
     <value>الفئة</value>
+  </data>
+  <data name="Category List" xml:space="preserve">
+    <value>قائمه الفئات</value>
   </data>
   <data name="Category Report" xml:space="preserve">
     <value>تقرير الفئة</value>
@@ -419,6 +455,9 @@
   </data>
   <data name="Change" xml:space="preserve">
     <value>تغيير</value>
+  </data>
+  <data name="Change Password" xml:space="preserve">
+    <value>تغيير الرقم السري</value>
   </data>
   <data name="Change your password" xml:space="preserve">
     <value>تغيير كلمة المرور الخاصة بك</value>
@@ -441,6 +480,12 @@
   <data name="checkconfirm" xml:space="preserve">
     <value>يرجى التحقق من بريدك الإلكتروني لتأكيد حسابك</value>
   </data>
+  <data name="CheckIn Assets Report" xml:space="preserve">
+    <value>تقارير مدخلات الأصول</value>
+  </data>
+  <data name="CheckOut Assets Report" xml:space="preserve">
+    <value>تقارير مستخرجات الأصول</value>
+  </data>
   <data name="CheckOut Expiring Assets List" xml:space="preserve">
     <value> قائمة الأصول منتهية الصلاحية</value>
   </data>
@@ -449,6 +494,9 @@
   </data>
   <data name="Choose Asset Photo" xml:space="preserve">
     <value>اختر صورة الأصل</value>
+  </data>
+  <data name="Choose Language" xml:space="preserve">
+    <value>إختر اللغة</value>
   </data>
   <data name="Choose New File" xml:space="preserve">
     <value>اختر ملف جديد</value>
@@ -534,6 +582,9 @@
   <data name="Contract List" xml:space="preserve">
     <value>قائمة العقودات</value>
   </data>
+  <data name="Contract Managment" xml:space="preserve">
+    <value>إداره العقودات</value>
+  </data>
   <data name="Contract No" xml:space="preserve">
     <value>رقم الإتفاقية</value>
   </data>
@@ -546,8 +597,17 @@
   <data name="ContractId" xml:space="preserve">
     <value>رقم العقد</value>
   </data>
+  <data name="Contracting" xml:space="preserve">
+    <value>العقود</value>
+  </data>
   <data name="Contracts" xml:space="preserve">
     <value>الإتفاقيات</value>
+  </data>
+  <data name="Contracts Expiring" xml:space="preserve">
+    <value>العقود المنتهية</value>
+  </data>
+  <data name="Contracts Report" xml:space="preserve">
+    <value>تقرير العقودات</value>
   </data>
   <data name="Copyright 2018. All Rights Reserved" xml:space="preserve">
     <value>حقوق الطبع والنشر 2018. جميع الحقوق محفوظة</value>
@@ -609,6 +669,9 @@
   <data name="Customer Report" xml:space="preserve">
     <value>تقرير العميل</value>
   </data>
+  <data name="Customers Report" xml:space="preserve">
+    <value>تقارير العملاء</value>
+  </data>
   <data name="Date Acquired" xml:space="preserve">
     <value>تاريخ الإبقاء</value>
   </data>
@@ -660,11 +723,17 @@
   <data name="Department" xml:space="preserve">
     <value>القسم</value>
   </data>
+  <data name="Department List" xml:space="preserve">
+    <value>قائمه الأقسام</value>
+  </data>
   <data name="Department Report" xml:space="preserve">
     <value>تقرير القسم</value>
   </data>
   <data name="DepartmentList" xml:space="preserve">
     <value>مجموعة الاقسام</value>
+  </data>
+  <data name="Departments Report" xml:space="preserve">
+    <value>تقارير الأقسام</value>
   </data>
   <data name="DepartmentTitle" xml:space="preserve">
     <value>اسم القسم</value>
@@ -744,6 +813,9 @@
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="Edit Company Information" xml:space="preserve">
+    <value>تعديل بيانات الشركه</value>
+  </data>
   <data name="Edit Contract" xml:space="preserve">
     <value>تعديل العقد</value>
   </data>
@@ -767,6 +839,9 @@
   </data>
   <data name="EditCompanyInformation" xml:space="preserve">
     <value>تعديل بيانات الشركة</value>
+  </data>
+  <data name="Editd Assets Report" xml:space="preserve">
+    <value>تقارير الأصول المعدله</value>
   </data>
   <data name="EditEmployee" xml:space="preserve">
     <value>تعديل موظف</value>
@@ -807,8 +882,14 @@
   <data name="EmployeeManagement" xml:space="preserve">
     <value>ادارة الموظفين</value>
   </data>
+  <data name="Employees Report" xml:space="preserve">
+    <value>تقارير الموظفين</value>
+  </data>
   <data name="Empolyee" xml:space="preserve">
     <value>الموظف</value>
+  </data>
+  <data name="Empolyee Managment" xml:space="preserve">
+    <value>إداره الموظفين</value>
   </data>
   <data name="End Date" xml:space="preserve">
     <value>تاريخ الانتهاء</value>
@@ -1063,6 +1144,9 @@
   <data name="GetStarted" xml:space="preserve">
     <value>!ابدأ</value>
   </data>
+  <data name="Help &amp; Contact" xml:space="preserve">
+    <value>المساعده والاتصال</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>السجل</value>
   </data>
@@ -1080,6 +1164,9 @@
   </data>
   <data name="Insurance Description" xml:space="preserve">
     <value>وصف التأمين</value>
+  </data>
+  <data name="Insurance Managment" xml:space="preserve">
+    <value>إداره التأمينات</value>
   </data>
   <data name="Insurance Title" xml:space="preserve">
     <value>عنوان التأمين</value>
@@ -1102,11 +1189,20 @@
   <data name="Insurances" xml:space="preserve">
     <value>التأمينات</value>
   </data>
+  <data name="Insurances Expiring" xml:space="preserve">
+    <value>التأمينات المنتهية</value>
+  </data>
+  <data name="Insurances Policy Report" xml:space="preserve">
+    <value>تقرير بوليصه التأمينات</value>
+  </data>
   <data name="InsuranceTitle" xml:space="preserve">
     <value>اسم البوليسة</value>
   </data>
   <data name="Inventory" xml:space="preserve">
     <value>المخزون</value>
+  </data>
+  <data name="is going to be big. We also hope to win" xml:space="preserve">
+    <value>ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>فعالة</value>
@@ -1126,6 +1222,9 @@
   <data name="Item List" xml:space="preserve">
     <value>مجموعة العناصر</value>
   </data>
+  <data name="Item Managment" xml:space="preserve">
+    <value>إداره العناصر</value>
+  </data>
   <data name="Item Title" xml:space="preserve">
     <value>عنوان العنصر</value>
   </data>
@@ -1138,6 +1237,9 @@
   <data name="LATEST ACTIVITY" xml:space="preserve">
     <value>الأنشطة الأخيرة</value>
   </data>
+  <data name="Learn More" xml:space="preserve">
+    <value>تعرف علي المزيد</value>
+  </data>
   <data name="lease Asset" xml:space="preserve">
     <value>تأجير أصل</value>
   </data>
@@ -1147,8 +1249,14 @@
   <data name="Lease Expires" xml:space="preserve">
     <value>انتهاء عقد الإيجار</value>
   </data>
+  <data name="Leased Asset Report" xml:space="preserve">
+    <value>تقرير الأصول المستأجره</value>
+  </data>
   <data name="Leased Cost" xml:space="preserve">
     <value>تكلفه التأجير</value>
+  </data>
+  <data name="Leases Expiring" xml:space="preserve">
+    <value>الأصول المؤجره المتأخرة</value>
   </data>
   <data name="Leasing" xml:space="preserve">
     <value>تأجير</value>
@@ -1225,6 +1333,18 @@
   <data name="Maintenance" xml:space="preserve">
     <value>اعمال صيانة</value>
   </data>
+  <data name="Maintenance Due" xml:space="preserve">
+    <value>الأصول الواجب صيانتها اليوم</value>
+  </data>
+  <data name="Maintenance OnDay Reports" xml:space="preserve">
+    <value>تقارير صيانه الأصول اليومية</value>
+  </data>
+  <data name="Maintenance Overdue" xml:space="preserve">
+    <value>تأخرات الصيانه </value>
+  </data>
+  <data name="Maintenance Reports" xml:space="preserve">
+    <value>تقارير صيانه الأصول</value>
+  </data>
   <data name="Message Preview" xml:space="preserve">
     <value>معاينة الرسالة</value>
   </data>
@@ -1252,6 +1372,9 @@
   <data name="Notes" xml:space="preserve">
     <value>ملاحظات</value>
   </data>
+  <data name="of the Year this year" xml:space="preserve">
+    <value>لهذا العام</value>
+  </data>
   <data name="on" xml:space="preserve">
     <value>في</value>
   </data>
@@ -1264,20 +1387,38 @@
   <data name="OrSignupUsing" xml:space="preserve">
     <value>او الاشتراك باستخدام</value>
   </data>
+  <data name="Other Reports" xml:space="preserve">
+    <value>تقارير أخري</value>
+  </data>
   <data name="Pages" xml:space="preserve">
     <value>الصفحات</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>الرقم السرى</value>
   </data>
+  <data name="Patch CheckIn" xml:space="preserve">
+    <value>استرجاع حزمه من الاصول</value>
+  </data>
+  <data name="Patch CheckOut" xml:space="preserve">
+    <value>إخراج حزمه من الاصول</value>
+  </data>
   <data name="Patch Dispose" xml:space="preserve">
-    <value>التخلص من التصحيح</value>
+    <value>التخلص من حزمه من الاصول</value>
+  </data>
+  <data name="Patch Lease" xml:space="preserve">
+    <value>تأجير حزمه من الأصول</value>
   </data>
   <data name="Patch Leasing" xml:space="preserve">
-    <value>تأجير التصحيح</value>
+    <value>تأجير حزمه من الاصول</value>
   </data>
   <data name="Patch Maintainance" xml:space="preserve">
-    <value>صيانة التصحيح</value>
+    <value>صيانة حزمه الاصول</value>
+  </data>
+  <data name="Patch Transfer From Department" xml:space="preserve">
+    <value>تحويل حزمه أصول من قسم</value>
+  </data>
+  <data name="Patch Transfer From Empolyee" xml:space="preserve">
+    <value>تحويل حزمه أصول من موظف</value>
   </data>
   <data name="Permium" xml:space="preserve">
     <value>بريميوم</value>
@@ -1417,6 +1558,18 @@
   <data name="Search Asset" xml:space="preserve">
     <value>بحث عن الأصل</value>
   </data>
+  <data name="Search Assets" xml:space="preserve">
+    <value>بحث عن أصول</value>
+  </data>
+  <data name="Search CheckedOut Assets By Department" xml:space="preserve">
+    <value>بحث عن أصول مستخرجه عند قسم</value>
+  </data>
+  <data name="Search CheckedOut Assets By Employee" xml:space="preserve">
+    <value>بحث عن أصول مستخرجه عند موظف</value>
+  </data>
+  <data name="Search CheckedOut Assets By Location" xml:space="preserve">
+    <value>بحث عن أصول مستخرجه في مكان</value>
+  </data>
   <data name="searching" xml:space="preserve">
     <value>بحث</value>
   </data>
@@ -1495,6 +1648,9 @@
   <data name="Sign in to continue" xml:space="preserve">
     <value>تسجيل الدخول للمتابعة</value>
   </data>
+  <data name="Sign Out" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
   <data name="Sign Up" xml:space="preserve">
     <value>إنشاء حساب</value>
   </data>
@@ -1517,7 +1673,10 @@
     <value>الاشتراك باستخدام تويتر</value>
   </data>
   <data name="slim paragraph" xml:space="preserve">
-    <value>نحن متحمسون لإطلاق شركتنا والمنتج الجديد Slim. بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة بدء الأعمال الخيالية لهذا العام</value>
+    <value>Slim نحن متحمسون لإطلاق شركتنا والمنتج الجديد 
+ThemePixels بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن 
+ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة
+لهذا العام Startup Fictional Business</value>
   </data>
   <data name="Sold To" xml:space="preserve">
     <value>بيعت ل</value>
@@ -1537,6 +1696,9 @@
   <data name="Status" xml:space="preserve">
     <value>حالة</value>
   </data>
+  <data name="Status Report" xml:space="preserve">
+    <value>تقرير حاله الأصول</value>
+  </data>
   <data name="Store" xml:space="preserve">
     <value>المتجر</value>
   </data>
@@ -1546,6 +1708,9 @@
   <data name="Store Details" xml:space="preserve">
     <value>تفاصيل المتجر</value>
   </data>
+  <data name="Store Incoming Report" xml:space="preserve">
+    <value>تقرير الأصول المدخله للمتجر</value>
+  </data>
   <data name="Store Information" xml:space="preserve">
     <value>معلومات المتجر</value>
   </data>
@@ -1554,6 +1719,18 @@
   </data>
   <data name="Store Management" xml:space="preserve">
     <value>إدارة المتاجر</value>
+  </data>
+  <data name="Store Managment" xml:space="preserve">
+    <value>إداره المتاجر</value>
+  </data>
+  <data name="Store Outcoming Report" xml:space="preserve">
+    <value>تقرير الأصول الخارجه من المتجر</value>
+  </data>
+  <data name="Store Reports" xml:space="preserve">
+    <value>تقرير المتاجر</value>
+  </data>
+  <data name="Store Taken Report" xml:space="preserve">
+    <value>تقرير جرد المتجر</value>
   </data>
   <data name="Store Title" xml:space="preserve">
     <value>اسم المتجر</value>
@@ -1606,6 +1783,12 @@
   <data name="Transaction History Report" xml:space="preserve">
     <value>تقرير تاريخ المعاملات</value>
   </data>
+  <data name="Transaction Reports" xml:space="preserve">
+    <value>تقارير المعاملات</value>
+  </data>
+  <data name="Transactions History Report" xml:space="preserve">
+    <value>تقارير تاريخ المعاملات</value>
+  </data>
   <data name="Transfer" xml:space="preserve">
     <value>نقل</value>
   </data>
@@ -1629,6 +1812,9 @@
   </data>
   <data name="TypeTitle" xml:space="preserve">
     <value>اسم النوع</value>
+  </data>
+  <data name="User List" xml:space="preserve">
+    <value>قائمة المستخدمين</value>
   </data>
   <data name="UserList" xml:space="preserve">
     <value>مجموعة المستخدمين</value>
@@ -1669,8 +1855,17 @@
   <data name="Warranties" xml:space="preserve">
     <value>الضمانات</value>
   </data>
+  <data name="Warranties Expiring" xml:space="preserve">
+    <value>الضمانات المنتهيه</value>
+  </data>
   <data name="Warranty" xml:space="preserve">
     <value>ضمان</value>
+  </data>
+  <data name="Warranty Report" xml:space="preserve">
+    <value>تقارير الضمانات</value>
+  </data>
+  <data name="We are excited to launch our new company and product" xml:space="preserve">
+    <value>نحن متحمسون لإطلاق شركتنا والمنتج الجديد</value>
   </data>
   <data name="WebSite" xml:space="preserve">
     <value>الموقع</value>
