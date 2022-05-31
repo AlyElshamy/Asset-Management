@@ -761,15 +761,15 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 _toastNotification.AddErrorToastMessage("Cannot Edit Previous Asset Maintainance..");
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
             }
-            else if (assetobj.AssetStatusId==9)
-            {
-                var lastassetMaintainance = Context.AssetMaintainances.Where(e => e.AssetId == assetMaintainance.AssetId).OrderByDescending(e => e.AssetMaintainanceId).FirstOrDefault();
-                if (assetMaintainance.AssetMaintainanceId != lastassetMaintainance.AssetMaintainanceId)
-                {
-                    _toastNotification.AddErrorToastMessage("Cannot Edit Previous Asset Maintainance..");
-                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
-                }
-            }
+            //else if (assetobj.AssetStatusId==9)
+            //{
+            //    var lastassetMaintainance = Context.AssetMaintainances.Where(e => e.AssetId == assetMaintainance.AssetId).OrderByDescending(e => e.AssetMaintainanceId).FirstOrDefault();
+            //    if (assetMaintainance.AssetMaintainanceId != lastassetMaintainance.AssetMaintainanceId)
+            //    {
+            //        _toastNotification.AddErrorToastMessage("Cannot Edit Previous Asset Maintainance..");
+            //        return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetMaintainance.AssetId });
+            //    }
+            //}
             if (assetMaintainance.AssetMaintainanceDateCompleted < assetMaintainance.ScheduleDate)
             {
                 _toastNotification.AddErrorToastMessage("Schedule Date Must be less than Completed Date..");

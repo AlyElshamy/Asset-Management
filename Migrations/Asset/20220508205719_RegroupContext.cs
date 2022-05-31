@@ -680,7 +680,7 @@ namespace AssetProject.Migrations.Asset
                         column: x => x.ItemId,
                         principalTable: "Items",
                         principalColumn: "ItemId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Assets_Stores_StoreId",
                         column: x => x.StoreId,

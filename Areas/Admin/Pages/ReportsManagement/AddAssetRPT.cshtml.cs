@@ -56,8 +56,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              AssetCost=a.AssetCost,
              Photo=a.Photo
             }).ToList();
-            
-            if(filterModel.FromDate != null && filterModel.ToDate == null)
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
+            if (filterModel.FromDate != null && filterModel.ToDate == null)
             {
                 ds = null;
             }
@@ -85,7 +88,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.ItemId == filterModel.ItemId).ToList();
             }
-            if ( filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.StoreId == null && filterModel.ItemId == null && filterModel.VendorId == null)  
+            if ( filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.StoreId == null && filterModel.ItemId == null && filterModel.VendorId == null && filterModel.ShowAll == false)  
             {
                 ds = null;
             }
