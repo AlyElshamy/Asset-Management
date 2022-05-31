@@ -43,11 +43,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.ToList();
             }
-            if (filterModel.DepartmentTitle != null)
+            if (filterModel.DepartmentId != null)
             {
-                ds = ds.Where(d => d.DepartmentTitle.Contains(filterModel.DepartmentTitle)).ToList();
+                ds = ds.Where(i => i.DepartmentId == filterModel.DepartmentId).ToList();
             }
-            if(filterModel.ShowAll == false&&filterModel.DepartmentTitle == null)
+            if (filterModel.ShowAll == false&& filterModel.DepartmentId == null)
             {
                 ds = new List<Department>();
             }

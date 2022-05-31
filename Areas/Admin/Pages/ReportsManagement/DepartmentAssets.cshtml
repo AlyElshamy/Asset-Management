@@ -1,17 +1,16 @@
 ﻿@page
-@model AssetProject.Areas.Admin.Pages.ReportsManagement.Transactions_HistoryRPTModel
+@model AssetProject.Areas.Admin.Pages.ReportsManagement.DepartmentAssetsModel
 @{
 }
-
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Reports"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Transaction History Report"]</li>
+                <li class="breadcrumb-item active" aria-current="page">Department Asset Report</li>
             </ol>
-            <h6 class="slim-pagetitle">@sharedResource["Transaction History"]</h6>
+            <h6 class="slim-pagetitle">Department Asset Report</h6>
         </div><!-- slim-pageheader -->
 
 
@@ -23,31 +22,36 @@
                     <div class="post-group">
 
                         @using (Html.BeginForm(FormMethod.Post))
+
+
                             @(Html.DevExtreme().Form<AssetProject.ReportModels.FilterModel>()
                                 .FormData(Model.filterModel)
                                 .LabelMode(FormLabelMode.Outside)
             .LabelLocation(FormLabelLocation.Top)
     .Items(items => {
-        items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m => m.Text(sharedResource["Show All"]));
-        items.AddSimpleFor(m => m.FromDate).IsRequired(false).Label(l => l.Text(sharedResource["From Date"]));
-        items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(l => l.Text(sharedResource["To Date"]));
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
-        items.AddSimpleFor(m => m.ActionLogId).IsRequired(false).Label(l => l.Text(sharedResource["Action Type"]))
+        items.AddSimpleFor(m => m.DepartmentId).IsRequired(false).Label(l => l.Text(sharedResource["Department"]))
         .Editor(e => e
         .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ActionLogsLookup").Key("Value"))
+        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("DepartmentsLookup").Key("Value"))
         .ValueExpr("Value")
         .DisplayExpr("Text")
         .ShowClearButton(true)
         );
+
+
+
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
-       .ButtonOptions(b => b.Text(sharedResource["Send"])
+    .ButtonOptions(b => b.Text(sharedResource["Send"])
        .Type(ButtonType.Success)
        .UseSubmitBehavior(true)
        );
     })
 )
+
+
+
+
                     </div><!-- post-group -->
                 </div><!-- card -->
             </div>

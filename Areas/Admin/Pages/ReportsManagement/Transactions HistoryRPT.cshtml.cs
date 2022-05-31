@@ -53,7 +53,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 AssetTagId=a.Asset.AssetTagId,
                 photo=a.Asset.Photo
             }).ToList();
-
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.AssetTagId != null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -75,7 +78,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = ds.Where(i => i.ActionDate <= filterModel.ToDate && i.ActionDate >= filterModel.FromDate).ToList();
             }
            
-            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.ActionLogId == null)
+            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.ActionLogId == null && filterModel.ShowAll == false)
             {
                 ds = null;
             }

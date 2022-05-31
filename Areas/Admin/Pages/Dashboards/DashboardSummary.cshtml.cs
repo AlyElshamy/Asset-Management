@@ -56,7 +56,27 @@ namespace AssetProject.Areas.Admin.Pages.Dashboards
             TotalSellAsst = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
             TotalSellAsstValue = _context.sellAssets.Sum(a => a.SaleAmount);
             TotalAssetUnderRepair = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
-            TotalAssetUnderRepairCost = _context.AssetRepairs.Sum(a => a.RepairCost);
+            var listmaxassetrepairId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 3
+                 from r in _context.AssetRepairs
+                 from rd in _context.AssetRepairDetails
+                 where a.AssetId == rd.AssetId && r.AssetRepairId == rd.AssetRepairId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetRepairId).Max()
+                 };
+
+            TotalAssetUnderRepairCost = 0;
+            foreach (var item in listmaxassetrepairId)
+            {
+                var costofmaxid = _context.AssetRepairs.Where(i => i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
+                TotalAssetUnderRepairCost += costofmaxid;
+            }
+
+            //TotalAssetUnderRepairCost = _context.AssetRepairs.Sum(a => a.RepairCost);
             TotalAssetLeased = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
             TotalLeasedAssetCost = _context.AssetLeasings.Sum(a => a.LeasedCost);
             TotalAssetLost = _context.Assets.Where(a => a.AssetStatusId == 4).Count();

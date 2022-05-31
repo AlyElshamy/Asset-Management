@@ -276,6 +276,9 @@
   <data name="Asset Edited Report" xml:space="preserve">
     <value>تقرير الأصور التي تم تعديلها</value>
   </data>
+  <data name="Asset History" xml:space="preserve">
+    <value>تاريخ الأصل</value>
+  </data>
   <data name="Asset Information" xml:space="preserve">
     <value>معلومات الأصول</value>
   </data>
@@ -463,10 +466,10 @@
     <value>تغيير كلمة المرور الخاصة بك</value>
   </data>
   <data name="Check In" xml:space="preserve">
-    <value>تحقق في</value>
+    <value>استرجاع</value>
   </data>
   <data name="Check In Information" xml:space="preserve">
-    <value>تحقق في المعلومات</value>
+    <value>معلومات الاصول المسترجعه</value>
   </data>
   <data name="Check Ou" xml:space="preserve">
     <value>الدفع</value>
@@ -475,7 +478,7 @@
     <value>الدفع</value>
   </data>
   <data name="Check Out Information" xml:space="preserve">
-    <value>تحقق من المعلومات</value>
+    <value>معلومات الأصول المستخرجه</value>
   </data>
   <data name="checkconfirm" xml:space="preserve">
     <value>يرجى التحقق من بريدك الإلكتروني لتأكيد حسابك</value>
@@ -609,8 +612,8 @@
   <data name="Contracts Report" xml:space="preserve">
     <value>تقرير العقودات</value>
   </data>
-  <data name="Copyright 2018. All Rights Reserved" xml:space="preserve">
-    <value>حقوق الطبع والنشر 2018. جميع الحقوق محفوظة</value>
+  <data name="Copyright 2022. All Rights Reserved" xml:space="preserve">
+    <value>حقوق الطبع والنشر 2022. جميع الحقوق محفوظة</value>
   </data>
   <data name="Cost" xml:space="preserve">
     <value>التكلفة</value>
@@ -722,6 +725,9 @@
   </data>
   <data name="Department" xml:space="preserve">
     <value>القسم</value>
+  </data>
+  <data name="Department Assets" xml:space="preserve">
+    <value>الأصول المتعلقة بالقسم</value>
   </data>
   <data name="Department List" xml:space="preserve">
     <value>قائمه الأقسام</value>
@@ -857,6 +863,9 @@
   </data>
   <data name="Employee" xml:space="preserve">
     <value>الموظف</value>
+  </data>
+  <data name="Employee Assets" xml:space="preserve">
+    <value>الأصول المتعلقة بالموظف</value>
   </data>
   <data name="Employee ID" xml:space="preserve">
     <value>رقم الموظف التعريفي</value>
@@ -1303,6 +1312,9 @@
   <data name="Location" xml:space="preserve">
     <value>الموقع</value>
   </data>
+  <data name="Location Assets" xml:space="preserve">
+    <value>الأصول الموجوده في مكان</value>
+  </data>
   <data name="LocationList" xml:space="preserve">
     <value>مجموعة المواقع</value>
   </data>
@@ -1673,10 +1685,7 @@
     <value>الاشتراك باستخدام تويتر</value>
   </data>
   <data name="slim paragraph" xml:space="preserve">
-    <value>Slim نحن متحمسون لإطلاق شركتنا والمنتج الجديد 
-ThemePixels بعد أن ظهرت في العديد من المجلات لذكرها وبعد أن أحدث ضجة عبر الإنترنت ، نعلم أن 
-ستكون كبيرة. نأمل أيضًا أن نفوز بجائزة
-لهذا العام Startup Fictional Business</value>
+    <value>Slim Asset هو حل قائم على الويب ومليء بالأدوات والميزات للتعامل مع جميع جوانب إدارة الأصول ، بما في ذلك إدارة المخزون. من خلال تقنيتها الناضجة وسهولة الإعداد ، تغطي Slim Assets جميع قواعد البرامج والأجهزة الأساسية لتتبع الأصول والمخزون. Slim Asset هي حزمة كاملة مثل أي عمل يحتاجه لتتبع وإدارة أصوله. تجمع وحدة إدارة المخزون الخاصة بها بين إدارة المخزون والأصول ضمن منصة واحدة وتتضمن القدرة على إدارة الأصول في مواقع متعددة والتنقل بين المواقع.</value>
   </data>
   <data name="Sold To" xml:space="preserve">
     <value>بيعت ل</value>

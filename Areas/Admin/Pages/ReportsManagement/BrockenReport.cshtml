@@ -35,14 +35,7 @@
            items.AddSimpleFor(m => m.ToDate).IsRequired(false).Label(m=>m.Text(sharedResource["To Date"]));
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(m=>m.Text(sharedResource["AssetTagID"]));
 
-        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text(sharedResource["Category"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        .ShowClearButton(true)
-        );
+       
 
 
         items.AddButton()
