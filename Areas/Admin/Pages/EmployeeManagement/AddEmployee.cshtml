@@ -70,7 +70,7 @@
                     <div class="row mg-b-10">
                       <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">@sharedResource["Notes"] </label>
+                            <label for="exampleFormControlTextarea1">@sharedResource["Notes"] : <span class="tx-danger">*</span> </label>
                              <textarea asp-for="@Model.employee.Notes" class="form-control" placeholder="@sharedResource["EnterNotes"]" id="exampleFormControlTextarea1" rows="3"></textarea>
                              <span asp-validation-for="@Model.employee.Notes" class="text-danger"></span>
                          </div>                   

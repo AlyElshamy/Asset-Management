@@ -44,19 +44,33 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<LeasingModel> ds = _context.AssetLeasingDetails.Select(i => new LeasingModel
+            //List<LeasingModel> ds = _context.AssetLeasingDetails.Select(i => new LeasingModel
+            //{
+            //    AssetCost = i.Asset.AssetCost,
+            //    AssetDescription = i.Asset.AssetDescription,
+            //    AssetSerialNo = i.Asset.AssetSerialNo,
+            //    AssetTagId = i.Asset.AssetTagId,
+            //    CustomerTL = i.AssetLeasing.Customer.FullName,
+            //    LeasingEndDate = i.AssetLeasing.EndDate,
+            //    LeasingStartDate = i.AssetLeasing.StartDate,
+            //    AssetLeasingId=i.AssetLeasing.AssetLeasingId,
+            //    CustomerId=i.AssetLeasing.Customer.CustomerId,
+            //    photo=i.Asset.Photo,
+            //    LeasingCost=i.AssetLeasing.LeasedCost
+
+            //}).ToList();
+            List<LeasingModel> ds = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).ThenInclude(e=>e.Customer).Where(c => c.AssetStatusId == 6).Select(i => new LeasingModel
             {
-                AssetCost = i.Asset.AssetCost,
-                AssetDescription = i.Asset.AssetDescription,
-                AssetSerialNo = i.Asset.AssetSerialNo,
-                AssetTagId = i.Asset.AssetTagId,
-                CustomerTL = i.AssetLeasing.Customer.FullName,
-                LeasingEndDate = i.AssetLeasing.EndDate,
-                LeasingStartDate = i.AssetLeasing.StartDate,
-                AssetLeasingId=i.AssetLeasing.AssetLeasingId,
-                CustomerId=i.AssetLeasing.Customer.CustomerId,
-                photo=i.Asset.Photo,
-                LeasingCost=i.AssetLeasing.LeasedCost
+                AssetId = i.AssetId,
+                AssetCost = i.AssetCost,
+                AssetSerialNo = i.AssetSerialNo,
+                AssetTagId = i.AssetTagId,
+                photo = i.Photo,
+                LeasingEndDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate,
+                LeasingStartDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.StartDate,
+                LeasingCost = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.LeasedCost,
+                CustomerTL = _context.Customers.Where(a => a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().FullName,
+                CustomerId = _context.Customers.Where(a => a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().CustomerId
 
             }).ToList();
             if (filterModel.AssetTagId != null)
