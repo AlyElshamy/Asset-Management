@@ -12,7 +12,7 @@ namespace AssetProject.Models
         [Required]
 
         public string Title { get; set; }
-        [Required]
+        [Required, RegularExpression("^[0-9]+$", ErrorMessage = " Accept Number Only")]
         public string Phone { get; set; }
         [Required, RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",ErrorMessage ="Not Valid")]
         public string Email { get; set; }

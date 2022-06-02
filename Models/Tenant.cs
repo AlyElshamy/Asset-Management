@@ -1,8 +1,11 @@
-﻿namespace AssetProject.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AssetProject.Models
 {
     public partial class Tenant
     {
         public int TenantId { get; set; }
+        [Required]
         public string CompanyName { get; set; }
         public int? CountryId { get; set; }
         public string Address { get; set; }

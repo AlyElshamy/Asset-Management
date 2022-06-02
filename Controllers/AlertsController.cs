@@ -83,7 +83,7 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetLeasesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new LeasingModel
+            var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).ThenInclude(e => e.Customer).Where(c => c.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new LeasingModel
             {
                 AssetId = i.AssetId,
                 AssetCost = i.AssetCost,

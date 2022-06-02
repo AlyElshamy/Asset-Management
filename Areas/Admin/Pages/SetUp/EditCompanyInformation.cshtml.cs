@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 using System;
 using System.IO;
 using System.Linq;
@@ -21,19 +22,19 @@ namespace AssetProject.Pages
         AssetContext Context;
         UserManager<ApplicationUser> UserManger;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IToastNotification toastNotification;
 
         [BindProperty]
          public  Tenant tenant { set; get; }
         public SelectList countries { get; set; }
 
-        public EditCompanyInformationModel(AssetContext context,
-           
-             IWebHostEnvironment webHostEnvironment,
+        public EditCompanyInformationModel(AssetContext context, IToastNotification toastNotification,IWebHostEnvironment webHostEnvironment,
             UserManager<ApplicationUser> userManager)
         {
             Context = context;
             UserManger = userManager;
            _webHostEnvironment = webHostEnvironment;
+            this.toastNotification = toastNotification;
         }
         public async Task<IActionResult> OnGet()
         {
@@ -70,8 +71,18 @@ namespace AssetProject.Pages
                 }
                 var Updatedtenant = Context.Tenants.Attach(tenant);
                 Updatedtenant.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                Context.SaveChanges();
-                return RedirectToPage("/Index");
+                try
+                {
+                    Context.SaveChanges();
+                    toastNotification.AddSuccessToastMessage("Information Company Edited Successfully"); 
+                    return RedirectToPage("/Index");
+                }
+                catch (Exception e)
+                {
+                    toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/SetUp/EditCompanyInformation");
+                }
+               
             }
             return Page();
         }
