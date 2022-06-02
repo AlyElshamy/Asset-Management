@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -40,23 +41,38 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<AssetRepairRM> ds = _context.AssetRepairDetails.Select(a => new AssetRepairRM
-            {
-                AssetId=a.AssetId,
-                AssetTagId=a.Asset.AssetTagId,
-                AssetSerialNo=a.Asset.AssetSerialNo,
-                AssetCost=a.Asset.AssetCost,
-                AssetDescription=a.Asset.AssetDescription,
-                AssetRepairId=a.AssetRepairId,
-                ScheduleDate=a.AssetRepair.ScheduleDate,
-                CompletedDate=a.AssetRepair.CompletedDate,
-                RepairCost=a.AssetRepair.RepairCost,
-                Notes=a.AssetRepair.Notes,
-                TechnicianId=a.AssetRepair.TechnicianId,
-                TechnicianName=a.AssetRepair.Technician.FullName,
-                photo=a.Asset.Photo
+        //    List<AssetRepairRM> ds = _context.AssetRepairDetails.Select(a => new AssetRepairRM
+        //    {
+        //        AssetId=a.AssetId,
+        //        AssetTagId=a.Asset.AssetTagId,
+        //        AssetSerialNo=a.Asset.AssetSerialNo,
+        //        AssetCost=a.Asset.AssetCost,
+        //        AssetDescription=a.Asset.AssetDescription,
+        //        AssetRepairId=a.AssetRepairId,
+        //        ScheduleDate=a.AssetRepair.ScheduleDate,
+        //        CompletedDate=a.AssetRepair.CompletedDate,
+        //        RepairCost=a.AssetRepair.RepairCost,
+        //        Notes=a.AssetRepair.Notes,
+        //        TechnicianId=a.AssetRepair.TechnicianId,
+        //        TechnicianName=a.AssetRepair.Technician.FullName,
+        //        photo=a.Asset.Photo
 
-            }).ToList();
+        //    }).ToList();
+
+         List<AssetRepairRM> ds = _context.Assets.Include(i => i.AssetRepairDetails).ThenInclude(i => i.AssetRepair).ThenInclude(i=>i.Technician).Where(c => c.AssetStatusId ==3).Select(i => new AssetRepairRM
+         {
+             AssetId = i.AssetId,
+             AssetCost = i.AssetCost,
+             AssetSerialNo = i.AssetSerialNo,
+             AssetTagId = i.AssetTagId,
+             photo = i.Photo,
+             ScheduleDate = i.AssetRepairDetails.OrderByDescending(e => e.AssetRepairDetailsId).FirstOrDefault().AssetRepair.ScheduleDate,
+             CompletedDate = i.AssetRepairDetails.OrderByDescending(e => e.AssetRepairDetailsId).FirstOrDefault().AssetRepair.CompletedDate,
+             RepairCost = i.AssetRepairDetails.OrderByDescending(e => e.AssetRepairDetailsId).FirstOrDefault().AssetRepair.RepairCost,
+             TechnicianId = i.AssetRepairDetails.OrderByDescending(e => e.AssetRepairDetailsId).FirstOrDefault().AssetRepair.Technician.TechnicianId,
+             TechnicianName = i.AssetRepairDetails.OrderByDescending(e => e.AssetRepairDetailsId).FirstOrDefault().AssetRepair.Technician.FullName
+
+         }).ToList();
 
 
             if (filterModel.AssetTagId != null)

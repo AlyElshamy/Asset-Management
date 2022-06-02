@@ -45,8 +45,8 @@ namespace AssetProject.Areas.Admin.Pages.Reports
         {
 
             List<AssetCheckOutList> ds = new List<AssetCheckOutList>();
-            var checkedinAssets = _context.Assets.Where(e => e.AssetStatusId == 2).Include(a => a.AssetMovementDetails).ThenInclude(a => a.AssetMovement);
-            foreach (var asset in checkedinAssets)
+            var checkedOutAssets = _context.Assets.Where(e => e.AssetStatusId == 2).Include(a => a.AssetMovementDetails).ThenInclude(a => a.AssetMovement);
+            foreach (var asset in checkedOutAssets)
             {
                 var lastAssetMovement = asset.AssetMovementDetails.OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                 ds.Add(new AssetCheckOutList()
@@ -68,7 +68,6 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                     DepartmentId = lastAssetMovement.AssetMovement.DepartmentId
 
                 });
-
             }
             if (filterModel.employeeId!=null)
             {

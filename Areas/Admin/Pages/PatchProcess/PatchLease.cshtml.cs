@@ -40,7 +40,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
 
         public IActionResult OnPost()
         {
-            if (assetLeasing.StartDate>=assetLeasing.EndDate)
+            if (assetLeasing.StartDate>assetLeasing.EndDate)
             {
                 ModelState.AddModelError("", "End Date Must Be Larger Than Start Date..");
                 SelectedAssets = null;
@@ -90,13 +90,16 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                         catch (Exception e)
                         {
                             _toastNotification.AddErrorToastMessage("Something went Error,Try again");
+                            SelectedAssets = null;
                             return Page();
                         }
                         _toastNotification.AddSuccessToastMessage("Asset Leasing Patched Added successfully");
+                        SelectedAssets = null;
                         return RedirectToPage();
                     }
                 }
                 _toastNotification.AddErrorToastMessage("Please Select at Least one Asset");
+                SelectedAssets = null;
                 return Page();
             }
             _toastNotification.AddErrorToastMessage("Something went Error,Try again");

@@ -75,7 +75,6 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     try
                     {
                         _context.SaveChanges();
-                        SelectedAssets = null;
                     }
                     catch (Exception e)
                     {
@@ -90,6 +89,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 }
 
                 _toastNotification.AddErrorToastMessage("Please Select at Least one Asset");
+                SelectedAssets = null;
                 return Page();
             }
             _toastNotification.AddErrorToastMessage("Something went Error,Try again");
