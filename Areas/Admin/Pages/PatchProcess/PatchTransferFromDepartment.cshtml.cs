@@ -97,10 +97,10 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 return Page();
             }
 
-            //Inert two movement
+                //Inert two movement
 
-            //First move assets to store --> Check in
-            if (SelectedAssets != null)
+                //First move assets to store --> Check in
+                if (SelectedAssets.Count != 0)
             {
                 int CheckInID = checkinAssetsfromDepartmentTostore(assetmovement, SelectedAssets);
                 if (CheckInID == 0)

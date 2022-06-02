@@ -775,7 +775,7 @@
     <value>تفاصيل</value>
   </data>
   <data name="Dispose Asset" xml:space="preserve">
-    <value>التخلص من الأصول</value>
+    <value>الأصول المنتهية</value>
   </data>
   <data name="Dispose Asset Report" xml:space="preserve">
     <value>الأصول التي تم التخلص منها</value>
@@ -787,7 +787,7 @@
     <value>قائمة الأصول المنتهية</value>
   </data>
   <data name="Dispose Information" xml:space="preserve">
-    <value>التخلص من المعلومات</value>
+    <value>معلومات التخلص من الاصول</value>
   </data>
   <data name="Dispose To" xml:space="preserve">
     <value>التخلص من</value>
@@ -1621,6 +1621,9 @@
   <data name="Select Item" xml:space="preserve">
     <value>إختر عنصر</value>
   </data>
+  <data name="Select Location" xml:space="preserve">
+    <value>إختر موقع</value>
+  </data>
   <data name="Select Maintainance Status" xml:space="preserve">
     <value>إختر حاله الصيانة</value>
   </data>
@@ -1632,6 +1635,9 @@
   </data>
   <data name="Select Vendor" xml:space="preserve">
     <value>إختر بائع</value>
+  </data>
+  <data name="Select Warranty" xml:space="preserve">
+    <value>إختر ضمان</value>
   </data>
   <data name="Sell Asset" xml:space="preserve">
     <value>بيع الأصول</value>

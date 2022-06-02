@@ -95,7 +95,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             //Inert two movement
 
             //First move assets to store --> Check in
-            if (SelectedAssets != null)
+            if (SelectedAssets.Count!=0)
             {
                 int CheckInID = checkinAssetsfromEmpolyeeTostore(assetmovement, SelectedAssets);
                 if (CheckInID == 0)

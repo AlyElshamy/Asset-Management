@@ -46,16 +46,22 @@
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("TechniciansLookup").Key("Value"))
         .ValueExpr("Value")
-        .DisplayExpr("Text")
-        .ShowClearButton(true)
+        .DisplayExpr("Text").Placeholder(sharedResource["Select Technician"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
         );
         items.AddSimpleFor(m => m.MaintStatusId).IsRequired(false).Label(l => l.Text(sharedResource["Maintainance Status"]))
         .Editor(e => e
         .Lookup()
         .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("MaintainanceStatusesLookup").Key("Value"))
         .ValueExpr("Value")
-        .DisplayExpr("Text")
-        .ShowClearButton(true)
+        .DisplayExpr("Text").Placeholder(sharedResource["Select Maintainance Status"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
         );
 
         items.AddButton()
