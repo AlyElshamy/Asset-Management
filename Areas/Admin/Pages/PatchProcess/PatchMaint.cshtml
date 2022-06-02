@@ -8,6 +8,7 @@
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["ASSETS"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["Patch Maintainance"]</li>
             </ol>
             <h6 class="slim-pagetitle">@sharedResource["Maintainance"]</h6>
@@ -190,11 +191,12 @@ columns.AddFor(m => m.Photo).Width(100)
             )
             .OnSelectionChanged("FrequencyLookuP")
             .ValueExpr("Value")
-            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
-                                                        .ShowClearButton(true)
-                                                        .ClearButtonText(sharedResource["Clear"])
-                                                        .CancelButtonText(sharedResource["Cancel"])
-                                                        .SearchPlaceholder(sharedResource["searching"])
+          .DisplayExpr("Text")
+          .Placeholder(sharedResource["Select Frequency"])
+                                                      .ShowClearButton(true)
+                                                      .ClearButtonText(sharedResource["Clear"])
+                                                      .CancelButtonText(sharedResource["Cancel"])
+                                                      .SearchPlaceholder(sharedResource["searching"])
           )
                                                 <span asp-validation-for="@Model.assetMaintainance.AssetMaintainanceFrequencyId" class="text-danger"></span>
                                             </div>
@@ -332,22 +334,22 @@ columns.AddFor(m => m.Photo).Width(100)
                 document.getElementById("WeeklyFrequency").style.display = 'block'
                 document.getElementById("MonthlyFrequency").style.display = 'none'
                 document.getElementById("YearlyFrequency").style.display = 'none'
-                document.getElementById("WeeklyPeriod").setAttribute('required', '')
+                document.getElementById("assetMaintainance_WeeklyPeriod").setAttribute('required', '')
             }
             else if (fequencyTypeValue.Text == "Monthly") {
                 console.log("Monthly")
                 document.getElementById("WeeklyFrequency").style.display = 'none'
                 document.getElementById("MonthlyFrequency").style.display = 'block'
                 document.getElementById("YearlyFrequency").style.display = 'none'
-                document.getElementById("MonthlyPeriod").setAttribute('required', '')
-                document.getElementById("MonthlyDay").setAttribute('required', '')
+                document.getElementById("assetMaintainance_MonthlyPeriod").setAttribute('required', '')
+                document.getElementById("assetMaintainance_MonthlyDay").setAttribute('required', '')
             }
             else if (fequencyTypeValue.Text == "Yearly") {
                 console.log("Yearly")
                 document.getElementById("WeeklyFrequency").style.display = 'none'
                 document.getElementById("MonthlyFrequency").style.display = 'none'
                 document.getElementById("YearlyFrequency").style.display = 'block'
-                document.getElementById("YearlyDay").setAttribute('required', '')
+                document.getElementById("assetMaintainance_YearlyDay").setAttribute('required', '')
             }
         }
 
@@ -416,7 +418,7 @@ columns.AddFor(m => m.Photo).Width(100)
         if (maintstatusValue != null) {
             if (maintstatusValue.Text == "Completed") {
                 document.getElementById("completeddate").style.display = 'block'
-                document.getElementById("AssetMaintainanceDateCompleted").setAttribute('required', '')
+                document.getElementById("assetMaintainance_AssetMaintainanceDateCompleted").setAttribute('required', '')
             } else {
                 document.getElementById("completeddate").style.display = 'none'
             }

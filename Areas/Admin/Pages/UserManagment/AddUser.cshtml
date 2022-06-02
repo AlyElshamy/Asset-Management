@@ -59,10 +59,10 @@
                  </form>
           <div class="signup-separator"><span>@sharedResource["OrSignupUsing"]</span></div>
 
-          <button class="btn btn-facebook btn-block">@sharedResource["SignUpUsingFacebook"]</button>
-          <button class="btn btn-twitter btn-block">@sharedResource["SignUpUsingTwitter"]</button>
+          @*<button class="btn btn-facebook btn-block">@sharedResource["SignUpUsingFacebook"]</button>
+          <button class="btn btn-twitter btn-block">@sharedResource["SignUpUsingTwitter"]</button>*@
 
-          <p class="mg-t-40 mg-b-0">@sharedResource["AlreadyHaveAnaccount"] <a href="page-signin2.html">@sharedResource["SignIn"]</a></p>
+          <p class="mg-t-40 mg-b-0">@sharedResource["AlreadyHaveAnaccount"] <a asp-area="Identity" asp-page="/Login">@sharedResource["SignIn"]</a></p>
     </div>
     </div>
      <div class="signin-left">
