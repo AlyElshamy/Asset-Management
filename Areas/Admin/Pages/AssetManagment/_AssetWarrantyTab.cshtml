@@ -70,23 +70,23 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                 .ColCount(1).Width(300).Height(250)
                 .Items(items =>
                 {
-                items.AddSimpleFor(m => m.Length).ValidationRules(r => r.AddRequired() .Message("Lenght is required")).Label(l => l.Text(sharedResource["Length"])).Editor(e => e.NumberBox().Value(new JS("null")));
-                items.AddSimpleFor(m => m.ExpirationDate).ValidationRules(r => r .AddRequired() .Message("Expiration Date is required")).Label(l => l.Text(sharedResource["Expiration Date"]));
+                items.AddSimpleFor(m => m.Length).ValidationRules(r => r.AddRequired().Message("Lenght is required")).Label(l => l.Text(sharedResource["Length"])).Editor(e => e.NumberBox().Value(new JS("null"))).ValidationRules(r => r.AddRange().Min(1));
+                items.AddSimpleFor(m => m.ExpirationDate).ValidationRules(r => r.AddRequired().Message("Expiration Date is required")).Label(l => l.Text(sharedResource["Expiration Date"])).ValidationRules(r=>r.AddRange().Min(DateTime.Now));
                 items.AddSimpleFor(m => m.Notes).Editor(e => e.TextArea()).ValidationRules(r => r
                  .AddRequired()
                  .Message("Notes is required")).Label(l => l.Text(sharedResource["Notes"]));
                 items.AddGroup().ColCount(2)
                .Items(groupItems =>
                {
-               groupItems.AddButton()
-                .HorizontalAlignment(HorizontalAlignment.Center)
-                .ButtonOptions(b => b.Text(@sharedResource["Save"])
-                    .Type(ButtonType.Default)
-                    .UseSubmitBehavior(true)
-            );
-               groupItems.AddButton()
-                .HorizontalAlignment(HorizontalAlignment.Center)
-                .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
+                   groupItems.AddButton()
+                    .HorizontalAlignment(HorizontalAlignment.Center)
+                    .ButtonOptions(b => b.Text(@sharedResource["Save"])
+                        .Type(ButtonType.Default)
+                        .UseSubmitBehavior(true)
+                );
+                   groupItems.AddButton()
+                    .HorizontalAlignment(HorizontalAlignment.Center)
+                    .ButtonOptions(b => b.Text(sharedResource["Cancel"]).ElementAttr("data-dismiss", "modal")
 
                         @*.UseSubmitBehavior(true)*@
                 );

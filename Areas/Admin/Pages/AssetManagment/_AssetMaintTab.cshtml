@@ -28,14 +28,14 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Title"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceTitle" class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceTitle" class="form-control"placeholder="@sharedResource["Enter Mainainance Title"]">
                                 <span asp-validation-for="@Model.AssetMaintainanceTitle" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Details"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceDetails" class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceDetails" class="form-control "placeholder="@sharedResource["Enter Mainainance Details"]">
                                 <span asp-validation-for="@Model.AssetMaintainanceDetails" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -98,7 +98,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Cost Of Repairs"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.AssetMaintainanceRepairesCost" class="form-control ">
+                                <input asp-for="@Model.AssetMaintainanceRepairesCost" class="form-control "min="1" placeholder="@sharedResource["Enter Cost Of Repair"]" value="">
                                 <span asp-validation-for="@Model.AssetMaintainanceRepairesCost" class="text-danger"></span>
                             </div>
                         </div><!-- col-6 -->
@@ -255,10 +255,9 @@
            </text>).Width(150);
          })
 
-    .Editing(e => e
-        .AllowDeleting(true).Texts(e=>e.DeleteRow(sharedResource["Delete"]))
+   
     )
-)
+
 
 
 <script>

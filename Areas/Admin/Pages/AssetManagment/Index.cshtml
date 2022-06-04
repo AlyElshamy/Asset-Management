@@ -134,7 +134,6 @@
             document.getElementById("DepreciationMethod").innerHTML = response.DepreciationMethod.DepreciationMethodTitle
             }
             else
-
             {
               document.getElementById("DepreciationInfo").style.display='none';
             }
@@ -188,12 +187,15 @@
                 btn1.removeAttribute('checked');
                 btn1.setAttribute('checked', 'checked');
                 btn2.removeAttribute('checked');
-                document.getElementById("AdateAcquired").value = DateFormat(response.DateAcquired)
+                console.log(response.DateAcquired);
+                document.getElementById("AdateAcquired").value = DateFormat(response.DateAcquired);
                 form.style.display = 'flex';
             } else
             {
                 btn1.removeAttribute('checked'); 
                 btn2.setAttribute('checked', 'checked');
+                document.getElementById("AdateAcquired").value = null;
+                console.log("false");
                 form.style.display = 'none';
 
             }

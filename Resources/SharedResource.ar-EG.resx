@@ -942,6 +942,9 @@
   <data name="Enter Cost" xml:space="preserve">
     <value>أدخل التكلفة</value>
   </data>
+  <data name="Enter Cost Of Repair" xml:space="preserve">
+    <value>أدخل تكلفه الصيانه</value>
+  </data>
   <data name="Enter Country" xml:space="preserve">
     <value>أدخل البلد</value>
   </data>
@@ -962,6 +965,12 @@
   </data>
   <data name="Enter Item Title" xml:space="preserve">
     <value>أدخل عنوان العنصر</value>
+  </data>
+  <data name="Enter Mainainance Details" xml:space="preserve">
+    <value>أدخل تفاصيل الصيانه</value>
+  </data>
+  <data name="Enter Mainainance Title" xml:space="preserve">
+    <value>أدخل عنوان الصيانه</value>
   </data>
   <data name="Enter Mobile Number" xml:space="preserve">
     <value>أدخل رقم الهاتف</value>
@@ -1287,6 +1296,9 @@
   </data>
   <data name="Leasing StartDate" xml:space="preserve">
     <value>تاريخ بداية التأجير</value>
+  </data>
+  <data name="Lenght" xml:space="preserve">
+    <value>المده</value>
   </data>
   <data name="Length" xml:space="preserve">
     <value>المدة</value>
