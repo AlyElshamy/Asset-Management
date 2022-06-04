@@ -63,8 +63,6 @@
                         columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
-
-                        columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
                         //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
                         columns.AddFor(m => m.AssetStatusId).Caption(sharedResource["Status"]).Lookup(lookup => lookup
           .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
@@ -99,14 +97,14 @@
                             <div class="row mg-b-25">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Date Disposed"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Date Disposed"]: <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.disposeAsset.DateDisposed" type="date" class="form-control date">
                                         <span asp-validation-for="@Model.disposeAsset.DateDisposed" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Dispose To"] <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Dispose To"] <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.disposeAsset.DisposeTo" class="form-control ">
                                         <span asp-validation-for="@Model.disposeAsset.DisposeTo" class="text-danger"></span>
                                     </div>
@@ -114,7 +112,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Notes"] <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Notes"] <span class="tx-danger">*</span></label>
                                         <textarea asp-for="@Model.disposeAsset.Notes" class="form-control" placeholder=""></textarea>
                                         <span asp-validation-for="@Model.disposeAsset.Notes" class="text-danger"></span>
                                     </div>

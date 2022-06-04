@@ -63,8 +63,6 @@ columns.AddFor(m => m.Photo).Width(100)
     columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
 
     columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
-
-    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
     //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
     columns.AddFor(m => m.AssetStatusId).Caption("Status").Lookup(lookup => lookup
     .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
@@ -99,21 +97,21 @@ columns.AddFor(m => m.Photo).Width(100)
                             <div class="row mg-b-25">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["StartDate"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["StartDate"]: <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.assetLeasing.StartDate" type="date" class="form-control date" value="@(Model.assetLeasing.StartDate >= DateTime.Now ? Model.assetLeasing.StartDate : string.Empty)">
                                         <span asp-validation-for="@Model.assetLeasing.StartDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["EndDate"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["EndDate"]: <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.assetLeasing.EndDate" type="date" class="form-control"value=""  >
                                         <span asp-validation-for="@Model.assetLeasing.EndDate" class="text-danger"></span>
                                     </div>
                                 </div><!-- col-4 -->
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Leased Cost"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Leased Cost"]: <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.assetLeasing.LeasedCost" min="0" class="form-control" value="" placeholder="@sharedResource["Please Enter Leased Cost"]">
                                         <span asp-validation-for="@Model.assetLeasing.LeasedCost" class="text-danger"></span>
                                     </div>
@@ -121,7 +119,7 @@ columns.AddFor(m => m.Photo).Width(100)
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Customer"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Customer"]: <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().LookupFor(c=>c.assetLeasing.CustomerId)
                                         .DataSource(d => d.WebApi()
@@ -142,7 +140,7 @@ columns.AddFor(m => m.Photo).Width(100)
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Notes"] <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Notes"] <span class="tx-danger">*</span></label>
                                         <textarea asp-for="@Model.assetLeasing.Notes" class="form-control" placeholder=""></textarea>
                                         <span asp-validation-for="@Model.assetLeasing.Notes" class="text-danger"></span>
                                     </div>

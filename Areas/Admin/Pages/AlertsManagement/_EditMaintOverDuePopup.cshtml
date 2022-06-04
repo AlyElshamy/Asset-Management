@@ -121,67 +121,98 @@
                         </div><!-- col-6 -->
 
 
-                        <div class="col-lg-6" id="Weekly" style="display:none">
+                        <div class="col-lg-12" id="Weekly" style="display:none">
                             <label>@sharedResource["Recur on"]</label>
-                            <div class="form-group">
-                                <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.WeeklyPeriod" class="form-control" style="width:75px; display:inline-block" id="WeekPeriod" min="1">
-                                <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
-                                <label>@sharedResource["Week(s) on"] </label>
-                                <div style="display:inline-block">
-                                    @(Html.DevExtreme().LookupFor(c=>c.WeekDayId)
-                                    .ID("WeekDay")
-                       .Width(170)
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>@sharedResource["Every"]</label>
+                                    <div class="form-group">
+                                        <input asp-for="@Model.WeeklyPeriod" min="1" class="form-control" id="WeekPeriod">
+                                        <span asp-validation-for="@Model.WeeklyPeriod" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>@sharedResource["Week(s) on"] </label>
+                                        @(Html.DevExtreme().LookupFor(c=>c.WeekDayId)
+        .ID("WeekDay")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("WeekDaysLookup")
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
           )
+                                        <span asp-validation-for="@Model.WeekDayId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12" id="Monthly" style="display:none">
+                            <label>@sharedResource["Recur on"]</label>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>@sharedResource["Every"]</label>
+                                    <div class="form-group">
+                                        <input asp-for="@Model.MonthlyPeriod" min="1" class="form-control" id="MonthPeriod">
+                                        <span asp-validation-for="@Model.MonthlyPeriod" class="text-danger"></span>
+                                    </div>
                                 </div>
 
-                                <span asp-validation-for="@Model.WeekDayId" class="text-danger"></span>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>@sharedResource["Month(s) on"] </label>
+                                        <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" id="MonthDay">
+                                        <span asp-validation-for="@Model.MonthlyDay" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div><!-- col-6 -->
+                        </div>
+                        <!-- col-6 -->
 
-                        <div class="col-lg-6" id="Monthly" style="display:none">
-                            <label>@sharedResource["Recur on"]</label>
-                            <div class="form-group">
-                                <label>@sharedResource["Every"]</label>
-                                <input asp-for="@Model.MonthlyPeriod" min="1" class="form-control" style="width:75px;display:inline-block" id="MonthPeriod">
-                                <span asp-validation-for="@Model.MonthlyPeriod" class="text-danger"></span>
-                                <label>@sharedResource["Month(s) on"] </label>
-                                <input asp-for="@Model.MonthlyDay" max="31" min="1" class="form-control" style="width:75px;display:inline-block" id="MonthDay">
-                                <span asp-validation-for="@Model.MonthlyDay" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-6 -->
 
-                        <div class="col-lg-6" id="Yearly" style="display:none">
+                        <div class="col-lg-12" id="Yearly" style="display:none">
                             <label>@sharedResource["Recur on"]</label>
-                            <div class="form-group">
-                                <label>@sharedResource["Every"]</label>
-                                <div style="display:inline-block">
-                                    @(Html.DevExtreme().LookupFor(c=>c.MonthId).ID("MonthLookup")
-                       .Width(175)
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>@sharedResource["Every"]</label>
+                                    <div class="form-group">
+                                        @(Html.DevExtreme().LookupFor(c=>c.MonthId)
+        .ID("MonthLookup")
             .DataSource(d => d.WebApi()
                 .Controller("Lookups")
                 .LoadAction("MonthsLookup")
                 .Key("Value")
             )
             .ValueExpr("Value")
-            .DisplayExpr("Text")
-            .ShowClearButton(true)
+            .DisplayExpr("Text").Placeholder(sharedResource["Select Frequency"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
           )
+                                        <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
+
+                                    </div>
                                 </div>
-                                <span asp-validation-for="@Model.MonthId" class="text-danger"></span>
-                                <label> @sharedResource["on"] </label>
-                                <input asp-for="@Model.YearlyDay" max="31" min="1" class="form-control" style="width:75px; display:inline-block" id="YearDay">
-                                <span asp-validation-for="@Model.YearlyDay" class="text-danger"></span>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> @sharedResource["on"] </label>
+                                        <input asp-for="@Model.YearlyDay" max="31" min="1" class="form-control" id="YearDay">
+                                        <span asp-validation-for="@Model.YearlyDay" class="text-danger"></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div><!-- col-6 -->
+                        </div>
 
                         <input id="MaintAssetIdField" name="AssetId" hidden />
                         <input asp-for="@Model.AssetMaintainanceId" id="MaintId" hidden />
@@ -201,15 +232,15 @@
 
 
 <script>
-    $(function () {
-        var date = new Date().toISOString().slice(0, 10);
+    //$(function () {
+    //    var date = new Date().toISOString().slice(0, 10);
 
-        //To restrict past date
+    //    //To restrict past date
 
-        $('.date').attr('min', date);
+    //    $('.date').attr('min', date);
 
 
-    });
+    //});
 
     function FrequencySelection() {
         var Yes = document.getElementById("R");
@@ -218,6 +249,13 @@
 
         if (Yes.checked == true) {
             Frequency.style.display = 'block'
+            $("#MFreq").dxLookup("instance").option("value", null);
+            $("#WeekDay").dxLookup("instance").option("value", null);
+            $("#MonthLookup").dxLookup("instance").option("value", null);
+            document.getElementById("WeekPeriod").value = null;
+            document.getElementById("MonthPeriod").value = null;
+            document.getElementById("MonthDay").value = null;
+            document.getElementById("YearDay").value = null
         }
 
         if (No.checked == true) {
