@@ -175,24 +175,24 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                         try
                         {
                             _context.SaveChanges();
-                            SelectedAssets = null;
                         }
                         catch (Exception e)
                         {
-                            _toastNotification.AddErrorToastMessage("Something went Error,Try again");
                             SelectedAssets = null;
+                            _toastNotification.AddErrorToastMessage("Something went Error,Try again");
                             return Page();
                         }
-                        _toastNotification.AddSuccessToastMessage("Asset Maintainance Patched Added successfully");
                         SelectedAssets = null;
+                        _toastNotification.AddSuccessToastMessage("Asset Maintainance Patched Added successfully");
                         return RedirectToPage();
                     }
                 }
-                _toastNotification.AddErrorToastMessage("Please Select at Least one Asset0=");
+                SelectedAssets = null;
+                _toastNotification.AddErrorToastMessage("Please Select at Least one Asset");
                 return Page();
             }
-            _toastNotification.AddErrorToastMessage("Something went Error,Try again");
             SelectedAssets = null;
+            _toastNotification.AddErrorToastMessage("Something went Error,Try again");
             return Page();
         }
     }

@@ -53,6 +53,13 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public async Task<IActionResult> OnPostAddAssetPhotot(IFormFile file, AssetPhotos photos)
         {
+            //var assetobj = Context.Assets.Where(e => e.AssetId == photos.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
+
+            //if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
+            //{
+            //    _toastNotification.AddErrorToastMessage("Can’t Add Asset Photos becasuse Asset Now is" + "" + assetobj.AssetStatus.AssetStatusTitle );
+            //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = photos.AssetId });
+            //}
             if (file != null)
             {
                 string folder = "Images/AssetPhotos/";
@@ -102,15 +109,19 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         }
         public async Task<IActionResult> OnPostAddAssetDocument(AssetDocument instance, IFormFile file)
         {
+            //var assetobj = Context.Assets.Where(e => e.AssetId == instance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
 
+            //if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
+            //{
+            //    _toastNotification.AddErrorToastMessage("Can’t Add Asset Document becasuse Asset Now is" + "" + assetobj.AssetStatus.AssetStatusTitle);
+            //    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
+            //}
             if (file != null)
             {
 
                 string folder = "Documents/AssetDocuments/";
                 instance.DocumentType = await UploadImage(folder, file);
             }
-
-
             Context.assetDocuments.Add(instance);
             AssetLog assetLog = new AssetLog()
             {
@@ -120,9 +131,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Remark = string.Format($"Document Name : {instance.DocumentName} ")
             };
             Context.AssetLogs.Add(assetLog);
-            Context.SaveChanges();
-            _toastNotification.AddSuccessToastMessage("Asset Document Added successfully");
-            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
+            try
+            {
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Document Added successfully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
+            }
+            catch (Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Something went ");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
+            }
 
         }
         private async Task<string> UploadImage(string folderPath, IFormFile file)
@@ -139,7 +158,13 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public IActionResult OnpostAddAssetContract(AssetContract assetcontract)
         {
+            var assetobj = Context.Assets.Where(e => e.AssetId == assetcontract.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
 
+            if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
+            {
+                _toastNotification.AddErrorToastMessage("Can’t Add Asset Contract becasuse Asset Now is" + "" + assetobj.AssetStatus.AssetStatusTitle);
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+            }
             if (assetcontract.ContractId != 0 && assetcontract.AssetId != 0)
             {
                 var Assetcont = new AssetContract { AssetId = assetcontract.AssetId, ContractId = assetcontract.ContractId };
@@ -160,21 +185,34 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Remark = string.Format($"{ContractTitle}{SelectedContract.Title} , {ContractSDate}{ContractStartDate} and {ContractEDate}{ContractEndDate}")
                 };
                 Context.AssetLogs.Add(assetLog);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Link Contract Added Successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Link Contract Added Successfully");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+                }
             }
 
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
         }
         public IActionResult OnpostAddAssetInsurance(AssetsInsurance assetsInsurance)
         {
+            var assetobj = Context.Assets.Where(e => e.AssetId == assetsInsurance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
 
+            if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
+            {
+                _toastNotification.AddErrorToastMessage("Can’t Add Asset Insuurance becasuse Asset Now is" + "" + assetobj.AssetStatus.AssetStatusTitle);
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+            }
             if (assetsInsurance.InsuranceId != 0 && assetsInsurance.AssetId != 0)
             {
                 AssetsInsurance AssetIns = new AssetsInsurance { AssetId = assetsInsurance.AssetId, InsuranceId = assetsInsurance.InsuranceId };
                 Context.AssetsInsurances.Add(AssetIns);
-
                 string InsuranceTitle = "Insurance Title : ";
                 string InsuranceCompany = "Insurance Company : ";
                 Insurance SelectedInsurance = Context.Insurances.Find(assetsInsurance.InsuranceId);
@@ -189,10 +227,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Remark = string.Format($"{InsuranceTitle}{InsuranceTit} and {InsuranceCompany}{InsuranceComp} ")
                 };
                 Context.AssetLogs.Add(assetLog);
-
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Link Insurance Added Successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Link Insurance Added Successfully");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Link Insurance Added Successfully");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+                }
             }
 
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
@@ -355,12 +400,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Remark = string.Format($"Asset Lost Date {LostDate}")
                 };
                 Context.AssetLogs.Add(assetLog);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Asset Lost Added successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new
+                try
                 {
-                    AssetId = AssetId
-                });
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Asset Lost Added successfully");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                }
             }
 
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
@@ -489,9 +539,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Remark = string.Format($"Brocken Asset Date {BrockenDate}")
                 };
                 Context.AssetLogs.Add(assetLog);
-                Context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Asset Broken Added successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                try
+                {
+                    Context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Asset Broken Added successfully");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                }
+                catch (Exception e)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went wrong");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
+                }
             }
 
             return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = AssetId });
@@ -613,15 +671,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public IActionResult OnpostDeattachAssetContract(AssetContract assetContract)
         {
             AssetContract _assetContract = Context.AssetContracts.Where(e => e.AssetContractID == assetContract.AssetContractID && e.AssetId == assetContract.AssetId).FirstOrDefault();
-            try
-            {
-                Context.AssetContracts.Remove(_assetContract);
-                _toastNotification.AddSuccessToastMessage("Asset Contract Dettached Succeffully");
-            }
-            catch (Exception)
-            {
-                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
-            }
+
+
+            Context.AssetContracts.Remove(_assetContract);
+
+
             Contract contract = Context.Contracts.Find(assetContract.ContractId);
 
             AssetLog assetLog = new AssetLog()
@@ -632,23 +686,24 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Remark = string.Format($"Dettached Asset Contract With Contract Name : {contract.Title} and Contract Number : {contract.ContractNo}")
             };
             Context.AssetLogs.Add(assetLog);
-
-            Context.SaveChanges();
-            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetContract.AssetId });
+            try
+            {
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Contract Dettached Succeffully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetContract.AssetId });
+            }
+            catch (Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Something went wrong");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetContract.AssetId });
+            }
 
         }
         public IActionResult OnpostDeattachAssetInsurance(AssetsInsurance assetInsurance)
         {
+
             AssetsInsurance _assetInsurance = Context.AssetsInsurances.Where(e => e.AssetsInsuranceId == assetInsurance.AssetsInsuranceId && e.AssetId == assetInsurance.AssetId).FirstOrDefault();
-            try
-            {
-                Context.AssetsInsurances.Remove(_assetInsurance);
-                _toastNotification.AddSuccessToastMessage("Asset Insurance Dettached Succeffully");
-            }
-            catch (Exception)
-            {
-                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
-            }
+            Context.AssetsInsurances.Remove(_assetInsurance);
             Insurance insurance = Context.Insurances.Find(assetInsurance.InsuranceId);
 
             AssetLog assetLog = new AssetLog()
@@ -659,24 +714,30 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Remark = string.Format($"Dettached Asset Insurance With Insurance Name : {insurance.Title} and Insurance Company : {insurance.InsuranceCompany}")
             };
             Context.AssetLogs.Add(assetLog);
-
-            Context.SaveChanges();
-            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetInsurance.AssetId });
-
+            try
+            {
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Insurance Dettached Succeffully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetInsurance.AssetId });
+            }
+            catch (Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetInsurance.AssetId });
+            }
         }
+
+    
+
+        
         public IActionResult OnpostDeattachAssetDocument(AssetDocument assetDocument)
         {
             AssetDocument _assetDocument = Context.assetDocuments.Where(e => e.AssetDocumentId == assetDocument.AssetDocumentId && e.AssetId == assetDocument.AssetId).FirstOrDefault();
             string AssetDocName = _assetDocument.DocumentName;
-            try
-            {
-                Context.assetDocuments.Remove(_assetDocument);
-                _toastNotification.AddSuccessToastMessage("Asset Document Dettached Succeffully");
-            }
-            catch (Exception)
-            {
-                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
-            }
+           
+            
+                Context.assetDocuments.Remove(_assetDocument);            
+           
 
             AssetLog assetLog = new AssetLog()
             {
@@ -686,9 +747,18 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 Remark = string.Format($"Dettached Asset Document With Document Name : {AssetDocName} ")
             };
             Context.AssetLogs.Add(assetLog);
-            Context.SaveChanges();
-            return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
-
+            try
+            {
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("Asset Document Dettached Succeffully");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
+            }
+           
+            catch(Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Something went wrong");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
+            }
         }
         public IActionResult OnPostAddAssetWarranty(AssetWarranty assetWarranty)
         {

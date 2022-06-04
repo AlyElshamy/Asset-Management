@@ -35,7 +35,7 @@ namespace AssetProject.Areas.Admin.Pages.PrintAssetProfile
 
         public async Task<IActionResult> OnGet(int AssetId)
         {
-            List<Asset> ds = _context.Assets.Include(a => a.Item).Include(a => a.Store).Include(a=>a.AssetStatus)
+            List<Asset> ds = _context.Assets.Include(a => a.Item).Include(a => a.Store).Include(a=>a.AssetStatus).Include(e=>e.Vendor).Include(e=>e.DepreciationMethod)
                    .ToList();
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
