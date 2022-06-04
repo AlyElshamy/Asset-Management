@@ -1444,6 +1444,9 @@
   <data name="Patch Transfer From Empolyee" xml:space="preserve">
     <value>تحويل حزمه أصول من موظف</value>
   </data>
+  <data name="Patches" xml:space="preserve">
+    <value>الحزم</value>
+  </data>
   <data name="Permium" xml:space="preserve">
     <value>بريميوم</value>
   </data>

@@ -546,6 +546,9 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Patches" xml:space="preserve">
+    <value>Patches</value>
+  </data>
   <data name="Permium" xml:space="preserve">
     <value>Permium</value>
   </data>

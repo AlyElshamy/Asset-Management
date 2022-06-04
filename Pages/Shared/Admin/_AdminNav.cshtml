@@ -52,13 +52,7 @@
                                         <li><a asp-area="Admin" asp-page="/AssetLeasingManagement/leasinglist">@sharedResource["Leasing List"]</a></li>
                                         <li><a asp-area="Admin" asp-page="/SellAssetManagement/SellAssetList">@sharedResource["Sell Asset List"]</a></li>
                                         <li><a asp-area="Admin" asp-page="/AssetBrokenManagement/AssetBrokenList">@sharedResource["Asset Broken List"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchCheckIn">@sharedResource["Patch CheckIn"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchCheckOut">@sharedResource["Patch CheckOut"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchLease">@sharedResource["Patch Lease"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchMaint">@sharedResource["Patch Maintainance"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchDispose">@sharedResource["Patch Dispose"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchTransferFromDepartment">@sharedResource["Patch Transfer From Department"]</a></li>
-                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchTransferFromEmpolyee">@sharedResource["Patch Transfer From Empolyee"]</a></li>
+                                       
                                         <li><a asp-area="Admin" asp-page="/AssetManagment/SearchCheckedOutAssetsByDepartment">@sharedResource["Search CheckedOut Assets By Department"]</a></li>
                                         <li><a asp-area="Admin" asp-page="/AssetManagment/SearchCheckedOutAssetsByEmpolyee">@sharedResource["Search CheckedOut Assets By Employee"]</a></li>
                                         <li><a asp-area="Admin" asp-page="/AssetManagment/SearchCheckedOutAssetsByLocation">@sharedResource["Search CheckedOut Assets By Location"]</a></li>
@@ -68,6 +62,18 @@
                                 </div><!-- col -->
 
                             </div><!-- row -->
+                        </div><!-- col -->
+                          <div class="col-lg mg-t-30 mg-lg-t-0">
+                            <label class="section-label">@sharedResource["Patches"]</label>
+                            <ul>
+                                 <li><a asp-area="Admin" asp-page="/PatchProcess/PatchCheckIn">@sharedResource["Patch CheckIn"]</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchCheckOut">@sharedResource["Patch CheckOut"]</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchLease">@sharedResource["Patch Lease"]</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchMaint">@sharedResource["Patch Maintainance"]</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchDispose">@sharedResource["Patch Dispose"]</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchTransferFromDepartment">@sharedResource["Patch Transfer From Department"]</a></li>
+                                        <li><a asp-area="Admin" asp-page="/PatchProcess/PatchTransferFromEmpolyee">@sharedResource["Patch Transfer From Empolyee"]</a></li>
+                            </ul>
                         </div><!-- col -->
                         <div class="col-lg mg-t-30 mg-lg-t-0">
                             <label class="section-label">@sharedResource["Contracting"]</label>

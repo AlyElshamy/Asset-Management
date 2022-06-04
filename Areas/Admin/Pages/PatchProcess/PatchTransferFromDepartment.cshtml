@@ -90,7 +90,7 @@
                             <div class="row mg-b-25">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date">
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
@@ -98,7 +98,7 @@
 
                                 <div class="col-lg-12" id="AssetToDepartment" style="display:block">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Department"] <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Department"] <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().LookupFor(c=>c.assetmovement.DepartmentId)
                                         .ID("DepartmntLookup")
@@ -122,7 +122,7 @@
 
                                 <div class="col-lg-12" id="AssetToLocation" style="display:block">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
                                         .ValueExpr("Value")
@@ -180,7 +180,7 @@
 
                                 <div class="col-lg-12" id="AssetToEmpolyee" style="display:block">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().LookupFor(c=>c.assetmovement.EmpolyeeID)
                                         .DataSource(d => d.WebApi()
@@ -204,7 +204,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Store"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Store"]: <span class="tx-danger">*</span></label>
 
                                         @(Html.DevExtreme().LookupFor(c=>c.assetmovement.StoreId)
                                         .DataSource(d => d.WebApi()
@@ -226,7 +226,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="form-control-label">@sharedResource["Remarks"] <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Remarks"] <span class="tx-danger">*</span></label>
                                         <textarea asp-for="@Model.assetmovement.Remarks" class="form-control" placeholder=""></textarea>
                                         <span asp-validation-for="@Model.assetmovement.Remarks" class="text-danger"></span>
                                     </div>
