@@ -51,8 +51,8 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 if (asset.AssetMovementDetails.Count() > 0)
                 {
 
-                    var checkinMovements = asset.AssetMovementDetails.Where(e => e.AssetMovement.AssetMovementDirectionId == 1).ToList();
-                    foreach (var movement in checkinMovements)
+                    var checkoutMovements = asset.AssetMovementDetails.Where(e => e.AssetMovement.AssetMovementDirectionId == 1).ToList();
+                    foreach (var movement in checkoutMovements)
                     {
                         ds.Add(new AssetReportsModel
                         {
@@ -61,7 +61,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                             AssetTagId = asset.AssetTagId,
                             ItemTL = asset.Item.ItemTitle,
                             Photo = asset.Photo,
-                            StoreTL = movement.AssetMovement.Store.StoreTitle,
+                            StoreTL = movement.AssetMovement.Store==null?null: movement.AssetMovement.Store.StoreTitle,
                             VendorTL = asset.Vendor.VendorTitle,
                             StoreId = movement.AssetMovement.StoreId,
                             TransactionDate = movement.AssetMovement.TransactionDate

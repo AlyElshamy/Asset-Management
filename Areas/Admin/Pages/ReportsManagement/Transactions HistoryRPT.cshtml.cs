@@ -78,7 +78,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = ds.Where(i => i.ActionDate <= filterModel.ToDate && i.ActionDate >= filterModel.FromDate).ToList();
             }
            
-            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.ActionLogId == null && filterModel.ShowAll == false)
+            if (filterModel.AssetTagId == null && filterModel.ShowAll == false && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.ActionLogId == null )
             {
                 ds = null;
             }

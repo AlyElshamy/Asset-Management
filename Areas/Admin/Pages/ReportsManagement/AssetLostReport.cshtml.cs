@@ -53,7 +53,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 LostNotes=i.AssetLost.Notes,
                 photo=i.Asset.Photo
             }).ToList();
-
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.AssetTagId != null)
             {
                 ds = ds.Where(i => i.AssetTagId.Contains(filterModel.AssetTagId)).ToList();
@@ -71,7 +74,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = ds.Where(i => i.DateLost <= filterModel.ToDate && i.DateLost >= filterModel.FromDate).ToList();
             }
             
-            if (filterModel.OnDay == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.AssetTagId == null)
+            if (filterModel.ShowAll == false && filterModel.OnDay == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.AssetTagId == null)
             {
                 ds = null;
             }

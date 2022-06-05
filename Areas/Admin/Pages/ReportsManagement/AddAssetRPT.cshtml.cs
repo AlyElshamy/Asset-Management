@@ -48,10 +48,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              AssetStatusTL=a.AssetStatus.AssetStatusTitle,
              ItemTL=a.Item.ItemTitle,
              VendorTL=a.Vendor.VendorTitle,
-             StoreTL= _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(i => i.AssetId == a.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Store.StoreTitle,
-             StoreId=a.StoreId,
              ItemId=a.ItemId,
              VendorId=a.VendorId,
+             CategoryTL=a.Item.Category.CategoryTIAR,
              CategoryId = a.Item.CategoryId,
              AssetCost=a.AssetCost,
              Photo=a.Photo
@@ -80,15 +79,12 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.VendorId == filterModel.VendorId).ToList();
             }
-            if (filterModel.StoreId != null)
-            {
-                ds = ds.Where(i => i.StoreId == filterModel.StoreId).ToList();
-            }
+           
             if (filterModel.ItemId != null)
             {
                 ds = ds.Where(i => i.ItemId == filterModel.ItemId).ToList();
             }
-            if ( filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.StoreId == null && filterModel.ItemId == null && filterModel.VendorId == null && filterModel.ShowAll == false)  
+            if ( filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.ItemId == null && filterModel.VendorId == null && filterModel.ShowAll == false)  
             {
                 ds = null;
             }

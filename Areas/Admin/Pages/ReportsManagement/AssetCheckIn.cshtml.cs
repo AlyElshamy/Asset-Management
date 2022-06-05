@@ -56,11 +56,11 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                     {
                         TransactionDate = lastAssetMovement.AssetMovement.TransactionDate,
                         EmployeeFullN = _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID) == null ? null : _context.Employees.Find(lastAssetMovement.AssetMovement.EmpolyeeID).FullName,
-                        LocationTl = _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId).LocationTitle,
-                        DepartmentTl = _context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId).DepartmentTitle,
+                        LocationTl = _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId)==null?null: _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId).LocationTitle,
+                        DepartmentTl = _context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId)==null? null: _context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId).DepartmentTitle,
                         Photo = lastAssetMovement.Asset.Photo,
                         StoreTl = _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId).StoreTitle,
-                        ActionTypeTl = _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId).ActionTypeTitle,
+                        ActionTypeTl = _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId)==null?null : _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId).ActionTypeTitle,
                         AssetPurchaseDate = lastAssetMovement.Asset.AssetPurchaseDate,
                         AssetSerialNo = lastAssetMovement.Asset.AssetSerialNo,
                         AssetTagId = lastAssetMovement.Asset.AssetTagId,
@@ -68,7 +68,8 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                         EmployeeId = lastAssetMovement.AssetMovement.EmpolyeeID,
                         LocationId = lastAssetMovement.AssetMovement.LocationId,
                         StoreId = lastAssetMovement.AssetMovement.StoreId,
-                        DepartmentId = lastAssetMovement.AssetMovement.DepartmentId
+                        DepartmentId = lastAssetMovement.AssetMovement.DepartmentId,
+                        AssetCost=lastAssetMovement.Asset.AssetCost
 
                     });
                 }
@@ -82,6 +83,7 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                         DepartmentTl =null,
                         Photo = asset.Photo,
                         StoreTl = _context.Stores.Find(asset.StoreId).StoreTitle,
+                        AssetCost=asset.AssetCost,
                         ActionTypeTl = null,
                         AssetPurchaseDate = asset.AssetPurchaseDate,
                         AssetSerialNo = asset.AssetSerialNo,

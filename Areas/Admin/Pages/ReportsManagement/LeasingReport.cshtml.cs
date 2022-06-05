@@ -73,6 +73,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 CustomerId = _context.Customers.Where(a => a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().CustomerId
 
             }).ToList();
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
             if (filterModel.AssetTagId != null)
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
@@ -93,7 +97,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.LeasingStartDate <= filterModel.ToDate && i.LeasingStartDate >= filterModel.FromDate).ToList();
             }
-            if (filterModel.AssetTagId == null&&filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
+            if (filterModel.AssetTagId == null&& filterModel.ShowAll == false && filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.CustomerId == null)
             {
                 ds = null;
             }

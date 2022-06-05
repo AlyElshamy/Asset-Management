@@ -115,7 +115,7 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Include(e=>e.Asset).Where(c => c.ScheduleDate.Date==DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId==1&&c.Asset.AssetStatusId==9).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
+            var Maintainances = _context.AssetMaintainances.Include(e=>e.Asset).Where(c => c.ScheduleDate.Date==DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId==1/*&&c.Asset.AssetStatusId==9*/).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,
@@ -129,7 +129,7 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceoverDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date<DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+            var Maintainances = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date<DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 /*&& c.Asset.AssetStatusId == 9*/).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,

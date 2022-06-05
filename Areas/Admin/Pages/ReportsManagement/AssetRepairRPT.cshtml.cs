@@ -73,7 +73,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
              TechnicianName = i.AssetRepairDetails.OrderByDescending(e => e.AssetRepairDetailsId).FirstOrDefault().AssetRepair.Technician.FullName
 
          }).ToList();
-
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
 
             if (filterModel.AssetTagId != null)
             {
@@ -95,7 +98,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.ScheduleDate <= filterModel.ToDate && i.ScheduleDate >= filterModel.FromDate).ToList();
             }
-            if (filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.TechnicianId == null&&filterModel.Cost==null)
+            if ( filterModel.ShowAll==false &&  filterModel.AssetTagId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.TechnicianId == null&&filterModel.Cost==null)
             {
                 ds = null;
             }
