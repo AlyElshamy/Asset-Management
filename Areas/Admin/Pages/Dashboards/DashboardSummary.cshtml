@@ -6,12 +6,12 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Dashboard"]</li>
             </ol>
-            <h6 class="slim-pagetitle">Welcome back, Mohamed</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Welcome back, Mohamed"]</h6>
         </div><!-- slim-pageheader -->
-
+          
         <div class="row row-xs">
             <div class="col-sm-6 col-lg-3">
                 <div class="card card-status">
@@ -19,7 +19,7 @@
                         <i class="icon ion-ios-cloud-download-outline tx-purple"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetCount</h1>
-                            <p>Total Assets</p>
+                            <p>@sharedResource["Total Assets"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -30,7 +30,7 @@
                         <i class="icon ion-ios-bookmarks-outline tx-teal"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetValue</h1>
-                            <p>Total Asset Cost</p>
+                            <p>@sharedResource["Total Asset Cost"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -41,7 +41,7 @@
                         <i class="icon ion-ios-cloud-upload-outline tx-primary"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetActive</h1>
-                            <p>Active</p>
+                            <p>@sharedResource["Active"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -52,20 +52,20 @@
                         <i class="icon ion-ios-analytics-outline tx-pink"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetAvaliable</h1>
-                            <p>Avaialble</p>
+                            <p>@sharedResource["Available"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
             </div><!-- col-3 -->
         </div><!-- row -->
-         <div class="row row-xs mt-2">
+        <div class="row row-xs mt-2">
             <div class="col-sm-6 col-lg-3">
                 <div class="card card-status">
                     <div class="media">
                         <i class="icon ion-ios-cloud-download-outline tx-purple"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetPurchaseCY</h1>
-                            <p>Current Year Purchase</p>
+                            <p>@sharedResource["Current Year Purchase"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -76,7 +76,7 @@
                         <i class="icon ion-ios-bookmarks-outline tx-teal"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetLinkWarrenty</h1>
-                            <p>Asset Linked To Warrenty</p>
+                            <p>@sharedResource["Asset Linked To Warrenty"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -87,7 +87,7 @@
                         <i class="icon ion-ios-cloud-upload-outline tx-primary"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetLinkContract</h1>
-                            <p>Asset Linked To Contract</p>
+                            <p>@sharedResource["Asset Linked To Contract"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -98,7 +98,7 @@
                         <i class="icon ion-ios-analytics-outline tx-pink"></i>
                         <div class="media-body">
                             <h1>@Model.TotalAssetLinkInsurance</h1>
-                            <p>Asset Link To Insurance</p>
+                            <p>@sharedResource["Asset Link To Insurance"]</p>
                         </div><!-- media-body -->
                     </div><!-- media -->
                 </div><!-- card -->
@@ -258,14 +258,14 @@
         <div class="row row-xs mt-2 mb-2">
           <div class="col-lg-3">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-primary">Broken</h6>
+              <h6 class="slim-card-title tx-primary">@sharedResource["Available"]</h6>
               <div class="row mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetBrocken</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalAssetBrockenValue</p>
                 </div><!-- col -->
              
@@ -276,14 +276,14 @@
           </div><!-- col-4 -->
           <div class="col-lg-3 mg-t-20 mg-lg-t-0">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-success">Sold</h6>
+              <h6 class="slim-card-title tx-success">@sharedResource["Sold"]</h6>
               <div class="row  mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalSellAsst</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalSellAsstValue</p>
                 </div><!-- col -->
               
@@ -294,14 +294,14 @@
           </div><!-- col-4 -->
           <div class="col-lg-3 mg-t-20 mg-lg-t-0">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-danger">Under Repair</h6>
+              <h6 class="slim-card-title tx-danger">@sharedResource["Under Repair"]</h6>
               <div class="row  mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetUnderRepair</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalAssetUnderRepairCost</p>
                 </div><!-- col -->
                
@@ -312,14 +312,14 @@
           </div><!-- col-4 -->
             <div class="col-lg-3 mg-t-20 mg-lg-t-0">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-warning">Leased</h6>
+              <h6 class="slim-card-title tx-warning">@sharedResource["Leased"]</h6>
               <div class="row  mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetLeased</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalLeasedAssetCost</p>
                 </div><!-- col -->
                
@@ -340,10 +340,10 @@
                                             .Series(s => s.Add()
                                             .Label(l => l
                                             .Visible(true)
-                                            .BackgroundColor("#c18e92")
+                                            .BackgroundColor("#7978e9")
 
                                             )
-                                            .Color("#79cac4")
+                                            .Color("#4b49ac")
                                             .Type(SeriesType.Bar)
                                             .ArgumentField("Name")
                                             .ValueField("Count")
@@ -413,14 +413,14 @@
        <div class="row row-xs mt-2 mb-2">
           <div class="col-lg-3">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-primary">Lost</h6>
+              <h6 class="slim-card-title tx-primary">@sharedResource["Lost"]</h6>
               <div class="row mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetLost</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalAssetLostCost</p>
                 </div><!-- col -->
              
@@ -431,14 +431,14 @@
           </div><!-- col-4 -->
           <div class="col-lg-3 mg-t-20 mg-lg-t-0">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-success">CheckOut</h6>
+              <h6 class="slim-card-title tx-success">@sharedResource["CheckOut"]</h6>
               <div class="row  mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetCheckOut</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalAssetCheckOutCost</p>
                 </div><!-- col -->
               
@@ -449,14 +449,14 @@
           </div><!-- col-4 -->
           <div class="col-lg-3 mg-t-20 mg-lg-t-0">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-danger">Maintainance</h6>
+              <h6 class="slim-card-title tx-danger">@sharedResource["Maintainance"]</h6>
               <div class="row  mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetMaint</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalAssetMaintCost</p>
                 </div><!-- col -->
                
@@ -467,14 +467,14 @@
           </div><!-- col-4 -->
             <div class="col-lg-3 mg-t-20 mg-lg-t-0">
             <div class="card card-sales">
-              <h6 class="slim-card-title tx-warning">Dispsed</h6>
+              <h6 class="slim-card-title tx-warning">@sharedResource["Dispsed"]</h6>
               <div class="row  mb-0">
                 <div class="col">
-                  <label class="tx-12">Count</label>
+                  <label class="tx-12">@sharedResource["Count"]</label>
                   <p>@Model.TotalAssetDispose</p>
                 </div><!-- col -->
                 <div class="col">
-                  <label class="tx-12">Cost</label>
+                  <label class="tx-12">@sharedResource["Cost"]</label>
                   <p>@Model.TotalAssetDisposeCost</p>
                 </div><!-- col -->
                

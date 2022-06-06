@@ -132,6 +132,9 @@
   <data name="Actions" xml:space="preserve">
     <value>إجراءات</value>
   </data>
+  <data name="Active" xml:space="preserve">
+    <value>الاصول النشطة</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>أضف</value>
   </data>
@@ -237,6 +240,9 @@
   <data name="arabic" xml:space="preserve">
     <value>اللغة العربية</value>
   </data>
+  <data name="Are you Sure Delete Category" xml:space="preserve">
+    <value>هل تريد بالفعل حذف فئه</value>
+  </data>
   <data name="Are you Sure to Delete?!" xml:space="preserve">
     <value>هل انت متاكد من الحذف؟</value>
   </data>
@@ -302,6 +308,15 @@
   </data>
   <data name="Asset Life (Months)" xml:space="preserve">
     <value>عمر الأصول (شهور)</value>
+  </data>
+  <data name="Asset Link To Insurance" xml:space="preserve">
+    <value>الاصول المرتبطة بتامينات</value>
+  </data>
+  <data name="Asset Linked To Contract" xml:space="preserve">
+    <value>الاصول المرتبطة بعقود</value>
+  </data>
+  <data name="Asset Linked To Warrenty" xml:space="preserve">
+    <value>الاصول المرتبطة بضمانات</value>
   </data>
   <data name="Asset List" xml:space="preserve">
     <value>قائمة الأصول</value>
@@ -375,6 +390,30 @@
   <data name="ASSETS" xml:space="preserve">
     <value>الأصول</value>
   </data>
+  <data name="Assets Cost Per Category" xml:space="preserve">
+    <value>تكلفة الاصول بالنسبة للفئات</value>
+  </data>
+  <data name="Assets Cost Per Department" xml:space="preserve">
+    <value>تكلفة الاصول بالنسبة للاقسام</value>
+  </data>
+  <data name="Assets Cost Per Location" xml:space="preserve">
+    <value>تكلفة الاصول بالنسبة للموقع</value>
+  </data>
+  <data name="Assets Cost Per Status" xml:space="preserve">
+    <value>تكلفة الاصول بالنسبة لحالة الاصل</value>
+  </data>
+  <data name="Assets Count Per Category" xml:space="preserve">
+    <value>عدد الاصول بالنسبة للفئات</value>
+  </data>
+  <data name="Assets Count Per Department" xml:space="preserve">
+    <value>عدد الاصول بالنسبة للاقسام</value>
+  </data>
+  <data name="Assets Count Per Location" xml:space="preserve">
+    <value>عدد الاصول بالنسبة للموقع</value>
+  </data>
+  <data name="Assets Count Per Status" xml:space="preserve">
+    <value>عدد الاصول بالنسبة لحالة الاصل</value>
+  </data>
   <data name="Assets Dispose Report" xml:space="preserve">
     <value>تقارير الأصول التالفة</value>
   </data>
@@ -407,6 +446,9 @@
   </data>
   <data name="Assigned To" xml:space="preserve">
     <value>مخصص ل</value>
+  </data>
+  <data name="Available" xml:space="preserve">
+    <value>الاصول المتوفرة</value>
   </data>
   <data name="Back to List" xml:space="preserve">
     <value>الرجوع إلي القائمة</value>
@@ -491,6 +533,9 @@
   </data>
   <data name="CheckIn Assets Report" xml:space="preserve">
     <value>تقارير مدخلات الأصول</value>
+  </data>
+  <data name="CheckOut" xml:space="preserve">
+    <value>الاصول المستخرجة</value>
   </data>
   <data name="CheckOut Assets Report" xml:space="preserve">
     <value>تقارير مستخرجات الأصول</value>
@@ -627,6 +672,9 @@
   <data name="Cost Of Repairs" xml:space="preserve">
     <value>تكلفة الإصلاحات</value>
   </data>
+  <data name="Count" xml:space="preserve">
+    <value>العدد</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
   </data>
@@ -650,6 +698,9 @@
   </data>
   <data name="Current Password" xml:space="preserve">
     <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="Current Year Purchase" xml:space="preserve">
+    <value>الاصول المشتره العام الحالي</value>
   </data>
   <data name="Cusromer Name" xml:space="preserve">
     <value>اسم العميل</value>
@@ -680,6 +731,12 @@
   </data>
   <data name="Customers Report" xml:space="preserve">
     <value>تقارير العملاء</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>لوحة القيادة</value>
+  </data>
+  <data name="Dashboard - Summary" xml:space="preserve">
+    <value>ملخص - لوجة القيادة</value>
   </data>
   <data name="Date Acquired" xml:space="preserve">
     <value>تاريخ الإبقاء</value>
@@ -797,6 +854,9 @@
   </data>
   <data name="Dispose To" xml:space="preserve">
     <value>التخلص من</value>
+  </data>
+  <data name="Dispsed" xml:space="preserve">
+    <value>الاصول التالفة </value>
   </data>
   <data name="Docs" xml:space="preserve">
     <value>المستندات</value>
@@ -948,6 +1008,9 @@
   <data name="Enter Cost" xml:space="preserve">
     <value>أدخل التكلفة</value>
   </data>
+  <data name="Enter Cost Of Repair" xml:space="preserve">
+    <value>أدخل تكلفه الصيانه</value>
+  </data>
   <data name="Enter Country" xml:space="preserve">
     <value>أدخل البلد</value>
   </data>
@@ -968,6 +1031,12 @@
   </data>
   <data name="Enter Item Title" xml:space="preserve">
     <value>أدخل عنوان العنصر</value>
+  </data>
+  <data name="Enter Mainainance Details" xml:space="preserve">
+    <value>أدخل تفاصيل الصيانه</value>
+  </data>
+  <data name="Enter Mainainance Title" xml:space="preserve">
+    <value>أدخل عنوان الصيانه</value>
   </data>
   <data name="Enter Mobile Number" xml:space="preserve">
     <value>أدخل رقم الهاتف</value>
@@ -1267,6 +1336,9 @@
   <data name="Lease Expires" xml:space="preserve">
     <value>انتهاء عقد الإيجار</value>
   </data>
+  <data name="Leased" xml:space="preserve">
+    <value>الاصول المتاجرة</value>
+  </data>
   <data name="Leased Asset Report" xml:space="preserve">
     <value>تقرير الأصول المستأجره</value>
   </data>
@@ -1296,6 +1368,9 @@
   </data>
   <data name="Leasing StartDate" xml:space="preserve">
     <value>تاريخ بداية التأجير</value>
+  </data>
+  <data name="Lenght" xml:space="preserve">
+    <value>المده</value>
   </data>
   <data name="Length" xml:space="preserve">
     <value>المدة</value>
@@ -1708,6 +1783,9 @@
   <data name="slim paragraph" xml:space="preserve">
     <value>Slim Asset هو حل قائم على الويب ومليء بالأدوات والميزات للتعامل مع جميع جوانب إدارة الأصول ، بما في ذلك إدارة المخزون. من خلال تقنيتها الناضجة وسهولة الإعداد ، تغطي Slim Assets جميع قواعد البرامج والأجهزة الأساسية لتتبع الأصول والمخزون. Slim Asset هي حزمة كاملة مثل أي عمل يحتاجه لتتبع وإدارة أصوله. تجمع وحدة إدارة المخزون الخاصة بها بين إدارة المخزون والأصول ضمن منصة واحدة وتتضمن القدرة على إدارة الأصول في مواقع متعددة والتنقل بين المواقع.</value>
   </data>
+  <data name="Sold" xml:space="preserve">
+    <value>الاصول المباعة</value>
+  </data>
   <data name="Sold To" xml:space="preserve">
     <value>بيعت ل</value>
   </data>
@@ -1807,6 +1885,12 @@
   <data name="ToDate" xml:space="preserve">
     <value />
   </data>
+  <data name="Total Asset Cost" xml:space="preserve">
+    <value>التكلفة الكلية للاصول</value>
+  </data>
+  <data name="Total Assets" xml:space="preserve">
+    <value>عدد الاصول</value>
+  </data>
   <data name="Transaction Date" xml:space="preserve">
     <value>تاريخ الصفقة</value>
   </data>
@@ -1845,6 +1929,9 @@
   </data>
   <data name="TypeTitle" xml:space="preserve">
     <value>اسم النوع</value>
+  </data>
+  <data name="Under Repair" xml:space="preserve">
+    <value>تحت التصليح</value>
   </data>
   <data name="User List" xml:space="preserve">
     <value>قائمة المستخدمين</value>
@@ -1908,6 +1995,9 @@
   </data>
   <data name="Welcome back" xml:space="preserve">
     <value>أهلا بعودتك</value>
+  </data>
+  <data name="Welcome back, Mohamed" xml:space="preserve">
+    <value>مرحباً بعودتك محمد</value>
   </data>
   <data name="yes" xml:space="preserve">
     <value>نعم</value>
