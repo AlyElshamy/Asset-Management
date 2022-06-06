@@ -16,7 +16,6 @@
         </div><!-- slim-pageheader -->
               <div class="section-wrapper">
                   <label class="section-title d-inline">@sharedResource["SubCategoryList"]</label>
-                  <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
                   <div class="table-wrapper">
                       <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                           @(Html.DevExtreme().DataGrid<AssetProject.Models.SubCategory>()
@@ -50,8 +49,8 @@
     })
     .Editing(e => e
         .AllowAdding(true)
-        .AllowUpdating(true)
-        .AllowDeleting(true)
+        .AllowDeleting(true).Texts(a => a.DeleteRow(@sharedResource["Delete"]))
+         .AllowUpdating(true).Texts(a => a.EditRow(sharedResource["Edit"]))
     )
 )
                       </div>

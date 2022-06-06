@@ -101,22 +101,20 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 }
             }
 
-            if (assetmovement.StoreId == null)
-            {
-                ModelState.AddModelError("", "Please Select Store");
-                SelectedAssets = null;
-                return Page();
-            }
+            //if (assetmovement.StoreId == null)
+            //{
+            //    ModelState.AddModelError("", "Please Select Store");
+            //    SelectedAssets = null;
+            //    return Page();
+            //}
             if (ModelState.IsValid)
             {
                 if (SelectedAssets != null)
                 {
                     if (SelectedAssets.Count != 0)
                     {
-
-                        //Check in from employeee to store
                         assetmovement.AssetMovementDirectionId = 1;
-                        //StoreId = LastAssetMovement.AssetMovementId==0 ? asset.StoreId : LastAssetMovement.StoreId;                  
+                        assetmovement.TransactionDate = DateTime.Now;
                         assetmovement.AssetMovementDetails = new List<AssetMovementDetails>();
                         string ActionTitle = "Action Title : ";
                         string TransDate = "Transaction Date : ";
@@ -126,13 +124,6 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                         string TransactionDate = assetmovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                         foreach (var asset in SelectedAssets)
                         {
-                            //var LastAssetMovementDetails = _context.AssetMovementDetails.Where(a => a.AssetId == asset.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
-                            //AssetMovement LastAssetMovement=new AssetMovement();
-                            //if (LastAssetMovementDetails != null)
-                            //{
-                            //     LastAssetMovement = _context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);                        
-                            //}
-
                             asset.AssetStatusId = 2;
                             var UpdatedAsset = _context.Assets.Attach(asset);
                             UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

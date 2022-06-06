@@ -9,9 +9,8 @@
     var InsuranceCount = context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
     var LeasingCount = context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date< DateTime.Now.Date).Count();
     var WarrantyCount = context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
-    var MaintenanceCount = context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
-    var MaintenanceoverdueCount = context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
-
+    var MaintenanceCount = context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 /*&& c.Asset.AssetStatusId == 9*/).Count();
+    var MaintenanceoverdueCount = context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 /*&& c.Asset.AssetStatusId == 9*/).Count();
 }
 <div class="slim-navbar">
     <div class="container">

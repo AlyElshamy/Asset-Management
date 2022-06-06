@@ -49,8 +49,6 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             List<AssetReportsModel> ds = _context.AssetLogs.Where(l => l.ActionLogId == 19).Select(i => new AssetReportsModel
             {
                 AssetCost = i.Asset.AssetCost,
-                AssetDescription = i.Asset.AssetDescription,
-                AssetLife = i.Asset.AssetLife,
                 AssetPurchaseDate = i.Asset.AssetPurchaseDate,
                 AssetSerialNo = i.Asset.AssetSerialNo,
                 AssetStatusTL = i.Asset.AssetStatus.AssetStatusTitle,
@@ -88,20 +86,20 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.AssetTagId.Contains(filterModel.AssetTagId)).ToList();
             }
-            if (filterModel.LocationId != null)
-            {
-                ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
-            }
-            if (filterModel.DepartmentId != null)
-            {
-                ds = ds.Where(i => i.DepartmentId == filterModel.DepartmentId).ToList();
-            }
-            if (filterModel.CategoryId != null)
-            {
-                ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
-            }
+            //if (filterModel.LocationId != null)
+            //{
+            //    ds = ds.Where(i => i.LocationId == filterModel.LocationId).ToList();
+            //}
+            //if (filterModel.DepartmentId != null)
+            //{
+            //    ds = ds.Where(i => i.DepartmentId == filterModel.DepartmentId).ToList();
+            //}
+            //if (filterModel.CategoryId != null)
+            //{
+            //    ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
+            //}
 
-            if (filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null && filterModel.CategoryId == null&& filterModel.OnDay == null&& filterModel.ShowAll == false)
+            if (filterModel.AssetTagId == null && filterModel.OnDay == null&& filterModel.ShowAll == false)
             {
                 ds = new List<AssetReportsModel>();
             }

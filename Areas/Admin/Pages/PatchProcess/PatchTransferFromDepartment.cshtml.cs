@@ -136,13 +136,14 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 newAssetMovement=new AssetMovement()
                 {
                 AssetMovementDirectionId = 2,
-                ActionTypeId=2,
-                DepartmentId=assetMovementObj.DepartmentId,
-                LocationId=assetMovementObj.LocationId,
-                TransactionDate=assetMovementObj.TransactionDate,
+                //ActionTypeId=2,
+                //DepartmentId=assetMovementObj.DepartmentId,
+                //LocationId=assetMovementObj.LocationId,
+                TransactionDate=DateTime.Now,
                 //DueDate=assetMovementObj.DueDate,
                 Remarks=assetMovementObj.Remarks,
                 StoreId=assetMovementObj.StoreId,
+                
                 };
                newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
                 string DirectionTitle = "Direction Title : ";
@@ -191,10 +192,9 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     LocationId = assetMovementObj.LocationId,
                     StoreId = assetMovementObj.StoreId,
                     Remarks = assetMovementObj.Remarks,
-                    TransactionDate = assetMovementObj.TransactionDate,
-                    EmpolyeeID=assetMovementObj.EmpolyeeID
-                    
-                    //DueDate=assetMovementObj.DueDate
+                    TransactionDate = DateTime.Now,
+                    EmpolyeeID=assetMovementObj.EmpolyeeID,
+                    DueDate=assetMovementObj.DueDate
                 };
 
                 newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();

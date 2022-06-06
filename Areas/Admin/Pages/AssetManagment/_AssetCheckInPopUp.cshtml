@@ -22,17 +22,8 @@
                 <div class="modal-body pd-25">
 
                     <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["Transaction Date"] <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.TransactionDate" type="date" class="form-control date" value=" ">
-                                <span asp-validation-for="@Model.TransactionDate" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
-
-
-
-                        <div class="col-lg-4">
+                       
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Store"]: <span class="tx-danger">*</span></label>
 
@@ -42,8 +33,6 @@
                                         .LoadAction("StoresLookup")
                                         .Key("Value")
                                         )
-                                         .Width(200)
-
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text").Placeholder(sharedResource["Select Store"])
                                         .ShowClearButton(true)
@@ -55,7 +44,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Remarks"] <span class="tx-danger">*</span></label>
                                 <textarea asp-for="@Model.Remarks" class="form-control" placeholder=""></textarea>

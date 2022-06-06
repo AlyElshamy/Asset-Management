@@ -56,7 +56,7 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                     LocationTl = _context.Locations.Find(lastAssetMovement.AssetMovement.LocationId).LocationTitle,
                     DepartmentTl = _context.Departments.Find(lastAssetMovement.AssetMovement.DepartmentId).DepartmentTitle,
                     Photo = lastAssetMovement.Asset.Photo,
-                    StoreTl = _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId).StoreTitle,
+                    StoreTl = _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId)==null?null: _context.Stores.Find(lastAssetMovement.AssetMovement.StoreId).StoreTitle,
                     ActionTypeTl = _context.ActionTypes.Find(lastAssetMovement.AssetMovement.ActionTypeId).ActionTypeTitle,
                     AssetPurchaseDate = lastAssetMovement.Asset.AssetPurchaseDate,
                     AssetSerialNo = lastAssetMovement.Asset.AssetSerialNo,
@@ -68,6 +68,10 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                     DepartmentId = lastAssetMovement.AssetMovement.DepartmentId
 
                 });
+            }
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
             }
             if (filterModel.employeeId!=null)
             {
@@ -98,7 +102,7 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                 ds = ds.Where(i => i.TransactionDate <= filterModel.ToDate && i.TransactionDate >= filterModel.FromDate).ToList();
             }
           
-            if (filterModel.DepartmentId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.LocationId == null && filterModel.AssetTagId == null && filterModel.employeeId == null)
+            if (filterModel.ShowAll == false&&filterModel.DepartmentId == null && filterModel.FromDate == null && filterModel.ToDate == null && filterModel.LocationId == null && filterModel.AssetTagId == null && filterModel.employeeId == null)
             {
                 ds = null;
             }

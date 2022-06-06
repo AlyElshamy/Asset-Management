@@ -54,8 +54,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                     DisposeTo = i.DisposeAsset.DisposeTo
                     ,photo=i.Asset.Photo
                 }).ToList();
-
-                if (filterModel.AssetTagId != null)
+            if (filterModel.ShowAll != false)
+            {
+                ds = ds.ToList();
+            }
+            if (filterModel.AssetTagId != null)
                 {
                     ds = ds.Where(i => i.AssetTagId.Contains(filterModel.AssetTagId)).ToList();
                 }
@@ -76,7 +79,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                     ds = ds.Where(i => i.DateDisposed <= filterModel.ToDate && i.DateDisposed >= filterModel.FromDate).ToList();
                 }
                
-                if (filterModel.FromDate == null && filterModel.ToDate == null&& filterModel.DisposeTo == null&& filterModel.AssetTagId == null)
+                if (filterModel.FromDate == null && filterModel.ShowAll == false && filterModel.ToDate == null&& filterModel.DisposeTo == null&& filterModel.AssetTagId == null)
                 {
                     ds = null;
                 }
