@@ -17,7 +17,7 @@
             <h6 class="slim-pagetitle">@sharedResource["LocationList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">@sharedResource["LocationList"]</label>
+            @*<label class="section-title d-inline">@sharedResource["LocationList"]</label>*@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().TreeList<AssetProject.Models.Location>()
@@ -52,6 +52,11 @@
     columns.AddFor(m => m.BarCode).Caption(@sharedResource["BarCode"]);
     columns.AddFor(m => m.LocationLatitude).Caption(@sharedResource["Latitude"]);
     columns.AddFor(m => m.LocationLangtiude).Caption(@sharedResource["Longitude"]);
+     columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
+.CellTemplate(@<text>
+  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%-data.LocationId%>')"> <i class="fa fa-trash"></i> </a>
+  </text>);
+
       @*  columns.AddFor(m => m.CountryId);
 
         columns.AddFor(m => m.Address);
@@ -66,7 +71,7 @@
     .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
-.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
+//.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
         .UseIcons(true)
           .Popup(p => p
                 .Title("Location Info")
@@ -83,7 +88,7 @@
 
     </div><!-- container -->
 </div>
-
+<partial name="_DeleteLocationPopup"/>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
         if (localStorage.getItem("lang") != "") {
@@ -99,4 +104,24 @@
             }
         }
     });
+
+     function ShowDeletePopUp(id)
+    {
+        console.log(id)
+        $.ajax({
+            type: "GET",
+            url: "/admin/SetUp/LocationTree?handler=LocationforDelete",
+            data: { "locationid": id },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                document.getElementById("LocationIdField").value = response.LocationId;
+                document.getElementById("LocationTitleField").value = response.LocationTitle;
+                $('#DeletelocationPoup').modal('show');
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
 </script>

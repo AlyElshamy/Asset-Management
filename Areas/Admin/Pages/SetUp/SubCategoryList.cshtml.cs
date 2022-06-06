@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,31 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
         public void OnGet(int id)
         {
             catId = id; 
+        }
+
+        public IActionResult OnPostDeleteSubCategory(SubCategory subcat)
+        {
+            SubCategory DeletedsubCat = Context.SubCategories.FirstOrDefault(e => e.SubCategoryId == subcat.SubCategoryId);
+            Context.SubCategories.Remove(DeletedsubCat);
+            try
+            {
+                Context.SaveChanges();
+                _toastNotification.AddSuccessToastMessage("SubCategory Deleted Succeffully");
+
+            }
+            catch (Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+
+            }
+            return RedirectToPage("/SetUp/SubCategoryList");
+
+
+        }
+        public IActionResult OnGetSubCategoryforDelete(int Subcategoryid)
+        {
+            var result = Context.SubCategories.FirstOrDefault(e => e.SubCategoryId == Subcategoryid);
+            return new JsonResult(result);
         }
     }
 }

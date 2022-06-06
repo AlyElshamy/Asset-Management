@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["DepartmentList"]</li>
             </ol>
-            <h6 class="slim-pagetitle">@sharedResource["DepartmentList"]</h6>
+          @*  <h6 class="slim-pagetitle">@sharedResource["DepartmentList"]</h6>*@
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <label class="section-title d-inline">@sharedResource["DepartmentList"]</label>
@@ -37,12 +37,16 @@
     .Columns(columns => {
 
         columns.AddFor(m => m.DepartmentTitle).Caption(@sharedResource["DepartmentTitle"]);
+         columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
+.CellTemplate(@<text>
+  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%-data.DepartmentId %>')">@sharedResource["Delete"] </a>
+  </text>);
     })
     .Editing(e => e
         .AllowAdding(true)
-        .UseIcons(true)
-        .AllowUpdating(true)
-.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
+       // .UseIcons(true)
+        .AllowUpdating(true).Texts(e=>e.EditRow(sharedResource["Edit"]))
+//.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
     )
 )
                 </div>
@@ -51,6 +55,7 @@
 
     </div><!-- container -->
 </div>
+<partial name="_DeleteDepartmentPopup"/>
 
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
@@ -65,4 +70,24 @@
             }
         }
     });
+
+     function ShowDeletePopUp(id)
+    {
+        console.log(id)
+        $.ajax({
+            type: "GET",
+            url: "/admin/SetUp/DepartmentList?handler=DepartmentforDelete",
+            data: { "DepartmentId": id },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                document.getElementById("DepartmentIdField").value = response.DepartmentId;
+                document.getElementById("DepartmentTitleField").value = response.DepartmentTitle;
+                $('#DeleteSubCategoryPoup').modal('show');
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
 </script>
