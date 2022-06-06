@@ -23,7 +23,7 @@ namespace AssetProject.Areas.Admin.Pages.Dashboards
         public int TotalAssetUnderRepair { get; set; }
         public double TotalAssetUnderRepairCost { get; set; }
         public int TotalAssetLeased { get; set; }
-        public double TotalLeasedAssetCost { get; set; }
+        public double TotalLeasedAssetCost = 0;
         public int TotalAssetLost { get; set; }
         public double TotalAssetLostCost { get; set; }
         public int TotalAssetDispose { get; set; }
@@ -75,21 +75,56 @@ namespace AssetProject.Areas.Admin.Pages.Dashboards
                 var costofmaxid = _context.AssetRepairs.Where(i => i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
                 TotalAssetUnderRepairCost += costofmaxid;
             }
-
-            //TotalAssetUnderRepairCost = _context.AssetRepairs.Sum(a => a.RepairCost);
+            var listmaxassetLeasingId =
+                 from a in _context.Assets
+                 where a.AssetStatusId == 6
+                 from r in _context.AssetLeasings
+                 from rd in _context.AssetLeasingDetails
+                 where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
+                 group rd by rd.AssetId
+                 into gr
+                 select new
+                 {
+                     AMIDS = (from AMD in gr select AMD.AssetLeasingId).Max()
+                 };
+             
+            foreach (var item in listmaxassetLeasingId)
+            {
+                var costofmaxid = _context.AssetLeasings.Where(i => i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
+                TotalLeasedAssetCost += costofmaxid;
+            }
+            TotalAssetMaint = _context.AssetMaintainances.Where(m => m.MaintainanceStatusId != 4 && m.MaintainanceStatusId != 5).Count();
+            TotalAssetMaintCost = _context.AssetMaintainances.Where(m => m.MaintainanceStatusId != 4 && m.MaintainanceStatusId != 5).Sum(e=>e.AssetMaintainanceRepairesCost);
             TotalAssetLeased = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
-            TotalLeasedAssetCost = _context.AssetLeasings.Sum(a => a.LeasedCost);
             TotalAssetLost = _context.Assets.Where(a => a.AssetStatusId == 4).Count();
             TotalAssetLostCost = _context.Assets.Where(a => a.AssetStatusId == 4).Sum(a=>a.AssetCost);
             TotalAssetDispose = _context.Assets.Where(a => a.AssetStatusId == 5).Count();
-            TotalAssetMaint = _context.Assets.Where(a => a.AssetStatusId == 9).Count();
-            TotalAssetMaintCost = _context.AssetMaintainances.Sum(a=>a.AssetMaintainanceRepairesCost);
             TotalAssetDisposeCost = _context.Assets.Where(a => a.AssetStatusId == 5).Sum(a=>a.AssetCost);
             TotalAssetCheckOut = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
             TotalAssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
-            TotalAssetLinkInsurance = _context.AssetsInsurances.Count();
-            TotalAssetLinkWarrenty = _context.AssetWarranties.Count();
-            TotalAssetLinkContract = _context.AssetContracts.Count();
+            var AssetIdWithinsurance = (from c in _context.AssetsInsurances
+                                        orderby c.AssetId
+                                        select c.AssetId).Distinct();
+
+            double AssetLinkInsuranceCost = 0;
+            foreach (var item in AssetIdWithinsurance)
+            {
+                AssetLinkInsuranceCost += _context.Assets.Where(a => a.AssetId == item).Sum(a => a.AssetCost);
+            }
+
+            TotalAssetLinkInsurance = (from IN in
+               _context.AssetsInsurances
+                                       orderby IN.AssetId
+                                       select IN.AssetId).Distinct().Count();
+            TotalAssetLinkWarrenty = (from W in
+               _context.AssetWarranties
+                                      orderby W.AssetId
+                                      select W.AssetId).Distinct().Count();
+           
+            TotalAssetLinkContract = (from C in
+               _context.AssetContracts
+                                      orderby C.AssetId
+                                      select C.AssetId).Distinct().Count();
             TotalAssetPurchaseCY = _context.Assets.Where(A=>A.AssetPurchaseDate.Date.Year==DateTime.Now.Year).Count();
             TotalAssetPurchaseCostCY = _context.Assets.Where(A=>A.AssetPurchaseDate.Date.Year==DateTime.Now.Year).Sum(a=>a.AssetCost);
 
