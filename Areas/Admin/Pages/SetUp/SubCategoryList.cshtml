@@ -60,9 +60,10 @@
   </text>);
     })
     .Editing(e => e
-        .AllowAdding(true).Texts(e=>e.EditRow(sharedResource["Edit"]))
+        .AllowAdding(true)
         //.UseIcons(true)
-//.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
+        .AllowUpdating(true).Texts(e => e.EditRow(sharedResource["Edit"]))
+    //.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
     )
 )
                       </div>

@@ -8,9 +8,9 @@
             <ol class="breadcrumb slim-breadcrumb">
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
                 <li class="breadcrumb-item"><a href="#">@sharedResource["Alerts"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Expiring Assets"]</li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Assets Past Due"]</li>
             </ol>
-            <h6 class="slim-pagetitle">@sharedResource["CheckOut Expiring Assets List"]</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Assets Past Due List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <div class="table-wrapper">
@@ -44,8 +44,6 @@ columns.AddFor(m => m.Photo).Caption(sharedResource["Photo"]).Width(100)
                             </div>
                         </text>);
     columns.AddFor(m => m.AssetTagId).Caption(sharedResource["Asset TagId"]);
-    columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["Asset Serial Number"]);
-    columns.AddFor(m => m.AssetCost).Caption(sharedResource["Asset Cost"]);
     columns.AddFor(m => m.LocationTL).Caption(sharedResource["Location"]);
     columns.AddFor(m => m.EmployeeFullName).Caption(sharedResource["Employee"]);
     columns.AddFor(m => m.DepartmentTL).Caption(sharedResource["Department"]);

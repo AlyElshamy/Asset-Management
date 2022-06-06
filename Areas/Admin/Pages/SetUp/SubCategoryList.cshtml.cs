@@ -44,7 +44,7 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
                 _toastNotification.AddErrorToastMessage("Some Thing Went Error");
 
             }
-            return RedirectToPage("/SetUp/SubCategoryList");
+            return RedirectToPage("/SetUp/SubCategoryList",new { id= DeletedsubCat.CategoryId });
 
 
         }

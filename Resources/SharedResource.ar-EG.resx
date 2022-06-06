@@ -1447,6 +1447,9 @@
   <data name="Maintainance Status" xml:space="preserve">
     <value>حالة الصيانة</value>
   </data>
+  <data name="Maintainance Title" xml:space="preserve">
+    <value>عنوان الصيانة</value>
+  </data>
   <data name="Maintaince By" xml:space="preserve">
     <value>الصيانة بواسطة</value>
   </data>
@@ -1455,6 +1458,9 @@
   </data>
   <data name="Maintenance Due" xml:space="preserve">
     <value>الأصول الواجب صيانتها اليوم</value>
+  </data>
+  <data name="Maintenance List" xml:space="preserve">
+    <value>قائمة اعمال الصيانة</value>
   </data>
   <data name="Maintenance OnDay Reports" xml:space="preserve">
     <value>تقارير صيانه الأصول اليومية</value>
@@ -1738,8 +1744,14 @@
   <data name="Select Maintainance Status" xml:space="preserve">
     <value>إختر حاله الصيانة</value>
   </data>
+  <data name="Select MaintainanceStatus" xml:space="preserve">
+    <value>إختر حالة الصيانة</value>
+  </data>
   <data name="Select Store" xml:space="preserve">
     <value>إختر متجر</value>
+  </data>
+  <data name="Select Techinician" xml:space="preserve">
+    <value>إختر الفني</value>
   </data>
   <data name="Select Technician" xml:space="preserve">
     <value>إختر الفني</value>
@@ -1749,6 +1761,12 @@
   </data>
   <data name="Select Warranty" xml:space="preserve">
     <value>إختر ضمان</value>
+  </data>
+  <data name="Select Week" xml:space="preserve">
+    <value>إختر الأسبوع</value>
+  </data>
+  <data name="Select Year" xml:space="preserve">
+    <value>إختر السنة</value>
   </data>
   <data name="Sell Asset" xml:space="preserve">
     <value>بيع الأصول</value>
@@ -2004,6 +2022,15 @@
   </data>
   <data name="Warranty" xml:space="preserve">
     <value>ضمان</value>
+  </data>
+  <data name="Warranty Expiring" xml:space="preserve">
+    <value>انتهاء الضمان</value>
+  </data>
+  <data name="Warranty Expiring List" xml:space="preserve">
+    <value>قائمة انتهاء الضمان</value>
+  </data>
+  <data name="Warranty Length" xml:space="preserve">
+    <value>فترة الضمان</value>
   </data>
   <data name="Warranty Report" xml:space="preserve">
     <value>تقارير الضمانات</value>

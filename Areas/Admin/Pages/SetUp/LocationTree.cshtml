@@ -52,10 +52,7 @@
     columns.AddFor(m => m.BarCode).Caption(@sharedResource["BarCode"]);
     columns.AddFor(m => m.LocationLatitude).Caption(@sharedResource["Latitude"]);
     columns.AddFor(m => m.LocationLangtiude).Caption(@sharedResource["Longitude"]);
-     columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
-.CellTemplate(@<text>
-  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%-data.LocationId%>')"> <i class="fa fa-trash"></i> </a>
-  </text>);
+
 
       @*  columns.AddFor(m => m.CountryId);
 
@@ -67,11 +64,18 @@
 
         columns.AddFor(m => m.PostalCode);*@
     })
+    .Columns(columns =>
+    {
+        columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
+.CellTemplate(@<text>
+  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%-data.LocationId%>')"> <i class="fa fa-trash"></i> </a>
+  </text>);
+    })
     .Editing(e => e
     .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
-//.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
+        //.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
         .UseIcons(true)
           .Popup(p => p
                 .Title("Location Info")

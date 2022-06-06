@@ -6,11 +6,11 @@
     <div class="container">
         <div class="slim-pageheader">
             <ol class="breadcrumb slim-breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">ASSETS</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Maintenance Policy"]</li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Alerts"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Maintenance Overdue"]</li>
             </ol>
-            <h6 class="slim-pagetitle">@sharedResource["Maintenance Policy List"]</h6>
+            <h6 class="slim-pagetitle">@sharedResource["Maintenance List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             @*<label class="section-title d-inline">@sharedResource["InsurancePolicyList"]</label>*@
@@ -19,23 +19,23 @@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetMaintainance>()
+        .ID("MaintOverdueid")
     .DataSource(ds => ds.Mvc()
         .Controller("Alerts")
         .LoadAction("GetMaintenanceoverDue")
         .Key("AssetMaintainanceId")
     )
-    .ColumnChooser(cc => cc.Enabled(true))
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
     .RemoteOperations(true)
      .ShowBorders(true)
-    .Paging(p=>p.PageSize(10))
-    .Pager(p=>p.ShowPageSizeSelector(true).AllowedPageSizes(new [] {10,20,40,80}))
-    .SearchPanel(s=>s.Visible(true).HighlightCaseSensitive(true))
+    .Paging(p => p.PageSize(10))
+    .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+    .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
-        .Visible(true)
-        .ApplyFilter(GridApplyFilterMode.Auto)
+     .Visible(true)
+     .ApplyFilter(GridApplyFilterMode.Auto)
     )
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
@@ -53,13 +53,11 @@
                             </div>
                         </text>);
         columns.AddFor(m => m.Asset.AssetTagId).Caption(@sharedResource["Asset TagId"]);
-        columns.AddFor(m => m.Asset.AssetSerialNo).Caption(@sharedResource["SerialNo."]);
-        columns.AddFor(m => m.Asset.AssetCost).Caption(@sharedResource["Asset Cost"]);
         columns.AddFor(m => m.AssetMaintainanceTitle).Caption(@sharedResource["Maintainance Title"]);
 
         columns.AddFor(m => m.ScheduleDate).Caption(@sharedResource["Schedule Date"]);
 
-        columns.AddFor(m => m.Technician.TechnicianId).Caption("Technician").Lookup(lookup => lookup
+        columns.AddFor(m => m.Technician.TechnicianId).Caption(sharedResource["Technician"]).Lookup(lookup => lookup
                 .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("TechniciansLookup").Key("Value"))
                 .ValueExpr("Value")
                 .DisplayExpr("Text")
@@ -187,9 +185,26 @@ columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.
         });
     }
     function DateFormat(incomingdate) {
-        var d = new Date(incomingdate),            month = '' + (d.getMonth() + 1),            day = '' + d.getDate(),            year = d.getFullYear();
-        if (month.length < 2)            month = '0' + month;        if (day.length < 2)            day = '0' + day;        var outcomingdate = [year, month, day].join('-');
+        var d = new Date(incomingdate),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        var outcomingdate = [year, month, day].join('-');
         return outcomingdate;
     }
 
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                dataGrid = $("#MaintOverdueid").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
 </script>

@@ -19,25 +19,25 @@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetMaintainance>()
+        .ID("MaintDueid")
 .DataSource(ds => ds.Mvc()
 .Controller("Alerts")
 .LoadAction("GetMaintenanceDue")
 .Key("AssetMaintainanceId")
 )
-.ColumnChooser(cc => cc.Enabled(true))
 .ColumnAutoWidth(true)
 .WordWrapEnabled(true)
 .ShowBorders(true)
 .RemoteOperations(true)
 .ShowBorders(true)
-.Paging(p => p.PageSize(10))
-.Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
-.SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
-.FilterRow(filterRow => filterRow
-.Visible(true)
-.ApplyFilter(GridApplyFilterMode.Auto)
-)
-.HeaderFilter(headerFilter => headerFilter.Visible(true))
+ .Paging(p => p.PageSize(10))
+    .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+    .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
+    .FilterRow(filterRow => filterRow
+     .Visible(true)
+     .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+      .HeaderFilter(headerFilter => headerFilter.Visible(true))
 .Columns(columns =>
 {
 
@@ -54,15 +54,12 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                             </div>
                         </text>);
 columns.AddFor(m => m.Asset.AssetTagId).Caption(@sharedResource["Asset TagId"]);
-columns.AddFor(m => m.Asset.AssetSerialNo).Caption(@sharedResource["SerialNo."]);
-columns.AddFor(m => m.Asset.AssetCost).Caption(@sharedResource["Asset Cost"]);
-
 columns.AddFor(m => m.AssetMaintainanceTitle).Caption(@sharedResource["Maintainance Title"]);
 
 columns.AddFor(m => m.ScheduleDate).Caption(@sharedResource["Schedule Date"]);
 
 
-columns.AddFor(m => m.Technician.TechnicianId).Caption("Technician").Lookup(lookup => lookup
+columns.AddFor(m => m.Technician.TechnicianId).Caption(sharedResource["Technician"]).Lookup(lookup => lookup
                 .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("TechniciansLookup").Key("Value"))
                 .ValueExpr("Value")
                 .DisplayExpr("Text")
@@ -202,4 +199,16 @@ columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.
         var outcomingdate = [year, month, day].join('-');
         return outcomingdate;
     }
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                dataGrid = $("#MaintDueid").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+
+    
 </script>

@@ -51,13 +51,15 @@ namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
                 _context.Entry(employee).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Employee Update Successfuly");
+                return RedirectToPage("/EmployeeManagement/DetailsEmployee", new { id = employee.ID });
 
             }
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
+                return RedirectToPage("/EmployeeManagement/EditEmployee", new { id = employee.ID });
+
             }
-            return RedirectToPage("EmployeeList");
         }
     }
 }

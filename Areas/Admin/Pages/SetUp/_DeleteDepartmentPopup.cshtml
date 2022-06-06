@@ -5,7 +5,7 @@
 }
 
 
-<div id="DeletelocationPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
+<div id="DeletedepartmentPoup" class="modal fade effect-super-scaled" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-vertical-center modal-lg" role="document">
     <form asp-area="Admin" asp-page="/SetUp/DepartmentList" asp-page-handler="DeleteDepartment" enctype="multipart/form-data">
         <div class="modal-content bd-0 tx-14">
@@ -16,13 +16,13 @@
             </div>
             <div class="modal-body pd-25">
                 
-                    <input id="DepartmentIdField" name="DepartmentId " hidden  />
+                    <input id="DepartmentIdField" name="DepartmentId" hidden/>
                     
 
                       <div class="row mg-b-25">
                 <div class="form-group">
-                    <label class="form-control-label">@sharedResource["Location Title"] <span class="tx-danger"></span></label>
-                  <input id="DepartmentTitleField"  class="form-control" readonly>
+                    <label class="form-control-label">@sharedResource["DepartmentTitle"] <span class="tx-danger"></span></label>
+                  <input id="DepartmentTitleField" name="DepartmentTitle" class="form-control" readonly>
                 </div>
               
             </div><!-- row -->

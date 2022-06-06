@@ -81,9 +81,12 @@
             contentType: "application/json",
             dataType: "json",
             success: function (response) {
+                console.log(document.getElementById("DepartmentIdField"))
                 document.getElementById("DepartmentIdField").value = response.DepartmentId;
+                console.log(document.getElementById("DepartmentIdField").value)
+
                 document.getElementById("DepartmentTitleField").value = response.DepartmentTitle;
-                $('#DeleteSubCategoryPoup').modal('show');
+                $('#DeletedepartmentPoup').modal('show');
             },
             failure: function (response) {
                 alert(response);

@@ -17,10 +17,6 @@
              <h6 class="slim-pagetitle">@sharedResource["BrandList"]</h6>
         </div><!-- slim-pageheader -->
            <div class="section-wrapper">
-               <label class="section-title d-inline">@sharedResource["BrandList"]</label>
-               <br />
-               <br />
-               
                <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary"> @sharedResource["AddNewBrand"]  </a>
                <br />
                <br />
@@ -72,7 +68,8 @@
             
              if (localStorage.getItem("lang") == "ar") {
                 console.log("In Page")
-                dataGrid = $("#BrandListID").dxDataGrid("instance");                dataGrid.option("rtlEnabled", true);
+                dataGrid = $("#BrandListID").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
 
 
             }
