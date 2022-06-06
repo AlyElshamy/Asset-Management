@@ -47,14 +47,7 @@ namespace AssetProject.Areas.Admin.Pages.AlertsManagement
             {
                 assetMaintainance.AssetMaintainanceDateCompleted = null;
             }
-            if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4)
-            {
-                var assetobj = Context.Assets.Find(assetMaintainance.AssetId);
-
-                assetobj.AssetStatusId = 1;
-                var UpdatedAsset = Context.Assets.Attach(assetobj);
-                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            }
+           
             if (!assetMaintainance.AssetMaintainanceRepeating)
             {
                 assetMaintainance.AssetMaintainanceFrequencyId = null;

@@ -66,7 +66,7 @@
     .Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
-        .AllowDeleting(true)
+.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
         .UseIcons(true)
           .Popup(p => p
                 .Title("Location Info")

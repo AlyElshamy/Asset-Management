@@ -58,8 +58,7 @@
     .Editing(e => e
         .AllowAdding(true)
         .UseIcons(true)
-        .AllowDeleting(true)
-         .AllowUpdating(true)
+.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
     )
 )
                       </div>
