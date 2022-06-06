@@ -15,7 +15,7 @@
             <h6 class="slim-pagetitle">@sharedResource["CategoryList"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">@sharedResource["CategoryList"]</label>
+       @*     <label class="section-title d-inline">@sharedResource["CategoryList"]</label>*@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">  
    @(Html.DevExtreme().DataGrid<AssetProject.Models.Category>()
@@ -42,21 +42,30 @@
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
 
-    columns.Add().Caption(@sharedResource["SubCategories"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+    columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
                 <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
+                <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%- data %>')">@sharedResource["Delete"] </a>
             </text>).Width(150);
     })
     .Columns(columns => {
 
         columns.AddFor(m => m.CategoryTIAR).Caption(@sharedResource["CategoryTIAR"]);
+        columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
+.CellTemplate(@<text>
+   <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
+  @Html.DevExtreme().Button().Text(sharedResource["Delete"]).OnClick("function (e) { ShowDeletePopUp(data)}")
+  </text>);
+
+      
     })
     .Editing(e => e
         .AllowAdding(true)
-    .UseIcons(true)
-        .AllowDeleting(true).Texts(e=>e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"]))
+        .UseIcons(true)
+        //.AllowDeleting(true).Texts(e=>e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"]))
          .AllowUpdating(true)
 
     )
+
 )
                 </div>
             </div><!-- table-wrapper -->
@@ -64,7 +73,7 @@
 
     </div><!-- container -->
 </div>
-
+<partial name="_DeleteCategoryPopup"/>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {
         if (localStorage.getItem("lang") != "") {
@@ -78,4 +87,10 @@
             }
         }
     });
+    function ShowDeletePopUp(data)
+    {
+       $('#DeleteCategoryPoup').modal('show');
+       document.getElementById("CategoryIdField").value = data.CategoryId;
+       document.getElementById("CategoryTIARField").value = data.CategoryTIAR;
+    }
 </script>
