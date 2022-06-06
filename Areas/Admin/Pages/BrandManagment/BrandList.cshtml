@@ -18,13 +18,17 @@
         </div><!-- slim-pageheader -->
            <div class="section-wrapper">
                <label class="section-title d-inline">@sharedResource["BrandList"]</label>
-               <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary" style="float:right"> @sharedResource["AddNewBrand"]  </a>
+               <br />
+               <br />
+               
+               <a asp-area="Admin" asp-page="/BrandManagment/AddBrand" class="btn btn-primary"> @sharedResource["AddNewBrand"]  </a>
                <br />
                <br />
                <br />
                <div class="table-wrapper">
                    <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                        @(Html.DevExtreme().DataGrid<AssetProject.Models.Brand>()
+        .ID("BrandListID")
                     .DataSource(ds => ds.Mvc()
                     .Controller("Brands")
                     .LoadAction("Get")
@@ -40,7 +44,6 @@
         .Visible(true)
         .ApplyFilter(GridApplyFilterMode.Auto)
     )
-
       .HeaderFilter(headerFilter => headerFilter.Visible(true))
         .Columns(columns => {
 
@@ -62,3 +65,17 @@
 
     </div><!-- container -->
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+            
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                dataGrid = $("#BrandListID").dxDataGrid("instance");                dataGrid.option("rtlEnabled", true);
+
+
+            }
+        }
+    });
+</script>

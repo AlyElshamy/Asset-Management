@@ -619,7 +619,7 @@
     <value>Save</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>The search, sort, and paging features will be immediately added to the table, as shown in this example</value>
+    <value />
   </data>
   <data name="searching" xml:space="preserve">
     <value>Search</value>

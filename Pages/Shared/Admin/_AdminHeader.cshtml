@@ -75,23 +75,25 @@
 
                     }
                     window.addEventListener('DOMContentLoaded', (event) => {
-                    var masterPage= document.getElementById("masterPageId"); 
-                    var Design_align= document.getElementById("Design_align"); 
-                    console.log(Design_align)
-                    
-                    if(localStorage.getItem("lang")!="")
-                    {
-                        if(localStorage.getItem("lang")=="en")
-                        masterPage.dir="ltr";
-                    }
-                        
-                        if(localStorage.getItem("lang")=="ar")
-                        {
-                        masterPage.dir="rtl";
-                        Design_align.style.text-align="right"
+                        var masterPage = document.getElementById("masterPageId");
+                        if (localStorage.getItem("lang") != "") {
+                            if (localStorage.getItem("lang") == "en") {
+                                masterPage.dir = "ltr";
+                            console.log("Aya")
+                            document.getElementById("masterbodyid").style.textAlign = "left"
                         }
 
-                    
+                        else if (localStorage.getItem("lang") == "ar") {
+
+
+                            masterPage.dir = "rtl"
+                            console.log("Aya M")
+
+                                document.getElementById("masterbodyid").style.textAlign = "right"
+                               
+
+                        }
+                    }
                      });
                 </script>
                 @*<div class="dropdown-menu dropdown-menu-end">
