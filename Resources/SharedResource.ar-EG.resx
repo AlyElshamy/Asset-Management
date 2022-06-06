@@ -237,6 +237,9 @@
   <data name="arabic" xml:space="preserve">
     <value>اللغة العربية</value>
   </data>
+  <data name="Are you Sure to Delete?!" xml:space="preserve">
+    <value>هل انت متاكد من الحذف؟</value>
+  </data>
   <data name="Asset" xml:space="preserve">
     <value>الأصل</value>
   </data>
@@ -410,6 +413,9 @@
   </data>
   <data name="BacktoList" xml:space="preserve">
     <value>عودة </value>
+  </data>
+  <data name="BarCode" xml:space="preserve">
+    <value>الباركود</value>
   </data>
   <data name="Brand" xml:space="preserve">
     <value>الماركة</value>
@@ -1151,7 +1157,7 @@
     <value>هيا نبدأ</value>
   </data>
   <data name="GetStarted" xml:space="preserve">
-    <value>!ابدأ</value>
+    <value> ابدأ</value>
   </data>
   <data name="Help &amp; Contact" xml:space="preserve">
     <value>المساعده والاتصال</value>
@@ -1246,6 +1252,9 @@
   <data name="LATEST ACTIVITY" xml:space="preserve">
     <value>الأنشطة الأخيرة</value>
   </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>خط العرض</value>
+  </data>
   <data name="Learn More" xml:space="preserve">
     <value>تعرف علي المزيد</value>
   </data>
@@ -1329,6 +1338,9 @@
   </data>
   <data name="Logo" xml:space="preserve">
     <value>الشعار</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>خط الطول </value>
   </data>
   <data name="Maintainance" xml:space="preserve">
     <value>اعمال صيانة</value>
@@ -1568,7 +1580,7 @@
     <value>تاريخ الجدول الزمني</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>ستتم إضافة ميزات البحث والترتيب والترحيل على الفور إلى الجدول ، كما هو موضح في هذا المثال</value>
+    <value>   </value>
   </data>
   <data name="Search Asset" xml:space="preserve">
     <value>بحث عن الأصل</value>

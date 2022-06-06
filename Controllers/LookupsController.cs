@@ -85,8 +85,9 @@ namespace AssetProject.Controllers
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
         [HttpGet]
-        public async Task<IActionResult> CategoriesLookup(DataSourceLoadOptions loadOptions)
+        public async Task<IActionResult> CategoriesLookup(DataSourceLoadOptions loadOptions )
         {
+            
             var lookup = from i in _context.Categories
                          orderby i.CategoryTIAR
                          select new
@@ -94,8 +95,29 @@ namespace AssetProject.Controllers
                              Value = i.CategoryId,
                              Text = i.CategoryTIAR
                          };
+            
+            
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Category1Lookup(DataSourceLoadOptions loadOptions , int CategoryId)
+        {
+
+            var lookup = from i in _context.Categories
+                         where i.CategoryId==CategoryId
+                         orderby i.CategoryTIAR
+                         
+                         select new
+                         {
+                             Value = i.CategoryId,
+                             Text = i.CategoryTIAR
+                         };
+
+
+            return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
+        }
+
         [HttpGet]
         public async Task<IActionResult> StoresLookup(DataSourceLoadOptions loadOptions)
         {

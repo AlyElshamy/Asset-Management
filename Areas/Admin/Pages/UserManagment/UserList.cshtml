@@ -15,11 +15,14 @@
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <label class="section-title d-inline">@sharedResource["UserList"]</label>
-            <a asp-area="Admin" asp-page="/UserManagment/AddUser" class="btn btn-primary" style="float:right">@sharedResource["AddNewUser"] </a>
+        <br/>
+        <br/>
+            <a asp-area="Admin" asp-page="/UserManagment/AddUser" class="btn btn-primary">@sharedResource["AddNewUser"] </a>
             <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                    @(Html. DevExtreme().DataGrid<AssetProject.Models.ApplicationUser>()
+        .ID("userlistid")
     .DataSource(Model.Users,"Id")
                     .ColumnAutoWidth(true)
                     .WordWrapEnabled(true)
@@ -48,3 +51,16 @@
         </div><!-- section-wrapper -->
 
     </div><!-- container -->
+
+    <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#userlistid").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+    </script>

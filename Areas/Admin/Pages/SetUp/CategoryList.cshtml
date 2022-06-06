@@ -19,6 +19,7 @@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">  
    @(Html.DevExtreme().DataGrid<AssetProject.Models.Category>()
+        .ID("CategoryListid")
     .DataSource(ds => ds.Mvc()
         .Controller("Categories")
         .LoadAction("Get")
@@ -31,9 +32,17 @@
                     .WordWrapEnabled(true)
                      .ShowBorders(true)
     .RemoteOperations(true)
+     .Paging(p => p.PageSize(10))
+    .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
+    .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+      .HeaderFilter(headerFilter => headerFilter.Visible(true))
     .Columns(columns => {
-      
-            columns.Add().Caption(@sharedResource["SubCategories"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+
+    columns.Add().Caption(@sharedResource["SubCategories"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
                 <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
             </text>).Width(150);
     })
@@ -43,8 +52,9 @@
     })
     .Editing(e => e
         .AllowAdding(true)
-        .AllowDeleting(true).Texts(a => a.DeleteRow(@sharedResource["Delete"]))
-         .AllowUpdating(true).Texts(a => a.EditRow(sharedResource["Edit"]))
+    .UseIcons(true)
+        .AllowDeleting(true)
+         .AllowUpdating(true)
 
     )
 )
@@ -54,3 +64,18 @@
 
     </div><!-- container -->
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#CategoryListid").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+
+
+            }
+        }
+    });
+</script>

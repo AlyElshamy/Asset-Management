@@ -6,23 +6,26 @@
 <div class="slim-mainpanel">
     <div class="container">
         <<div class="slim-pageheader">
-             <ol class="breadcrumb slim-breadcrumb">
-                 <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
-                 <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
-                 <li class="breadcrumb-item active" aria-current="page">@sharedResource["EmployeeManagement"]</li>
-             </ol>
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["SETUP"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["EmployeeManagement"]</li>
+            </ol>
             <h6 class="slim-pagetitle">@sharedResource["EmployeeList"]</h6>
         </div><!-- slim-pageheader -->
-         <div class="section-wrapper">
-             <label class="section-title d-inline">@sharedResource["EmployeeList"]</label>
-             <a asp-area="Admin" asp-page="/EmployeeManagement/AddEmployee" class="btn btn-primary" style="float:right"> @sharedResource["AddNewEmployee"]   </a>
-             <br />
-             <br />
-             <br />
-             <div class="table-wrapper">
-                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
+        <div class="section-wrapper">
+            <label class="section-title d-inline">@sharedResource["EmployeeList"]</label>
+            <br />
+            <br />
+            <a asp-area="Admin" asp-page="/EmployeeManagement/AddEmployee" class="btn btn-primary"> @sharedResource["AddNewEmployee"]   </a>
+            <br />
+            <br />
+            <br />
+            <div class="table-wrapper">
+                <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
 
-                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Employee>()
+                    @(Html.DevExtreme().DataGrid<AssetProject.Models.Employee>()
+        .ID("Employeelistid")
     .DataSource(ds => ds.Mvc()
         .Controller("Employees")
         .LoadAction("Get")
@@ -67,9 +70,22 @@
    })
 )
 
-                 </div>
-             </div><!-- table-wrapper -->
-         </div><!-- section-wrapper -->
+                </div>
+            </div><!-- table-wrapper -->
+        </div><!-- section-wrapper -->
 
     </div><!-- container -->
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#Employeelistid").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+</script>

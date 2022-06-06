@@ -21,6 +21,7 @@
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().TreeList<AssetProject.Models.Location>()
+        .ID("Locationtreeid")
     .DataSource(ds => ds.Mvc()
         .Controller("Locations")
         .LoadAction("Get")
@@ -50,7 +51,7 @@
     columns.AddFor(m => m.LocationTitle).Caption(@sharedResource["LocationTitle"]);
     columns.AddFor(m => m.BarCode).Caption(@sharedResource["BarCode"]);
     columns.AddFor(m => m.LocationLatitude).Caption(@sharedResource["Latitude"]);
-    columns.AddFor(m => m.LocationLangtiude).Caption(@sharedResource["Langtiude"]);
+    columns.AddFor(m => m.LocationLangtiude).Caption(@sharedResource["Longitude"]);
       @*  columns.AddFor(m => m.CountryId);
 
         columns.AddFor(m => m.Address);
@@ -64,8 +65,9 @@
     .Editing(e => e
     .Mode(GridEditMode.Popup)
         .AllowAdding(true)
-        .AllowUpdating(true).Texts(a => a.EditRow(sharedResource["Edit"]))
-        .AllowDeleting(true).Texts(a => a.DeleteRow(sharedResource["Delete"]))
+        .AllowUpdating(true)
+        .AllowDeleting(true)
+        .UseIcons(true)
           .Popup(p => p
                 .Title("Location Info")
                 .ShowTitle(true)
@@ -81,3 +83,20 @@
 
     </div><!-- container -->
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                 console.log("In Page")
+                 
+                 dataGrid = $("#Locationtreeid").dxTreeList("instance");
+                 console.log(dataGrid)
+                 dataGrid.option("rtlEnabled", true);
+
+
+            }
+        }
+    });
+</script>

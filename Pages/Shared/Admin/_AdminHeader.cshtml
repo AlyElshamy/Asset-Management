@@ -75,13 +75,24 @@
 
                     }
                     window.addEventListener('DOMContentLoaded', (event) => {
-                    var masterPage= document.getElementById("masterPageId"); 
-                    if(localStorage.getItem("lang")!=""){
-                        if(localStorage.getItem("lang")=="en")
-                        masterPage.dir="ltr";
-                        
-                        if(localStorage.getItem("lang")=="ar")
-                        masterPage.dir="rtl"
+                        var masterPage = document.getElementById("masterPageId");
+                        if (localStorage.getItem("lang") != "") {
+                            if (localStorage.getItem("lang") == "en") {
+                                masterPage.dir = "ltr";
+                            console.log("Aya")
+                            document.getElementById("masterbodyid").style.textAlign = "left"
+                        }
+
+                        else if (localStorage.getItem("lang") == "ar") {
+
+
+                            masterPage.dir = "rtl"
+                            console.log("Aya M")
+
+                                document.getElementById("masterbodyid").style.textAlign = "right"
+                               
+
+                        }
                     }
                      });
                 </script>
