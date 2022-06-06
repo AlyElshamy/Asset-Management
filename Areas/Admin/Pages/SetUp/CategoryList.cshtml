@@ -52,16 +52,16 @@
         columns.AddFor(m => m.CategoryTIAR).Caption(@sharedResource["CategoryTIAR"]);
         columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
 .CellTemplate(@<text>
-  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%- data %>')">@sharedResource["Delete"] </a>
+  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%-data.CategoryId%>')">@sharedResource["Delete"] </a>
   </text>);
 
-      
+
     })
     .Editing(e => e
         .AllowAdding(true)
-        .UseIcons(true)
-        //.AllowDeleting(true).Texts(e=>e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"]))
-         .AllowUpdating(true)
+         //.UseIcons(true)
+         //.AllowDeleting(true).Texts(e=>e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"]))
+         .AllowUpdating(true).Texts(e=>e.EditRow(sharedResource["Edit"]))
 
     )
 
@@ -86,10 +86,32 @@
             }
         }
     });
-    function ShowDeletePopUp(data)
+    function ShowDeletePopUp(categoryid)
     {
-       $('#DeleteCategoryPoup').modal('show');
-       document.getElementById("CategoryIdField").value = data.CategoryId;
-       document.getElementById("CategoryTIARField").value = data.CategoryTIAR;
+        console.log(categoryid)
+        $.ajax({
+            type: "GET",
+            url: "/admin/SetUp/CategoryList?handler=CategoryforDelete",
+            data: { "categoryid": categoryid },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                document.getElementById("CategoryIdField").value = response.CategoryId;
+                document.getElementById("CategoryTIARField").value = response.CategoryTIAR;
+                $('#DeleteCategoryPoup').modal('show');
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+
+
+
+
+
+
+      
     }
 </script>

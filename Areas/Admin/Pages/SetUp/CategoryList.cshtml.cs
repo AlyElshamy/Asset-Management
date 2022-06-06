@@ -43,5 +43,9 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
 
 
         }
+        public IActionResult OnGetCategoryforDelete(int categoryid ) { 
+          var result=  Context.Categories.FirstOrDefault(e => e.CategoryId == categoryid);
+            return new JsonResult(result);
+        }
     }
 }
