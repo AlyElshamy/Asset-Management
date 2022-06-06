@@ -78,7 +78,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
             {
-                ds = ds.Where(i => (i.DateBroken.Date) > filterModel.FromDate.Value.Date && i.DateBroken.Date < filterModel.ToDate.Value.Date).ToList();
+                ds = ds.Where(i => (i.DateBroken.Date) >= filterModel.FromDate.Value.Date && i.DateBroken.Date <= filterModel.ToDate.Value.Date).ToList();
             }
             if (filterModel.AssetTagId != null)
             {

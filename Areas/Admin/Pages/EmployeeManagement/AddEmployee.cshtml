@@ -20,7 +20,7 @@
                 <form  method="post" enctype="multipart/form-data" >
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row mg-b-25">
-                      <div class="col-lg-4">
+                      <div class="col-lg-6">
                         <div class="form-group">
                           <label class="form-control-label">@sharedResource["FullName"] : <span class="tx-danger">*</span></label>
                           <input asp-for="@Model.employee.FullName" class="form-control"  placeholder="@sharedResource["EnterFullName"]">
@@ -28,7 +28,7 @@
                         </div>
                       </div><!-- col-4 -->
               
-                       <div class="col-lg-4">
+                       <div class="col-lg-6">
                         <div class="form-group mg-b-10-force">
                           <label class="form-control-label">@sharedResource["EmployeeID"] : <span class="tx-danger">*</span></label>
                           <input  asp-for="@Model.employee.EmployeeId"  class="form-control" placeholder="@sharedResource["EnterEmployeeID"]">
@@ -36,45 +36,41 @@
                         </div>
                       </div><!-- col-4 -->
                      
-                      <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label"> @sharedResource["Title"] : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.employee.Title"  class="form-control" placeholder="@sharedResource["EnterTitle"]">
-                           <span asp-validation-for="@Model.employee.Title"  class="text-danger"></span>
-                        </div>
-                      </div><!-- col-4 -->
+                      
                     </div><!--End Row-->
                     <div class="row mg-b-10">
-                      <div class="col-lg-4">
-                        <div class="form-group mg-b-10-force">
-                          <label class="form-control-label"> @sharedResource["Phone"] : <span class="tx-danger">*</span></label>
-                          <input  asp-for="@Model.employee.Phone"  class="form-control" placeholder="@sharedResource["EnterPhoneNumber"] ">
-                           <span asp-validation-for="@Model.employee.Phone" class="text-danger"></span>
-                        </div>
-                      </div><!-- col-4 -->
-                      <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">@sharedResource["Email"] : <span class="tx-danger">*</span></label>
-                          <input asp-for="@Model.employee.Email"  class="form-control"  placeholder="@sharedResource["EnterEmail"]">
-                           <span asp-validation-for="@Model.employee.Email" class="text-danger"></span>
-                        </div>
-                      </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                        <div class="form-group">
-                          <label class="form-control-label">@sharedResource["Remark"] : <span class="tx-danger">*</span></label>
-                          <input asp-for="@Model.employee.Remark" type="text"  class="form-control" placeholder="@sharedResource["EnterRemark"]">
-                           <span asp-validation-for="@Model.employee.Remark" class="text-danger"></span>
-                        </div>
-                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label"> @sharedResource["Title"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="@Model.employee.Title" class="form-control" placeholder="@sharedResource["EnterTitle"]">
+                                <span asp-validation-for="@Model.employee.Title" class="text-danger"></span>
+                            </div>
+                        </div><!-- col-4 -->
+                        <div class="col-lg-6">
+                            <div class="form-group mg-b-10-force">
+                                <label class="form-control-label"> @sharedResource["Phone"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="@Model.employee.Phone" class="form-control" placeholder="@sharedResource["EnterPhoneNumber"] ">
+                                <span asp-validation-for="@Model.employee.Phone" class="text-danger"></span>
+                            </div>
+                        </div><!-- col-4 -->
+                        
+
                     </div><!--End Row-->
                     <div class="row mg-b-10">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">@sharedResource["Notes"] : <span class="tx-danger">*</span> </label>
-                             <textarea asp-for="@Model.employee.Notes" class="form-control" placeholder="@sharedResource["EnterNotes"]" id="exampleFormControlTextarea1" rows="3"></textarea>
-                             <span asp-validation-for="@Model.employee.Notes" class="text-danger"></span>
-                         </div>                   
-                      </div><!-- col-6 -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">@sharedResource["Email"] : <span class="tx-danger">*</span></label>
+                                <input asp-for="@Model.employee.Email" class="form-control" placeholder="@sharedResource["EnterEmail"]">
+                                <span asp-validation-for="@Model.employee.Email" class="text-danger"></span>
+                            </div>
+                        </div><!-- col-4 -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">@sharedResource["Notes"] : <span class="tx-danger">*</span> </label>
+                                <textarea asp-for="@Model.employee.Notes" class="form-control" placeholder="@sharedResource["EnterNotes"]" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <span asp-validation-for="@Model.employee.Notes" class="text-danger"></span>
+                            </div>
+                        </div><!-- col-6 -->
                     </div><!--End Row-->
              
                     <div class="form-layout-footer mt-4 ">

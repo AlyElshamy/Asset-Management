@@ -97,14 +97,14 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                             <div class="row mg-b-25">
-                                <div class="col-lg-12">
+                                @*<div class="col-lg-12">
                                     <div class="form-group">
                                         <label>@sharedResource["Transaction Date"] <span class="tx-danger">*</span></label>
                                         <input asp-for="@Model.assetmovement.TransactionDate" type="date" class="form-control date" value=" " required>
                                         <span asp-validation-for="@Model.assetmovement.TransactionDate" class="text-danger"></span>
                                     </div>
-                                </div><!-- col-4 -->
-                                <div class="col-lg-12">
+                                </div>*@<!-- col-4 -->
+                                @*<div class="col-lg-12">
                                     <div class="form-group">
                                         <label>@sharedResource["Action Type"]: <span class="tx-danger">*</span></label>
 
@@ -125,11 +125,11 @@
                                 )
                                         <span asp-validation-for="@Model.assetmovement.ActionTypeId" class="text-danger"></span>
                                     </div>
-                                </div>
+                                </div>*@
 
 
 
-                                <div class="col-lg-12" id="AssetToEmpolyee" style="display:none">
+                                @*<div class="col-lg-12" id="AssetToEmpolyee" style="display:none">
                                     <div class="form-group">
                                         <label>@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
 
@@ -148,12 +148,12 @@
                                 )
                                         <span asp-validation-for="@Model.assetmovement.EmpolyeeID" class="text-danger"></span>
                                     </div>
-                                </div>
+                                </div>*@
 
 
-                                <div class="col-lg-12" id="AssetToLocation" style="display:none">
+                                @*<div class="col-lg-12" id="AssetToLocation" style="display:none">
                                     <div class="form-group">
-                                        <label>@sharedResource["Location"]: <span class="tx-danger">*</span></label>
+                                        <label>@sharedResource["Location"]: <span class="tx-danger">*</span></label>*@
 
                                         @*  @(Html.DevExtreme().LookupFor(c=>c.LocationId)
                                             .DataSource(d => d.WebApi()
@@ -165,7 +165,7 @@
                                             .DisplayExpr("Text")
 
                                             )*@
-                                        @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
+                                        @*@(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
                                 .ValueExpr("Value")
                                 .DisplayExpr("Text")
                                 .DropDownOptions(o => o.Height(350))
@@ -182,8 +182,8 @@
                                 )
                                         <span asp-validation-for="@Model.assetmovement.LocationId" class="text-danger"></span>
                                     </div>
-                                </div>
-                                @using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
+                                </div>*@
+                                @*@using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
                                 {
                                     @(Html.DevExtreme().TreeView()
                         .DataSource(ds => ds.Mvc()
@@ -215,10 +215,10 @@
                                 syncTreeViewSelection(args.component, component.option("value"));
                                 }
                             </text>)
-                        )
+                        )*@
                                 }
 
-                                <div class="col-lg-12" id="AssetToDepartment" style="display:none">
+                                @*<div class="col-lg-12" id="AssetToDepartment" style="display:none">
                                     <div class="form-group">
                                         <label>@sharedResource["Department"] <span class="tx-danger">*</span></label>
 
@@ -237,7 +237,7 @@
                                 )
                                         <span asp-validation-for="@Model.assetmovement.DepartmentId" class="text-danger"></span>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>@sharedResource["Store"]: <span class="tx-danger">*</span></label>

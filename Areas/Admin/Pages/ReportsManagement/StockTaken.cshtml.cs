@@ -52,7 +52,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 AssetTagId = i.AssetTagId,
                 ItemTL = i.Item.ItemTitle,
                 Photo = i.Photo,
-                StoreTL = i.AssetMovementDetails.Count()>0?i.AssetMovementDetails.OrderByDescending(e=>e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Store.StoreTitle:i.Store.StoreTitle,
+                StoreTL = i.AssetMovementDetails.Count()>0?i.AssetMovementDetails.OrderByDescending(e=>e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Store.StoreTitle : i.Store.StoreTitle,
                 VendorTL = i.Vendor.VendorTitle,
                 StoreId = i.AssetMovementDetails.Count() > 0 ? i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.StoreId : i.StoreId
 

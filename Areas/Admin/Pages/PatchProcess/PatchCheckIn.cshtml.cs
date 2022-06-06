@@ -41,7 +41,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         }
         public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
         {
-            var Assets = _context.Assets.Where(a => a.AssetStatusId == 2||a.AssetStatusId==6|| a.AssetStatusId ==9|| a.AssetStatusId ==3).Select(i => new {
+            var Assets = _context.Assets.Where(a => a.AssetStatusId==2).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,
@@ -73,37 +73,37 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 SelectedAssets = null;
                 return Page();
             }
-            if (assetmovement.ActionTypeId == null)
-            {
-                ModelState.AddModelError("", "Please Select Action");
-                SelectedAssets = null;
+            //if (assetmovement.ActionTypeId == null)
+            //{
+            //    ModelState.AddModelError("", "Please Select Action");
+            //    SelectedAssets = null;
 
-                return Page();
-            }
-            if (assetmovement.LocationId == null)
-            {
-                ModelState.AddModelError("", "Please Select Location");
-                SelectedAssets = null;
+            //    return Page();
+            //}
+            //if (assetmovement.LocationId == null)
+            //{
+            //    ModelState.AddModelError("", "Please Select Location");
+            //    SelectedAssets = null;
 
-                return Page();
-            }
-            if (assetmovement.DepartmentId == null)
-            {
-                ModelState.AddModelError("", "Please Select Department");
-                SelectedAssets = null;
+            //    return Page();
+            //}
+            //if (assetmovement.DepartmentId == null)
+            //{
+            //    ModelState.AddModelError("", "Please Select Department");
+            //    SelectedAssets = null;
 
-                return Page();
-            }
-            if (assetmovement.ActionTypeId == 1)
-            {
-                if (assetmovement.EmpolyeeID == null)
-                {
-                    ModelState.AddModelError("", "Please Select Empolyee");
-                    SelectedAssets = null;
+            //    return Page();
+            //}
+            //if (assetmovement.ActionTypeId == 1)
+            //{
+            //    if (assetmovement.EmpolyeeID == null)
+            //    {
+            //        ModelState.AddModelError("", "Please Select Empolyee");
+            //        SelectedAssets = null;
 
-                    return Page();
-                }
-            }
+            //        return Page();
+            //    }
+            //}
 
             if (ModelState.IsValid)
             {
@@ -113,23 +113,14 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 {
 
                     assetmovement.AssetMovementDirectionId = 2;
+                        assetmovement.TransactionDate = DateTime.Now;
                     assetmovement.AssetMovementDetails = new List<AssetMovementDetails>();
-                    //ActionTypeId = LastAssetMovement.ActionTypeId,
-                    //EmpolyeeID = LastAssetMovement.EmpolyeeID,
-                    //LocationId = LastAssetMovement.LocationId,
-                    //DepartmentId = LastAssetMovement.DepartmentId,
                     string DirectionTitle = "Direction Title : ";
                     string TransDate = "Transaction Date : ";
                     AssetMovementDirection Direction = _context.AssetMovementDirections.Find(assetmovement.AssetMovementDirectionId);
                     string TransactionDate = assetmovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                     foreach (var asset in SelectedAssets)
                     {
-                        //var LastAssetMovementDetails = _context.AssetMovementDetails.Where(a => a.AssetId == asset.AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
-                        //AssetMovement LastAssetMovement = new AssetMovement();
-                        //if (LastAssetMovementDetails != null)
-                        //{
-                        //    LastAssetMovement = _context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
-                        //}
                         asset.AssetStatusId = 1;
                         var UpdatedAsset = _context.Assets.Attach(asset);
                         UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;

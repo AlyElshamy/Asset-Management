@@ -24,15 +24,9 @@
                 <div class="modal-body pd-25">
 
                     <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@sharedResource["Transaction Date"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="@Model.TransactionDate" type="date" class="form-control date" value=" " required>
-                                <span asp-validation-for="@Model.TransactionDate" class="text-danger"></span>
-                            </div>
-                        </div><!-- col-4 -->
+                       
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Action Type"]: <span class="tx-danger">*</span></label>
 
@@ -53,7 +47,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["DueDate"] : <span class="tx-danger">*</span></label>
                                 <input asp-for="@Model.DueDate" type="date" class="form-control date" value=" "required>
@@ -61,7 +55,7 @@
                             </div>
                         </div><!-- col-4 -->
 
-                        <div class="col-lg-4" id="AssetToEmpolyee" style="display:none">
+                        <div class="col-lg-6" id="AssetToEmpolyee" style="display:none">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Empolyee"]: <span class="tx-danger">*</span></label>
 
@@ -83,7 +77,7 @@
                         </div>
 
 
-                        <div class="col-lg-4" id="AssetToLocation" style="display:none">
+                        <div class="col-lg-6" id="AssetToLocation" style="display:none">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
@@ -150,7 +144,7 @@
                         )
                         }
 
-                        <div class="col-lg-4" id="AssetToDepartment" style="display:none">
+                        <div class="col-lg-6" id="AssetToDepartment" style="display:none">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Department"] <span class="tx-danger">*</span></label>
 
@@ -170,7 +164,7 @@
                                 <span asp-validation-for="@Model.DepartmentId" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Remarks"] <span class="tx-danger">*</span></label>
                                 <textarea asp-for="@Model.Remarks" class="form-control" placeholder=""></textarea>

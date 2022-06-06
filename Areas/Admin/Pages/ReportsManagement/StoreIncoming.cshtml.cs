@@ -95,8 +95,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             }
             if (filterModel.FromDate != null && filterModel.ToDate != null)
 
-            {
-              
+            { 
                 ds = ds.Where(i =>( i.TransactionDate >= filterModel.FromDate || i.AssetPurchaseDate >= filterModel.FromDate) && (i.AssetPurchaseDate <= filterModel.ToDate || i.TransactionDate <= filterModel.ToDate)).ToList();
             }
             if (filterModel.StoreId == null && filterModel.FromDate == null && filterModel.ToDate == null)

@@ -52,15 +52,6 @@
            .ShowClearButton(true)
            );
 
-        items.AddSimpleFor(m => m.StoreId).IsRequired(false).Label(l => l.Text(sharedResource["Store"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("StoresLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text")
-        .ShowClearButton(true)
-        );
-
         items.AddSimpleFor(m => m.ItemId).IsRequired(false).Label(l => l.Text(sharedResource["Item"]))
         .Editor(e => e
         .Lookup()

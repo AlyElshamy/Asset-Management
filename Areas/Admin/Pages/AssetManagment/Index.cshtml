@@ -18,7 +18,9 @@
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
             <a asp-area="Admin" asp-page="/AssetManagment/AddAsset" class="btn btn-primary" style="float:right">@sharedResource["Add New Asset"]  </a>
-            <p class="mg-b-20 mg-sm-b-40">@sharedResource["Search"].</p>
+            <br />
+            <br />
+            <br />
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
@@ -184,15 +186,18 @@
             var btn2 = document.getElementById('DA2');
 
             if (response.DepreciableAsset) {
+                console.log("true")
                 btn1.removeAttribute('checked');
                 btn1.setAttribute('checked', 'checked');
                 btn2.removeAttribute('checked');
                 console.log(response.DateAcquired);
                 document.getElementById("AdateAcquired").value = DateFormat(response.DateAcquired);
                 form.style.display = 'flex';
-            } else
+            } if (!response.DepreciableAsset)
             {
-                btn1.removeAttribute('checked'); 
+                console.log("false")
+                btn1.removeAttribute('checked');
+                btn2.removeAttribute('checked');
                 btn2.setAttribute('checked', 'checked');
                 document.getElementById("AdateAcquired").value = null;
                 console.log("false");

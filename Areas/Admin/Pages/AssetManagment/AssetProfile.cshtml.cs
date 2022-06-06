@@ -284,6 +284,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     assetMovement.StoreId = asset.StoreId;
 
                 }
+                assetMovement.TransactionDate = DateTime.Now;
                 assetMovement.AssetMovementDirectionId = 1;
                 asset.AssetStatusId = 2;
                 var UpdatedAsset = Context.Assets.Attach(asset);
@@ -319,16 +320,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             if (ModelState.IsValid && assetMovement.StoreId != null)
             {
                 var asset = Context.Assets.Find(AssetId);
-                var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a => a.AssetId == AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
-                if (LastAssetMovementDetails != null)
-                {
-                    var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
-                    assetMovement.ActionTypeId = LastAssetMovement.ActionTypeId;
-                    assetMovement.DepartmentId = LastAssetMovement.DepartmentId;
-                    assetMovement.LocationId = LastAssetMovement.LocationId;
-                    assetMovement.EmpolyeeID = LastAssetMovement.EmpolyeeID;
-                }
+                //var LastAssetMovementDetails = Context.AssetMovementDetails.Where(a => a.AssetId == AssetId).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                //if (LastAssetMovementDetails != null)
+                //{
+                //    var LastAssetMovement = Context.AssetMovements.Find(LastAssetMovementDetails.AssetMovementId);
+                //    assetMovement.ActionTypeId = LastAssetMovement.ActionTypeId;
+                //    assetMovement.DepartmentId = LastAssetMovement.DepartmentId;
+                //    assetMovement.LocationId = LastAssetMovement.LocationId;
+                //    assetMovement.EmpolyeeID = LastAssetMovement.EmpolyeeID;
+                //}
                 assetMovement.AssetMovementDirectionId = 2;
+                assetMovement.TransactionDate = DateTime.Now;
                 asset.AssetStatusId = 1;
                 var UpdatedAsset = Context.Assets.Attach(asset);
                 UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -656,9 +658,9 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 assetMaintainance.AssetMaintainanceDueDate = DateTime.Now;
                 Context.AssetMaintainances.Add(assetMaintainance);
 
-                assetobj.AssetStatusId = 9;
-                var UpdatedAsset = Context.Assets.Attach(assetobj);
-                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                //assetobj.AssetStatusId = 9;
+                //var UpdatedAsset = Context.Assets.Attach(assetobj);
+                //UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 string DueDate = assetMaintainance.AssetMaintainanceDueDate?.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 string CompletedDate = assetMaintainance.AssetMaintainanceDateCompleted?.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
 
@@ -872,13 +874,21 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             {
                 assetMaintainance.AssetMaintainanceDateCompleted = null;
             }
-            if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4)
-            {
-
-                assetobj.AssetStatusId = 1;
-                var UpdatedAsset = Context.Assets.Attach(assetobj);
-                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            }
+            //if (assetMaintainance.MaintainanceStatusId == 5 || assetMaintainance.MaintainanceStatusId == 4)
+            //{
+            //    AssetMovement assetCheckin = new AssetMovement()
+            //    {
+            //        AssetMovementDirectionId = 2,
+            //        TransactionDate = DateTime.Now,
+            //        StoreId = null
+            //    };
+            //    assetCheckin.AssetMovementDetails= new List<AssetMovementDetails>();
+            //    assetCheckin.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = assetMaintainance.AssetId, Remarks = "" });
+            //    Context.AssetMovements.Add(assetCheckin);
+            //    assetobj.AssetStatusId = 1;
+            //    var UpdatedAsset = Context.Assets.Attach(assetobj);
+            //    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //}
             if (!assetMaintainance.AssetMaintainanceRepeating)
             {
                 assetMaintainance.AssetMaintainanceFrequencyId = null;

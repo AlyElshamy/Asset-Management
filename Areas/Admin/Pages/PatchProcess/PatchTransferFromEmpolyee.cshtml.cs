@@ -131,14 +131,14 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 newAssetMovement = new AssetMovement()
                 {
                     AssetMovementDirectionId = 2,
-                    ActionTypeId = 1,
-                    DepartmentId = LastassetmovementForEmpolyee.DepartmentId,
-                    LocationId = LastassetmovementForEmpolyee.LocationId,
-                    TransactionDate = assetMovementObj.TransactionDate,
+                    //ActionTypeId = 1,
+                    //DepartmentId = LastassetmovementForEmpolyee.DepartmentId,
+                    //LocationId = LastassetmovementForEmpolyee.LocationId,
+                    TransactionDate = DateTime.Now,
                     //DueDate=assetMovementObj.DueDate,
                     Remarks = assetMovementObj.Remarks,
                     StoreId = assetMovementObj.StoreId,
-                    EmpolyeeID=assetMovementObj.EmpolyeeID
+                    //EmpolyeeID=assetMovementObj.EmpolyeeID
                 };
 
 
@@ -189,8 +189,8 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                     LocationId=assetMovementObj.LocationId,
                     StoreId=assetMovementObj.StoreId,
                     Remarks=assetMovementObj.Remarks,
-                    TransactionDate=assetMovementObj.TransactionDate
-                    //DueDate=assetMovementObj.DueDate
+                    TransactionDate=DateTime.Now,
+                    DueDate=assetMovementObj.DueDate
                 };
 
               newAssetMovement.AssetMovementDetails = new List<AssetMovementDetails>();
