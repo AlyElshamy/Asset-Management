@@ -159,7 +159,12 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public IActionResult OnpostAddAssetContract(AssetContract assetcontract)
         {
             var assetobj = Context.Assets.Where(e => e.AssetId == assetcontract.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
-
+            var contractobj = Context.AssetContracts.Where(a => a.ContractId == assetcontract.ContractId && a.AssetId == assetcontract.AssetId).FirstOrDefault();
+            if (contractobj != null)
+            {
+                _toastNotification.AddErrorToastMessage("This contract was previously added to this asset..");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetcontract.AssetId });
+            }
             if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
             {
                 _toastNotification.AddErrorToastMessage("Can’t Add Asset Contract becasuse Asset Now is" + "" + assetobj.AssetStatus.AssetStatusTitle);
@@ -203,7 +208,12 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public IActionResult OnpostAddAssetInsurance(AssetsInsurance assetsInsurance)
         {
             var assetobj = Context.Assets.Where(e => e.AssetId == assetsInsurance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
-
+            var insuranceobj = Context.AssetsInsurances.Where(a => a.InsuranceId == assetsInsurance.InsuranceId && a.AssetId == assetsInsurance.AssetId).FirstOrDefault();
+            if (insuranceobj != null)
+            {
+                _toastNotification.AddErrorToastMessage("This Insurance was previously added to this asset..");
+                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetsInsurance.AssetId });
+            }
             if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
             {
                 _toastNotification.AddErrorToastMessage("Can’t Add Asset Insuurance becasuse Asset Now is" + "" + assetobj.AssetStatus.AssetStatusTitle);
@@ -245,7 +255,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public IActionResult OnPostAddAssetCheckOut(AssetMovement assetMovement)
         {
-            
+
             if (ModelState.IsValid && assetMovement.ActionTypeId != null
                 && assetMovement.DepartmentId != null && assetMovement.LocationId != null
                 )
@@ -727,17 +737,17 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             }
         }
 
-    
 
-        
+
+
         public IActionResult OnpostDeattachAssetDocument(AssetDocument assetDocument)
         {
             AssetDocument _assetDocument = Context.assetDocuments.Where(e => e.AssetDocumentId == assetDocument.AssetDocumentId && e.AssetId == assetDocument.AssetId).FirstOrDefault();
             string AssetDocName = _assetDocument.DocumentName;
-           
-            
-                Context.assetDocuments.Remove(_assetDocument);            
-           
+
+
+            Context.assetDocuments.Remove(_assetDocument);
+
 
             AssetLog assetLog = new AssetLog()
             {
@@ -753,7 +763,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 _toastNotification.AddSuccessToastMessage("Asset Document Dettached Succeffully");
                 return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = assetDocument.AssetId });
             }
-           
+
             catch(Exception e)
             {
                 _toastNotification.AddErrorToastMessage("Something went wrong");
@@ -763,7 +773,6 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         public IActionResult OnPostAddAssetWarranty(AssetWarranty assetWarranty)
         {
             var assetobj = Context.Assets.Where(e => e.AssetId == assetWarranty.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
-
             if (assetobj.AssetStatusId == 4 || assetobj.AssetStatusId == 5 || assetobj.AssetStatusId == 7 || assetobj.AssetStatusId == 8)
             {
                 _toastNotification.AddErrorToastMessage("Can’t Add Asset asset Warranty becasuse Asset Now is" + " " + assetobj.AssetStatus.AssetStatusTitle);

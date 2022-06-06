@@ -527,22 +527,26 @@ namespace AssetProject.Controllers
             var SellAssetCost = _context.sellAssets.Sum(a => a.SaleAmount);
             var AssetCheckOutCount = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
             var AssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
-            var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
-            var AssetLinkWarrantyCost = _context.AssetWarranties.Sum(a => a.Asset.AssetCost);
-            //var AssetIdWithoutWarranty = from c in _context.Assets
-            //                             where !(from o in _context.AssetWarranties
-            //                                     select o.AssetId)
-            //                                    .Contains(c.AssetId)
-            //                             select c;
-            //double AssetWithoutInsuranceCost = 0;
-            //foreach (var item in AssetIdWithoutWarranty)
-            //{
-            //    AssetWithoutInsuranceCost += item.AssetCost;
-            //}
+                //var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
+               
+                var AssetLinkWarrantyCount = (from W in
+                   _context.AssetWarranties
+                                          orderby W.AssetId
+                                          select W.AssetId).Distinct().Count();
 
-            //var AssetWithoutInsuranceCount = AssetIdWithoutWarranty.Count();
+                //var AssetLinkWarrantyCost = _context.AssetWarranties.Distinct().Sum(a => a.Asset.AssetCost);
+                var AssetIdWithWarranty = (from c in _context.AssetWarranties
+                                              orderby c.AssetId
+                                              select c.AssetId).Distinct();
+                                                    
+                double AssetLinkWarrantyCost = 0;
+                foreach (var item in AssetIdWithWarranty)
+                {
 
-            var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
+                    AssetLinkWarrantyCost += _context.Assets.Where(a => a.AssetId == item).Sum(a => a.AssetCost);
+                }
+
+                var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
             var listmaxassetrepairId =
                  from a in _context.Assets
                  where a.AssetStatusId == 3
@@ -564,10 +568,24 @@ namespace AssetProject.Controllers
             }
             //insurance
             var totalinsurance = _context.Insurances.Count();
-            var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
-            var AssetLinkInsuranceCost = _context.AssetsInsurances.Sum(a => a.Asset.AssetCost);
+            //var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
+                var AssetLinkInsuranceCount = (from IN in
+              _context.AssetsInsurances
+                                               orderby IN.AssetId
+                                               select IN.AssetId).Distinct().Count();
+                //var AssetLinkInsuranceCost = _context.AssetsInsurances.Sum(a => a.Asset.AssetCost);
+                var AssetIdWithinsurance = (from c in _context.AssetsInsurances
+                                           orderby c.AssetId
+                                           select c.AssetId).Distinct();
 
-            var AvaliableAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+                double AssetLinkInsuranceCost = 0;
+                foreach (var item in AssetIdWithinsurance)
+                {
+                    AssetLinkInsuranceCost += _context.Assets.Where(a => a.AssetId == item).Sum(a => a.AssetCost);
+                }
+
+
+                var AvaliableAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
             var AvaliableAssetsCost = _context.Assets.Where(a => a.AssetStatusId == 1).Sum(a=>a.AssetCost);
 
             var AssetsLeasedCount = _context.Assets.Where(a => a.AssetStatusId == 6).Count();

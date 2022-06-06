@@ -237,6 +237,9 @@
   <data name="arabic" xml:space="preserve">
     <value>اللغة العربية</value>
   </data>
+  <data name="Are you Sure Delete Category" xml:space="preserve">
+    <value>هل تريد بالفعل حذف فئه</value>
+  </data>
   <data name="Asset" xml:space="preserve">
     <value>الأصل</value>
   </data>
