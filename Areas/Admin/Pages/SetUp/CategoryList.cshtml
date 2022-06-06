@@ -43,8 +43,8 @@
     .Columns(columns => {
 
     columns.Add().Caption(@sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
-                <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
-                <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%- data %>')">@sharedResource["Delete"] </a>
+     <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
+
             </text>).Width(150);
     })
     .Columns(columns => {
@@ -52,8 +52,7 @@
         columns.AddFor(m => m.CategoryTIAR).Caption(@sharedResource["CategoryTIAR"]);
         columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
 .CellTemplate(@<text>
-   <a href="/Admin/SetUp/SubCategoryList?id=<%- data.CategoryId %>">@sharedResource["SubCategories"] </a>
-  @Html.DevExtreme().Button().Text(sharedResource["Delete"]).OnClick("function (e) { ShowDeletePopUp(data)}")
+  <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%- data %>')">@sharedResource["Delete"] </a>
   </text>);
 
       
