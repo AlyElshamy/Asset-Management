@@ -22,7 +22,7 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">@sharedResource["AssetTagId"]: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Asset TagId"]: <span class="tx-danger">*</span></label>
                                 <input asp-for="@Model.AssetTagId" id="AtagId" class="form-control" placeholder="@sharedResource["Enter Asset Tag Id"]">
                                 <span asp-validation-for="@Model.AssetTagId" class="text-danger"></span>
                             </div>
@@ -121,7 +121,7 @@
                                 <label class="form-control-label"> @sharedResource["Photo"]: <span class="tx-danger">*</span></label>
                                 <div class="custom-file">
                                     <input type="file" name="file" accept=".png, .jpg, .jpeg" class="custom-file-input" id="text">
-                                    <label class="custom-file-label" for="File">@sharedResource["Choose New Photo"]</label>
+                                    <label class="custom-file-label" for="File"></label>
                                 </div>
                             </div>
                         </div>

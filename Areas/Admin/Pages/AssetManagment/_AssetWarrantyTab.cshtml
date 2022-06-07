@@ -120,7 +120,7 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                     //$('#frmDeattachContract').dxForm('instance').option('formData', data);
                     document.getElementById("AssetWarrantyIdFaild").value = data.WarrantyId;
                     document.getElementById("WarrantylenghtFaild").value = data.Length;
-                    document.getElementById("WarrantyExpirationDate").value = data.ExpirationDate;
+                    document.getElementById("WarrantyExpirationDate").value = DateFormat(data.ExpirationDate);
 
 
                     //var pop = $('#DeattacheAssetContractPoup').dxPopup('instance');
@@ -131,5 +131,27 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                     //     });
                     //$('#DeattacheAssetContractPoup').modal('show');
 
+                }
+                window.addEventListener('DOMContentLoaded', (event) => {
+                    if (localStorage.getItem("lang") != "") {
+
+                        if (localStorage.getItem("lang") == "ar") {
+                            console.log("In Page")
+                            dataGrid = $("#gridWarrantyContainer").dxDataGrid("instance");
+                            dataGrid.option("rtlEnabled", true);
+                        }
+                    }
+                });
+                function DateFormat(incomingdate) {
+                    var d = new Date(incomingdate),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+                    if (month.length < 2)
+                        month = '0' + month;
+                    if (day.length < 2)
+                        day = '0' + day;
+                    var outcomingdate = [year, month, day].join('-');
+                    return outcomingdate;
                 }
             </script>

@@ -39,8 +39,11 @@
                                 )
                                 .OnSelectionChanged("AcionTypeLookuP")
                                 .ValueExpr("Value")
-                                .DisplayExpr("Text")
-                                .ShowClearButton(true)
+                                .DisplayExpr("Text").Placeholder(sharedResource["Select Action"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"])
 
                                 )
                                 <span asp-validation-for="@Model.ActionTypeId" class="text-danger"></span>
@@ -49,7 +52,7 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-control-label">@sharedResource["DueDate"] : <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@sharedResource["Due Date"] : <span class="tx-danger">*</span></label>
                                 <input asp-for="@Model.DueDate" type="date" class="form-control date" value=" "required>
                                 <span asp-validation-for="@Model.DueDate" class="text-danger"></span>
                             </div>
@@ -92,6 +95,7 @@
 
                             )*@
                                 @(Html.DevExtreme().DropDownBoxFor(c=>c.LocationId)
+                                  .ID("locationTree")
                                 .ValueExpr("Value")
                                 .DisplayExpr("Text")
                                 .DropDownOptions(o => o.Height(350))
@@ -112,6 +116,7 @@
                         @using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
                         {
                             @(Html.DevExtreme().TreeView()
+                               
                         .DataSource(ds => ds.Mvc()
                         .Controller("Locations")
                         .LoadAction("Get")
@@ -224,6 +229,9 @@
            if($treeView.length) {
                syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
            }
-       }
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {        if (localStorage.getItem("lang") != "") {            if (localStorage.getItem("lang") == "ar") {                console.log("In Page")                drobdownBox = $("#locationTree").dxDropDownBox("instance");                drobdownBox.option("rtlEnabled", true);            }        }    });
+
 
 </script>

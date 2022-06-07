@@ -99,21 +99,24 @@
                         </div><!-- col-6 -->
                     </div><!--End Row-->
                     <div class="row mg-b-20">
-                     
-                      <div class="col-lg-4">
-                         <div class="form-group">
-                          <label class="form-control-label">@sharedResource["Permium"] : <span class="tx-danger">*</span></label>
-                           <div>
-                               <label><h4>@Model.insurance.Permium</h4></label>
-                          </div>
-                         </div>
-                      </div><!-- col-6 -->
-                      <div class="form-check">
-                          <input asp-for="@Model.insurance.IsActive" class="form-check-input" disabled>
-                          <label class="form-check-label" asp-for="@Model.insurance.IsActive">  @sharedResource["IsActive"]  </label>
-                      </div>
-                    </div ><!-- End row -->
-                    
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">@sharedResource["Permium"] : <span class="tx-danger">*</span></label>
+                                <div>
+                                    <label><h4>@Model.insurance.Permium</h4></label>
+                                </div>
+                            </div>
+                        </div><!-- col-6 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label"> @sharedResource["IsActive"]  : <span class="tx-danger">*</span></label>
+                                <input asp-for="@Model.insurance.IsActive" class="form-control">
+                                <span asp-validation-for="@Model.insurance.IsActive" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                      
                        
                     <div class="form-layout-footer mt-4 ">
                            <form  method="post" enctype="multipart/form-data" >

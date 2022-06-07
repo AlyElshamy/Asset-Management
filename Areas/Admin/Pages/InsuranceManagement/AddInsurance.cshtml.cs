@@ -19,6 +19,7 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
        
         public AddInsuranceModel(AssetContext context, IToastNotification toastNotification)
         {
+            insurance = new Insurance();
             _context = context;
             _toastNotification = toastNotification;
         }

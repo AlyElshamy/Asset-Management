@@ -85,7 +85,7 @@
     .ShowBorders(true)
     .Paging(p => p.PageSize(10))
     .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
-    .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
+    .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true).Placeholder(sharedResource["searching"]))
     .FilterRow(filterRow => filterRow
     .Visible(true)
     .ApplyFilter(GridApplyFilterMode.Auto)
@@ -102,7 +102,7 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>);
-        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
+        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["Asset TagId"]);
                     columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
         columns.AddFor(m => m.Asset.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
         columns.AddFor(m => m.Asset.AssetPurchaseDate).Caption(sharedResource["Purchase Date"]);

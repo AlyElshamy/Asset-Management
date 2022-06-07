@@ -295,7 +295,7 @@
     <value>تقرير تأمين الأصول</value>
   </data>
   <data name="Asset Leasing" xml:space="preserve">
-    <value>تأجير الأصول</value>
+    <value>الأصول المتأجره</value>
   </data>
   <data name="Asset Leasing Information" xml:space="preserve">
     <value>معلومات تأجير الأصول</value>
@@ -876,6 +876,9 @@
   <data name="Document" xml:space="preserve">
     <value>الملف</value>
   </data>
+  <data name="Document Description" xml:space="preserve">
+    <value>وصف الملف</value>
+  </data>
   <data name="Document Name" xml:space="preserve">
     <value>اسم الملف</value>
   </data>
@@ -983,6 +986,9 @@
   </data>
   <data name="EndDate" xml:space="preserve">
     <value>تاريخ الانتهاء</value>
+  </data>
+  <data name="Enter Address" xml:space="preserve">
+    <value>أدخل العنوان</value>
   </data>
   <data name="Enter Asset Cost" xml:space="preserve">
     <value>أدخل تكلفة الأصل</value>
@@ -1711,6 +1717,9 @@
   <data name="Select a value..." xml:space="preserve">
     <value>إختر موقع</value>
   </data>
+  <data name="Select Action" xml:space="preserve">
+    <value>إختر إجراء</value>
+  </data>
   <data name="Select Action Type" xml:space="preserve">
     <value>حدد نوع الإجراء</value>
   </data>
@@ -1719,6 +1728,9 @@
   </data>
   <data name="Select Category" xml:space="preserve">
     <value>إختر فئة</value>
+  </data>
+  <data name="Select Contract" xml:space="preserve">
+    <value>إختر عقد</value>
   </data>
   <data name="Select Country" xml:space="preserve">
     <value>إختر الدولة</value>
@@ -1740,6 +1752,9 @@
   </data>
   <data name="Select Frequency" xml:space="preserve">
     <value>إختر التكرار</value>
+  </data>
+  <data name="Select Insurance" xml:space="preserve">
+    <value>إختر بوليصة تأمين</value>
   </data>
   <data name="Select Item" xml:space="preserve">
     <value>إختر عنصر</value>
