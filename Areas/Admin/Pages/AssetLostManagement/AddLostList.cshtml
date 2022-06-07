@@ -15,7 +15,7 @@
             <h6 class="slim-pagetitle">@sharedResource["Assets Lost List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">@sharedResource["Assets List"]</label>
+            @*<label class="section-title d-inline">@sharedResource["Assets List"]</label>*@
             @*<a asp-area="Admin" asp-page="/AssetManagment/AddLostList" class="btn btn-primary" style="float:right"> Add New Contract   </a>*@
             @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
             <div class="table-wrapper">
@@ -118,7 +118,7 @@
 
                         <div class="col-lg-5">
                                  <div class="form-group">
-                            @Html.Label(sharedResource["AssetTagId"])
+                            @Html.Label(sharedResource["Asset TagId"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
                             </div>
                             </div>
@@ -342,7 +342,17 @@
                 var fileName = document.getElementById("Photo").value.split("\\").pop();;
                     document.getElementById("photolabel").innerHTML=fileName;
 
+    }
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                dataGrid = $("#gridContainer").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
             }
+        }
+    });
 
 </script>
 

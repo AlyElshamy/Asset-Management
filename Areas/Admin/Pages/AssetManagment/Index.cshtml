@@ -17,13 +17,14 @@
             <h6 class="slim-pagetitle">@sharedResource["Assets List"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <a asp-area="Admin" asp-page="/AssetManagment/AddAsset" class="btn btn-primary" style="float:right">@sharedResource["Add New Asset"]  </a>
+            <a asp-area="Admin" asp-page="/AssetManagment/AddAsset" class="btn btn-primary">@sharedResource["Add New Asset"]  </a>
             <br />
             <br />
             <br />
             <div class="table-wrapper">
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
+        .ID("AssetLookupListId")
                     .DataSource(ds => ds.RemoteController()
                     .LoadUrl(Url.Page(null, "GridData")) // access to the GridData handler defined in the OnGetGridData method in the page model
                     .Key("AssetId")
@@ -63,7 +64,7 @@
                                 <img src="<%- '/' + value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
-                    columns.AddFor(m => m.AssetTagId).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["AssetTagId"]); ;
+                    columns.AddFor(m => m.AssetTagId).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["Asset TagId"]); ;
                         //columns.AddFor(m=>m.AssetDescription).Fixed(true).Caption(sharedResource["Asset Description"]);
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
                         columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
@@ -103,6 +104,18 @@
 
 
 <script>
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                dataGrid = $("#AssetLookupListId").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+
             function grid_dataSource_beforeSend(op, ajax) {
                     ajax.headers = {
                     RequestVerificationToken: "@Xsrf.GetAndStoreTokens(Model.HttpContext).RequestToken"
@@ -139,9 +152,9 @@
             {
               document.getElementById("DepreciationInfo").style.display='none';
             }
-         
+
              $('#AssetQuickViewPoup').modal('show');
-            
+
         },
         failure: function (response) {
             alert(response);
@@ -162,7 +175,7 @@
         contentType: "application/json",
         dataType: "json",
         success: function (response) {
-          
+
               // $('#frmEdit').dxForm('instance').option('formData',response);
             document.getElementById("EditAssetDescriptiontxt").innerHTML = response.AssetTagId
             document.getElementById("AtagId").value = response.AssetTagId
@@ -179,7 +192,7 @@
             document.getElementById("ADepreciable").value = response.DepreciableCost
             document.getElementById("ASalvageValue").value = response.SalvageValue
             document.getElementById("ALife").value = response.AssetLife
-          
+
             $("#ADepreciationMetod").dxLookup("instance").option("value", response.DepreciationMethodId);
             const form = document.getElementById('depreciable')
             var btn1 = document.getElementById('DA1');
@@ -205,7 +218,7 @@
 
             }
                $('#AssetEditPoup').modal('show');
-           
+
         },
         failure: function (response) {
             alert(response);
@@ -238,7 +251,8 @@
         var outcomingdate = [year, month, day].join('-');
         return outcomingdate;
     }
-
+  
+   
 </script>
 
 
