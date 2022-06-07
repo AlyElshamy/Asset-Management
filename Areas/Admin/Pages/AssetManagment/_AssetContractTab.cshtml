@@ -148,4 +148,17 @@ items.AddGroup().ColCount(2)
                     //$('#DeattacheAssetContractPoup').modal('show');
 
                 }
-            </script>
+             
+     window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#gridContractContainer").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+</script>
+
+            

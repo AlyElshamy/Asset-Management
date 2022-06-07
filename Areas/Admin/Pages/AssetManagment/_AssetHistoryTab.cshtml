@@ -7,6 +7,7 @@
   
 }
  @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetLog>()
+     .ID("gridHistoryContainer")
     .DataSource(ds => ds.Mvc()
         .Controller("AssetLogs")
         .LoadAction("Get")
@@ -39,3 +40,16 @@
        
     })
 )
+
+<script>
+      window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#gridHistoryContainer").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+</script>

@@ -244,6 +244,7 @@
 <br />
 <br />
 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetMaintainance>()
+    .ID("gridMaintenanceContainer")
     .DataSource(ds => ds.Mvc()
         .Controller("AssetMaintainances")
         .LoadAction("Get")
@@ -286,6 +287,16 @@
 
 
 <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+          if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#gridMaintenanceContainer").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
     $(function () {
         var date = new Date().toISOString().slice(0, 10);
 

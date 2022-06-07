@@ -137,4 +137,15 @@ columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
 
      }
 
+      window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#gridDocumentContainer").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+
     </script>

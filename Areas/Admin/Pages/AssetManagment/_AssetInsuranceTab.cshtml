@@ -143,4 +143,14 @@ items.AddGroup().ColCount(2)
                     document.getElementById("InsuranceIdFaildHidden").value = data.InsuranceId;
 
                 }
+                  window.addEventListener('DOMContentLoaded', (event) => {
+          if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#gridInsuranceContainer").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
             </script>
