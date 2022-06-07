@@ -27,6 +27,10 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
         public IActionResult OnPostDeleteCategory(Category cat )
         {
             Category DeletedCat = Context.Categories.FirstOrDefault(e=>e.CategoryId==cat.CategoryId);
+            if (DeletedCat == null)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
             Context.Categories.Remove(DeletedCat);
             try
             {

@@ -27,6 +27,10 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
         public IActionResult OnPostDeleteDepartment(Department dept)
         {
            var  Deleteddept = Context.Departments.FirstOrDefault(e => e.DepartmentId == dept.DepartmentId);
+            if (Deleteddept == null)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
             Context.Departments.Remove(Deleteddept);
             try
             {

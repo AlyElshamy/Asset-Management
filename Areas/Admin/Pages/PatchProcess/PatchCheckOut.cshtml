@@ -164,6 +164,7 @@
 
                     )*@
                                         @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
+                                        .ID("locationTree")
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
                                         .DropDownOptions(o => o.Height(350))
@@ -295,6 +296,19 @@
     <partial name="_ValidationScriptsPartial" />
 }
 <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#grid-container").dxDataGrid("instance");
+                  drobdownBox = $("#locationTree").dxDropDownBox("instance");
+                 dataGrid.option("rtlEnabled", true);
+                 drobdownBox.option("rtlEnabled", true);
+            }
+        }
+    });
+
     function AcionTypeLookuP() {
         console.log("inside the funcion")
         var ActionType = $("#ActionTypeLookup").dxLookup("instance");

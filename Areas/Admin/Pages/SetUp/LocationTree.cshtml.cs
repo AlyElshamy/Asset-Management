@@ -27,6 +27,10 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
         public IActionResult OnPostDeleteLocation(Location location )
         {
            var  Deletedlocation = Context.Locations.FirstOrDefault(e => e.LocationId ==location.LocationId);
+            if (Deletedlocation == null)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
             Context.Locations.Remove(Deletedlocation);
             try
             {

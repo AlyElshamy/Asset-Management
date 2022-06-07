@@ -32,6 +32,10 @@ namespace AssetProject.Areas.Admin.Pages.SetUp
         public IActionResult OnPostDeleteSubCategory(SubCategory subcat)
         {
             SubCategory DeletedsubCat = Context.SubCategories.FirstOrDefault(e => e.SubCategoryId == subcat.SubCategoryId);
+            if (DeletedsubCat == null)
+            {
+                _toastNotification.AddErrorToastMessage("Some Thing Went Error");
+            }
             Context.SubCategories.Remove(DeletedsubCat);
             try
             {
