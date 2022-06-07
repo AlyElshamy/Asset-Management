@@ -76,6 +76,7 @@
                 </script>
 
                 @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetContract>()
+                    .ID("grid-container")
 .DataSource(ds => ds.RemoteController()
 .LoadUrl(Url.Page("DetailsContract", "GridData"))
 .LoadParams(new { ContractId = Model.Contract.ContractId })
@@ -144,3 +145,15 @@ columns.AddFor(m => m.Asset.Photo).Caption(sharedResource["Photo"]).Width(100)
 
     </script>
 }
+<script>
+     window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#grid-container").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+</script>

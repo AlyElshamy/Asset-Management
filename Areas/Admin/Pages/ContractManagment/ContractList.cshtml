@@ -19,6 +19,7 @@
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
 
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Contract>()
+                        .ID("grid-container")
                     .DataSource(ds => ds.Mvc()
                     .Controller("Contracts")
                     .LoadAction("Get")
@@ -77,3 +78,15 @@
 
     </div><!-- container -->
 </div>
+<script>
+     window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#grid-container").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+    });
+</script>
