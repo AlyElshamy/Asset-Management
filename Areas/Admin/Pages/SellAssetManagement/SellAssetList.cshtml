@@ -21,6 +21,7 @@
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
 
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.AssetSellDetails>()
+        .ID("Soldlistid")
                     .DataSource(ds => ds.Mvc()
                     .Controller("SellAssets")
                     .LoadAction("Get")
@@ -53,7 +54,7 @@
                             </div>
                         </text>);
 
-                        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                        columns.AddFor(m => m.Asset.AssetTagId).Caption(sharedResource["Asset TagId"]);
 
                         columns.AddFor(m => m.Asset.AssetCost).Caption(sharedResource["AssetCost"]);
 
@@ -80,3 +81,17 @@
 
     </div><!-- container -->
 </div>
+
+<script>
+
+  window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#Soldlistid").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+            }
+        }
+  });
+    </script>

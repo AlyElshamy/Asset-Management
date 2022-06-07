@@ -15,7 +15,7 @@
             <h6 class="slim-pagetitle">@sharedResource["Dispose Asset"]</h6>
         </div><!-- slim-pageheader -->
         <div class="section-wrapper">
-            <label class="section-title d-inline">@sharedResource["Dispose Assets List"]</label>
+            @*<label class="section-title d-inline">@sharedResource["Dispose Assets List"]</label>*@
 
             @*<a asp-area="Admin" asp-page="/AssetManagment/AddLostList" class="btn btn-primary" style="float:right"> Add New Contract   </a>*@
             @*<p class="mg-b-20 mg-sm-b-40">Searching, ordering and paging goodness will be immediately added to the table, as shown in this example.</p>*@
@@ -85,7 +85,7 @@
 
                         <div class="col-lg-5">
                                  <div class="form-group">
-                            @Html.Label(sharedResource["AssetTagId"])
+                            @Html.Label(sharedResource["Asset TagId"])
                             @Html.DevExtreme().TextBox().ID("TxtAssetTagId")
                             </div>
                             </div>
@@ -159,103 +159,114 @@
         </div><!-- container -->
 </div>
 
-<script>
+        <script>
 
             var currentKey;
-    function editButtonClick(data) {
-        $('#customPopup').dxPopup('instance').option('visible', true);
-        $('#frmEdit').dxForm('instance').option('formData', data);
+            function editButtonClick(data) {
+                $('#customPopup').dxPopup('instance').option('visible', true);
+                $('#frmEdit').dxForm('instance').option('formData', data);
 
                 var AssetDescription = $('#TxtAssetDescription').dxTextBox('instance');
-        AssetDescription.option('value', data.AssetDescription);
-          var AssetTagId = $('#TxtAssetTagId').dxTextBox('instance');
-        AssetTagId.option('value', data.AssetTagId);
-          var AssetCost = $('#TxtAssetCost').dxTextBox('instance');
-        AssetCost.option('value', data.AssetCost);
-          var AssetSerialNo = $('#TxtAssetSerialNo').dxTextBox('instance');
-       AssetSerialNo.option('value', data.AssetSerialNo);
-          var AssetPurchaseDate = $('#AssetPurchaseDate').dxDateBox('instance');
-        AssetPurchaseDate.option('value', data.AssetPurchaseDate);
-          var AssetItem = $('#TxtAssetItem').dxLookup('instance');
-        AssetItem.option('value', data.ItemId);
+                AssetDescription.option('value', data.AssetDescription);
+                var AssetTagId = $('#TxtAssetTagId').dxTextBox('instance');
+                AssetTagId.option('value', data.AssetTagId);
+                var AssetCost = $('#TxtAssetCost').dxTextBox('instance');
+                AssetCost.option('value', data.AssetCost);
+                var AssetSerialNo = $('#TxtAssetSerialNo').dxTextBox('instance');
+                AssetSerialNo.option('value', data.AssetSerialNo);
+                var AssetPurchaseDate = $('#AssetPurchaseDate').dxDateBox('instance');
+                AssetPurchaseDate.option('value', data.AssetPurchaseDate);
+                var AssetItem = $('#TxtAssetItem').dxLookup('instance');
+                AssetItem.option('value', data.ItemId);
 
 
-        currentKey = data.AssetId;
-    }
-    function deleteButtonClick(data) {
-        var grid = $('#gridContainer').dxDataGrid('instance');
-        var rowIndex = grid.getRowIndexByKey(data.DisposeAssetId)
-        grid.deleteRow(rowIndex);
-    }
-    function saveButtonClick() {
-        var grid = $('#gridContainer').dxDataGrid('instance');
-        var AssetTagId = $('#TxtAssetTagId').dxTextBox('instance');
-        var AssetTagIdvalue = AssetTagId.option('value');
+                currentKey = data.AssetId;
+            }
+            function deleteButtonClick(data) {
+                var grid = $('#gridContainer').dxDataGrid('instance');
+                var rowIndex = grid.getRowIndexByKey(data.DisposeAssetId)
+                grid.deleteRow(rowIndex);
+            }
+            function saveButtonClick() {
+                var grid = $('#gridContainer').dxDataGrid('instance');
+                var AssetTagId = $('#TxtAssetTagId').dxTextBox('instance');
+                var AssetTagIdvalue = AssetTagId.option('value');
 
-         var AssetDescription = $('#TxtAssetDescription').dxTextBox('instance');
-        var AssetDescriptionvalue = AssetDescription.option('value');
-          var AssetCost = $('#TxtAssetCost').dxTextBox('instance');
-        var AssetCostvalue = AssetCost.option('value');
-          var AssetSerialNo = $('#TxtAssetSerialNo').dxTextBox('instance');
-        var AssetSerialNovalue = AssetSerialNo.option('value');
-          var AssetPurchaseDate = $('#AssetPurchaseDate').dxDateBox('instance');
-         var AssetPurchaseDatevalue =AssetPurchaseDate.option('value');
-          var AssetItem= $('#TxtAssetItem').dxLookup('instance');
-        var TxtAssetItemvalue = AssetItem.option('value');
-          var Photo =document.getElementById("Photo");
-          var Photovalue = Photo.value.split("\\").pop();
-        var rowIndex = grid.getRowIndexByKey(currentKey);
-        grid.cellValue(rowIndex, "AssetTagId", AssetTagIdvalue);
-         grid.cellValue(rowIndex, "AssetDescription", AssetDescriptionvalue);
-          grid.cellValue(rowIndex, "AssetCost", AssetCostvalue);
-           grid.cellValue(rowIndex, "AssetSerialNo", AssetSerialNovalue);
-            grid.cellValue(rowIndex, "AssetPurchaseDate", AssetPurchaseDatevalue);
-           grid.cellValue(rowIndex, "ItemId", TxtAssetItemvalue);
-           console.log(Photovalue)
-         grid.cellValue(rowIndex, "Photo",Photovalue);
+                var AssetDescription = $('#TxtAssetDescription').dxTextBox('instance');
+                var AssetDescriptionvalue = AssetDescription.option('value');
+                var AssetCost = $('#TxtAssetCost').dxTextBox('instance');
+                var AssetCostvalue = AssetCost.option('value');
+                var AssetSerialNo = $('#TxtAssetSerialNo').dxTextBox('instance');
+                var AssetSerialNovalue = AssetSerialNo.option('value');
+                var AssetPurchaseDate = $('#AssetPurchaseDate').dxDateBox('instance');
+                var AssetPurchaseDatevalue = AssetPurchaseDate.option('value');
+                var AssetItem = $('#TxtAssetItem').dxLookup('instance');
+                var TxtAssetItemvalue = AssetItem.option('value');
+                var Photo = document.getElementById("Photo");
+                var Photovalue = Photo.value.split("\\").pop();
+                var rowIndex = grid.getRowIndexByKey(currentKey);
+                grid.cellValue(rowIndex, "AssetTagId", AssetTagIdvalue);
+                grid.cellValue(rowIndex, "AssetDescription", AssetDescriptionvalue);
+                grid.cellValue(rowIndex, "AssetCost", AssetCostvalue);
+                grid.cellValue(rowIndex, "AssetSerialNo", AssetSerialNovalue);
+                grid.cellValue(rowIndex, "AssetPurchaseDate", AssetPurchaseDatevalue);
+                grid.cellValue(rowIndex, "ItemId", TxtAssetItemvalue);
+                console.log(Photovalue)
+                grid.cellValue(rowIndex, "Photo", Photovalue);
 
-        grid.saveEditData()
-        $('#customPopup').dxPopup('instance').option('visible', false);
-        currentKey = -1;
-    }
-    function cancelButtonClick() {
-        $('#customPopup').dxPopup('instance').option('visible', false);
-        currentKey = -1;
-    }
+                grid.saveEditData()
+                $('#customPopup').dxPopup('instance').option('visible', false);
+                currentKey = -1;
+            }
+            function cancelButtonClick() {
+                $('#customPopup').dxPopup('instance').option('visible', false);
+                currentKey = -1;
+            }
 
-    function closeButtonClick() {
-        $('#viewPopup').dxPopup('instance').option('visible', false);
-        currentKey = -1;
-    }
+            function closeButtonClick() {
+                $('#viewPopup').dxPopup('instance').option('visible', false);
+                currentKey = -1;
+            }
 
-    function viewButtonClick(data) {
-   var pop = $('#viewPopup').dxPopup('instance');
-        pop.option('visible', true);
-        $("#viewPopup").dxPopup({
-            title: data.AssetTagId,
-        //    visible: true,
-        //    resizeEnabled: true
-        });
+            function viewButtonClick(data) {
+                var pop = $('#viewPopup').dxPopup('instance');
+                pop.option('visible', true);
+                $("#viewPopup").dxPopup({
+                    title: data.AssetTagId,
+                    //    visible: true,
+                    //    resizeEnabled: true
+                });
 
-       document.getElementById("img").src= data.Photo;
-        document.getElementById("AssetDescription").innerText = data.AssetDescription;
-        document.getElementById("AssetCost").innerText = data.AssetCost;
-        document.getElementById("AssetSerialNo").innerText = data.AssetSerialNo;
-        document.getElementById("TxtAssetPurchaseDate").innerText = new Date(data.AssetPurchaseDate).toDateString()
-            ;
-        document.getElementById("AssetItem").innerText = data.ItemTitle;
-        document.getElementById("btn").href= "/Admin/AssetManagment/AssetDetails?id="+data.AssetId;
-        currentKey = data.AssetId;
-    }
+                document.getElementById("img").src = data.Photo;
+                document.getElementById("AssetDescription").innerText = data.AssetDescription;
+                document.getElementById("AssetCost").innerText = data.AssetCost;
+                document.getElementById("AssetSerialNo").innerText = data.AssetSerialNo;
+                document.getElementById("TxtAssetPurchaseDate").innerText = new Date(data.AssetPurchaseDate).toDateString()
+                    ;
+                document.getElementById("AssetItem").innerText = data.ItemTitle;
+                document.getElementById("btn").href = "/Admin/AssetManagment/AssetDetails?id=" + data.AssetId;
+                currentKey = data.AssetId;
+            }
 
-  function changephotoname() {
-         console.log("in photo")
+            function changephotoname() {
+                console.log("in photo")
                 var fileName = document.getElementById("Photo").value.split("\\").pop();;
-                    document.getElementById("photolabel").innerHTML=fileName;
+                document.getElementById("photolabel").innerHTML = fileName;
 
             }
 
-</script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                if (localStorage.getItem("lang") != "") {
+
+                    if (localStorage.getItem("lang") == "ar") {
+                    console.log("In Page")
+                        dataGrid = $("#gridContaine").dxDataGrid("instance");
+                dataGrid.option("rtlEnabled", true);
+                    }
+                }
+            });
+        </script>
+
 
 
 <script type="text/javascript">
