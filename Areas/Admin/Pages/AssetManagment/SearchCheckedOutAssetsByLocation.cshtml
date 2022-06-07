@@ -24,6 +24,7 @@
                 <div class="form-group">
                  @* <label class="form-control-label">Search <span class="tx-danger">*</span></label>*@
                  @(Html.DevExtreme().DropDownBoxFor(c=>c.LocationId)
+                 .ID("locationTree")
                                 .ValueExpr("Value")
                                 .DisplayExpr("Text")
                                 .DropDownOptions(o => o.Height(350))
@@ -156,6 +157,18 @@
             @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script> 
+        window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+             if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                 dataGrid = $("#grid-container").dxDataGrid("instance");
+                  drobdownBox = $("#locationTree").dxDropDownBox("instance");
+                 dataGrid.option("rtlEnabled", true);
+                 drobdownBox.option("rtlEnabled", true);
+            }
+        }
+    });
         function datagridData()
         {
                      console.log(document.getElementById("SearchAssetInputField").value)
