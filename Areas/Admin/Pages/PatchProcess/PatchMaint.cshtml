@@ -59,7 +59,7 @@ columns.AddFor(m => m.Photo).Width(100)
                                 <img src="/<%- value %>" alt="" width="35" height="35" />
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
-    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["Asset TagId"]);
 
     columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
     columns.AddFor(m => m.AssetStatusId).Caption(sharedResource["Status"]).Lookup(lookup => lookup

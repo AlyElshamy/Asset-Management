@@ -526,7 +526,7 @@
     <value>الدفع</value>
   </data>
   <data name="Check Out" xml:space="preserve">
-    <value>الدفع</value>
+    <value>إخراج</value>
   </data>
   <data name="Check Out Information" xml:space="preserve">
     <value>معلومات الأصول المستخرجه</value>
@@ -1719,6 +1719,9 @@
   </data>
   <data name="Select Country" xml:space="preserve">
     <value>إختر الدولة</value>
+  </data>
+  <data name="Select Customer" xml:space="preserve">
+    <value>إختر عميل</value>
   </data>
   <data name="Select Department" xml:space="preserve">
     <value>إختر قسم</value>

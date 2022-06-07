@@ -67,7 +67,7 @@
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
 
-                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["Asset TagId"]);
 
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["Asset Cost"]);
                         //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
@@ -173,8 +173,9 @@
                                         .LoadMode(DataSourceLoadMode.Raw)
                                         .Key("Value")
                                         )
-                                        .Placeholder("Select a value...")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Location"])
                                         .ShowClearButton(true)
+                                       
                                         .OnValueChanged("treeBox_valueChanged")
                                         .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
                                         )

@@ -66,12 +66,12 @@
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
 
-                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["AssetTagId"]);
+                        columns.AddFor(m => m.AssetTagId).Caption(sharedResource["Asset TagId"]);
 
                         columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
                         //columns.AddFor(m => m.AssetStatus.AssetStatusTitle).Caption("Status");
-                        columns.AddFor(m => m.AssetStatusId).Caption("Status").Lookup(lookup => lookup
+                        columns.AddFor(m => m.AssetStatusId).Caption(sharedResource["Status"]).Lookup(lookup => lookup
            .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("AssetStatusesLookup").Key("Value"))
            .ValueExpr("Value")
            .DisplayExpr("Text")
@@ -216,7 +216,7 @@
                                 }
                             </text>)
                         )*@
-                                }
+                                
 
                                 @*<div class="col-lg-12" id="AssetToDepartment" style="display:none">
                                     <div class="form-group">
