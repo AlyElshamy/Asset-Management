@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Controllers
 {
@@ -20,10 +22,15 @@ namespace AssetProject.Controllers
     public class LookupsController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public LookupsController(AssetContext context) {
+
+        public LookupsController(AssetContext context, UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
         }
+     
 
         [HttpGet]
         public async Task<IActionResult> CountriesLookup(DataSourceLoadOptions loadOptions)
@@ -75,7 +82,12 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> BrandsLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+
             var lookup = from i in _context.Brands
+                         where i.TenantId==tenant.TenantId
                          orderby i.BrandTitle
                          select new
                          {
@@ -87,8 +99,12 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoriesLookup(DataSourceLoadOptions loadOptions )
         {
-            
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+
             var lookup = from i in _context.Categories
+                         where i.TenantId == tenant.TenantId
                          orderby i.CategoryTIAR
                          select new
                          {
