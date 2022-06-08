@@ -12,22 +12,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class DepartmentsController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
 
-        public DepartmentsController(AssetContext context) {
+        public DepartmentsController(AssetContext context, UserManager<ApplicationUser> userManager)
+        {
             _context = context;
+            UserManger = userManager;
         }
+        public Tenant tenant { set; get; }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var departments = _context.Departments.Select(i => new {
+
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var departments = _context.Departments.Include(e => e.tenant).Where(e => e.tenant == tenant).Select(i => new {
                 i.DepartmentId,
                 i.DepartmentTitle
             });
@@ -43,7 +55,10 @@ namespace AssetProject.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post(string values) {
-            var model = new Department();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var model = new Department(){ TenantId = tenant.TenantId };
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
 

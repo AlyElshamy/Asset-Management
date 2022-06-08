@@ -21,6 +21,10 @@ namespace AssetProject.Models
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        public int? TenantId { get; set; }
+
+        public virtual Tenant tenant { get; set; }
+
         [Required]
         public string BarCode { get; set; }
         [Required]

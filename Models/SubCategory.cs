@@ -13,6 +13,9 @@ namespace AssetProject.Models
         public virtual Category Category { set; get; }
 
         public int CategoryId { set; get; }
+        public int? TenantId { get; set; }
+
+        public virtual Tenant tenant { get; set; }
 
     }
 }

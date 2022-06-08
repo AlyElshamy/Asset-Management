@@ -12,22 +12,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class BrandsController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
 
-        public BrandsController(AssetContext context) {
+
+        public BrandsController(AssetContext context, UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
         }
+        public Tenant tenant { set; get; }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var brands = _context.Brands.Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var brands = _context.Brands.Include(e => e.tenant).Where(s => s.tenant == tenant).Select(i => new {
                 i.BrandId,
                 i.BrandTitle
             });

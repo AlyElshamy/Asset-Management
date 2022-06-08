@@ -12,22 +12,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class SubCategoriesController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
 
-        public SubCategoriesController(AssetContext context) {
+
+        public SubCategoriesController(AssetContext context, UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
+
         }
+        public Tenant tenant { set; get; }
+
 
         [HttpGet]
         public async Task<IActionResult> Get(int CategoryId, DataSourceLoadOptions loadOptions) {
-            var subcategories = _context.SubCategories.Where(s=>s.CategoryId==CategoryId).Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var subcategories = _context.SubCategories.Include(e=>e.tenant).Where(s=>s.CategoryId==CategoryId && s.tenant==tenant).Select(i => new {
                 i.SubCategoryId,
                 i.SubCategoryTitle,
                 i.SubCategoryDescription,
@@ -45,7 +58,10 @@ namespace AssetProject.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post( string values) {
-            var model = new SubCategory();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var model = new SubCategory() { TenantId = tenant.TenantId };
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
 

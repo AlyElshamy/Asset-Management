@@ -66,23 +66,24 @@
     })
     .Columns(columns =>
     {
-        columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
+        columns.Add().Width(160).Alignment(HorizontalAlignment.Center).AllowEditing(false)
 .CellTemplate(@<text>
   <a href="javascript:void(0)" onclick="ShowDeletePopUp('<%-data.LocationId%>')"> <i class="fa fa-trash"></i> </a>
   </text>);
     })
     .Editing(e => e
-    .Mode(GridEditMode.Popup)
+    //.Mode(GridEditMode.Popup)
         .AllowAdding(true)
         .AllowUpdating(true)
         //.AllowDeleting(true).Texts(e => e.ConfirmDeleteMessage(sharedResource["Are you Sure to Delete?!"])).AllowUpdating(true)
         .UseIcons(true)
-          .Popup(p => p
-                .Title("Location Info")
-                .ShowTitle(true)
-                .Width(500)
-                .Height(250)
-    )
+
+    //      .Popup(p => p
+    //            .Title("Location Info")
+    //            .ShowTitle(true)
+    //            .Width(500)
+    //            .Height(250)
+    //)
     ).Selection(s => s.Mode(SelectionMode.Single))
 
 )

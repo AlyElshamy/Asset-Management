@@ -12,47 +12,64 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class LocationsController : Controller
     {
         private AssetContext _context;
-
-        public LocationsController(AssetContext context) {
+        UserManager<ApplicationUser> UserManger;
+        public LocationsController(AssetContext context,UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
+
         }
+
+        
+        public Tenant tenant { set; get; }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var locations = _context.Locations.Select(i => new {
-                i.LocationId,
-                i.LocationParentId,
-                i.LocationTitle,
-                i.CountryId,
-                i.Address,
-                i.City,
-                i.State,
-                i.PostalCode,
-                i.BarCode,
-                i.LocationLangtiude,
-                i.LocationLatitude
-            });
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+                var locations = _context.Locations.Include(e=>e.tenant).Where(e => e.tenant == tenant).Select(i => new {
+                    i.LocationId,
+                    i.LocationParentId,
+                    i.LocationTitle,
+                    i.CountryId,
+                    i.Address,
+                    i.City,
+                    i.State,
+                    i.PostalCode,
+                    i.BarCode,
+                    i.LocationLangtiude,
+                    i.LocationLatitude
+                });
 
-            // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
-            // This can make SQL execution plans more efficient.
-            // For more detailed information, please refer to this discussion: https://github.com/DevExpress/DevExtreme.AspNet.Data/issues/336.
-            // loadOptions.PrimaryKey = new[] { "LocationId" };
-            // loadOptions.PaginateViaPrimaryKey = true;
+                // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
+                // This can make SQL execution plans more efficient.
+                // For more detailed information, please refer to this discussion: https://github.com/DevExpress/DevExtreme.AspNet.Data/issues/336.
+                // loadOptions.PrimaryKey = new[] { "LocationId" };
+                // loadOptions.PaginateViaPrimaryKey = true;
 
-            return Json(await DataSourceLoader.LoadAsync(locations, loadOptions));
+                return Json(await DataSourceLoader.LoadAsync(locations, loadOptions));
+            
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(string values) {
-            var model = new Location();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+
+            var model = new Location() { TenantId=tenant.TenantId};
             var valuesDict = JsonConvert.DeserializeObject<IDictionary>(values);
             PopulateModel(model, valuesDict);
 

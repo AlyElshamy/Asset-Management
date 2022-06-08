@@ -4,14 +4,16 @@ using AssetProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AssetProject.Migrations.Asset
 {
     [DbContext(typeof(AssetContext))]
-    partial class AssetContextModelSnapshot : ModelSnapshot
+    [Migration("20220608125252_multi-tenantancy")]
+    partial class multitenantancy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -935,12 +937,7 @@ namespace AssetProject.Migrations.Asset
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("int");
-
                     b.HasKey("BrandId");
-
-                    b.HasIndex("TenantId");
 
                     b.ToTable("Brands");
                 });
@@ -1184,16 +1181,11 @@ namespace AssetProject.Migrations.Asset
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TenantId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("TenantId");
 
                     b.ToTable("Employees");
                 });
@@ -2165,15 +2157,6 @@ namespace AssetProject.Migrations.Asset
                     b.Navigation("Insurance");
                 });
 
-            modelBuilder.Entity("AssetProject.Models.Brand", b =>
-                {
-                    b.HasOne("AssetProject.Models.Tenant", "tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId");
-
-                    b.Navigation("tenant");
-                });
-
             modelBuilder.Entity("AssetProject.Models.Category", b =>
                 {
                     b.HasOne("AssetProject.Models.Tenant", "tenant")
@@ -2193,15 +2176,6 @@ namespace AssetProject.Migrations.Asset
                 });
 
             modelBuilder.Entity("AssetProject.Models.Department", b =>
-                {
-                    b.HasOne("AssetProject.Models.Tenant", "tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId");
-
-                    b.Navigation("tenant");
-                });
-
-            modelBuilder.Entity("AssetProject.Models.Employee", b =>
                 {
                     b.HasOne("AssetProject.Models.Tenant", "tenant")
                         .WithMany()

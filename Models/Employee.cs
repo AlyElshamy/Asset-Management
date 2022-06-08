@@ -20,5 +20,9 @@ namespace AssetProject.Models
         public string Notes { get; set; }
         
         public string Remark { get; set; }
+
+        public int? TenantId { get; set; }
+
+        public virtual Tenant tenant { get; set; }
     }
 }
