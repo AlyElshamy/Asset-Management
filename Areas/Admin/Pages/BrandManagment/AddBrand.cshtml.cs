@@ -19,6 +19,7 @@ namespace AssetProject.Areas.Admin.Pages.BrandManagment
         AssetContext Context;
         private readonly IToastNotification _toastNotification;
         UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         public AddBrandModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             Context = context;
@@ -28,7 +29,7 @@ namespace AssetProject.Areas.Admin.Pages.BrandManagment
 
         }
 
-        public Tenant tenant { set; get; }
+    
         public void OnGet()
         {
         }

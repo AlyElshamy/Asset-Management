@@ -12,22 +12,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class ItemsController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public ItemsController(AssetContext context) {
+        public ItemsController(AssetContext context, UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var items = _context.Items.Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var items = _context.Items.Include(e => e.tenant).Where(s => s.tenant == tenant).Select(i => new {
                 i.ItemId,
                 i.ItemTitle,
                 i.CategoryId,

@@ -14,7 +14,8 @@ namespace AssetProject.Models
         public virtual Brand Brand { get; set; }
         public string Description { get; set; }
         public virtual ICollection<PurchaseAsset> PurchaseAssets { get; set; }
+        public int? TenantId { get; set; }
 
-
+        public virtual Tenant tenant { get; set; }
     }
 }

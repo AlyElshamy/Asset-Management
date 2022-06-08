@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
@@ -18,17 +20,20 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
         public Item Item { set; get; }
         AssetContext Context;
         private readonly IToastNotification _toastNotification;
-        public CreateItemModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public CreateItemModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             Context = context;
             _toastNotification = toastNotification;
             Item = new Item();
+            UserManger = userManager;
         }
         public void OnGet()
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
@@ -42,6 +47,11 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
                     ModelState.AddModelError("", "Please Select Brand");
                     return Page();
                 }
+
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = Context.Tenants.Find(user.TenantId);
+                Item.TenantId = tenant.TenantId;
                 Context.Items.Add(Item);
                 try
                 {
