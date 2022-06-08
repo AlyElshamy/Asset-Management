@@ -1,10 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
 {
@@ -15,29 +18,42 @@ namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
         private readonly IToastNotification _toastNotification;
         [BindProperty]
         public Employee employee { get; set; }
-        public EditEmployeeModel(AssetContext context,IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public EditEmployeeModel(AssetContext context,IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
+
         }
-        public IActionResult OnGet(int? id)
+        public async Task <IActionResult> OnGet(int? id)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             
-               
-                try
+            try
                 {
                     employee = _context.Employees.Find(id);
+
                     if (employee == null)
                     {
                         _toastNotification.AddErrorToastMessage("Something went error");
                         return RedirectToPage("EmployeeList");
                     }
+
+                if (employee.TenantId != tenant.TenantId)
+                {
+                    return Redirect("../NotFound");
                 }
+            }
                 catch (Exception)
                 {
                     _toastNotification.AddErrorToastMessage("Something went error");
-                }
-                return Page();
+                    return RedirectToPage("EmployeeList");
+            }
+            return Page();
             
             
 

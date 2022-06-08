@@ -9,6 +9,8 @@ using AssetProject.Data;
 using AssetProject.Models;
 using NToastNotify;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
@@ -17,11 +19,14 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
     {
         private readonly AssetContext _context;
         private readonly IToastNotification toastNotification;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public CreateModel(AssetContext context, IToastNotification toastNotification)
+        public CreateModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             this.toastNotification = toastNotification;
+            UserManger = userManager;
         }
 
         public IActionResult OnGet()
@@ -41,6 +46,10 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
             }
             try
             {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
+                Store.TenantId = tenant.TenantId;
                 _context.Stores.Add(Store);
                 await _context.SaveChangesAsync();
                 toastNotification.AddSuccessToastMessage("Store Added successfully");

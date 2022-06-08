@@ -21,6 +21,8 @@ namespace AssetProject.Models
         [DataType(DataType.PhoneNumber)]
         public string Mobile { get; set; }
         public string Fax { get; set; }
+        public int? TenantId { get; set; }
+        public virtual Tenant tenant { get; set; }
         public virtual ICollection<Purchase> Purchases { get; set; }
 
     }
