@@ -12,23 +12,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class AssetLeasingsController : Controller
     {
         private AssetContext _context;
-
-        public AssetLeasingsController(AssetContext context) {
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public AssetLeasingsController(AssetContext context, UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
       
-            var assetleasings = _context.AssetLeasingDetails.Select(
+            var assetleasings = _context.AssetLeasingDetails.Include(e => e.Asset).ThenInclude(e => e.tenant).Where(e => e.Asset.tenant == tenant).Select(
                 i => new
                 {
                     i.AssetLeasingDetailsId ,
