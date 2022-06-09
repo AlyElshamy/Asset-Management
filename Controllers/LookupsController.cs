@@ -61,7 +61,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> ItemsLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Items
+                         where i.TenantId == tenant.TenantId
                          orderby i.ItemTitle
                          select new
                          {
@@ -145,7 +149,12 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> StoresLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+
             var lookup = from i in _context.Stores
+                         where i.TenantId == tenant.TenantId
                          orderby i.StoreTitle
                          select new
                          {
@@ -158,6 +167,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> DepreciationMethodsLookup(DataSourceLoadOptions loadOptions)
         {
+            
             var lookup = from i in _context.DepreciationMethods
                          orderby i.DepreciationMethodTitle
                          select new

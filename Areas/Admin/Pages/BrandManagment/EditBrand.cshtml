@@ -21,19 +21,21 @@
           <div class="form-layout">
               <form  method="post" >
               <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="row mg-b-25">
-              <div class="col-lg-4">
-                <div class="form-group">
-                  <label>@sharedResource["BrandTitle"]: <span class="tx-danger">*</span></label>
-                  <input asp-for="Brand.BrandTitle" class="form-control"  placeholder="@sharedResource["EnterBrandTitle"]">
-                   <span asp-validation-for="Brand.BrandTitle" class="text-danger"></span>
-                </div>
-              </div><!-- col-4 -->
-              
-             
-          <input asp-for="Brand.BrandId" class="form-control"  hidden>
-            
-            </div><!-- row -->
+              <div class="row mg-b-25">
+                  <div class="col-lg-4">
+                      <div class="form-group">
+                          <label>@sharedResource["BrandTitle"]: <span class="tx-danger">*</span></label>
+                          <input asp-for="Brand.BrandTitle" class="form-control" placeholder="@sharedResource["EnterBrandTitle"]">
+                          <span asp-validation-for="Brand.BrandTitle" class="text-danger"></span>
+                      </div>
+                  </div><!-- col-4 -->
+
+
+                  <input asp-for="Brand.BrandId" class="form-control" hidden>
+                  <input asp-for="Brand.TenantId" class="form-control" hidden>
+
+
+              </div><!-- row -->
 
             <div class="form-layout-footer">
               <button class="btn btn-primary bd-0">@sharedResource["Save"] </button>

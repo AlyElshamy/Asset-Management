@@ -10,6 +10,8 @@ using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using NToastNotify;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
@@ -18,10 +20,13 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
     {
         private readonly AssetProject.Data.AssetContext _context;
         private readonly IToastNotification toastNotification;
-        public EditModel(AssetProject.Data.AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public EditModel(AssetProject.Data.AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             this.toastNotification = toastNotification;
+            UserManger = userManager;
         }
 
         [BindProperty]
@@ -29,12 +34,17 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-           
-            Store = await _context.Stores.FirstOrDefaultAsync(m => m.StoreId == id);
-
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            Store = await _context.Stores.FirstOrDefaultAsync(m => m.StoreId == id);           
             if (Store == null)
             {
-                return Redirect("../../Error");
+                return Redirect("../NotFound");
+            }
+            if (Store.TenantId != tenant.TenantId)
+            {
+                return Redirect("../NotFound");
             }
             return Page();
         }

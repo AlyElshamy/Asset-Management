@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Areas.Admin.Pages.StoreManagment
 {
@@ -16,26 +18,32 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
     {
         private readonly AssetProject.Data.AssetContext _context;
 
-        public DetailsModel(AssetProject.Data.AssetContext context)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public DetailsModel(AssetProject.Data.AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
 
         public Store Store { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Store = await _context.Stores.FirstOrDefaultAsync(m => m.StoreId == id);
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            Store = _context.Stores.Find(id);
 
             if (Store == null)
             {
-                return NotFound();
+                return Redirect("../NotFound");
             }
+            if (Store.TenantId != tenant.TenantId)
+            {
+                return Redirect("../NotFound");
+            }
+
             return Page();
         }
     }

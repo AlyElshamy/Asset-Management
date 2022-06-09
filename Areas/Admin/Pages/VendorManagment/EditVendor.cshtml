@@ -80,7 +80,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Contact Personal Phone"] : <span class="tx-danger">*</span></label>
-                                <input asp-for="Vendor.ContactPersonPhone" class="form-control date"placeholder="@sharedResource["Enter Personal Phone"]">
+                                <input asp-for="Vendor.ContactPersonPhone" class="form-control date" placeholder="@sharedResource["Enter Personal Phone"]">
                                 <span asp-validation-for="Vendor.ContactPersonPhone" class="text-danger"></span>
                             </div>
                         </div>
@@ -102,6 +102,8 @@
                         </div>*@
 
                         <input asp-for="Vendor.VendorId" class="form-control" placeholder="Enter Company name" hidden>
+                        <input asp-for="Vendor.TenantId" class="form-control" hidden>
+
 
                     </div><!-- row -->
 

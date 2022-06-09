@@ -31,7 +31,9 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
         {
             try
             {
-               
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
 
                 insurance = _context.Insurances.Find(id);
                 if (insurance == null)
