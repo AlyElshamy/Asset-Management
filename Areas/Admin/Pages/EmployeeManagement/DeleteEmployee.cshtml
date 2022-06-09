@@ -78,8 +78,9 @@
                     <div class="form-layout-footer mt-4">
                            <form  method="post" enctype="multipart/form-data" asp-route-id="@Model.employee.ID" >
                                 <input type="submit" value="@sharedResource["Delete"] " class="btn btn-danger" >
+                                 <a asp-area="admin" class="btn btn-secondary " asp-page="EmployeeList">@sharedResource["BacktoList"]</a>
                             </form>
-                        <a asp-area="admin" class="btn btn-secondary " asp-page="EmployeeList">@sharedResource["BacktoList"]</a>
+                       
                      </div><!-- form-layout-footer -->
           </div><!-- form-layout -->
         </div><!-- section-wrapper --> 

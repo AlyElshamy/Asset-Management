@@ -65,10 +65,11 @@
             <div class="form-layout-footer">
                  <form method="post" asp-route-id="@Model.Contract.ContractId" >
                    <input type="submit" value='@sharedResource["Delete"]' class="btn btn-danger bd-0"  >
-                  </form>
-               <a  asp-area="Admin" asp-page="/ContractManagment/ContractList">
+                      <a  asp-area="Admin" asp-page="/ContractManagment/ContractList">
                  <input type='button' class="btn btn-secondary bd-0" value='@sharedResource["Cancel"]' />
               </a>
+                  </form>
+            
             </div><!-- form-layout-footer -->
        
           </div><!-- form-layout -->
