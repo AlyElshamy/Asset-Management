@@ -51,7 +51,8 @@ namespace AssetProject.Areas.Admin.Pages.BrandManagment
                 }
             }
 
-            return Redirect("../../Error");
+            _toastNotification.AddErrorToastMessage("Something went wrong");
+            return RedirectToPage("/BrandManagment/BrandList");
         }
     }
 }

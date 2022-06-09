@@ -67,7 +67,8 @@ namespace AssetProject.Areas.Admin.Pages.StoreManagment
                 }
             }
 
-            return Redirect("../Error");
+            toastNotification.AddErrorToastMessage("Something went wrong");
+            return RedirectToPage("/StoreManagment/List");
         }
     }
 }

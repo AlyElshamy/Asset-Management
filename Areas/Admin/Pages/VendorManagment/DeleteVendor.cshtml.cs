@@ -68,7 +68,8 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
                     return RedirectToPage("/VendorManagment/DeleteVendor",new { id=Vendor.VendorId});
                 }
             }
-            return Redirect("../Error");
+            _toastNotification.AddErrorToastMessage("Something went wrong");
+            return RedirectToPage("/VendorManagment/VendorList");
 
 
         }

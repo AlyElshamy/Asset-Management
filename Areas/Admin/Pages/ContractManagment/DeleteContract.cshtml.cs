@@ -72,8 +72,8 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
                 }
             }
 
-            return Redirect("../../Error");
-
+            _toastNotification.AddErrorToastMessage("Something went wrong");
+            return RedirectToPage("/ContractManagment/ContractList");
 
         }
     }

@@ -54,23 +54,28 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
             return Page();
 
         }
-        public IActionResult OnPost()
+        public IActionResult OnPost(int? id)
         {
-            if (customer == null)
-                return Page();
-            try
+            customer = _context.Customers.Find(id);
+            if (customer != null)
             {
-                _context.Customers.Remove(customer);
-                _context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Customer Deleted Successfully");
-                return RedirectToPage("CustomerList");
-            }
-            catch (Exception)
-            {
-                _toastNotification.AddErrorToastMessage("Something went error");
-                return RedirectToPage("/CustomerManagement/DeleteCustomer", new { id = customer.CustomerId });
+                try
+                {
+                    _context.Customers.Remove(customer);
+                    _context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Customer Deleted Successfully");
+                    return RedirectToPage("/CustomerManagement/CustomerList");
+                }
+                catch (Exception)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went error");
+                    return RedirectToPage("/CustomerManagement/DeleteCustomer", new { id = customer.CustomerId });
 
+                }
             }
+            _toastNotification.AddErrorToastMessage("Something went error");
+            return RedirectToPage("/CustomerManagement/CustomerList");
+
         }
     }
 }
