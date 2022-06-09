@@ -62,11 +62,13 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Fax"] : <span class="tx-danger">*</span></label>
-                                <input asp-for="Store.Fax" value="@Model.Store.Fax" class="form-control"placeholder="@sharedResource["Enter Fax"]">
+                                <input asp-for="Store.Fax" value="@Model.Store.Fax" class="form-control" placeholder="@sharedResource["Enter Fax"]">
                             </div>
                         </div>
                     </div>
-                    <input asp-for="Store.StoreId" class="form-control"  hidden>
+                    <input asp-for="Store.StoreId" class="form-control" hidden>
+                    <input asp-for="Store.TenantId" class="form-control" hidden>
+
 
                     <div class="form-layout-footer">
                         <button class="btn btn-primary bd-0" type="submit">@sharedResource["Edit Store"] </button>

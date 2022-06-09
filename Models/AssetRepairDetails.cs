@@ -8,5 +8,6 @@
         public Asset Asset { set; get; }
         public int AssetId { set; get; }
         public string Remarks { set; get; }
+
     }
 }
