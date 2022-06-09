@@ -1,10 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.CustomerManagement
 {
@@ -15,26 +18,38 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
         private readonly IToastNotification _toastNotification;
         [BindProperty]
         public Customer customer { get; set; }
-        public DeleteCustomerModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public DeleteCustomerModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
         }
-        public IActionResult OnGet(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             try
             {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
+
                 customer = _context.Customers.Find(id);
                 if (customer == null)
                 {
-                    _toastNotification.AddErrorToastMessage("Something went error");
+                    _toastNotification.AddErrorToastMessage("Something went Error");
                     return RedirectToPage("CustomerList");
+                }
+                if (customer.TenantId != tenant.TenantId)
+                {
+                    return Redirect("../NotFound");
                 }
 
             }
             catch (Exception)
             {
-                _toastNotification.AddErrorToastMessage("Something went errro");
+                _toastNotification.AddErrorToastMessage("Something went Error");
+                return RedirectToPage("CustomerList");
             }
             return Page();
 

@@ -1,11 +1,14 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
 {
@@ -16,18 +19,21 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
         private readonly IToastNotification _toastNotification;
         [BindProperty]
         public Insurance insurance { get; set; }
-       
-        public AddInsuranceModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+
+        public AddInsuranceModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             insurance = new Insurance();
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
         }
         public void OnGet()
         {
 
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (insurance.EndDate <= insurance.StartDate)
             {
@@ -38,9 +44,13 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
                 return Page();
                 try
                 {
-                    _context.Insurances.Add(insurance);
-                    _context.SaveChanges();
-                    _toastNotification.AddSuccessToastMessage("Insurance Policy Created Successfully");
+                     var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                     var user = await UserManger.FindByIdAsync(userid);
+                     tenant = _context.Tenants.Find(user.TenantId);
+                     insurance.TenantId = tenant.TenantId;
+                     _context.Insurances.Add(insurance);
+                     _context.SaveChanges();
+                     _toastNotification.AddSuccessToastMessage("Insurance Policy Created Successfully");
                 }
                 catch (Exception)
                 {

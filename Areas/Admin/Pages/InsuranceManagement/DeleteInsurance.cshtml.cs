@@ -1,11 +1,14 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
 using System.Globalization;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
 {
@@ -19,20 +22,32 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
         public string EndDate { get; set; }
         [BindProperty]
         public Insurance insurance { get; set; }
-        public DeleteInsuranceModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public DeleteInsuranceModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
         }
-        public IActionResult OnGet(int ?id)
+        public async Task<IActionResult> OnGet(int ?id)
         {
             try
             {
+
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
+
                 insurance = _context.Insurances.Find(id);
                 if (insurance == null)
                 {
                     _toastNotification.AddErrorToastMessage("Something went error");
                     return RedirectToPage("InsuranceList");
+                }
+                if (insurance.TenantId != tenant.TenantId)
+                {
+                    return Redirect("../NotFound");
                 }
                 StartDate = insurance.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 EndDate = insurance.StartDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
@@ -41,6 +56,7 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
+                return RedirectToPage("InsuranceList");
             }
             return Page();
         }

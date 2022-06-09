@@ -1,10 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.ContractManagment
 {
@@ -15,17 +18,20 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
         public Contract Contract { set; get; }
         AssetContext Context;
         private readonly IToastNotification _toastNotification;
-        public AddContractModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public AddContractModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             Context = context;
            _toastNotification = toastNotification;
             Contract = new Contract();
+            UserManger = userManager;
         }
         public void OnGet()
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (Contract.VendorId == null)
             {
@@ -39,8 +45,11 @@ namespace AssetProject.Areas.Admin.Pages.ContractManagment
             }
             if (ModelState.IsValid)
             {
-                
-               
+
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = Context.Tenants.Find(user.TenantId);
+                Contract.TenantId = tenant.TenantId;
                 Context.Contracts.Add(Contract);
                 try
                 {

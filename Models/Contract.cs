@@ -20,5 +20,7 @@ namespace AssetProject.Models
 
         public int? VendorId { set; get; }
         public virtual Vendor Vendor { set; get; }
+        public int? TenantId { get; set; }
+        public virtual Tenant tenant { get; set; }
     }
 }

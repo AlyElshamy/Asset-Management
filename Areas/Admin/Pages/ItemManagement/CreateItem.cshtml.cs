@@ -47,14 +47,14 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
                     ModelState.AddModelError("", "Please Select Brand");
                     return Page();
                 }
-
-                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = await UserManger.FindByIdAsync(userid);
-                tenant = Context.Tenants.Find(user.TenantId);
-                Item.TenantId = tenant.TenantId;
-                Context.Items.Add(Item);
                 try
                 {
+                    var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    var user = await UserManger.FindByIdAsync(userid);
+                    tenant = Context.Tenants.Find(user.TenantId);
+                    Item.TenantId = tenant.TenantId;
+                    Context.Items.Add(Item);
+
                     Context.SaveChanges();
                     _toastNotification.AddSuccessToastMessage("Item Added successfully");
                     return RedirectToPage("/ItemManagement/ItemList");

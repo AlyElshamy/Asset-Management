@@ -3,12 +3,15 @@ using AssetProject.Models;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.CustomerManagement
 {
@@ -18,15 +21,22 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
         private readonly AssetContext _context;
         private readonly IToastNotification _toastNotification;
         public Customer customer { get; set; }
-        public CustomerDetailsModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public CustomerDetailsModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
         }
-        public IActionResult OnGet(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             try
             {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
+
                 customer = _context.Customers.Find(id);
                 if (customer == null)
                 {
@@ -34,10 +44,15 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
                     return RedirectToPage("CustomerList");
 
                 }
+                if (customer.TenantId != tenant.TenantId)
+                {
+                    return Redirect("../NotFound");
+                }
             }
             catch (Exception)
             {
                 _toastNotification.AddErrorToastMessage("Something went error");
+                return RedirectToPage("CustomerList");
             }
             return Page();
         }

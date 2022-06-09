@@ -36,5 +36,7 @@ namespace AssetProject.Models
         [RegularExpression(@"(?!^0*$)(?!^0*\.0*$)^\d{1,5}(\.\d{1,3})?$", ErrorMessage = " Accept Number Only")]
         public decimal Permium { get; set; }
         public bool IsActive { get; set; }
+        public int? TenantId { get; set; }
+        public virtual Tenant tenant { get; set; }
     }
 }

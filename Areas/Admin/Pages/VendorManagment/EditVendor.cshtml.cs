@@ -1,10 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.VendorManagment
 {
@@ -15,18 +18,28 @@ namespace AssetProject.Areas.Admin.Pages.VendorManagment
         public Vendor Vendor { set; get; }
         AssetContext Context;
         private readonly IToastNotification _toastNotification;
-
-        public EditVendorModel(AssetContext context,IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public EditVendorModel(AssetContext context,IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             Context = context;
            _toastNotification = toastNotification;
+            UserManger = userManager;
         }
-        public IActionResult OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-           Vendor =Context.Vendors.Find(id);
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = Context.Tenants.Find(user.TenantId);
+
+            Vendor = Context.Vendors.Find(id);
             if (Vendor == null)
             {
-                return Redirect("../../Error");
+                return Redirect("../NotFound");
+            }
+            if (Vendor.TenantId != tenant.TenantId)
+            {
+                return Redirect("../NotFound");
             }
             return Page();
 

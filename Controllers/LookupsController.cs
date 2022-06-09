@@ -44,7 +44,12 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> VendorsLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+
             var lookup = from i in _context.Vendors
+                         where i.TenantId==tenant.TenantId
                          orderby i.VendorTitle
                          select new
                          {
@@ -119,9 +124,12 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> Category1Lookup(DataSourceLoadOptions loadOptions , int CategoryId)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
 
             var lookup = from i in _context.Categories
-                         where i.CategoryId==CategoryId
+                         where i.CategoryId==CategoryId &&  i.TenantId == tenant.TenantId
                          orderby i.CategoryTIAR
                          
                          select new

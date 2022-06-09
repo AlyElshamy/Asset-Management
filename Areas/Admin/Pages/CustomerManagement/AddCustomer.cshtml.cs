@@ -1,10 +1,13 @@
 using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.CustomerManagement
 {
@@ -15,21 +18,28 @@ namespace AssetProject.Areas.Admin.Pages.CustomerManagement
         [BindProperty]
         public Customer customer { get; set; }
         private readonly IToastNotification _toastNotification;
-        public AddCustomerModel(IToastNotification toastNotification, AssetContext context)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public AddCustomerModel(IToastNotification toastNotification, AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
         }
         public void OnGet()
         {
 
         }
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
                 return Page();
             try
             {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
+                customer.TenantId = tenant.TenantId;
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
                 _toastNotification.AddSuccessToastMessage("Customer Created Successfuly");

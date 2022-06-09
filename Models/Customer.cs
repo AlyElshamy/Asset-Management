@@ -30,5 +30,7 @@ namespace AssetProject.Models
         [RegularExpression(@"^[a-zA-z]+([\s][a-zA-Z]+)*$", ErrorMessage = " Not Valid"), MinLength(5, ErrorMessage = "Minimum Length Is 5")]
         public string Notes  { get; set; }
         public virtual ICollection<AssetLeasing> AssetLeasings { get; set; }
+        public int? TenantId { get; set; }
+        public virtual Tenant tenant { get; set; }
     }
 }

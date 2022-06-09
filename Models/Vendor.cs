@@ -27,6 +27,8 @@ namespace AssetProject.Models
         public string ContactPersonPhone { set; get; }
        public virtual ICollection<Contract> Cotracts { get; set; }
        public virtual ICollection<Purchase > Purchases { get; set; }
+        public int? TenantId { get; set; }
+        public virtual Tenant tenant { get; set; }
 
     }
 }
