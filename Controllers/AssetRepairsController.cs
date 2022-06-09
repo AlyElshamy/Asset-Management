@@ -109,7 +109,11 @@ namespace AssetProject.Controllers
 
         [HttpGet]
         public async Task<IActionResult> TechniciansLookup(DataSourceLoadOptions loadOptions) {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Technicians
+                         where i.TenantId==tenant.TenantId
                          orderby i.FullName
                          select new {
                              Value = i.TechnicianId,

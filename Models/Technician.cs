@@ -13,6 +13,10 @@ namespace AssetProject.Models
         [Required]
         public string Address  { set; get; }
         public string Remarks { set; get; }
+        public int? TenantId { set; get; }
+        public virtual Tenant Tenant { set; get; }
+
+
 
         public ICollection<AssetRepair> AssetRepairs { set; get; }
 

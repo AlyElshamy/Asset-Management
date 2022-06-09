@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NToastNotify;
 using System;
 using System.Globalization;
 using System.IO;
@@ -20,15 +21,18 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         AssetContext Context;
         [BindProperty]
         public Asset Asset { set; get; }
+        private readonly IToastNotification toastNotification;
+
         private readonly IWebHostEnvironment _webHostEnvironment;
         UserManager<ApplicationUser> UserManger;
         public Tenant tenant { set; get; }
 
-        public AddAssetModel(AssetContext context, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager)
+        public AddAssetModel(AssetContext context, IWebHostEnvironment webHostEnvironment, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             Context = context;
             _webHostEnvironment = webHostEnvironment;
             Asset = new Asset();
+            this.toastNotification = toastNotification;
             UserManger = userManager;
 
         }
@@ -98,8 +102,18 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     Remark = string.Format($"{Str}{AssetPurchaseDate}")
                 };
                 Context.AssetLogs.Add(assetLog);
-                Context.SaveChanges();
-                return RedirectToPage("Index");
+                try
+                {
+                    Context.SaveChanges();
+                    toastNotification.AddSuccessToastMessage("Asset Added successfully");
+                    return RedirectToPage("Index");
+                }
+                catch(Exception e)
+                {
+                    toastNotification.AddErrorToastMessage("Something went Error");
+                    return RedirectToPage("Index");
+                }
+               
             }
             return Page();
         }
