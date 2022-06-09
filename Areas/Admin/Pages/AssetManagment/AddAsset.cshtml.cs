@@ -1,28 +1,36 @@
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
+    [Authorize]
     public class AddAssetModel : PageModel
     {
         AssetContext Context;
         [BindProperty]
         public Asset Asset { set; get; }
         private readonly IWebHostEnvironment _webHostEnvironment;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public AddAssetModel(AssetContext context, IWebHostEnvironment webHostEnvironment)
+        public AddAssetModel(AssetContext context, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager)
         {
             Context = context;
             _webHostEnvironment = webHostEnvironment;
             Asset = new Asset();
+            UserManger = userManager;
+
         }
         public void OnGet()
         {
@@ -30,6 +38,8 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public async Task<IActionResult> OnPost(IFormFile file)
         {
+           
+
             if (Asset.ItemId == 0)
             {
                 ModelState.AddModelError("", "Please Select Item");
@@ -72,6 +82,10 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
               
                 Asset.AssetStatusId = 1;
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = Context.Tenants.Find(user.TenantId);
+                Asset.TenantId = tenant.TenantId;
                 Context.Assets.Add(Asset);
                 string Str = "purchase Date : "; 
                 string AssetPurchaseDate = Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);

@@ -5,6 +5,7 @@ using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
@@ -25,18 +27,25 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         private readonly AssetContext _context;
         private readonly IToastNotification _toastNotification;
         private readonly IWebHostEnvironment _hostEnvironment;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         public Asset Asset { set; get; }
-        public IndexModel(AssetContext context, IToastNotification toastNotification, IWebHostEnvironment hostEnvironment)
+        public IndexModel(AssetContext context, IToastNotification toastNotification, IWebHostEnvironment hostEnvironment, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
             _hostEnvironment = hostEnvironment;
             Asset = new Asset();
+            UserManger = userManager;
+
         }
 
-        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
+        public async Task <IActionResult> OnGetGridData(DataSourceLoadOptions loadOptions)
         {
-            var categories = _context.Assets;
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var categories = _context.Assets.Include(e => e.tenant).Where(e => e.tenant == tenant);
             return new JsonResult(DataSourceLoader.Load(categories, loadOptions));
         }
         public IActionResult OnGetSingleAssetForView(int AssetId)
