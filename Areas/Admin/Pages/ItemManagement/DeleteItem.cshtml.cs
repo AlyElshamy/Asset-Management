@@ -75,7 +75,8 @@ namespace AssetProject.Areas.Admin.Pages.ItemManagement
                 }
             }
 
-            return Redirect("../../Error");
+            _toastNotification.AddErrorToastMessage("Something went wrong");
+            return RedirectToPage("/ItemManagement/ItemList");
 
 
         }

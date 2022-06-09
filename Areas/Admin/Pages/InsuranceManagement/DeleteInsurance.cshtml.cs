@@ -60,25 +60,26 @@ namespace AssetProject.Areas.Admin.Pages.InsuranceManagement
             }
             return Page();
         }
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
-                if (insurance == null)
-                    return Page();
-                
-            
+            insurance = _context.Insurances.Find(id);
+            if (insurance != null)
+            {
                 try
                 {
                     _context.Insurances.Remove(insurance);
                     _context.SaveChanges();
                     _toastNotification.AddSuccessToastMessage("Insurance Policy Deleted Successfuly");
-                     return RedirectToPage("InsuranceList");
+                    return RedirectToPage("/InsuranceManagement/InsuranceList");
                 }
                 catch (Exception)
                 {
                     _toastNotification.AddErrorToastMessage("Something went error");
-                return RedirectToPage("/InsuranceManagement/DeleteInsurance", new { id = insurance.InsuranceId });
-
-            }            
+                    return RedirectToPage("/InsuranceManagement/DeleteInsurance", new { id = insurance.InsuranceId });
+                }
+            }
+            _toastNotification.AddErrorToastMessage("Something went error");
+            return RedirectToPage("/InsuranceManagement/InsuranceList");
         }
     }
     

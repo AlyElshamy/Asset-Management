@@ -53,25 +53,29 @@ namespace AssetProject.Areas.Admin.Pages.EmployeeManagement
             return Page();
 
         }
-        public IActionResult OnPost()
+        public IActionResult OnPost(int id)
         {
-            if (employee == null)
-                return RedirectToPage("/EmployeeManagement/DeleteEmployee", new { id = employee.ID });
-            try
+            employee = _context.Employees.Find(id);
+            if (employee != null)
             {
-                _context.Employees.Remove(employee);
-                _context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Employee Deleted Successfully");
-                return RedirectToPage("EmployeeList");
-            }
-            catch (Exception)
-            {
-                _toastNotification.AddErrorToastMessage("Something went error");
-                return RedirectToPage("/EmployeeManagement/DeleteEmployee", new { id = employee.ID });
 
+                try
+                {
+                    _context.Employees.Remove(employee);
+                    _context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Employee Deleted Successfully");
+                    return RedirectToPage("EmployeeList");
+                }
+                catch (Exception)
+                {
+                    _toastNotification.AddErrorToastMessage("Something went error");
+                    return RedirectToPage("/EmployeeManagement/DeleteEmployee", new { id = employee.ID });
+
+                }
             }
-           
-            
+            _toastNotification.AddErrorToastMessage("Something went error");
+            return RedirectToPage("/EmployeeManagement/EmployeeList");
+
         }
     }
 }
