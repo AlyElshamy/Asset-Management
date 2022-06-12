@@ -42,7 +42,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<ReportModels.Category> ds = _context.Categories.Select(i => new ReportModels.Category
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<ReportModels.Category> ds = _context.Categories.Where(e=>e.TenantId==tenant.TenantId).Select(i => new ReportModels.Category
             {
                 CategoryId=i.CategoryId,
                CategoryTIAR=i.CategoryTIAR
@@ -60,9 +63,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptCategory(tenant);
             Report.DataSource = ds;
             return Page();

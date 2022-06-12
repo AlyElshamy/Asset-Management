@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -39,7 +40,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<TransactionHistoryRM> ds = _context.AssetLogs.Select(a => new TransactionHistoryRM
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<TransactionHistoryRM> ds = _context.AssetLogs.Include(e=>e.Asset).Where(e=>e.Asset.TenantId==tenant.TenantId).Select(a => new TransactionHistoryRM
             {
                 ActionDate=a.ActionDate,
                 Remark=a.Remark,
@@ -82,9 +86,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptTransactionsHistory(tenant);
             Report.DataSource = ds;
             return Page();

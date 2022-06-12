@@ -163,8 +163,8 @@ namespace AssetProject.Reports
             this.xrTableCell22.StylePriority.UseTextAlignment = false;
             this.xrTableCell22.Text = "xrTableCell22";
             this.xrTableCell22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell22.TextFormatString = "{0:dd/mm/yyyy}";
-            this.xrTableCell22.Weight = 0.17789823359068119D;
+            this.xrTableCell22.TextFormatString = "{0:dd-MM-yyyy}";
+            this.xrTableCell22.Weight = 0.23152343213788412D;
             // 
             // xrTableCell23
             // 
@@ -177,7 +177,7 @@ namespace AssetProject.Reports
             this.xrTableCell23.StylePriority.UseTextAlignment = false;
             this.xrTableCell23.Text = "xrTableCell23";
             this.xrTableCell23.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell23.Weight = 0.19057909054902839D;
+            this.xrTableCell23.Weight = 0.22976681349655487D;
             // 
             // xrTableCell24
             // 
@@ -190,7 +190,7 @@ namespace AssetProject.Reports
             this.xrTableCell24.StylePriority.UseTextAlignment = false;
             this.xrTableCell24.Text = "xrTableCell24";
             this.xrTableCell24.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell24.Weight = 0.33471919664257788D;
+            this.xrTableCell24.Weight = 0.24190627514784849D;
             // 
             // xrTableCell31
             // 
@@ -442,10 +442,10 @@ namespace AssetProject.Reports
             this.xrTableCell5.StylePriority.UseFont = false;
             this.xrTableCell5.StylePriority.UseForeColor = false;
             this.xrTableCell5.StylePriority.UseTextAlignment = false;
-            this.xrTableCell5.Text = "Date";
+            this.xrTableCell5.Text = "Purchase Date";
             this.xrTableCell5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell5.TextFormatString = "{0:d}";
-            this.xrTableCell5.Weight = 0.17789823369790156D;
+            this.xrTableCell5.Weight = 0.23152343172953122D;
             // 
             // xrTableCell6
             // 
@@ -462,7 +462,7 @@ namespace AssetProject.Reports
             this.xrTableCell6.StylePriority.UseTextAlignment = false;
             this.xrTableCell6.Text = "Tag Id";
             this.xrTableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell6.Weight = 0.1905791590965793D;
+            this.xrTableCell6.Weight = 0.22976688166733991D;
             // 
             // xrTableCell7
             // 
@@ -479,7 +479,7 @@ namespace AssetProject.Reports
             this.xrTableCell7.StylePriority.UseTextAlignment = false;
             this.xrTableCell7.Text = "Status";
             this.xrTableCell7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell7.Weight = 0.3347191361615921D;
+            this.xrTableCell7.Weight = 0.2419062155592018D;
             // 
             // xrTableCell14
             // 

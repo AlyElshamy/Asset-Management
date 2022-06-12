@@ -119,14 +119,15 @@
                                             .Series(s => s.Add()
                                             .Label(l => l
                                             .Visible(true)
-                                            .BackgroundColor("#7978e9")
+                                            .BackgroundColor("#c18e92")
 
                                             )
-                                            .Color("#4b49ac")
+                                            .Color("#79cac4")
                                             .Type(SeriesType.Bar)
                                             .ArgumentField("Name")
                                             .ValueField("Count")
                                             )
+
                                             .Title(sharedResource["Assets Count Per Status"])
                                             .ArgumentAxis(a => a
                                             .Label(l => l
@@ -191,7 +192,7 @@
     <div class="row row-xs mt-2 mb-2">
         <div class="col-lg-3">
             <div class="card card-sales"style="background: #dcfefa">
-                <h6 class="slim-card-title tx-primary">@sharedResource["Available"]</h6>
+                <h6 class="slim-card-title tx-primary">@sharedResource["Broken"]</h6>
                 <div class="row mb-0">
                     <div class="col">
                         <label class="tx-12">@sharedResource["Count"]</label>

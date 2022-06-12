@@ -9,23 +9,29 @@ using System.Collections.Generic;
 using System.Linq;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
-
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
+    [Authorize]
     public class SearchCheckedOutAssetsByEmpolyeeModel : PageModel
     {
         private readonly AssetContext _context;
         private readonly IToastNotification _toastNotification;
-
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         [BindProperty]
         public int EmpolyeeID { set; get; }
         public static List<Asset> checkedoutassets = new List<Asset>();
         static bool isEntered = false;
 
-        public SearchCheckedOutAssetsByEmpolyeeModel(AssetContext context, IToastNotification toastNotification)
+        public SearchCheckedOutAssetsByEmpolyeeModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
             _toastNotification = toastNotification;
 
 
@@ -46,14 +52,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         {
         }
 
-        public void OnPost()
+        public async Task <IActionResult> OnPost()
         {
             if (EmpolyeeID != 0)
             {
-            
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
                 checkedoutassets = new List<Asset>();
                 isEntered = true;
-                var movementsForEmpolyee = _context.AssetMovements.Where(a => a.EmpolyeeID == EmpolyeeID && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForEmpolyee = _context.AssetMovements.Where(a => a.EmpolyeeID == EmpolyeeID && a.AssetMovementDirectionId == 1 &&a.Employee.TenantId==tenant.TenantId).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForEmpolyee)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
@@ -71,6 +79,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                     }
                 }
             }
+            return Page();
         }
     }
 }

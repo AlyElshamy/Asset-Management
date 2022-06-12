@@ -43,9 +43,11 @@ namespace AssetProject.Areas.Admin.Pages.Reports
         }
         public async Task<IActionResult> OnPost()
         {
-
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             List<AssetCheckOutList> ds = new List<AssetCheckOutList>();
-            var checkedOutAssets = _context.Assets.Where(e => e.AssetStatusId == 2).Include(a => a.AssetMovementDetails).ThenInclude(a => a.AssetMovement);
+            var checkedOutAssets = _context.Assets.Where(e =>e.TenantId==tenant.TenantId&&e.AssetStatusId == 2).Include(a => a.AssetMovementDetails).ThenInclude(a => a.AssetMovement);
             foreach (var asset in checkedOutAssets)
             {
                 var lastAssetMovement = asset.AssetMovementDetails.OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
@@ -107,9 +109,7 @@ namespace AssetProject.Areas.Admin.Pages.Reports
                 ds = null;
             }
 
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rtpAssetCheckOut(tenant);
             Report.DataSource = ds;
             return Page();

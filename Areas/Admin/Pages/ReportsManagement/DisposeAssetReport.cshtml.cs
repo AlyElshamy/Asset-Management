@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -43,7 +44,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<DisposeModel> ds = _context.AssetDisposeDetails.Select(i => new DisposeModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<DisposeModel> ds = _context.AssetDisposeDetails.Include(e=>e.Asset).Where(e=>e.Asset.TenantId==tenant.TenantId).Select(i => new DisposeModel
                 {
                     AssetCost = i.Asset.AssetCost,
                     AssetDescription = i.Asset.AssetDescription,
@@ -84,9 +88,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                     ds = null;
                 }
 
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptDisposeAsset(tenant);
             Report.DataSource = ds;
             return Page();

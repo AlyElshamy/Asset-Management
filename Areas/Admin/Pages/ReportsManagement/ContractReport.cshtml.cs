@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -41,7 +42,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<ContractModel> ds = _context.AssetContracts.Select(i => new ContractModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<ContractModel> ds = _context.AssetContracts.Include(e=>e.Asset).Where(e=>e.Asset.TenantId==tenant.TenantId).Select(i => new ContractModel
             {
                 AssetCost = i.Asset.AssetCost,
                 AssetDescription = i.Asset.AssetDescription,
@@ -64,9 +68,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.AssetTagId == filterModel.AssetTagId).ToList();
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+            if (filterModel.AssetTagId == null && filterModel.ContractId == null)
+            {
+                ds = new List<ContractModel>();
+            }
             Report = new rptContract(tenant);
             Report.DataSource = ds;
             return Page();

@@ -12,27 +12,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class TechniciansController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public TechniciansController(AssetContext context) {
+        public TechniciansController(AssetContext context, UserManager<ApplicationUser> userManager) {
             _context = context;
+            UserManger = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions) {
-            var technicians = _context.Technicians.Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var technicians = _context.Technicians.Include(e => e.Tenant).Where(e => e.Tenant == tenant).Select(i => new {
                 i.TechnicianId,
                 i.FullName,
                 i.Mobile,
                 i.Address,
-                i.Remarks,
-                i.TenantId
+                i.Remarks
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.

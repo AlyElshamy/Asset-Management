@@ -42,8 +42,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-
-            List<AssetReportsModel> ds = _context.Assets.Where(e => e.AssetStatusId == 2).Include(a => a.AssetMovementDetails).ThenInclude(a => a.AssetMovement).ThenInclude(a => a.Location).Select(i => new AssetReportsModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<AssetReportsModel> ds = _context.Assets.Where(e =>e.TenantId==tenant.TenantId&&e.AssetStatusId == 2).Include(a => a.AssetMovementDetails).ThenInclude(a => a.AssetMovement).ThenInclude(a => a.Location).Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
                 AssetSerialNo = i.AssetSerialNo,
@@ -67,9 +69,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = new List<AssetReportsModel>();
             }
 
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+         
             Report = new rptLocationAssets(tenant);
             Report.DataSource = ds;
             return Page();

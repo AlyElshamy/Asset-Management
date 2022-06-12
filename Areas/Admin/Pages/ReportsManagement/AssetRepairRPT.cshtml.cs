@@ -41,25 +41,27 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-        //    List<AssetRepairRM> ds = _context.AssetRepairDetails.Select(a => new AssetRepairRM
-        //    {
-        //        AssetId=a.AssetId,
-        //        AssetTagId=a.Asset.AssetTagId,
-        //        AssetSerialNo=a.Asset.AssetSerialNo,
-        //        AssetCost=a.Asset.AssetCost,
-        //        AssetDescription=a.Asset.AssetDescription,
-        //        AssetRepairId=a.AssetRepairId,
-        //        ScheduleDate=a.AssetRepair.ScheduleDate,
-        //        CompletedDate=a.AssetRepair.CompletedDate,
-        //        RepairCost=a.AssetRepair.RepairCost,
-        //        Notes=a.AssetRepair.Notes,
-        //        TechnicianId=a.AssetRepair.TechnicianId,
-        //        TechnicianName=a.AssetRepair.Technician.FullName,
-        //        photo=a.Asset.Photo
+            //    List<AssetRepairRM> ds = _context.AssetRepairDetails.Select(a => new AssetRepairRM
+            //    {
+            //        AssetId=a.AssetId,
+            //        AssetTagId=a.Asset.AssetTagId,
+            //        AssetSerialNo=a.Asset.AssetSerialNo,
+            //        AssetCost=a.Asset.AssetCost,
+            //        AssetDescription=a.Asset.AssetDescription,
+            //        AssetRepairId=a.AssetRepairId,
+            //        ScheduleDate=a.AssetRepair.ScheduleDate,
+            //        CompletedDate=a.AssetRepair.CompletedDate,
+            //        RepairCost=a.AssetRepair.RepairCost,
+            //        Notes=a.AssetRepair.Notes,
+            //        TechnicianId=a.AssetRepair.TechnicianId,
+            //        TechnicianName=a.AssetRepair.Technician.FullName,
+            //        photo=a.Asset.Photo
 
-        //    }).ToList();
-
-         List<AssetRepairRM> ds = _context.Assets.Include(i => i.AssetRepairDetails).ThenInclude(i => i.AssetRepair).ThenInclude(i=>i.Technician).Where(c => c.AssetStatusId ==3).Select(i => new AssetRepairRM
+            //    }).ToList();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<AssetRepairRM> ds = _context.Assets.Include(i => i.AssetRepairDetails).ThenInclude(i => i.AssetRepair).ThenInclude(i=>i.Technician).Where(c =>c.TenantId==tenant.TenantId &&c.AssetStatusId ==3).Select(i => new AssetRepairRM
          {
              AssetId = i.AssetId,
              AssetCost = i.AssetCost,
@@ -103,9 +105,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = null;
             }
 
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptAssetRepair(tenant);
             Report.DataSource = ds;
             return Page();

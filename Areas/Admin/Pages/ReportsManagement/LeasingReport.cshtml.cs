@@ -59,7 +59,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             //    LeasingCost=i.AssetLeasing.LeasedCost
 
             //}).ToList();
-            List<LeasingModel> ds = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).ThenInclude(e=>e.Customer).Where(c => c.AssetStatusId == 6).Select(i => new LeasingModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<LeasingModel> ds = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).ThenInclude(e=>e.Customer).Where(c =>c.TenantId==tenant.TenantId &&c.AssetStatusId == 6).Select(i => new LeasingModel
             {
                 AssetId = i.AssetId,
                 AssetCost = i.AssetCost,
@@ -101,9 +104,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptLeasing(tenant);
             Report.DataSource = ds;
             return Page();

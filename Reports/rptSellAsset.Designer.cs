@@ -256,7 +256,7 @@ namespace AssetProject.Reports
             this.tableCell13.StyleName = "DetailData1";
             this.tableCell13.StylePriority.UseTextAlignment = false;
             this.tableCell13.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.tableCell13.TextFormatString = "{0:dd/mm/yyyy}";
+            this.tableCell13.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell13.Weight = 0.303504184726081D;
             // 
             // tableCell14

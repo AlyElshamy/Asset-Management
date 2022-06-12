@@ -23,6 +23,41 @@
                     <label class="slim-card-title">@sharedResource["Filter"]</label>
                     <div class="post-group">
 
+                        @using (Html.DevExtreme().NamedTemplate("EmbeddedTreeViewSingle"))
+                        {
+                            @(Html.DevExtreme().TreeView()
+                        .DataSource(ds => ds.Mvc()
+                        .Controller("Locations")
+                        .LoadAction("Get")
+                        .Key("LocationId")
+                        )
+                        .DisplayExpr("LocationTitle")
+                        .ItemsExpr("Items")
+                        .ExpandedExpr("Expanded")
+                        .KeyExpr("LocationId")
+                        .ParentIdExpr("LocationParentId")
+                        .DataStructure(TreeViewDataStructure.Plain)
+                        .SelectionMode(NavSelectionMode.Single)
+                        .SelectByClick(true)
+                        .Height(235)
+                        .OnItemClick(@<text>
+                                function(args) {
+                                component.close();
+                                }
+                            </text>)
+                        .OnItemSelectionChanged(@<text>
+                                function(args) {
+                                component.option("value", args.component.getSelectedNodeKeys());
+                                }
+                            </text>)
+                        .OnContentReady(@<text>
+                                function(args) {
+                                syncTreeViewSelection(args.component, component.option("value"));
+                                }
+                            </text>)
+                        )
+                        }
+
                         @using (Html.BeginForm(FormMethod.Post))
 
 
@@ -35,19 +70,29 @@
         //items.AddSimpleFor(m => m.FromDate).IsRequired(true);
         //items.AddSimpleFor(m => m.ToDate).IsRequired(true);
         items.AddSimpleFor(m => m.ShowAll).IsRequired(false).Label(m => m.Text(sharedResource["Show All"]));
-        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["AssetTagId"]));
+        items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["Asset TagId"]));
 
         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
-        .Editor(e => e
-        .Lookup()
-        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("LocationsLookup").Key("Value"))
-        .ValueExpr("Value")
-        .DisplayExpr("Text").Placeholder(sharedResource["Select Location"])
-                                        .ShowClearButton(true)
-                                        .ClearButtonText(sharedResource["Clear"])
-                                        .CancelButtonText(sharedResource["Cancel"])
-                                        .SearchPlaceholder(sharedResource["searching"])
-        );
+         
+       .Editor(e => e
+        .DropDownBox()
+        .ID("locationTree")
+      .ValueExpr("Value")
+     .DisplayExpr("Text")
+     .DropDownOptions(o => o.Height(350))
+     .DataSource(d => d.WebApi()
+     .Controller("Lookups")
+     .LoadAction("LocationsLookup")
+    .LoadMode(DataSourceLoadMode.Raw)
+     .Key("Value")
+       )
+     .Placeholder(sharedResource["Select a value..."])
+     .ShowClearButton(true)
+     .OnValueChanged("treeBox_valueChanged")
+     .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
+     );
+
+       
         items.AddSimpleFor(m => m.employeeId).IsRequired(false).Label(l => l.Text(sharedResource["Employee"]))
         .Editor(e => e
         .Lookup()
@@ -107,3 +152,36 @@
 
     </div><!-- container -->
 </div>
+
+<script>
+
+    function syncTreeViewSelection(treeView, value) {
+        console.log(treeView)
+        console.log(value)
+        if (!value) {
+            treeView.unselectAll();
+        } else {
+            treeView.selectItem(value);
+        }
+    }
+
+    function treeBox_valueChanged(e) {
+        console.log("tree")
+        var $treeView = e.component.content().find(".dx-treeview");
+        console.log($treeView)
+        if ($treeView.length) {
+            syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                drobdownBox = $("#locationTree").dxDropDownBox("instance");
+                drobdownBox.option("rtlEnabled", true);
+            }
+        }
+    });
+</script>

@@ -13,58 +13,67 @@ using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class StatisticsController : Controller
     {
         private AssetContext _context;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
 
-        public StatisticsController(AssetContext context)
+        public StatisticsController(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
+
         }
 
         [HttpGet]
-        public object GetAssetCountsPerCategory(DataSourceLoadOptions loadOptions)
+        public async Task <object> GetAssetCountsPerCategory(DataSourceLoadOptions loadOptions)
         {
-
-            var listEn = _context.Categories.GroupBy(c => c.CategoryId).Select(g => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var listEn = _context.Categories.Where(e=>e.TenantId==tenant.TenantId).GroupBy(c => c.CategoryId).Select(g => new
             {
                 Name = _context.Categories.FirstOrDefault(r => r.CategoryId == g.Key).CategoryTIAR,
-                Count = _context.Assets.Where(r => r.Item.CategoryId == g.Key).Count()
+                Count = _context.Assets.Include(e=>e.Item).Where(r => r.TenantId == tenant.TenantId && r.Item.CategoryId == g.Key).Count()
 
             }).OrderByDescending(r => r.Count);
-
-         
-
             return listEn;
         }
         [HttpGet]
-        public object GetAssetCostByCategory(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCostByCategory(DataSourceLoadOptions loadOptions)
         {
-            var listEn = _context.Categories.GroupBy(c => c.CategoryId).Select(g => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var listEn = _context.Categories.Where(e=>e.TenantId==tenant.TenantId).GroupBy(c => c.CategoryId).Select(g => new
             {
                 Name = _context.Categories.FirstOrDefault(r => r.CategoryId == g.Key).CategoryTIAR,
-                Cost = _context.Assets.Where(r => r.Item.CategoryId == g.Key).Sum(s=>s.AssetCost)
+                Cost = _context.Assets.Include(e=>e.Item).Where(r =>r.TenantId==tenant.TenantId &&r.Item.CategoryId == g.Key).Sum(s=>s.AssetCost)
 
             }).OrderByDescending(r => r.Cost);
-
-
-
             return listEn;
         }
         [HttpGet]
-        public object GetAssetCostByDepartment(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCostByDepartment(DataSourceLoadOptions loadOptions)
         {
-
-                        var listEn = _context.Departments.GroupBy(c => c.DepartmentId).Select(g => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var listEn = _context.Departments.Where(e=>e.TenantId==tenant.TenantId).GroupBy(c => c.DepartmentId).Select(g => new
             {
                 Name = _context.Departments.FirstOrDefault(r => r.DepartmentId == g.Key).DepartmentTitle,
                 Cost = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g=>g.AssetMovement)
-                    .Where(a => a.AssetStatusId == 2 && a.AssetMovementDetails
+                    .Where(a =>a.TenantId==tenant.TenantId&& a.AssetStatusId == 2 && a.AssetMovementDetails
                     .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
                     .AssetMovement.DepartmentId == g.Key).Sum(a => a.AssetCost)
 
@@ -73,14 +82,16 @@ namespace AssetProject.Controllers
 
             
         }
-        public object GetAssetCountByDepartment(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCountByDepartmentAsync(DataSourceLoadOptions loadOptions)
         {
-
-            var listEn = _context.Departments.GroupBy(c => c.DepartmentId).Select(g => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var listEn = _context.Departments.Where(e=>e.TenantId==tenant.TenantId).GroupBy(c => c.DepartmentId).Select(g => new
             {
                 Name = _context.Departments.FirstOrDefault(r => r.DepartmentId == g.Key).DepartmentTitle,
                 Count = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g => g.AssetMovement)
-        .Where(a => a.AssetStatusId == 2 && a.AssetMovementDetails
+        .Where(a =>a.TenantId==tenant.TenantId &&a.AssetStatusId == 2 && a.AssetMovementDetails
         .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
         .AssetMovement.DepartmentId == g.Key).Count()
 
@@ -90,13 +101,15 @@ namespace AssetProject.Controllers
 
         }
         [HttpGet]
-        public object GetAssetCostByStatus(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCostByStatusAsync(DataSourceLoadOptions loadOptions)
         {
-
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var listEn = _context.AssetStatuses.GroupBy(c => c.AssetStatusId).Select(g => new
             {
                 Name = _context.AssetStatuses.FirstOrDefault(r => r.AssetStatusId == g.Key).AssetStatusTitle,
-                Cost = _context.Assets.Where(r => r.AssetStatusId== g.Key).Sum(s => s.AssetCost)
+                Cost = _context.Assets.Where(r =>r.TenantId==tenant.TenantId &&r.AssetStatusId== g.Key).Sum(s => s.AssetCost)
 
             }).OrderByDescending(r => r.Cost);
 
@@ -105,13 +118,15 @@ namespace AssetProject.Controllers
             return listEn;
         }
         [HttpGet]
-        public object GetAssetCountByStatus(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCountByStatusAsync(DataSourceLoadOptions loadOptions)
         {
-
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var listEn = _context.AssetStatuses.GroupBy(c => c.AssetStatusId).Select(g => new
             {
                 Name = _context.AssetStatuses.FirstOrDefault(r => r.AssetStatusId == g.Key).AssetStatusTitle,
-                Count = _context.Assets.Where(r => r.AssetStatusId == g.Key).Count()
+                Count = _context.Assets.Where(r =>r.TenantId==tenant.TenantId &&r.AssetStatusId == g.Key).Count()
             }).OrderByDescending(r => r.Count);
 
 
@@ -119,14 +134,16 @@ namespace AssetProject.Controllers
             return listEn;
         }
       
-        public object GetAssetCostByLocation(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCostByLocationAsync(DataSourceLoadOptions loadOptions)
         {
-
-            var listEn = _context.Locations.GroupBy(c => c.LocationId).Select(g => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var listEn = _context.Locations.Where(i=>i.TenantId==tenant.TenantId).GroupBy(c => c.LocationId).Select(g => new
             {
                 Name = _context.Locations.FirstOrDefault(r => r.LocationId == g.Key).LocationTitle,
                 Cost = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g => g.AssetMovement)
-        .Where(a => a.AssetStatusId == 2 
+        .Where(a =>a.TenantId==tenant.TenantId &&a.AssetStatusId == 2 
          && a.AssetMovementDetails
         .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
         .AssetMovement.LocationId == g.Key).Sum(a => a.AssetCost)
@@ -136,14 +153,16 @@ namespace AssetProject.Controllers
 
 
         }
-        public object GetAssetCountByLocation(DataSourceLoadOptions loadOptions)
+        public async Task<object> GetAssetCountByLocationAsync(DataSourceLoadOptions loadOptions)
         {
-
-            var listEn = _context.Locations.GroupBy(c => c.LocationId).Select(g => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var listEn = _context.Locations.Where(i=>i.TenantId==tenant.TenantId).GroupBy(c => c.LocationId).Select(g => new
             {
                 Name = _context.Locations.FirstOrDefault(r => r.LocationId == g.Key).LocationTitle,
                 Count = _context.Assets.Include(a => a.AssetMovementDetails).ThenInclude(g => g.AssetMovement)
-        .Where(a => a.AssetStatusId == 2
+        .Where(a => a.TenantId == tenant.TenantId && a.AssetStatusId == 2
          && a.AssetMovementDetails
         .OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault()
         .AssetMovement.LocationId == g.Key).Count()

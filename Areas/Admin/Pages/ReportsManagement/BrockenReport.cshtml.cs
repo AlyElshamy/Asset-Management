@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -45,8 +46,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 
         public async Task<IActionResult> OnPost()
         {
-
-            List<BrockenModel> ds = _context.AssetBrokenDetails.Select(i => new BrockenModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<BrockenModel> ds = _context.AssetBrokenDetails.Include(e=>e.Asset).Where(e=>e.Asset.TenantId==tenant.TenantId).Select(i => new BrockenModel
             {
                 AssetCost = i.Asset.AssetCost,
                 AssetDescription = i.Asset.AssetDescription,
@@ -90,9 +93,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = new List<BrockenModel>();
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+            
             Report = new rptAssetBrocken(tenant);
             Report.DataSource = ds;
             return Page();

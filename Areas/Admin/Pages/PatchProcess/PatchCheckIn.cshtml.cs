@@ -12,6 +12,9 @@ using System.Linq;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
@@ -23,11 +26,14 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         AssetContext _context;
         public static List<Asset> SelectedAssets = new List<Asset>();
         private readonly IToastNotification _toastNotification;
-        public PatchCheckInModel(AssetContext context, IToastNotification toastNotification)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public PatchCheckInModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
             assetmovement = new AssetMovement();
+            UserManger = userManager;
         }
         public void OnGet()
         {
@@ -39,9 +45,12 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             SelectedAssets = assets;
             return new JsonResult(assets);
         }
-        public IActionResult OnGetGridData(DataSourceLoadOptions loadOptions)
+        public async Task <IActionResult> OnGetGridData(DataSourceLoadOptions loadOptions)
         {
-            var Assets = _context.Assets.Where(a => a.AssetStatusId==2).Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var Assets = _context.Assets.Where(a => a.AssetStatusId==2&&a.TenantId==tenant.TenantId).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,

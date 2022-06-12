@@ -44,8 +44,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             List<AssetReportsModel> ds = new List<AssetReportsModel>();
-            var assets = _context.Assets.Include(e => e.Store).Include(e => e.Item).Include(e => e.Vendor).Include(e => e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).ThenInclude(e => e.Store).ToList();
+            var assets = _context.Assets.Where(e=>e.TenantId==tenant.TenantId).Include(e => e.Store).Include(e => e.Item).Include(e => e.Vendor).Include(e => e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).ThenInclude(e => e.Store).ToList();
             foreach (var asset in assets)
             {
                 if (asset.AssetMovementDetails.Count() > 0)
@@ -89,9 +92,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+          
             Report = new rptOutcomingStoreHistory(tenant);
             Report.DataSource = ds;
             return Page();

@@ -13,25 +13,34 @@ using System.Threading.Tasks;
 using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ReportModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class AlertsController : Controller
     {
 
         private AssetContext _context;
-
-        public AlertsController(AssetContext context)
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public AlertsController(AssetContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            UserManger = userManager;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetExpiringContracts(DataSourceLoadOptions loadOptions)
         {
-            var contracts = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Select(i => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var contracts = _context.Contracts.Where( c=>c.TenantId == tenant.TenantId && c.EndDate.Date < DateTime.Now.Date).Select(i => new
             {
                 i.ContractId,
                 i.Title,
@@ -48,7 +57,10 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetExpiringCheckOut(DataSourceLoadOptions loadOptions)
         {
-            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate<DateTime.Now.Date).Select(i => new AssetReportsModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c =>c.TenantId==tenant.TenantId &&c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate<DateTime.Now.Date).Select(i => new AssetReportsModel
             {
                 AssetID=i.AssetId,
                 AssetCost = i.AssetCost,
@@ -68,7 +80,10 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetInsurancesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var insurances = _context.Insurances.Where(c => c.EndDate.Date<DateTime.Now.Date).Select(i => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var insurances = _context.Insurances.Where( c=>c.TenantId == tenant.TenantId && c.EndDate.Date<DateTime.Now.Date).Select(i => new
             {
                 i.InsuranceId,
                 i.Title,
@@ -83,7 +98,10 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetLeasesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).ThenInclude(e => e.Customer).Where(c => c.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new LeasingModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).ThenInclude(e => e.Customer).Where(c =>c.TenantId==tenant.TenantId &&c.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new LeasingModel
             {
                 AssetId = i.AssetId,
                 AssetCost = i.AssetCost,
@@ -102,7 +120,10 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetWarrantiesExpiring(DataSourceLoadOptions loadOptions)
         {
-            var warranty = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Include(i => i.Asset).Select(i => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var warranty = _context.AssetWarranties.Include(i => i.Asset).Where(c =>c.Asset.TenantId==tenant.TenantId &&c.ExpirationDate.Date < DateTime.Now.Date).Select(i => new
             {
                 i.WarrantyId,
                 i.AssetId,
@@ -115,7 +136,10 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Include(e=>e.Asset).Where(c => c.ScheduleDate.Date==DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId==1/*&&c.Asset.AssetStatusId==9*/).Include(i => i.Asset).Include(i=>i.Technician).Select(i => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var Maintainances = _context.AssetMaintainances.Include(e=>e.Asset).Where(c =>c.Asset.TenantId==tenant.TenantId &&c.ScheduleDate.Date==DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId==1/*&&c.Asset.AssetStatusId==9*/).Include(i=>i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,
@@ -129,7 +153,10 @@ namespace AssetProject.Controllers
         }
         public async Task<IActionResult> GetMaintenanceoverDue(DataSourceLoadOptions loadOptions)
         {
-            var Maintainances = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date<DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 /*&& c.Asset.AssetStatusId == 9*/).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var Maintainances = _context.AssetMaintainances.Include(e => e.Asset).Where(c =>c.Asset.TenantId==tenant.TenantId &&c.ScheduleDate.Date<DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 /*&& c.Asset.AssetStatusId == 9*/).Include(i => i.Technician).Select(i => new
             {
                 i.AssetMaintainanceId,
                 i.AssetMaintainanceTitle,

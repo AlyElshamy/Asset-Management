@@ -43,8 +43,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-
-            List<EmployeeModel> ds = _context.Employees.Select(i => new EmployeeModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<EmployeeModel> ds = _context.Employees.Where(e=>e.TenantId==tenant.TenantId).Select(i => new EmployeeModel
                 {
                     FullName = i.FullName,
                     EmployeeId = i.EmployeeId,
@@ -53,6 +55,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                     Title = i.Title,
                     Notes = i.Notes,
                     Remark = i.Remark,
+                    ID=i.ID
                     
 
                 }).ToList();
@@ -61,21 +64,19 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 {
                     ds = ds.ToList();
                 }
-                if (filterModel.EmployeeFullName != null)
+                if (filterModel.employeeId != null)
                 {
-                    ds = ds.Where(i => i.FullName.Contains(filterModel.EmployeeFullName)).ToList();
+                    ds = ds.Where(i=>i.ID==filterModel.employeeId).ToList();
                 }
                 if (filterModel.EmployeeIdStr != null)
                 {
                     ds = ds.Where(i => i.EmployeeId.Contains(filterModel.EmployeeIdStr)).ToList();
                 }
-                if(filterModel.EmployeeFullName==null&& filterModel.EmployeeIdStr == null&& filterModel.ShowAll == false)
+                if(filterModel.employeeId == null && filterModel.EmployeeIdStr == null&& filterModel.ShowAll == false)
                 {
                     ds = new List<EmployeeModel>();
                 }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptEmployee(tenant);
             Report.DataSource = ds;
             return Page();

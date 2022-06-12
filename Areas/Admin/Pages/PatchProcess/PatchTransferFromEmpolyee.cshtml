@@ -333,26 +333,28 @@
         console.log(Empolyee)
         var EmpolyeeValue = Empolyee.option("selectedItem");
         console.log(EmpolyeeValue)
-        console.log(EmpolyeeValue.Value)
+        if (EmpolyeeValue != null) {
+            console.log(EmpolyeeValue.Value)
+            $.ajax({
+                type: "GET",
+                url: "/admin/PatchProcess/PatchTransferFromEmpolyee?handler=AssetsForEmpolyee",
+                data: { "values": EmpolyeeValue.Value },
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    console.log("get Employee successfully" + response)
+                    // $("#grid-container").dxDataGrid("instance").refresh()
+                    $("#grid-container").dxDataGrid("instance").option("dataSource", response)
+                    console.log($("#grid-container").dxDataGrid("instance"))
 
-        $.ajax({
-            type: "GET",
-            url: "/admin/PatchProcess/PatchTransferFromEmpolyee?handler=AssetsForEmpolyee",
-            data: { "values": EmpolyeeValue.Value },
-            contentType: "application/json",
-            dataType: "json",
-            success: function (response) {
-                console.log("get Employee successfully" + response)
-                // $("#grid-container").dxDataGrid("instance").refresh()
-                $("#grid-container").dxDataGrid("instance").option("dataSource", response)
-                console.log($("#grid-container").dxDataGrid("instance"))
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
 
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-
+        }
+       
 
 
     }

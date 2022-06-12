@@ -9,13 +9,21 @@ using System.Collections.Generic;
 using System.Linq;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
-{
+{ 
+    [Authorize]
     public class SearchCheckedOutAssetsByLocationModel : PageModel
     {
 
         private readonly AssetContext _context;
         private readonly IToastNotification _toastNotification;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         [BindProperty]
         public int LocationId{ get; set; }
 
@@ -24,12 +32,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
   
 
 
-        public SearchCheckedOutAssetsByLocationModel(AssetContext context, IToastNotification toastNotification)
+        public SearchCheckedOutAssetsByLocationModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
-      
-
+            UserManger = userManager;
         }
         public void OnGet()
         {
@@ -45,14 +52,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             return new JsonResult(DataSourceLoader.Load(checkedoutassets.Distinct(), loadOptions));
         }
 
-        public async void OnPost()
+        public async Task <IActionResult> OnPost()
         {
             if (LocationId!=0)
             {
-
-               checkedoutassets = new List<Asset>();
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
+                checkedoutassets = new List<Asset>();
                 isEntered = true;
-                var movementsForLocation = _context.AssetMovements.Where(a => a.LocationId == LocationId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForLocation = _context.AssetMovements.Where(a => a.LocationId == LocationId && a.AssetMovementDirectionId == 1&&a.Location.TenantId==tenant.TenantId).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForLocation)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
@@ -71,6 +80,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 }
    
             }
+            return Page();
         }
     }
 }

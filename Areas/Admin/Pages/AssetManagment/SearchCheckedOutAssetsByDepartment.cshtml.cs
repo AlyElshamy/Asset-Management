@@ -9,25 +9,30 @@ using System.Collections.Generic;
 using System.Linq;
 using DevExtreme.AspNet.Mvc;
 using DevExtreme.AspNet.Data;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
-{
+{  
+    [Authorize]
     public class SearchCheckedOutAssetsByDepartmentModel : PageModel
     {
         private readonly AssetContext _context;
         private readonly IToastNotification _toastNotification;
-
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         [BindProperty]
         public int DepartmentId { set; get; }
         public static List<Asset> checkedoutassets = new List<Asset>();
         static bool isEntered = false;
 
-        public SearchCheckedOutAssetsByDepartmentModel(AssetContext context, IToastNotification toastNotification)
+        public SearchCheckedOutAssetsByDepartmentModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
-
+            UserManger = userManager;
         }
         public void OnGet()
         {
@@ -44,13 +49,16 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             return new JsonResult(DataSourceLoader.Load(checkedoutassets.Distinct(), loadOptions));
         }
 
-        public void OnPost()
+        public async Task <IActionResult> OnPost()
         {
             if (DepartmentId != 0)
             {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
                 checkedoutassets = new List<Asset>();
                 isEntered = true;
-                var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1 && a.EmpolyeeID == null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1 && a.EmpolyeeID == null&&a.Department.TenantId==tenant.TenantId).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForDepartment)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
@@ -65,8 +73,9 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                             }
                         }
                     }
-                }   
+                }
             }
+            return Page();
         }
     }
 }

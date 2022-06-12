@@ -73,6 +73,7 @@
         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
         .Editor(e => e
          .DropDownBox()
+         .ID("locationTree")
        .ValueExpr("Value")
       .DisplayExpr("Text")
       .DropDownOptions(o => o.Height(350))
@@ -82,7 +83,7 @@
      .LoadMode(DataSourceLoadMode.Raw)
       .Key("Value")
         )
-      .Placeholder("Select a value...")
+      .Placeholder(sharedResource["Select a value..."])
       .ShowClearButton(true)
       .OnValueChanged("treeBox_valueChanged")
       .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
@@ -183,4 +184,14 @@
             syncTreeViewSelection($treeView.dxTreeView("instance"), e.value);
         }
     }
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                drobdownBox = $("#locationTree").dxDropDownBox("instance");
+                drobdownBox.option("rtlEnabled", true);
+            }
+        }
+    });
     </script>

@@ -43,8 +43,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-
-            List<AssetReportsModel> ds = _context.Assets.Select(i => new AssetReportsModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<AssetReportsModel> ds = _context.Assets.Where(e=>e.TenantId==tenant.TenantId).Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
                 AssetSerialNo = i.AssetSerialNo,
@@ -63,11 +65,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.StatusId == filterModel.StatusId).ToList();
             }
-                
+            if (filterModel.StatusId == 0)
+            {
+                ds = new List<AssetReportsModel>();
+            }
 
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
             tenant.Email = user.Email;
             tenant.Phone = user.PhoneNumber;
             Report = new rptAssetStatus(tenant);

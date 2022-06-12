@@ -231,7 +231,16 @@
            }
     }
 
-    window.addEventListener('DOMContentLoaded', (event) => {        if (localStorage.getItem("lang") != "") {            if (localStorage.getItem("lang") == "ar") {                console.log("In Page")                drobdownBox = $("#locationTree").dxDropDownBox("instance");                drobdownBox.option("rtlEnabled", true);            }        }    });
+    window.addEventListener('DOMContentLoaded', (event) => {
+        if (localStorage.getItem("lang") != "") {
+
+            if (localStorage.getItem("lang") == "ar") {
+                console.log("In Page")
+                drobdownBox = $("#locationTree").dxDropDownBox("instance");
+                drobdownBox.option("rtlEnabled", true);
+            }
+        }
+    });
 
 
 </script>

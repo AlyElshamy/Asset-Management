@@ -44,7 +44,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<MaintainanceModel> ds = _context.AssetMaintainances.Include(e => e.AssetMaintainanceFrequency).Include(e => e.MaintainanceStatus).Include(e => e.Technician).Select(i => new MaintainanceModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<MaintainanceModel> ds = _context.AssetMaintainances.Include(e=>e.Asset).Where(e=>e.Asset.TenantId==tenant.TenantId).Include(e => e.AssetMaintainanceFrequency).Include(e => e.MaintainanceStatus).Include(e => e.Technician).Select(i => new MaintainanceModel
             {
                 AssetCost = i.Asset.AssetCost,
                 AssetSerialNo = i.Asset.AssetSerialNo,
@@ -97,10 +100,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
-
+          
             Report = new rptMaintOnDay(tenant);
             Report.DataSource = ds;
             return Page();

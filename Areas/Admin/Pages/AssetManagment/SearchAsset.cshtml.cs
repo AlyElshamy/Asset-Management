@@ -2,11 +2,14 @@ using AssetProject.Data;
 using AssetProject.Models;
 using AssetProject.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NToastNotify;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
@@ -16,17 +19,20 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         
         private readonly AssetContext _context ;
         private readonly IToastNotification _toastNotification;
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
         [BindProperty]
         public AssetSerachVM AssetSerachVM { get; set; }
-        public SearchAssetModel(AssetContext context, IToastNotification toastNotification)
+        public SearchAssetModel(AssetContext context, IToastNotification toastNotification, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _toastNotification = toastNotification;
+            UserManger = userManager;
         }
         public void OnGet()
         {
         }
-        public IActionResult OnPost()
+        public async Task <IActionResult> OnPost()
         {
             bool CheckSearchItem=false;
             int SearchItem = 0;
@@ -34,8 +40,11 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
             
             if (ModelState.IsValid)
             {
+                var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = await UserManger.FindByIdAsync(userid);
+                tenant = _context.Tenants.Find(user.TenantId);
                 List<Asset> ListOfAssets = _context.Assets
-                    .Where(x => x.AssetTagId == AssetSerachVM.AssetSearchItem || x.AssetSerialNo == AssetSerachVM.AssetSearchItem || x.AssetCost == SearchItem||x.AssetLife== SearchItem||x.Item.ItemTitle ==AssetSerachVM.AssetSearchItem).ToList();
+                    .Where(x =>x.TenantId == tenant.TenantId &&(x.AssetTagId == AssetSerachVM.AssetSearchItem || x.AssetSerialNo == AssetSerachVM.AssetSearchItem || x.AssetCost == SearchItem||x.AssetLife== SearchItem||x.Item.ItemTitle ==AssetSerachVM.AssetSearchItem)).ToList();
                 if (ListOfAssets.Count == 0)
                 {
                     _toastNotification.AddErrorToastMessage("This Asset Not Found");

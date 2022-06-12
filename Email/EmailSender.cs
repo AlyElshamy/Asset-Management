@@ -13,8 +13,8 @@ namespace Email
         
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            string fromMail = "hallbooking3@gmail.com";
-            string fromPassword = "ssnwevikxhzcqfgh";
+            string fromMail = "slimassetssystem@gmail.com";
+            string fromPassword = "bknnhojgyjazmlzl";
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);

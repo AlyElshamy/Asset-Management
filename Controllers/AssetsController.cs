@@ -15,18 +15,25 @@ using AssetProject.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class AssetsController : Controller
     {
         private AssetContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AssetsController(AssetContext context, IWebHostEnvironment webHostEnvironment) {
+        UserManager<ApplicationUser> UserManger;
+        public Tenant tenant { set; get; }
+        public AssetsController(AssetContext context, IWebHostEnvironment webHostEnvironment, UserManager<ApplicationUser> userManager) {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            UserManger = userManager;
         }
 
         [HttpGet]
@@ -217,7 +224,10 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAssetsWithoutMaint(DataSourceLoadOptions loadOptions)
         {
-            var assets = _context.Assets.Where(a=>a.AssetStatusId==1|| a.AssetStatusId == 2).Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var assets = _context.Assets.Where(a=>a.TenantId==tenant.TenantId&&(a.AssetStatusId==1|| a.AssetStatusId == 2)).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,
@@ -244,7 +254,10 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAssetsWithoutdispose(DataSourceLoadOptions loadOptions)
         {
-            var assets = _context.Assets.Where(a=>a.AssetStatusId==1).Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var assets = _context.Assets.Where(a=>a.AssetStatusId==1&&a.TenantId==tenant.TenantId).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,
@@ -270,7 +283,10 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAssetsforleasing(DataSourceLoadOptions loadOptions)
         {
-            var assets = _context.Assets.Where(a=>a.AssetStatusId==1).Select(i => new {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            var assets = _context.Assets.Where(a=>a.AssetStatusId==1&&a.TenantId==tenant.TenantId).Select(i => new {
                 i.AssetId,
                 i.AssetDescription,
                 i.AssetTagId,

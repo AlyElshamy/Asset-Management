@@ -73,14 +73,14 @@
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">@sharedResource["StartDate"] : <span class="tx-danger">*</span></label>
-                              <input asp-for="@Model.insurance.StartDate" type="date" class="form-control date">
+                              <input asp-for="@Model.insurance.StartDate" type="date" class="form-control date" value="">
                               <span asp-validation-for="@Model.insurance.StartDate" class="text-danger"></span>
                           </div>
                       </div><!-- col-6 -->
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">@sharedResource["EndDate"] : <span class="tx-danger">*</span></label>
-                              <input asp-for="@Model.insurance.EndDate" type="date" class="form-control date">
+                              <input asp-for="@Model.insurance.EndDate" type="date" class="form-control date" value="">
                               <span asp-validation-for="@Model.insurance.EndDate" class="text-danger"></span>
                           </div>
 
@@ -88,27 +88,27 @@
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">@sharedResource["Deductible"] : <span class="tx-danger">*</span></label>
-                              <input asp-for="@Model.insurance.Deductible" class="form-control" placeholder="@sharedResource["EnterDeductible"] ">
+                              <input asp-for="@Model.insurance.Deductible" class="form-control" placeholder="@sharedResource["EnterDeductible"] " value="">
                               <span asp-validation-for="@Model.insurance.Deductible" class="text-danger"></span>
                           </div>
                       </div><!-- col-6 -->
                       <div class="col-lg-4">
                           <div class="form-group">
                               <label class="form-control-label">@sharedResource["Permium"] : <span class="tx-danger">*</span></label>
-                              <input asp-for="@Model.insurance.Permium" class="form-control" placeholder="@sharedResource["EnterPermium"]">
+                              <input asp-for="@Model.insurance.Permium" class="form-control" placeholder="@sharedResource["EnterPermium"]" value="">
                               <span asp-validation-for="@Model.insurance.Permium" class="text-danger"></span>
                           </div>
                       </div><!-- col-6 -->
-
+                      <div class="col-lg-4">
+                          <div class="form-group">
+                              <label class="form-control-label"> @sharedResource["IsActive"]  : <span class="tx-danger">*</span></label>
+                              <input asp-for="@Model.insurance.IsActive" class="form-control">
+                              <span asp-validation-for="@Model.insurance.IsActive" class="text-danger"></span>
+                          </div>
+                      </div>
                   </div><!--End Row-->
                   
-                  <div class="col-lg-4">
-                      <div class="form-group">
-                          <label class="form-control-label"> @sharedResource["IsActive"]  : <span class="tx-danger">*</span></label>
-                          <input asp-for="@Model.insurance.IsActive" class="form-control">
-                          <span asp-validation-for="@Model.insurance.IsActive" class="text-danger"></span>
-                      </div>
-                  </div> 
+                  
                   @*<div class="form-check">
             <input asp-for="@Model.insurance.IsActive" class="form-check-input" type="checkbox">
             <label asp-for="@Model.insurance.IsActive"> @sharedResource["IsActive"]   </label>

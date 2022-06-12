@@ -447,7 +447,7 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
                 string DisposeFor = disposeAsset.DisposeTo;
                 AssetLog assetLog = new AssetLog()
                 {
-                    ActionLogId = 12,
+                    ActionLogId = 11,
                     AssetId = AssetId,
                     ActionDate = DateTime.Now,
                     Remark = string.Format($"{DisposeDate}{DisposeD} && {DisposeTo}{DisposeFor}")

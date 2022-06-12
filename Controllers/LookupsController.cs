@@ -14,9 +14,11 @@ using AssetProject.Data;
 using AssetProject.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class LookupsController : Controller
@@ -35,6 +37,7 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> CountriesLookup(DataSourceLoadOptions loadOptions)
         {
+           
             var lookup = _context.Countries;
                          
             return Json(await DataSourceLoader.LoadAsync(lookup, loadOptions));
@@ -78,7 +81,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> LocationsLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Locations
+                         where i.TenantId==tenant.TenantId
                          orderby i.LocationTitle
                          select new
                          {
@@ -181,7 +188,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> ContractsLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Contracts
+                         where i.TenantId==tenant.TenantId
                          orderby i.ContractId
                          select new
                          {
@@ -193,7 +204,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> InsurancesLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Insurances
+                         where i.TenantId==tenant.TenantId
                          orderby i.InsuranceId
                          select new
                          {
@@ -219,7 +234,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> EmpolyeesLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Employees
+                         where i.TenantId==tenant.TenantId
                          orderby i.ID
                          select new
                          {
@@ -232,7 +251,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> DepartmentsLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.Departments
+                         where i.TenantId==tenant.TenantId
                          orderby i.DepartmentId
                          select new
                          {
@@ -357,7 +380,11 @@ namespace AssetProject.Controllers
         [HttpGet]
         public async Task<IActionResult> AssetWarrantyLookup(DataSourceLoadOptions loadOptions)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
             var lookup = from i in _context.AssetWarranties
+                         where i.Asset.TenantId==tenant.TenantId
                          orderby i.WarrantyId
                          select new
                          {

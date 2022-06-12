@@ -40,7 +40,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<AssetReportsModel> ds = _context.Assets.Select(a => new AssetReportsModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<AssetReportsModel> ds = _context.Assets.Where(e=>e.TenantId==tenant.TenantId).Select(a => new AssetReportsModel
             {
              AssetTagId=a.AssetTagId,
              AssetSerialNo=a.AssetSerialNo,
@@ -88,9 +91,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptAddAsset(tenant);
             Report.DataSource = ds;
             return Page();

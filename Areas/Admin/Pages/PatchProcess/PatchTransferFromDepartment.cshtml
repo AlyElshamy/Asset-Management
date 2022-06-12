@@ -338,26 +338,29 @@
         console.log(Departmnt)
         var DepartmntValue = Departmnt.option("selectedItem");
         console.log(DepartmntValue)
-        console.log(DepartmntValue.Value)
+       
+        if (DepartmntValue != null) {
+            console.log(DepartmntValue.Value)
+            $.ajax({
+                type: "GET",
+                url: "/admin/PatchProcess/PatchTransferFromDepartment?handler=AssetsForDepartment",
+                data: { "values": DepartmntValue.Value },
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    console.log("get Employee successfully" + response)
+                    // $("#grid-container").dxDataGrid("instance").refresh()
+                    $("#grid-container").dxDataGrid("instance").option("dataSource", response)
+                    console.log($("#grid-container").dxDataGrid("instance"))
 
-        $.ajax({
-            type: "GET",
-            url: "/admin/PatchProcess/PatchTransferFromDepartment?handler=AssetsForDepartment",
-            data: { "values": DepartmntValue.Value },
-            contentType: "application/json",
-            dataType: "json",
-            success: function (response) {
-                console.log("get Employee successfully" + response)
-                // $("#grid-container").dxDataGrid("instance").refresh()
-                $("#grid-container").dxDataGrid("instance").option("dataSource", response)
-                console.log($("#grid-container").dxDataGrid("instance"))
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
 
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-
+        }
+        
 
 
     }

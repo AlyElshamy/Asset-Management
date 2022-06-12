@@ -12,9 +12,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
 using AssetProject.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
+    [Authorize]
     public class PatchTransferFromDepartmentModel : PageModel
     {
 

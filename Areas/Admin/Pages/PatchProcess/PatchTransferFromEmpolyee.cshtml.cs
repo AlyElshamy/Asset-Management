@@ -11,9 +11,11 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssetProject.Areas.Admin.Pages.PatchProcess
 {
+    [Authorize]
     public class PatchTransferFromEmpolyeeModel : PageModel
     {
         [BindProperty]

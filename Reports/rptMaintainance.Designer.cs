@@ -254,6 +254,8 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetTagId]")});
             this.tableCell17.Name = "tableCell17";
             this.tableCell17.StyleName = "DetailData1";
+            this.tableCell17.StylePriority.UseTextAlignment = false;
+            this.tableCell17.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell17.Weight = 0.11335353498498788D;
             // 
             // tableCell19
@@ -262,6 +264,8 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ScheduleDate]")});
             this.tableCell19.Name = "tableCell19";
             this.tableCell19.StyleName = "DetailData1";
+            this.tableCell19.StylePriority.UseTextAlignment = false;
+            this.tableCell19.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell19.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell19.Weight = 0.1056404917651875D;
             // 
@@ -271,6 +275,8 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MaintainanceStatusTL]")});
             this.tableCell20.Name = "tableCell20";
             this.tableCell20.StyleName = "DetailData1";
+            this.tableCell20.StylePriority.UseTextAlignment = false;
+            this.tableCell20.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell20.Weight = 0.094411820735836677D;
             // 
             // tableCell21
@@ -279,6 +285,8 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AssetMaintainanceDateCompleted]")});
             this.tableCell21.Name = "tableCell21";
             this.tableCell21.StyleName = "DetailData1";
+            this.tableCell21.StylePriority.UseTextAlignment = false;
+            this.tableCell21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell21.TextFormatString = "{0:dd-MM-yyyy}";
             this.tableCell21.Weight = 0.12425974469836788D;
             // 
@@ -289,7 +297,7 @@ namespace AssetProject.Reports
             this.tableCell22.Name = "tableCell22";
             this.tableCell22.StyleName = "DetailData1";
             this.tableCell22.StylePriority.UseTextAlignment = false;
-            this.tableCell22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.tableCell22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell22.Weight = 0.11082409019656271D;
             // 
             // tableCell23
@@ -299,7 +307,7 @@ namespace AssetProject.Reports
             this.tableCell23.Name = "tableCell23";
             this.tableCell23.StyleName = "DetailData1";
             this.tableCell23.StylePriority.UseTextAlignment = false;
-            this.tableCell23.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.tableCell23.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell23.Weight = 0.12135897692438866D;
             // 
             // tableCell24
@@ -308,6 +316,8 @@ namespace AssetProject.Reports
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TechnicianName]")});
             this.tableCell24.Name = "tableCell24";
             this.tableCell24.StyleName = "DetailData1";
+            this.tableCell24.StylePriority.UseTextAlignment = false;
+            this.tableCell24.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.tableCell24.Weight = 0.12830784344473603D;
             // 
             // objectDataSource1

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetProject.Areas.Admin.Pages.ReportsManagement
 {
@@ -45,8 +46,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-
-            List<AssetReportsModel> ds = _context.AssetLogs.Where(l => l.ActionLogId == 19).Select(i => new AssetReportsModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<AssetReportsModel> ds = _context.AssetLogs.Include(e=>e.Asset).Where(l =>l.Asset.TenantId==tenant.TenantId &&l.ActionLogId == 19).Select(i => new AssetReportsModel
             {
                 AssetCost = i.Asset.AssetCost,
                 AssetPurchaseDate = i.Asset.AssetPurchaseDate,
@@ -104,9 +107,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 ds = new List<AssetReportsModel>();
             }
 
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptAssetEdited(tenant);
             Report.DataSource = ds;
 

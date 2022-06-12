@@ -45,7 +45,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<WarrantyModel> ds = _context.AssetWarranties.Include(e => e.Asset).Select(i => new WarrantyModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<WarrantyModel> ds = _context.AssetWarranties.Include(e => e.Asset).Where(e=>e.Asset.TenantId==tenant.TenantId).Select(i => new WarrantyModel
             {
                 AssetCost = i.Asset.AssetCost,
                 AssetSerialNo = i.Asset.AssetSerialNo,
@@ -80,10 +83,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = null;
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
-
+            
             Report = new rptWarranty(tenant);
             Report.DataSource = ds;
             return Page();

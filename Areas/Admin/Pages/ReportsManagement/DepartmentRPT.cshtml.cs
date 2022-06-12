@@ -38,7 +38,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<Department> ds = _context.Departments.ToList();
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<Department> ds = _context.Departments.Where(e=>e.TenantId==tenant.TenantId).ToList();
             if (filterModel.ShowAll != false)
             {
                 ds = ds.ToList();
@@ -51,9 +54,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = new List<Department>();
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+           
             Report = new rptDepartmentReport(tenant);
             Report.DataSource = ds;
             return Page();

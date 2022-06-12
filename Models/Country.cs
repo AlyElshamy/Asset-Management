@@ -11,6 +11,7 @@ namespace AssetProject.Models
 
         public int CountryId { get; set; }
         public string CountryTitle { get; set; }
+       
 
         public virtual ICollection<Tenant> Tenants { get; set; }
     }

@@ -42,7 +42,10 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
         }
         public async Task<IActionResult> OnPost()
         {
-            List<CustomerModel> ds = _context.Customers.Select(i => new CustomerModel
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = _context.Tenants.Find(user.TenantId);
+            List<CustomerModel> ds = _context.Customers.Where(e=>e.TenantId==tenant.TenantId).Select(i => new CustomerModel
             {
                 CompanyName = i.CompanyName,
                 City = i.City,
@@ -57,17 +60,22 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 PostalCode = i.PostalCode,
                 State = i.State
             }).ToList();
-            if (filterModel.CustomerName != null)
+            if (filterModel.ShowAll != false)
             {
-                ds = ds.Where(i => i.FullName.Contains(filterModel.CustomerName)).ToList();
+                ds = ds.ToList();
+            }
+            if (filterModel.CustomerId != null)
+            {
+                ds = ds.Where(i=>i.CustomerId==filterModel.CustomerId).ToList();
             }
             if (filterModel.CompanyName != null)
             {
                 ds = ds.Where(i => i.CompanyName.Contains(filterModel.CompanyName)).ToList();
             }
-            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await UserManger.FindByIdAsync(userid);
-            tenant = _context.Tenants.Find(user.TenantId);
+          if(filterModel.CustomerId == null&& filterModel.CompanyName == null&& filterModel.ShowAll == false)
+            {
+                ds = null;
+            }
             Report = new rptCustomer(tenant);
             Report.DataSource = ds;
             return Page();

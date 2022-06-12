@@ -177,6 +177,9 @@
   <data name="Add New Store" xml:space="preserve">
     <value>إنشاء متجر جديد</value>
   </data>
+  <data name="Add New Technician" xml:space="preserve">
+    <value>اضافة فني جديد</value>
+  </data>
   <data name="Add New User" xml:space="preserve">
     <value>إضافه مستخدم جديد</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="Add Store" xml:space="preserve">
     <value>إضافة متجر</value>
+  </data>
+  <data name="Add Technician" xml:space="preserve">
+    <value>اضف فني </value>
   </data>
   <data name="Add Vendor" xml:space="preserve">
     <value>إضافة بائع</value>
@@ -450,6 +456,9 @@
   <data name="AssetSerialNo" xml:space="preserve">
     <value>رقم السيريال</value>
   </data>
+  <data name="AssetTagId" xml:space="preserve">
+    <value>الرقم التعريفي للأصل</value>
+  </data>
   <data name="Assigned To" xml:space="preserve">
     <value>مخصص ل</value>
   </data>
@@ -488,6 +497,9 @@
   </data>
   <data name="Brocken Asset Report" xml:space="preserve">
     <value>تقارير الأصول المكسوره</value>
+  </data>
+  <data name="Broken" xml:space="preserve">
+    <value>الأصول المكسورة</value>
   </data>
   <data name="Browse our site and see for yourself why you need Slim" xml:space="preserve">
     <value>تصفح موقعنا وشاهد بنفسك لماذا تحتاج Slim</value>
@@ -783,6 +795,9 @@
   <data name="Delete Store" xml:space="preserve">
     <value>حذف متجر</value>
   </data>
+  <data name="Delete Technician" xml:space="preserve">
+    <value>حذف فني</value>
+  </data>
   <data name="Delete Vendor" xml:space="preserve">
     <value>إزالة بائع</value>
   </data>
@@ -917,6 +932,9 @@
   </data>
   <data name="Edit Store" xml:space="preserve">
     <value>تعديل المتجر</value>
+  </data>
+  <data name="Edit Technician" xml:space="preserve">
+    <value>تعديل فني</value>
   </data>
   <data name="Edit Vendor" xml:space="preserve">
     <value>تعديل البائع</value>
@@ -1080,6 +1098,9 @@
   <data name="Enter Postal Code" xml:space="preserve">
     <value>أدخل الرمز البريدي</value>
   </data>
+  <data name="Enter Remarks" xml:space="preserve">
+    <value>أدخل الملاحظات</value>
+  </data>
   <data name="Enter salvage Value" xml:space="preserve">
     <value>أدخل قيمه الإسترداد</value>
   </data>
@@ -1094,6 +1115,9 @@
   </data>
   <data name="Enter Store Title" xml:space="preserve">
     <value>أدخل اسم المتجر</value>
+  </data>
+  <data name="Enter Technician Name" xml:space="preserve">
+    <value>أدخل اسم الفني </value>
   </data>
   <data name="Enter Telephone Number" xml:space="preserve">
     <value>أدخل رقم التليفون</value>
@@ -1483,6 +1507,9 @@
   <data name="Message Preview" xml:space="preserve">
     <value>معاينة الرسالة</value>
   </data>
+  <data name="Mobile" xml:space="preserve">
+    <value>الهاتف</value>
+  </data>
   <data name="Mobile Number" xml:space="preserve">
     <value>رقم الهاتف</value>
   </data>
@@ -1584,6 +1611,9 @@
   </data>
   <data name="Please fill Store information" xml:space="preserve">
     <value>من فضلك أدخل معلومات المتجر</value>
+  </data>
+  <data name="Please fill Technician information" xml:space="preserve">
+    <value>من فضلك اضف معلومات الموظف</value>
   </data>
   <data name="Please fill Vendor information" xml:space="preserve">
     <value>من فضلك أضف معلومات البائع</value>
@@ -1926,6 +1956,21 @@
   </data>
   <data name="Technician" xml:space="preserve">
     <value>الفني</value>
+  </data>
+  <data name="Technician Details" xml:space="preserve">
+    <value>تفاصيل الفني</value>
+  </data>
+  <data name="Technician Information" xml:space="preserve">
+    <value>معلومات الفني</value>
+  </data>
+  <data name="Technician List" xml:space="preserve">
+    <value>قائمة الفنيين</value>
+  </data>
+  <data name="Technician Managment" xml:space="preserve">
+    <value>إداراة الفنيين</value>
+  </data>
+  <data name="Technician Name" xml:space="preserve">
+    <value>أسم الفني</value>
   </data>
   <data name="Telephone Number" xml:space="preserve">
     <value>رقم التليفون</value>
