@@ -34,12 +34,22 @@ namespace AssetProject.Areas.Admin.Pages.PrintAssetProfile
 
 
         public async Task<IActionResult> OnGet(int AssetId)
-        {
-            List<Asset> ds = _context.Assets.Include(a => a.Item).Include(a => a.Store).Include(a=>a.AssetStatus).Include(e=>e.Vendor).Include(e=>e.DepreciationMethod)
-                   .ToList();
+        {   
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
+            var asset = _context.Assets.Find(AssetId);
+            if (asset == null)
+            {
+                return RedirectToPage("../NotFound");
+            }
+            if (asset.TenantId != tenant.TenantId)
+            {
+                return RedirectToPage("../NotFound");
+            }
+            List<Asset> ds = _context.Assets.Include(a => a.Item).Include(a => a.Store).Include(a=>a.AssetStatus).Include(e=>e.Vendor).Include(e=>e.DepreciationMethod)
+                   .ToList();
+           
             Report = new rptAssetProfileList(tenant);
             Report.DataSource = ds;
             Report.Parameters[0].Value = AssetId;

@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace AssetProject.Areas.Admin.Pages.AssetManagment
 {
@@ -30,21 +32,31 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
         [BindProperty]
         public int AssetId { set; get; }
         public Asset asset { get; set; }
-        public AssetProfileModel(AssetContext context, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
+        public Tenant tenant { set; get; }
+        UserManager<ApplicationUser> UserManger;
+        public AssetProfileModel(AssetContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment hostEnvironment, IToastNotification toastNotification)
         {
             Context = context;
             _hostEnvironment = hostEnvironment;
+            UserManger = userManager;
             _toastNotification = toastNotification;
             asset = new Asset();
             AssetMaintainance = new AssetMaintainance();
         }
-        public IActionResult OnGet(int AssetId)
+        public async Task<IActionResult> OnGetAsync(int AssetId)
         {
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await UserManger.FindByIdAsync(userid);
+            tenant = Context.Tenants.Find(user.TenantId);
             Asset = Context.Assets.Where(a => a.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).Include(a => a.AssetStatus).FirstOrDefault();
             if (Asset == null)
             {
                 return Redirect("../NotFound");
 
+            }
+            if (Asset.TenantId != tenant.TenantId)
+            {
+                return Redirect("../NotFound");
             }
             AssetPhoto = "/" + Asset.Photo;
             AssetId = Asset.AssetId;
