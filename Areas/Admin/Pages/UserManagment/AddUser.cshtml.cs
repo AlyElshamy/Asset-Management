@@ -82,7 +82,7 @@ namespace AssetProject.Areas.Identity.Pages.UserManagment
             {
                 var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var LoginedUser = await _userManager.FindByIdAsync(userid);
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.Phone,TenantId=LoginedUser.TenantId };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.Phone,TenantId=LoginedUser.TenantId,EmailConfirmed=true };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -94,27 +94,27 @@ namespace AssetProject.Areas.Identity.Pages.UserManagment
 
                     await _userManager.AddToRoleAsync(user, "User");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code },
-                        protocol: Request.Scheme);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { area = "Identity", userId = user.Id, code = code },
+                    //    protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
-                        return RedirectToPage("/Account/RegisterConfirmation", new { area = "Identity" , email = Input.Email });
-                        
-                    }
-                    else
-                    {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToPage("/Index");
-                    }
+                    //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    //{
+                    //    return RedirectToPage("/Account/RegisterConfirmation", new { area = "Identity" , email = Input.Email });
+
+                    //}
+                    //else
+                    //{
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToPage("/Index");
+                    //}
                 }
                 foreach (var error in result.Errors)
                 {

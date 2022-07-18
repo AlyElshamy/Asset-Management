@@ -25,6 +25,7 @@
                 <div id="datatable1_wrapper" class="dataTables_wrapper no-footer">
                     @(Html.DevExtreme().DataGrid<AssetProject.Models.Asset>()
         .ID("AssetLookupListId")
+        .RtlEnabled(bool.Parse(sharedResource["Direction"]))
                     .DataSource(ds => ds.RemoteController()
                     .LoadUrl(Url.Page(null, "GridData")) // access to the GridData handler defined in the OnGetGridData method in the page model
                     .Key("AssetId")
@@ -109,8 +110,8 @@
 
             if (localStorage.getItem("lang") == "ar") {
                 console.log("In Page")
-                dataGrid = $("#AssetLookupListId").dxDataGrid("instance");
-                dataGrid.option("rtlEnabled", true);
+                //dataGrid = $("#AssetLookupListId").dxDataGrid("instance");
+                //dataGrid.option("rtlEnabled", true);
             }
         }
     });
@@ -139,8 +140,10 @@
             document.getElementById("AssetCost").innerHTML = response.AssetCost
             document.getElementById("AssetPurchaseDate").innerHTML = response.AssetPurchaseDate
             document.getElementById("AssetItem").innerHTML = response.Item.ItemTitle
+            document.getElementById("Assetpurchasenumber").innerHTML = response.PurchaseNo
             if (response.DepreciableAsset)
             {
+            document.getElementById("DepreciationInfo").style.display = 'block';
             document.getElementById("DepreciableCost").innerHTML = response.DepreciableCost
             document.getElementById("SalvageValue").innerHTML = response.SalvageValue
             document.getElementById("AssetLife").innerHTML = response.AssetLife
@@ -184,6 +187,7 @@
             document.getElementById("AssettenantId").value = response.TenantId
             document.getElementById("Acost").value = response.AssetCost
             document.getElementById("AserialNum").value = response.AssetSerialNo
+            document.getElementById("purchasenumber").value = response.PurchaseNo
             document.getElementById("ApurshaseDate").value = DateFormat(response.AssetPurchaseDate)
             $("#AItem").dxLookup("instance").option("value", response.ItemId);
             $("#AStore").dxLookup("instance").option("value", response.StoreId);

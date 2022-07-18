@@ -45,7 +45,7 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await UserManger.FindByIdAsync(userid);
             tenant = _context.Tenants.Find(user.TenantId);
-            List<AssetReportsModel> ds = _context.Assets.Where(e=>e.TenantId==tenant.TenantId).Include(e => e.AssetStatus).Include(e => e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).Select(i => new AssetReportsModel
+            List<AssetReportsModel> ds = _context.Assets.Where(e => e.TenantId == tenant.TenantId).Include(e => e.AssetStatus).Include(a=>a.Item).Include(e => e.AssetMovementDetails).ThenInclude(e => e.AssetMovement).Select(i => new AssetReportsModel
             {
                 AssetCost = i.AssetCost,
                 AssetPurchaseDate = i.AssetPurchaseDate,
@@ -53,7 +53,9 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
                 AssetStatusTL = i.AssetStatus.AssetStatusTitle,
                 AssetTagId = i.AssetTagId,
                 Photo = i.Photo,
-                LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
+                CategoryId = i.Item.CategoryId,
+                CategoryTL = _context.Categories.FirstOrDefault(a => a.CategoryId == i.Item.CategoryId).CategoryTIAR,
+                    LocationTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationTitle,
                 DepartmentTL = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? null : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentTitle,
                 LocationId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Location.LocationId,
                 DepartmentId = _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault() == null ? 0 : _context.AssetMovementDetails.Where(a => a.AssetId == i.AssetId && a.Asset.AssetStatusId == 2).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault().AssetMovement.Department.DepartmentId,
@@ -80,7 +82,11 @@ namespace AssetProject.Areas.Admin.Pages.ReportsManagement
             {
                 ds = ds.Where(i => i.EmployeeId == filterModel.employeeId).ToList();
             }
-            if (filterModel.employeeId == null && filterModel.ShowAll == false && filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null)
+            if (filterModel.CategoryId != null)
+            {
+                ds = ds.Where(i => i.CategoryId == filterModel.CategoryId).ToList();
+            }
+            if (filterModel.CategoryId == null&&filterModel.employeeId == null && filterModel.ShowAll == false && filterModel.AssetTagId == null && filterModel.LocationId == null && filterModel.DepartmentId == null)
             {
                 ds =new List<AssetReportsModel>();
             }

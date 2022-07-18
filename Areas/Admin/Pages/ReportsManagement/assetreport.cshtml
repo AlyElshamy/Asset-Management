@@ -73,7 +73,7 @@
         items.AddSimpleFor(m => m.AssetTagId).IsRequired(false).Label(l => l.Text(sharedResource["Asset TagId"]));
 
         items.AddSimpleFor(m => m.LocationId).IsRequired(false).Label(l => l.Text(sharedResource["Location"]))
-         
+
        .Editor(e => e
         .DropDownBox()
         .ID("locationTree")
@@ -92,7 +92,7 @@
      .ContentTemplate(new TemplateName("EmbeddedTreeViewSingle"))
      );
 
-       
+
         items.AddSimpleFor(m => m.employeeId).IsRequired(false).Label(l => l.Text(sharedResource["Employee"]))
         .Editor(e => e
         .Lookup()
@@ -115,6 +115,17 @@
                                         .CancelButtonText(sharedResource["Cancel"])
                                         .SearchPlaceholder(sharedResource["searching"])
         );
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(false).Label(l => l.Text(sharedResource["Category"]))
+       .Editor(e => e
+       .Lookup()
+       .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("CategoriesLookup").Key("Value"))
+       .ValueExpr("Value")
+       .DisplayExpr("Text").Placeholder(sharedResource["Select Category"])
+                                       .ShowClearButton(true)
+                                       .ClearButtonText(sharedResource["Clear"])
+                                       .CancelButtonText(sharedResource["Cancel"])
+                                       .SearchPlaceholder(sharedResource["searching"])
+       );
         items.AddButton()
        .HorizontalAlignment(HorizontalAlignment.Left)
     .ButtonOptions(b => b.Text(sharedResource["Send"])

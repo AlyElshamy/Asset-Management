@@ -51,6 +51,13 @@
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
+                                <label class="form-control-label">@sharedResource["Purchase Number"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="@Model.PurchaseNo"id="purchasenumber" class="form-control" placeholder="@sharedResource["Enter Asset Purchase Number"]">
+                                <span asp-validation-for="@Model.PurchaseNo" class="text-danger"></span>
+                            </div>
+                        </div><!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Item"]: <span class="tx-danger">*</span></label>
 
                                 @(Html.DevExtreme().LookupFor(c=>c.ItemId)
