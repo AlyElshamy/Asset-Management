@@ -50,6 +50,13 @@
                                 <input asp-for="Asset.AssetPurchaseDate" type="date" class="form-control date" placeholder="@sharedResource["Enter Asset Purchase Date"]" value="@(Model.Asset.AssetPurchaseDate >= DateTime.Now ? Model.Asset.AssetPurchaseDate :string.Empty)">
                                 <span asp-validation-for="Asset.AssetPurchaseDate" class="text-danger"></span>
                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">@sharedResource["Purchase Number"]: <span class="tx-danger">*</span></label>
+                                <input asp-for="Asset.PurchaseNo"  class="form-control" placeholder="@sharedResource["Enter Asset Purchase Number"]">
+                                <span asp-validation-for="Asset.PurchaseNo" class="text-danger"></span>
+                            </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">

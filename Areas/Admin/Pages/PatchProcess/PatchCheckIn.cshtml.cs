@@ -45,6 +45,12 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             SelectedAssets = assets;
             return new JsonResult(assets);
         }
+
+        public IActionResult OnGetSingleAssetForView(int AssetId)
+        {
+            var Result = _context.Assets.Where(c => c.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).FirstOrDefault();
+            return new JsonResult(Result);
+        }
         public async Task <IActionResult> OnGetGridData(DataSourceLoadOptions loadOptions)
         {
             var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -68,7 +74,9 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 i.DepreciationMethodId,
                 i.VendorId,
                 i.StoreId,
-                i.AssetStatusId
+                i.AssetStatusId,
+                i.TenantId,
+                i.PurchaseNo
             });
 
             return new JsonResult(DataSourceLoader.Load(Assets, loadOptions));

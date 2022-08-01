@@ -40,7 +40,11 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         {
            
         }
-        
+        public IActionResult OnGetSingleAssetForView(int AssetId)
+        {
+            var Result = _context.Assets.Where(c => c.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).FirstOrDefault();
+            return new JsonResult(Result);
+        }
         public IActionResult OnPostFillAssetList([FromBody] List<Asset>assets)
         {
  
@@ -72,7 +76,8 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 i.VendorId,
                 i.StoreId,
                 i.AssetStatusId,
-                
+                i.TenantId,
+                i.PurchaseNo
 
 
             });

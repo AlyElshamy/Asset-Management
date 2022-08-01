@@ -9,15 +9,15 @@ namespace AssetProject.Models
         [Key]
         public int InsuranceId { get; set; }
         [Required(ErrorMessage ="Is Required")]
-        [RegularExpression(@"^[a-zA-z]+([\s][a-zA-Z]+)*$", ErrorMessage =" Not Valid"), MinLength(5,ErrorMessage ="Minimum Length Is 5")]
+        [ MinLength(5,ErrorMessage ="Minimum Length Is 5")]
         public string Title { get; set; }
-        [RegularExpression(@"^[a-zA-z]+([\s][a-zA-Z]+)*$", ErrorMessage = "Not Valid"), MinLength(5, ErrorMessage = "Minimum Length Is 5")]
+        [ MinLength(5, ErrorMessage = "Minimum Length Is 5")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Is Required")]
-        [RegularExpression(@"^[a-zA-z]+([\s][a-zA-Z]+)*$", ErrorMessage = "Not Valid"), MinLength(5, ErrorMessage = "Minimum Length Is 5")]
+        [ MinLength(5, ErrorMessage = "Minimum Length Is 5")]
         public string InsuranceCompany { get; set; }
         [Required(ErrorMessage = "Is Required")]
-        [RegularExpression(@"^[a-zA-z]+([\s][a-zA-Z]+)*$", ErrorMessage = "Not Valid"), MinLength(5, ErrorMessage = "Minimum Length Is 5")]
+        [ MinLength(5, ErrorMessage = "Minimum Length Is 5")]
         public string ContactPerson { get; set; }
         [Required(ErrorMessage = "Is Required")]
         [RegularExpression("^[0-9]+$", ErrorMessage = " Accept Number Only")]

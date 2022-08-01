@@ -53,6 +53,12 @@
                                                 @Model.Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture)
                                             </span>
                                         </p>
+                                    <p class="invoice-info-row">
+                                            <span>@sharedResource["Purchase Number"]</span>
+                                            <span>
+                                                @Model.Asset.PurchaseNo
+                                            </span>
+                                        </p>
                                     </div><!-- col -->
                                     @if (Model.Asset.DepreciableAsset)
                                     {
@@ -257,6 +263,8 @@
                 document.getElementById("AssettenantId").value = response.TenantId
                 document.getElementById("Acost").value = response.AssetCost
                 document.getElementById("AserialNum").value = response.AssetSerialNo
+                document.getElementById("purchasenumber").value = response.PurchaseNo
+
                 console.log(DateFormat(response.AssetPurchaseDate))
 
                 document.getElementById("ApurshaseDate").value = DateFormat(response.AssetPurchaseDate)

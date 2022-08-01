@@ -23,7 +23,8 @@ namespace AssetProject.Models
         public Item Item { set; get; }
         public int ItemId { set; get; }
         public string Photo { set; get; }
-
+        [Required]
+        public string PurchaseNo { get; set; }
         public bool DepreciableAsset { set; get; }
         public double? DepreciableCost { set; get; }
         public double? SalvageValue { set; get; }

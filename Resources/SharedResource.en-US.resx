@@ -342,6 +342,9 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>False</value>
+  </data>
   <data name="doesnt have account" xml:space="preserve">
     <value>This app does not currently have a real email sender registered, see</value>
   </data>

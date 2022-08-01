@@ -57,7 +57,10 @@ namespace AssetProject.Controllers
                 i.VendorId,
                 i.StoreId,
                 i.AssetStatusId,
-              
+                i.TenantId,
+                i.PurchaseNo
+
+
             });
 
             // If underlying data is a large SQL table, specify PrimaryKey and PaginateViaPrimaryKey.
@@ -245,7 +248,9 @@ namespace AssetProject.Controllers
                 i.DepreciationMethodId,
                 i.VendorId,
                 i.StoreId,
-                i.AssetStatusId
+                i.AssetStatusId,
+                i.TenantId,
+                i.PurchaseNo
 
 
             });
@@ -276,6 +281,8 @@ namespace AssetProject.Controllers
                 i.VendorId,
                 i.StoreId,
                 i.AssetStatusId,
+                i.TenantId,
+                i.PurchaseNo
 
             });
             return Json(await DataSourceLoader.LoadAsync(assets, loadOptions));
@@ -305,6 +312,8 @@ namespace AssetProject.Controllers
                 i.VendorId,
                 i.StoreId,
                 i.AssetStatusId,
+                i.TenantId,
+                i.PurchaseNo
 
             });
             return Json(await DataSourceLoader.LoadAsync(assets, loadOptions));
