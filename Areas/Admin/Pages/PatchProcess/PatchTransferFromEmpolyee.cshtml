@@ -66,7 +66,7 @@
                             </div>
                         </text>).Caption(sharedResource["Photo"]);
 
-                    columns.AddFor(m => m.AssetTagId).Caption(sharedResource["Asset TagId"]);
+                    columns.AddFor(m => m.AssetTagId).CellTemplate(@<text><a href="javascript:void(0)" onclick="ShowViewPopUp('<%- data.AssetId %>')"><%- value %></a> </text>).Caption(sharedResource["Asset TagId"]);
 
                     columns.AddFor(m => m.AssetCost).Caption(sharedResource["AssetCost"]);
 
@@ -247,7 +247,7 @@
         </div>
     </div>
 </div>
-
+<partial name="_AssetQuickViewPopup" />
 <script>
        window.addEventListener('DOMContentLoaded', (event) => {
         if (localStorage.getItem("lang") != "") {
@@ -355,8 +355,48 @@
 
         }
        
+       
 
 
     }
+    function ShowViewPopUp(AssetId) {
 
+
+        $.ajax({
+            type: "GET",
+            url: "/admin/PatchProcess/PatchTransferFromEmpolyee?handler=SingleAssetForView",
+            data: { "AssetId": AssetId },
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                document.getElementById("img").src = "/" + response.Photo
+                document.getElementById("AssetTagId").innerHTML = response.AssetTagId
+                document.getElementById("assettagid").innerHTML = response.AssetTagId
+                document.getElementById("AssetSerial").innerHTML = response.AssetSerialNo
+                document.getElementById("AssetDescription").innerHTML = response.AssetDescription
+                document.getElementById("AssetCost").innerHTML = response.AssetCost
+                document.getElementById("AssetPurchaseDate").innerHTML = response.AssetPurchaseDate
+                document.getElementById("AssetItem").innerHTML = response.Item.ItemTitle
+                if (response.DepreciableAsset) {
+                    document.getElementById("DepreciationInfo").style.display = 'block';
+                    document.getElementById("DepreciableCost").innerHTML = response.DepreciableCost
+                    document.getElementById("SalvageValue").innerHTML = response.SalvageValue
+                    document.getElementById("AssetLife").innerHTML = response.AssetLife
+                    document.getElementById("DateAcquired").innerHTML = response.DateAcquired
+                    document.getElementById("DepreciationMethod").innerHTML = response.DepreciationMethod.DepreciationMethodTitle
+                }
+                else {
+                    document.getElementById("DepreciationInfo").style.display = 'none';
+                }
+
+                $('#AssetQuickViewPoup').modal('show');
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+
+    }
 </script>

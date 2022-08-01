@@ -50,12 +50,17 @@
                     .Columns(columns => {
                     columns.Add()
                     .Type(GridCommandColumnType.Buttons)
-                    .Width(110)
+                    .Width(135)
                     .Buttons(b => {
                     b.Add().Text(sharedResource["View"]).OnClick("viewButtonClick");
                     b.Add().Text(sharedResource["Edit"]).OnClick("editButtonClick");
-                    });
+                        b.Add().Template(@<text>
 
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                                 <a  href="/Admin/ReportsManagement/ExprtRFID?tagId=<%- data.AssetTagId %>&serialno=<%- data.AssetSerialNo %>"> @sharedResource["Export"]   </a>
+                            </div>
+                            </text>);
+                    });
                     columns.AddFor(m => m.AssetId).Visible(false).Caption(sharedResource["Asset"]);
                         columns.AddFor(m => m.Photo).Width(100)
                     .AllowFiltering(false)

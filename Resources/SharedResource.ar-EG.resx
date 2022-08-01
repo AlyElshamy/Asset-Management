@@ -972,6 +972,9 @@
   <data name="Employee ID" xml:space="preserve">
     <value>رقم الموظف التعريفي</value>
   </data>
+  <data name="Employee Inventory" xml:space="preserve">
+    <value>جرد الموظفين</value>
+  </data>
   <data name="Employee Name" xml:space="preserve">
     <value>إسم الموظف</value>
   </data>
@@ -1231,6 +1234,9 @@
     <value>
 الأصول المنتهية الصلاحية</value>
   </data>
+  <data name="Export" xml:space="preserve">
+    <value>إستخراج</value>
+  </data>
   <data name="Fax" xml:space="preserve">
     <value>الفاكس</value>
   </data>
@@ -1458,6 +1464,9 @@
   </data>
   <data name="Location Assets" xml:space="preserve">
     <value>الأصول الموجوده في مكان</value>
+  </data>
+  <data name="Location Inventory" xml:space="preserve">
+    <value>جرد المواقع</value>
   </data>
   <data name="LocationList" xml:space="preserve">
     <value>مجموعة المواقع</value>
