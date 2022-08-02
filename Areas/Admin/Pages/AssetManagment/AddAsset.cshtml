@@ -5,24 +5,24 @@
 
 
 <div class="slim-mainpanel">
-      <div class="container">
+    <div class="container">
         <div class="slim-pageheader">
-          <ol class="breadcrumb slim-breadcrumb">
-            <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
-            <li class="breadcrumb-item"><a href="#">@sharedResource["Asset"]</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@sharedResource["Add Asset"]</li>
-          </ol>
-          <h6 class="slim-pagetitle">@sharedResource["Asset Information"]</h6>
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="#">@sharedResource["Asset"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@sharedResource["Add Asset"]</li>
+            </ol>
+            <h6 class="slim-pagetitle">@sharedResource["Asset Information"]</h6>
         </div><!-- slim-pageheader -->
 
         <div class="section-wrapper">
             <label class="section-title">@sharedResource["PLEASE FILL YOUR ASSET INFORMATION"]</label>
-            
+
             <div class="form-layout">
                 <form method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row mg-b-25">
-                  
+
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Asset TagId"]: <span class="tx-danger">*</span></label>
@@ -54,7 +54,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Purchase Number"]: <span class="tx-danger">*</span></label>
-                                <input asp-for="Asset.PurchaseNo"  class="form-control" placeholder="@sharedResource["Enter Asset Purchase Number"]">
+                                <input asp-for="Asset.PurchaseNo" class="form-control" placeholder="@sharedResource["Enter Asset Purchase Number"]">
                                 <span asp-validation-for="Asset.PurchaseNo" class="text-danger"></span>
                             </div>
                         </div><!-- col-4 -->
@@ -79,7 +79,7 @@
                             </div>
                         </div><!-- col-4 -->
 
-                               <div class="col-lg-4">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Store"] <span class="tx-danger">*</span></label>
 
@@ -100,7 +100,7 @@
                             </div>
                         </div><!-- col-4 -->
 
-                               <div class="col-lg-4">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Vendor"]: <span class="tx-danger">*</span></label>
 
@@ -134,7 +134,7 @@
                         </div>
 
 
-                              <div class="col-lg-4">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@sharedResource["Description"]: <span class="tx-danger">*</span></label>
                                 <textarea asp-for="Asset.AssetDescription" class="form-control" placeholder="@sharedResource["Enter Asset Description"]"> </textarea>
@@ -150,7 +150,7 @@
                             <label class="form-control-label">@sharedResource["DepreciableAsset"] </label>
 
                             <div class="col-md-10" id="radiobtn">
-                                <label for="ch1"> @sharedResource["yes"]</label><input asp-for="Asset.DepreciableAsset" value="true"  type="radio" id="ch1" onclick="myFunction()" />
+                                <label for="ch1"> @sharedResource["yes"]</label><input asp-for="Asset.DepreciableAsset" value="true" type="radio" id="ch1" onclick="myFunction()" />
                                 <label for="ch2"> @sharedResource["no"]</label> <input asp-for="Asset.DepreciableAsset" value="false" type="radio" id="ch2" onclick="myFunction()" />
                             </div>
                         </div>
@@ -224,40 +224,39 @@
             </div><!-- form-layout -->
         </div><!-- section-wrapper -->
 
-              </div><!-- container -->
-            </div>
+    </div><!-- container -->
+</div>
 
 
-        @section Scripts {
-            <partial name="_ValidationScriptsPartial" />
-             <script type="text/javascript">
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
 
-                // Add the following code if you want the name of the file appear on select
-                $("#text").on("change", function () {
-                var fileName = $(this).val().split("\\").pop();
-                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-            });
-
-           
-
-                 function myFunction() {
-                     var btn1 = document.getElementById('ch1');
-                     var btn2 = document.getElementById('ch2');
-
-                     const form = document.getElementById('depreciable');
-
-                     if (btn1.checked == true) {
-                         // 👇 this SHOWS the form
-                         form.style.display = 'flex';
-
-                     } 
-                     else if (btn2.checked == true)
-                     {
-                         // 👇 this HIDES the form
-                         form.style.display = 'none';
-                     }
-                 }
+        // Add the following code if you want the name of the file appear on select
+        $("#text").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
 
 
-            </script>
+
+        function myFunction() {
+            var btn1 = document.getElementById('ch1');
+            var btn2 = document.getElementById('ch2');
+
+            const form = document.getElementById('depreciable');
+
+            if (btn1.checked == true) {
+                // 👇 this SHOWS the form
+                form.style.display = 'flex';
+
+            }
+            else if (btn2.checked == true) {
+                // 👇 this HIDES the form
+                form.style.display = 'none';
+            }
         }
+
+
+    </script>
+}

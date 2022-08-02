@@ -57,5 +57,6 @@ namespace AssetProject.ReportModels
         public int? warrantyId { get; set; }
         public string radiobtn { get; set; }
 
+        public int? nulstatusid { get; set; }
     }
 }

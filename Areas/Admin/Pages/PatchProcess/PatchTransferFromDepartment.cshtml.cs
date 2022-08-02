@@ -37,7 +37,11 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         public void OnGet()
         {
         }
-
+        public IActionResult OnGetSingleAssetForView(int AssetId)
+        {
+            var Result = _context.Assets.Where(c => c.AssetId == AssetId).Include(a => a.Item).Include(a => a.DepreciationMethod).FirstOrDefault();
+            return new JsonResult(Result);
+        }
         public IActionResult OnGetAssetsForDepartment(string values)
         {
             var DepartmentId = JsonConvert.DeserializeObject<int>(values);
@@ -68,12 +72,11 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         }
 
         public IActionResult OnPostFillAssetList([FromBody] List<Asset> assets)
-        {
+        { 
 
             SelectedAssets = assets;
             return new JsonResult(assets);
         }
-
 
         public IActionResult OnPost()
         {
@@ -151,6 +154,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                 string DirectionTitle = "Direction Title : ";
                 string TransDate = "Transaction Date : ";
                 AssetMovementDirection Direction = _context.AssetMovementDirections.Find(newAssetMovement.AssetMovementDirectionId);
+                assetMovementObj.TransactionDate = DateTime.Now;
                 string TransactionDate = assetMovementObj.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
                 foreach (var asset in selectedAssetsList)
                 {
