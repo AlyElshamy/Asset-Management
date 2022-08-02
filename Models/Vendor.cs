@@ -16,7 +16,6 @@ namespace AssetProject.Models
         [EmailAddress]
         public  string Email { set; get; }
         [Required]
-        [Url]
         public string Website { set; get; }
         [Required]
         public  string ContactPersonName { set; get; }

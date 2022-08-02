@@ -71,7 +71,7 @@
                         columns.AddFor(m => m.AssetSerialNo).Caption(sharedResource["AssetSerialNo"]);
                         columns.AddFor(m => m.AssetPurchaseDate).Caption(sharedResource["AssetPurchaseDate"]);
                         columns.AddFor(m => m.ItemId).Lookup(lookup => lookup
-                        .DataSource(ds => ds.WebApi().Controller("AssetsManagement").LoadAction("ItemsLookup").Key("Value"))
+                        .DataSource(ds => ds.WebApi().Controller("Lookups").LoadAction("ItemsLookup").Key("Value"))
                         .ValueExpr("Value")
                         .DisplayExpr("Text")
                         ).Caption(sharedResource["Item"]);
