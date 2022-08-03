@@ -153,17 +153,7 @@
                                     <div class="form-group">
                                         <label>@sharedResource["Location"]: <span class="tx-danger">*</span></label>
 
-                                        @*  @(Html.DevExtreme().LookupFor(c=>c.LocationId)
-                    .DataSource(d => d.WebApi()
-                    .Controller("Lookups")
-                    .LoadAction("LocationsLookup")
-                    .Key("Value")
-                    )
-                    .ValueExpr("Value")
-                    .DisplayExpr("Text")
-
-                    )*@
-                                        @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
+                                                  @(Html.DevExtreme().DropDownBoxFor(c=>c.assetmovement.LocationId)
                                         .ID("locationTree")
                                         .ValueExpr("Value")
                                         .DisplayExpr("Text")
