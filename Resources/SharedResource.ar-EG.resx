@@ -1591,6 +1591,9 @@
   <data name="Patch Maintainance" xml:space="preserve">
     <value>صيانة حزمه الاصول</value>
   </data>
+  <data name="Patch Transfer" xml:space="preserve">
+    <value>تحويل حزمة</value>
+  </data>
   <data name="Patch Transfer From Department" xml:space="preserve">
     <value>تحويل حزمه أصول من قسم</value>
   </data>
