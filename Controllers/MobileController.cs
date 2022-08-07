@@ -49,13 +49,13 @@ namespace AssetProject.Controllers
             return Ok(invalidResponse);
         }
         [HttpGet]
-        public IActionResult Search([FromQuery] string Parcode)
+        public IActionResult Search([FromQuery] string Parcode, [FromQuery] int TentantId)
         {
             if (Parcode != null)
             {
-                var items = _context.Assets.Where(c => c.AssetTagId.Contains(Parcode)
+                var items = _context.Assets.Where(c =>c.TenantId== TentantId && (c.AssetTagId.Contains(Parcode)
                 || c.AssetSerialNo.Contains(Parcode) || c.AssetId.ToString() == Parcode
-                ).Select(i => new
+                )).Select(i => new
                 {
                     i.AssetTagId,
                     i.AssetSerialNo,
@@ -80,11 +80,11 @@ namespace AssetProject.Controllers
                 return Ok("Enter Parcode To Search");
         }
         [HttpGet]
-        public IActionResult Getassetinfobyid([FromQuery] int AssetId)
+        public IActionResult Getassetinfobyid([FromQuery] int AssetId, [FromQuery] int TentantId)
         {
             if (AssetId != 0)
             {
-                var items = _context.Assets.Where(c => c.AssetId == AssetId
+                var items = _context.Assets.Where(c =>c.TenantId == TentantId && c.AssetId == AssetId
                 ).Select(i => new
                 {
                     i.AssetTagId,
@@ -110,11 +110,11 @@ namespace AssetProject.Controllers
                 return Ok("Enter AssetId");
         }
         [HttpGet]
-        public IActionResult Getassetinfobyserial([FromQuery] string AssetSerialno)
+        public IActionResult Getassetinfobyserial([FromQuery] string AssetSerialno, [FromQuery] int TentantId)
         {
             if (AssetSerialno != null)
             {
-                var items = _context.Assets.Where(c => c.AssetSerialNo == AssetSerialno
+                var items = _context.Assets.Where(c =>c.TenantId== TentantId && c.AssetSerialNo == AssetSerialno
                 ).Select(i => new
                 {
                     i.AssetTagId,
@@ -141,11 +141,11 @@ namespace AssetProject.Controllers
                 return Ok("Enter Serial Number");
         }
         [HttpGet]
-        public IActionResult Getassetinfobytag([FromQuery] string AssetTag)
+        public IActionResult Getassetinfobytag([FromQuery] string AssetTag, [FromQuery] int TentantId )
         {
             if (AssetTag != null)
             {
-                var items = _context.Assets.Where(c => c.AssetTagId == AssetTag
+                var items = _context.Assets.Where(c =>c.TenantId==TentantId && c.AssetTagId == AssetTag
                 ).Select(i => new
                 {
                     i.AssetTagId,
@@ -171,12 +171,12 @@ namespace AssetProject.Controllers
                 return Ok("Enter AssetTag");
         }
         [HttpGet]
-        public IActionResult Getcheckedoutassets([FromQuery] string Search)
+        public IActionResult Getcheckedoutassets([FromQuery] string Search, [FromQuery] int TenantId )
         {
             if (Search != null)
             {
-                var items = _context.AssetMovementDetails
-                   .Where(c => c.Asset.AssetStatusId == 2 && (c.AssetMovement.Department.DepartmentTitle.Contains(Search) || c.AssetMovement.Employee.FullName.Contains(Search) || c.AssetMovement.Location.LocationTitle.Contains(Search)))
+                var items = _context.AssetMovementDetails.Include(e=>e.Asset)
+                   .Where(c =>c.Asset.TenantId==TenantId && c.Asset.AssetStatusId == 2 && (c.AssetMovement.Department.DepartmentTitle.Contains(Search) || c.AssetMovement.Employee.FullName.Contains(Search) || c.AssetMovement.Location.LocationTitle.Contains(Search)))
                    .Include(a => a.AssetMovement)
                 .Select(i => new
                 {
@@ -207,6 +207,85 @@ namespace AssetProject.Controllers
             }
             else
                 return Ok("Enter employee or location or department to search");
+        }
+
+        [HttpGet]
+        public IActionResult GetAssetsByTenant([FromQuery] int TenantId)
+        {
+            var Asset = _context.Assets.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(Asset);
+        }
+        [HttpGet]
+        public IActionResult GetLocationsByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Locations.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetDepartmentByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Departments.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetEmployeeByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Employees.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetCategoriesByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Categories.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetSubCategoriesByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.SubCategories.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetItemsByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Items.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetStoreByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Stores.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetVendorByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Vendors.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetTechnicianByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Technicians.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetBrandByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Brands.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetContractByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Contracts.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult GetInsuranceByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Insurances.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
         }
         [HttpGet]
         public IActionResult Getcheckedoutassetsbylocation([FromQuery] int LocationId)
