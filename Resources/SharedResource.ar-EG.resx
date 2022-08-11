@@ -1435,6 +1435,9 @@
   <data name="Leasing StartDate" xml:space="preserve">
     <value>تاريخ بداية التأجير</value>
   </data>
+  <data name="Left Corner" xml:space="preserve">
+    <value>الجانب الأيسر</value>
+  </data>
   <data name="Lenght" xml:space="preserve">
     <value>المده</value>
   </data>
@@ -1722,6 +1725,9 @@
   </data>
   <data name="Reset your password" xml:space="preserve">
     <value>اعد ضبط كلمه السر</value>
+  </data>
+  <data name="Right Corner" xml:space="preserve">
+    <value>الجانب الأيمن</value>
   </data>
   <data name="Sale Amount" xml:space="preserve">
     <value>مبلغ البيع</value>

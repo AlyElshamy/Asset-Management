@@ -40,6 +40,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Areas\Admin\Pages\PatchProcess\TwoWaysTransfer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Admin\Pages\PatchProcess\TwoWaysTransfer.cshtml" />
+  </ItemGroup>
   <!--<ItemGroup>
     <Content Update="wwwroot\js\viewer.part.bundle.js">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
