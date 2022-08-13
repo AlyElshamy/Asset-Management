@@ -288,19 +288,25 @@ namespace AssetProject.Controllers
             return Ok(result);
         }
         [HttpGet]
-        public IActionResult Getcheckedoutassetsbylocation([FromQuery] int LocationId)
+        public IActionResult GetCustomerByTenant([FromQuery] int TenantId)
+        {
+            var result = _context.Customers.Where(e => e.TenantId == TenantId).ToList();
+            return Ok(result);
+        }
+        [HttpGet]
+        public IActionResult Getcheckedoutassetsbylocation([FromQuery] int LocationId, [FromQuery] int TentantId)
         {
             var checkedoutassets = new List<Asset>();
             if (LocationId != 0)
             {
-                var movementsForLocation = _context.AssetMovements.Where(a => a.LocationId == LocationId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForLocation = _context.AssetMovements.Where(a =>a.Location.TenantId== TentantId && a.LocationId == LocationId && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForLocation)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
                     {
                         if (item2.Asset.AssetStatusId == 2)
                         {
-                            var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                            var lastassetmovement = _context.AssetMovementDetails.Where(a =>a.Asset.TenantId==item2.Asset.TenantId&& a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.LocationId == LocationId)
                             {
                                 checkedoutassets.Add(new Asset()
@@ -336,19 +342,19 @@ namespace AssetProject.Controllers
             return Ok(checkedoutassets.Distinct());
         }
         [HttpGet]
-        public IActionResult GetcheckedoutassetsbyDepartment([FromQuery] int DepartmentId)
+        public IActionResult GetcheckedoutassetsbyDepartment([FromQuery] int DepartmentId, [FromQuery] int TentantId)
         {
             var checkedoutassets = new List<Asset>();
             if (DepartmentId != 0)
             {
-                var movementsForDepartment = _context.AssetMovements.Where(a => a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1 && a.EmpolyeeID == null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForDepartment = _context.AssetMovements.Where(a =>a.Department.TenantId== TentantId && a.DepartmentId == DepartmentId && a.AssetMovementDirectionId == 1 && a.EmpolyeeID == null).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForDepartment)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
                     {
                         if (item2.Asset.AssetStatusId == 2)
                         {
-                            var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                            var lastassetmovement = _context.AssetMovementDetails.Where(a =>a.Asset.TenantId== TentantId && a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.EmpolyeeID == null && lastassetmovement.AssetMovement.DepartmentId == DepartmentId)
                             {
                                 checkedoutassets.Add(new Asset()
@@ -384,20 +390,20 @@ namespace AssetProject.Controllers
             return Ok(checkedoutassets.Distinct());
         }
         [HttpGet]
-        public IActionResult GetcheckedoutassetsbyEmployee([FromQuery] int EmpolyeeID)
+        public IActionResult GetcheckedoutassetsbyEmployee([FromQuery] int EmpolyeeID, [FromQuery] int TentantId)
         {
             var checkedoutassets = new List<Asset>();
 
             if (EmpolyeeID != 0)
             {
-                var movementsForEmpolyee = _context.AssetMovements.Where(a => a.EmpolyeeID == EmpolyeeID && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
+                var movementsForEmpolyee = _context.AssetMovements.Where(a =>a.Employee.TenantId== TentantId && a.EmpolyeeID == EmpolyeeID && a.AssetMovementDirectionId == 1).Include(a => a.AssetMovementDetails).ThenInclude(a => a.Asset);
                 foreach (var item in movementsForEmpolyee)
                 {
                     foreach (var item2 in item.AssetMovementDetails)
                     {
                         if (item2.Asset.AssetStatusId == 2)
                         {
-                            var lastassetmovement = _context.AssetMovementDetails.Where(a => a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
+                            var lastassetmovement = _context.AssetMovementDetails.Where(a =>a.Asset.TenantId == TentantId && a.AssetId == item2.AssetId && a.AssetMovement.AssetMovementDirectionId == 1).Include(a => a.AssetMovement).OrderByDescending(a => a.AssetMovementDetailsId).FirstOrDefault();
                             if (lastassetmovement.AssetMovement.EmpolyeeID == EmpolyeeID)
                             {
                                 checkedoutassets.Add(new Asset()
@@ -433,55 +439,15 @@ namespace AssetProject.Controllers
             }
             return Ok(checkedoutassets.Distinct());
         }
+       
+        
+        
         [HttpGet]
-        public IActionResult GetDepartments()
+        public IActionResult GetTotalAssetCount([FromQuery] int TentantId)
         {
             try
             {
-                var departments = _context.Departments.Select(e => e).ToList();
-                return Ok(new { departments });
-            }catch(Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-           
-        }
-        [HttpGet]
-        public IActionResult GetEmployees()
-        {
-            try
-            {
-                var Employees = _context.Employees.Select(e => e).ToList();
-                return Ok(new { Employees });
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(e.Message);
-            }
-           
-        }
-        [HttpGet]
-        public IActionResult GetLocations()
-        {
-            try
-            {
-                var Locations = _context.Locations.Select(e => e).ToList();
-                return Ok(new { Locations });
-            }
-            catch (Exception e)
-            {
-
-                return BadRequest(e.Message);
-            }
-          
-        }
-        [HttpGet]
-        public IActionResult GetTotalAssetCount()
-        {
-            try
-            {
-                var AllAssetscount = _context.Assets.Count();
+                var AllAssetscount = _context.Assets.Where(e=>e.TenantId==TentantId).Count();
                 return Ok(new { AllAssetscount });
             }
             catch (Exception e)
@@ -492,11 +458,11 @@ namespace AssetProject.Controllers
            
         }
         [HttpGet]
-        public IActionResult GetTotalAssetCost()
+        public IActionResult GetTotalAssetCost([FromQuery] int TentantId)
         {
             try
             {
-                var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
+                var TotalAssetCost = _context.Assets.Where(e => e.TenantId == TentantId).Sum(a => a.AssetCost);
                 return Ok(new { TotalAssetCost });
             }
             catch (Exception e)
@@ -507,11 +473,11 @@ namespace AssetProject.Controllers
             
         }
         [HttpGet]
-        public IActionResult GetAvaliableAssetsCount()
+        public IActionResult GetAvaliableAssetsCount([FromQuery] int TentantId)
         {
             try
             {
-                var AvaliableAssets = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
+                var AvaliableAssets = _context.Assets.Where(a =>a.TenantId == TentantId && a.AssetStatusId == 1).Count();
                 return Ok(new { AvaliableAssets });
             }
             catch (Exception e)
@@ -522,11 +488,11 @@ namespace AssetProject.Controllers
             
         }
         [HttpGet]
-        public IActionResult GetActiveAssetsCount()
+        public IActionResult GetActiveAssetsCount([FromQuery] int TentantId)
         {
             try
             {
-                var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
+                var ActiveAssets = _context.Assets.Where(a => a.TenantId == TentantId &&( a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2)).Count();
                 return Ok(new { ActiveAssets });
             }
             catch (Exception e)
@@ -538,11 +504,11 @@ namespace AssetProject.Controllers
            
        
     [HttpGet]
-    public IActionResult GetAssetBrockenCount()
+    public IActionResult GetAssetBrockenCount([FromQuery] int TentantId)
     {
         try
         {
-            var AssetBrockenCount = _context.Assets.Where(a => a.AssetStatusId == 8).Count();
+            var AssetBrockenCount = _context.Assets.Where(a => a.TenantId == TentantId && a.AssetStatusId == 8).Count();
             return Ok(new { AssetBrockenCount });
         }
 
@@ -554,11 +520,11 @@ namespace AssetProject.Controllers
     }
            
         [HttpGet]
-        public IActionResult GetAssetBrockenCost()
+        public IActionResult GetAssetBrockenCost([FromQuery] int TentantId)
         {
             try
             {
-                var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
+                var AssetBrockenCost = _context.Assets.Where(a => a.TenantId == TentantId && a.AssetStatusId == 8).Sum(a => a.AssetCost);
                 return Ok(new { AssetBrockenCost });
             }
             catch (Exception e)
@@ -569,11 +535,11 @@ namespace AssetProject.Controllers
            
         }
         [HttpGet]
-        public IActionResult GetSellAssetsCount()
+        public IActionResult GetSellAssetsCount([FromQuery] int TentantId)
         {
             try
             {
-                var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
+                var SellAssetsCount = _context.Assets.Where(a => a.TenantId == TentantId && a.AssetStatusId == 7).Count();
                 return Ok(new { SellAssetsCount });
             }
             catch (Exception e)
@@ -584,28 +550,27 @@ namespace AssetProject.Controllers
             
         }
         [HttpGet]
-        public IActionResult GetSellAssetCost()
+        public IActionResult GetSellAssetCost([FromQuery] int TentantId)
         {
-            var SellAssetCost = _context.sellAssets.Sum(a => a.SaleAmount);
+            var SellAssetCost = _context.AssetSellDetails.Where(e => e.Asset.TenantId == TentantId).Sum(a => a.SellAsset.SaleAmount);
             return Ok(new { SellAssetCost });
         }
         [HttpGet]
-        public IActionResult GetAllDashBoardData()
+        public IActionResult GetAllDashBoardData([FromQuery] int TenantId)
         {
             try
             {
 
-           
-            var ActiveAssets = _context.Assets.Where(a => a.AssetStatusId == 1 || a.AssetStatusId == 3 || a.AssetStatusId == 9 || a.AssetStatusId == 2).Count();
-            var TotalAssetCost = _context.Assets.Sum(a => a.AssetCost);
-            var AssetPurchaseCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
-            var AssetPurchaseCYCost = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a=>a.AssetCost);
-            var AssetBrockenCount = _context.Assets.Where(a => a.AssetStatusId == 8).Count();
-            var AssetBrockenCost = _context.Assets.Where(a => a.AssetStatusId == 8).Sum(a => a.AssetCost);
-            var SellAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 7).Count();
-            var SellAssetCost = _context.sellAssets.Sum(a => a.SaleAmount);
-            var AssetCheckOutCount = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
-            var AssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
+            var ActiveAssets = _context.Assets.Where(a => a.TenantId == TenantId && (a.AssetStatusId == 1 || a.AssetStatusId == 2 || a.AssetStatusId == 3 || a.AssetStatusId == 9)).Count();
+            var TotalAssetCost = _context.Assets.Where(a => a.TenantId == TenantId).Sum(a => a.AssetCost);
+            var AssetPurchaseCY = _context.Assets.Where(A => A.TenantId == TenantId&& A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
+            var AssetPurchaseCYCost = _context.Assets.Where(A => A.TenantId == TenantId&& A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a=>a.AssetCost);
+            var AssetBrockenCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 8).Count();
+            var AssetBrockenCost = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 8).Sum(a => a.AssetCost);
+            var SellAssetsCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 7).Count();
+                var SellAssetCost = _context.AssetSellDetails.Where(e => e.Asset.TenantId == TenantId && e.Asset.TenantId == TenantId).Sum(a => a.SellAsset.SaleAmount);
+                var AssetCheckOutCount = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 2).Count();
+            var AssetCheckOutCost = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 2).Sum(a => a.AssetCost);
                 //var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
                
                 var AssetLinkWarrantyCount = (from W in
@@ -615,20 +580,21 @@ namespace AssetProject.Controllers
 
                 //var AssetLinkWarrantyCost = _context.AssetWarranties.Distinct().Sum(a => a.Asset.AssetCost);
                 var AssetIdWithWarranty = (from c in _context.AssetWarranties
-                                              orderby c.AssetId
+                                           where c.Asset.TenantId == TenantId
+                                           orderby c.AssetId
                                               select c.AssetId).Distinct();
                                                     
                 double AssetLinkWarrantyCost = 0;
                 foreach (var item in AssetIdWithWarranty)
                 {
 
-                    AssetLinkWarrantyCost += _context.Assets.Where(a => a.AssetId == item).Sum(a => a.AssetCost);
+                    AssetLinkWarrantyCost += _context.Assets.Where(a =>a.TenantId == TenantId&& a.AssetId == item).Sum(a => a.AssetCost);
                 }
 
-                var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
+                var AssetsUnderRepairCount = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 3).Count();
             var listmaxassetrepairId =
                  from a in _context.Assets
-                 where a.AssetStatusId == 3
+                 where a.TenantId== TenantId&& a.AssetStatusId == 3
                  from r in _context.AssetRepairs
                  from rd in _context.AssetRepairDetails
                  where a.AssetId == rd.AssetId && r.AssetRepairId == rd.AssetRepairId
@@ -642,11 +608,11 @@ namespace AssetProject.Controllers
             double AssetsUnderRepairCost = 0;
             foreach (var item in listmaxassetrepairId)
             {
-                var costofmaxid = _context.AssetRepairs.Where(i => i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
+                var costofmaxid = _context.AssetRepairs.Where(i =>i.AssetRepairId == item.AMIDS).Select(e => e.RepairCost).FirstOrDefault();
                 AssetsUnderRepairCost += costofmaxid;
             }
             //insurance
-            var totalinsurance = _context.Insurances.Count();
+            var totalinsurance = _context.Insurances.Where(a=>a.TenantId==TenantId).Count();
             //var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
                 var AssetLinkInsuranceCount = (from IN in
               _context.AssetsInsurances
@@ -660,17 +626,17 @@ namespace AssetProject.Controllers
                 double AssetLinkInsuranceCost = 0;
                 foreach (var item in AssetIdWithinsurance)
                 {
-                    AssetLinkInsuranceCost += _context.Assets.Where(a => a.AssetId == item).Sum(a => a.AssetCost);
+                    AssetLinkInsuranceCost += _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetId == item).Sum(a => a.AssetCost);
                 }
 
 
-                var AvaliableAssetsCount = _context.Assets.Where(a => a.AssetStatusId == 1).Count();
-            var AvaliableAssetsCost = _context.Assets.Where(a => a.AssetStatusId == 1).Sum(a=>a.AssetCost);
+                var AvaliableAssetsCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 1).Count();
+            var AvaliableAssetsCost = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 1).Sum(a=>a.AssetCost);
 
-            var AssetsLeasedCount = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
+            var AssetsLeasedCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 6).Count();
             var listmaxassetLeasingId =
                  from a in _context.Assets
-                 where a.AssetStatusId == 6
+                 where a.TenantId == TenantId && a.AssetStatusId == 6
                  from r in _context.AssetLeasings
                  from rd in _context.AssetLeasingDetails
                  where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
@@ -683,13 +649,13 @@ namespace AssetProject.Controllers
             double AssetsLeasingCost = 0;
             foreach (var item in listmaxassetLeasingId)
             {
-                var costofmaxid = _context.AssetLeasings.Where(i => i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
+                var costofmaxid = _context.AssetLeasings.Where(i =>i.AssetLeasingId == item.AMIDS).Select(e => e.LeasedCost).FirstOrDefault();
                 AssetsLeasingCost += costofmaxid;
             }
-            var AssetsDisposeCount = _context.Assets.Where(a => a.AssetStatusId == 5).Count();
-            var AssetsDisposeCost = _context.Assets.Where(a => a.AssetStatusId == 5).Sum(a => a.AssetCost);
-            var AssetsLostCount = _context.Assets.Where(a => a.AssetStatusId == 4).Count();
-            var AssetsLostCost = _context.Assets.Where(a => a.AssetStatusId == 4).Sum(a => a.AssetCost);
+            var AssetsDisposeCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 5).Count();
+            var AssetsDisposeCost = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 5).Sum(a => a.AssetCost);
+            var AssetsLostCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 4).Count();
+            var AssetsLostCost = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 4).Sum(a => a.AssetCost);
 
             return Ok(new { ActiveAssets , TotalAssetCost , AssetPurchaseCY ,AssetPurchaseCYCost, AssetBrockenCount, AssetBrockenCost , SellAssetsCount, SellAssetCost, AssetCheckOutCount, AssetCheckOutCost, AssetLinkWarrantyCount, AssetLinkWarrantyCost,
             AssetsUnderRepairCount,AssetsUnderRepairCost,totalinsurance,AssetLinkInsuranceCount,AssetLinkInsuranceCost,
@@ -702,17 +668,17 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetAssetsUnderRepairCount()
+        public IActionResult GetAssetsUnderRepairCount([FromQuery] int TenantId)
         {
-            var AssetsUnderRepairCount = _context.Assets.Where(a => a.AssetStatusId == 3).Count();
+            var AssetsUnderRepairCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 3).Count();
             return Ok(new { AssetsUnderRepairCount });
         }
         [HttpGet]
-        public IActionResult GetAssetsUnderRepairCost()
+        public IActionResult GetAssetsUnderRepairCost([FromQuery] int TenantId)
         {
             var listmaxassetrepairId =
                  from a in _context.Assets
-                 where a.AssetStatusId == 3
+                 where a.TenantId == TenantId && a.AssetStatusId == 3
                  from r in _context.AssetRepairs
                  from rd in _context.AssetRepairDetails
                  where a.AssetId == rd.AssetId && r.AssetRepairId == rd.AssetRepairId
@@ -732,17 +698,17 @@ namespace AssetProject.Controllers
             return Ok(new { AssetsUnderRepairCost });
         }
         [HttpGet]
-        public IActionResult GetAssetsLeasedCount()
+        public IActionResult GetAssetsLeasedCount([FromQuery] int TenantId)
         {
-            var AssetsLeasedCount = _context.Assets.Where(a => a.AssetStatusId == 6).Count();
+            var AssetsLeasedCount = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 6).Count();
             return Ok(new { AssetsLeasedCount });
         }
         [HttpGet]
-        public IActionResult GetLeasedAssetsCost()
+        public IActionResult GetLeasedAssetsCost([FromQuery] int TenantId)
         {
             var listmaxassetLeasingId =
                  from a in _context.Assets
-                 where a.AssetStatusId == 6
+                 where a.TenantId == TenantId && a.AssetStatusId == 6
                  from r in _context.AssetLeasings
                  from rd in _context.AssetLeasingDetails
                  where a.AssetId == rd.AssetId && r.AssetLeasingId == rd.AssetLeasingId
@@ -761,67 +727,67 @@ namespace AssetProject.Controllers
             return Ok(new { AssetsLeasingCost });
         }
         [HttpGet]
-        public IActionResult GetAssetsLostCount()
+        public IActionResult GetAssetsLostCount([FromQuery] int TenantId)
         {
-            var AssetsLostCount = _context.Assets.Where(a => a.AssetStatusId == 4).Count();
+            var AssetsLostCount = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 4).Count();
             return Ok(new { AssetsLostCount });
         }
         [HttpGet]
-        public IActionResult GetAssetsLostCost()
+        public IActionResult GetAssetsLostCost([FromQuery] int TenantId)
         {
-            var AssetsLostCost = _context.Assets.Where(a => a.AssetStatusId == 4).Sum(a => a.AssetCost);
+            var AssetsLostCost = _context.Assets.Where(a =>a.TenantId == TenantId && a.AssetStatusId == 4).Sum(a => a.AssetCost);
             return Ok(new { AssetsLostCost });
         }
         [HttpGet]
-        public IActionResult GetAssetsDisposeCount()
+        public IActionResult GetAssetsDisposeCount([FromQuery] int TenantId)
         {
-            var AssetsDisposeCount = _context.Assets.Where(a => a.AssetStatusId == 5).Count();
+            var AssetsDisposeCount = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 5).Count();
             return Ok(new { AssetsDisposeCount });
         }
         [HttpGet]
-        public IActionResult GetAssetsDisposeCost()
+        public IActionResult GetAssetsDisposeCost([FromQuery] int TenantId)
         {
-            var AssetsDisposeCost = _context.Assets.Where(a => a.AssetStatusId == 5).Sum(a => a.AssetCost);
+            var AssetsDisposeCost = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 5).Sum(a => a.AssetCost);
             return Ok(new { AssetsDisposeCost });
         }
         [HttpGet]
-        public IActionResult GetAssetsMaintCount()
+        public IActionResult GetAssetsMaintCount([FromQuery] int TenantId)
         {
-            var AssetsMaintCount = _context.Assets.Where(a => a.AssetStatusId == 9).Count();
+            var AssetsMaintCount = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 9).Count();
             return Ok(new { AssetsMaintCount });
         }
         [HttpGet]
-        public IActionResult GetAssetsMaintCost()
+        public IActionResult GetAssetsMaintCost([FromQuery] int TenantId)
         {
-            var AssetsMaintCost = _context.AssetMaintainances.Sum(a => a.AssetMaintainanceRepairesCost);
+            var AssetsMaintCost = _context.AssetMaintainances.Where(a => a.Asset.TenantId == TenantId).Sum(a => a.AssetMaintainanceRepairesCost);
             return Ok(new { AssetsMaintCost });
         }
         [HttpGet]
-        public IActionResult GetAssetCheckOutCount()
+        public IActionResult GetAssetCheckOutCount([FromQuery] int TenantId)
         {
-            var AssetCheckOutCount = _context.Assets.Where(a => a.AssetStatusId == 2).Count();
+            var AssetCheckOutCount = _context.Assets.Where(a => a.TenantId == TenantId&& a.AssetStatusId == 2).Count();
             return Ok(new { AssetCheckOutCount });
         }
         [HttpGet]
-        public IActionResult GetAssetCheckOutCost()
+        public IActionResult GetAssetCheckOutCost([FromQuery] int TenantId)
         {
-            var AssetCheckOutCost = _context.Assets.Where(a => a.AssetStatusId == 2).Sum(a => a.AssetCost);
+            var AssetCheckOutCost = _context.Assets.Where(a => a.TenantId == TenantId && a.AssetStatusId == 2).Sum(a => a.AssetCost);
             return Ok(new { AssetCheckOutCost });
         }
         [HttpGet]
-        public IActionResult GetAssetLinkInsuranceCountAndCost()
+        public IActionResult GetAssetLinkInsuranceCountAndCost([FromQuery] int TenantId)
         {
-            var AssetLinkInsuranceCount = _context.AssetsInsurances.Count();
-            var AssetLinkInsuranceCost = _context.AssetsInsurances.Sum(a => a.Asset.AssetCost);
+            var AssetLinkInsuranceCount = _context.AssetsInsurances.Where(a => a.Asset.TenantId == TenantId).Count();
+            var AssetLinkInsuranceCost = _context.AssetsInsurances.Where(a => a.Asset.TenantId == TenantId).Sum(a => a.Asset.AssetCost);
             return Ok(new { Count = AssetLinkInsuranceCount, Cost = AssetLinkInsuranceCost });
         }
         [HttpGet]
-        public IActionResult GetAssetWithoutInsuranceCountAndCost()
+        public IActionResult GetAssetWithoutInsuranceCountAndCost([FromQuery] int TenantId)
         {
             var AssetIdWithoutInsurance = from c in _context.Assets
                                           where !(from o in _context.AssetsInsurances
                                                   select o.AssetId)
-                                                 .Contains(c.AssetId)
+                                                 .Contains(c.AssetId)&&c.TenantId== TenantId
                                           select c;
             double cost = 0;
             foreach (var item in AssetIdWithoutInsurance)
@@ -833,19 +799,19 @@ namespace AssetProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAssetLinkWarrantyCountAndCost()
+        public IActionResult GetAssetLinkWarrantyCountAndCost([FromQuery] int TenantId)
         {
-            var AssetLinkWarrantyCount = _context.AssetWarranties.Count();
-            var AssetLinkWarrantyCost = _context.AssetWarranties.Sum(a => a.Asset.AssetCost);
+            var AssetLinkWarrantyCount = _context.AssetWarranties.Where(a => a.Asset.TenantId == TenantId).Count();
+            var AssetLinkWarrantyCost = _context.AssetWarranties.Where(a => a.Asset.TenantId == TenantId).Sum(a => a.Asset.AssetCost);
             return Ok(new { Count = AssetLinkWarrantyCount, Cost = AssetLinkWarrantyCost });
         }
         [HttpGet]
-        public IActionResult GetAssetWithoutWarrantyCountAndCost()
+        public IActionResult GetAssetWithoutWarrantyCountAndCost([FromQuery] int TenantId)
         {
             var AssetIdWithoutWarranty = from c in _context.Assets
                                          where !(from o in _context.AssetWarranties
                                                  select o.AssetId)
-                                                .Contains(c.AssetId)
+                                                .Contains(c.AssetId)&& c.TenantId == TenantId
                                          select c;
             double AssetWithoutInsuranceCost = 0;
             foreach (var item in AssetIdWithoutWarranty)
@@ -859,43 +825,40 @@ namespace AssetProject.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAssetLinkInsuranceCost()
+        public IActionResult GetAssetLinkInsuranceCost([FromQuery] int TenantId)
         {
-            var AssetLinkInsuranceCost = _context.AssetsInsurances.Include(e => e.Asset).Select(e => e.Asset.AssetCost).Sum();
+            var AssetLinkInsuranceCost = _context.AssetsInsurances.Include(e => e.Asset).Where(a => a.Asset.TenantId == TenantId).Select(e => e.Asset.AssetCost).Sum();
             return Ok(new { AssetLinkInsuranceCost });
         }
         [HttpGet]
-        public IActionResult GetAssetLinkContractCount()
+        public IActionResult GetAssetLinkContractCount([FromQuery] int TenantId)
         {
-            var AssetLinkContractCount = _context.AssetContracts.Count();
+            var AssetLinkContractCount = _context.AssetContracts.Where(a => a.Asset.TenantId == TenantId).Count();
             return Ok(new { AssetLinkContractCount });
         }
         [HttpGet]
-        public IActionResult GetAssetsPurchaseCurrentYear()
+        public IActionResult GetAssetsPurchaseCurrentYear([FromQuery] int TenantId)
         {
-            var AssetPurchaseCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
+            var AssetPurchaseCY = _context.Assets.Where(A => A.TenantId == TenantId && A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Count();
             return Ok(new { AssetPurchaseCY });
         }
         [HttpGet]
-        public IActionResult GetAssetsPurchaseCurrentYearCost()
+        public IActionResult GetAssetsPurchaseCurrentYearCost([FromQuery] int TenantId)
         {
-            var AssetPurchaseCostCY = _context.Assets.Where(A => A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a => a.AssetCost);
+            var AssetPurchaseCostCY = _context.Assets.Where(A => A.TenantId == TenantId && A.AssetPurchaseDate.Date.Year == DateTime.Now.Year).Sum(a => a.AssetCost);
             return Ok(new { AssetPurchaseCostCY });
         }
-
-
-
         //start Alerts
         [HttpGet]
-        public IActionResult GetAlertsCounts()
+        public IActionResult GetAlertsCounts([FromQuery] int TenantId)
         {
             try
             {
-                var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
-                var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
-                var MaintenancedueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
-                var MaintenanceoverdueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
-                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+                var ContractsExpiringCount = _context.Contracts.Where(c => c.TenantId == TenantId && c.EndDate.Date < DateTime.Now.Date).Count();
+                var InsurancesExpiringCount = _context.Insurances.Where(c => c.TenantId == TenantId && c.EndDate.Date < DateTime.Now.Date).Count();
+                var MaintenancedueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.Asset.TenantId == TenantId && c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+                var MaintenanceoverdueCount = _context.AssetMaintainances.Include(e => e.Asset).Where(c => c.Asset.TenantId == TenantId && c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1 && c.Asset.AssetStatusId == 9).Count();
+                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.Asset.TenantId == TenantId && c.ExpirationDate.Date < DateTime.Now.Date).Count();
                 return Ok(new { ContractsExpiringCount, InsurancesExpiringCount, MaintenancedueCount, MaintenanceoverdueCount, WarrantiesExpiringCount });
             }
             catch (Exception e)
@@ -904,11 +867,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetContractsExpiringCount()
+        public IActionResult GetContractsExpiringCount([FromQuery] int TenantId)
         {
             try
             {
-                var ContractsExpiringCount = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                var ContractsExpiringCount = _context.Contracts.Where(c => c.TenantId == TenantId && c.EndDate.Date < DateTime.Now.Date).Count();
                 return Ok(new { ContractsExpiringCount });
             }
             catch (Exception e)
@@ -918,12 +881,12 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetContractsExpiringList()
+        public IActionResult GetContractsExpiringList([FromQuery] int TenantId)
         {
             try
             {
 
-                var contracts = _context.Contracts.Where(c => c.EndDate.Date < DateTime.Now.Date).Select(i => new
+                var contracts = _context.Contracts.Where(c =>c.TenantId== TenantId && c.EndDate.Date < DateTime.Now.Date).Select(i => new
                 {
                     i.Title,
                     i.Description,
@@ -943,11 +906,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetInsurancesExpiringCount()
+        public IActionResult GetInsurancesExpiringCount([FromQuery] int TenantId)
         {
             try
             {
-                var InsurancesExpiringCount = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Count();
+                var InsurancesExpiringCount = _context.Insurances.Where(c => c.TenantId == TenantId && c.EndDate.Date < DateTime.Now.Date).Count();
                 return Ok(new { InsurancesExpiringCount });
             }
             catch (Exception e)
@@ -957,13 +920,13 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetInsurancesExpiringList()
+        public IActionResult GetInsurancesExpiringList([FromQuery] int TenantId)
         {
             try
             {
 
 
-                var insurances = _context.Insurances.Where(c => c.EndDate.Date < DateTime.Now.Date).Select(i => new
+                var insurances = _context.Insurances.Where(c => c.TenantId == TenantId && c.EndDate.Date < DateTime.Now.Date).Select(i => new
                 {
                     i.Title,
                     i.ContactPerson,
@@ -982,11 +945,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetMaintainanceDueCount()
+        public IActionResult GetMaintainanceDueCount([FromQuery] int TenantId)
         {
             try
             {
-                var MaintainanceDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
+                var MaintainanceDueCount = _context.AssetMaintainances.Where(c => c.Asset.TenantId == TenantId && c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
                 return Ok(new { MaintainanceDueCount });
             }
             catch (Exception e)
@@ -996,13 +959,13 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetMaintenanceDueList()
+        public IActionResult GetMaintenanceDueList([FromQuery] int TenantId)
         {
             try
             {
 
 
-                var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+                var Maintainances = _context.AssetMaintainances.Where(c => c.Asset.TenantId == TenantId && c.ScheduleDate.Date == DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
                 {
                     i.AssetMaintainanceId,
                     i.AssetMaintainanceTitle,
@@ -1025,11 +988,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetMaintainanceOverDueCount()
+        public IActionResult GetMaintainanceOverDueCount([FromQuery] int TenantId)
         {
             try
             {
-                var MaintainanceOverDueCount = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
+                var MaintainanceOverDueCount = _context.AssetMaintainances.Where(c => c.Asset.TenantId == TenantId && c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Count();
                 return Ok(new { MaintainanceOverDueCount });
             }
             catch (Exception e)
@@ -1039,12 +1002,12 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetMaintenanceoverDueList()
+        public IActionResult GetMaintenanceoverDueList([FromQuery] int TenantId)
         {
             try
             {
 
-                var Maintainances = _context.AssetMaintainances.Where(c => c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
+                var Maintainances = _context.AssetMaintainances.Where(c => c.Asset.TenantId == TenantId && c.ScheduleDate.Date < DateTime.Now.Date && c.MaintainanceStatus.MaintainanceStatusId == 1).Include(i => i.Asset).Include(i => i.Technician).Select(i => new
                 {
                     i.AssetMaintainanceId,
                     i.AssetMaintainanceTitle,
@@ -1067,11 +1030,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetWarrantiesExpiringCount()
+        public IActionResult GetWarrantiesExpiringCount([FromQuery] int TenantId)
         {
             try
             {
-                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Count();
+                var WarrantiesExpiringCount = _context.AssetWarranties.Where(c => c.Asset.TenantId == TenantId && c.ExpirationDate.Date < DateTime.Now.Date).Count();
                 return Ok(new { WarrantiesExpiringCount });
             }
             catch (Exception e)
@@ -1081,13 +1044,13 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetWarrantiesExpiringList()
+        public IActionResult GetWarrantiesExpiringList([FromQuery] int TenantId)
         {
             try
             {
 
 
-                var warranty = _context.AssetWarranties.Where(c => c.ExpirationDate.Date < DateTime.Now.Date).Include(i => i.Asset).Select(i => new
+                var warranty = _context.AssetWarranties.Where(c => c.Asset.TenantId == TenantId && c.ExpirationDate.Date < DateTime.Now.Date).Include(i => i.Asset).Select(i => new
                 {
                     i.ExpirationDate,
                     i.Length,
@@ -1106,11 +1069,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetAssetsPastDueCount()
+        public IActionResult GetAssetsPastDueCount([FromQuery] int TenantId)
         {
             try
             {
-                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Count();
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.TenantId == TenantId && c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Count();
                 return Ok(new { AssetsCheckOut });
             }
             catch (Exception e)
@@ -1121,11 +1084,11 @@ namespace AssetProject.Controllers
 
         }
         [HttpGet]
-        public IActionResult GetAssetsPastDueList()
+        public IActionResult GetAssetsPastDueList([FromQuery] int TenantId)
         {
             try
             {
-                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.AssetReportsModel
+                var AssetsCheckOut = _context.Assets.Include(i => i.AssetMovementDetails).ThenInclude(i => i.AssetMovement).Where(c => c.TenantId == TenantId && c.AssetStatus.AssetStatusId == 2 && c.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.AssetReportsModel
                 {
                     AssetID = i.AssetId,
                     AssetCost = i.AssetCost,
@@ -1134,8 +1097,8 @@ namespace AssetProject.Controllers
                     Photo = i.Photo,
                     TransactionDate = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.TransactionDate,
                     DueDate = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DueDate,
-                    LocationTL = _context.Locations.Where(a => a.LocationId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.LocationId).FirstOrDefault().LocationTitle,
-                    DepartmentTL = _context.Departments.Where(a => a.DepartmentId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DepartmentId).FirstOrDefault().DepartmentTitle,
+                    LocationTL = _context.Locations.Where(a =>a.TenantId==TenantId&& a.LocationId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.LocationId).FirstOrDefault().LocationTitle,
+                    DepartmentTL = _context.Departments.Where(a =>a.TenantId==TenantId && a.DepartmentId == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.DepartmentId).FirstOrDefault().DepartmentTitle,
                     EmployeeFullName = i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID == null ? null : _context.Employees.Where(a => a.ID == i.AssetMovementDetails.OrderByDescending(e => e.AssetMovementDetailsId).FirstOrDefault().AssetMovement.EmpolyeeID).FirstOrDefault().FullName,
 
                 });
@@ -1149,11 +1112,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetLeasesExpiringCount()
+        public IActionResult GetLeasesExpiringCount([FromQuery] int TenantId)
         {
             try
             {
-                var LeasingCount = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Count();
+                var LeasingCount = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.TenantId == TenantId && c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Count();
                 return Ok(new { LeasingCount });
             }
             catch (Exception e)
@@ -1163,11 +1126,11 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetLeasesExpiringList()
+        public IActionResult GetLeasesExpiringList([FromQuery] int TenantId)
         {
             try
             {
-                var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.LeasingModel
+                var leasing = _context.Assets.Include(i => i.AssetLeasingDetails).ThenInclude(i => i.AssetLeasing).Where(c => c.TenantId == TenantId && c.AssetStatus.AssetStatusId == 6 && c.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate.Date < DateTime.Now.Date).Select(i => new AssetProject.ReportModels.LeasingModel
                 {
                     AssetId = i.AssetId,
                     AssetCost = i.AssetCost,
@@ -1178,7 +1141,7 @@ namespace AssetProject.Controllers
                     LeasingEndDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.EndDate,
                     LeasingStartDate = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.StartDate,
                     LeasingCost = i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.LeasedCost,
-                    CustomerTL = _context.Customers.Where(a => a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().FullName,
+                    CustomerTL = _context.Customers.Where(a => a.TenantId == TenantId && a.CustomerId == i.AssetLeasingDetails.OrderByDescending(e => e.AssetLeasingDetailsId).FirstOrDefault().AssetLeasing.CustomerId).FirstOrDefault().FullName,
 
 
                 });
@@ -1194,35 +1157,35 @@ namespace AssetProject.Controllers
         //end Alerts
 
         [HttpGet]
-        public IActionResult GetCheckOutList()
+        public IActionResult GetCheckOutList([FromQuery] int TenantId)
         {
-            var CheckOutList = _context.Assets.Where(c => c.AssetStatusId == 2);
+            var CheckOutList = _context.Assets.Where(c => c.TenantId == TenantId && c.AssetStatusId == 2);
             return Ok(new { CheckOutList });
         }
         [HttpGet]
-        public IActionResult GetCheckInList()
+        public IActionResult GetCheckInList([FromQuery] int TenantId)
         {
-            var CheckInList = _context.Assets.Where(c => c.AssetStatusId == 1);
+            var CheckInList = _context.Assets.Where(c => c.TenantId == TenantId && c.AssetStatusId == 1);
             return Ok(new { CheckInList });
         }
         [HttpGet]
-        public IActionResult GetUnderRepairList()
+        public IActionResult GetUnderRepairList([FromQuery] int TenantId)
         {
-            var UnderRepairList = _context.Assets.Where(c => c.AssetStatusId == 3);
+            var UnderRepairList = _context.Assets.Where(c => c.TenantId == TenantId && c.AssetStatusId == 3);
             return Ok(new { UnderRepairList });
         }
         [HttpGet]
-        public IActionResult GetAllAssets()
+        public IActionResult GetAllAssets([FromQuery] int TenantId)
         {
-            var AllAssets = _context.Assets;
+            var AllAssets = _context.Assets.Where(c => c.TenantId == TenantId).ToList();
             return Ok(new { AllAssets });
         }
         [HttpGet]
-        public IActionResult GetAssetDetails(int? AssetId)
+        public IActionResult GetAssetDetails(int? AssetId, int TenantId)
         {
             if (AssetId != null && AssetId != 0 && AssetId != 0)
             {
-                var ischeckoutorin = _context.Assets.Find(AssetId);
+                var ischeckoutorin = _context.Assets.Where(c => c.TenantId == TenantId).FirstOrDefault(e=>e.AssetId==AssetId);
                 if (ischeckoutorin != null)
                 {
                     if (ischeckoutorin.AssetStatusId == 2 || ischeckoutorin.AssetStatusId == 1)
@@ -1230,11 +1193,11 @@ namespace AssetProject.Controllers
                         var MaxMovementId =
                      (from r in _context.AssetMovements
                       from rd in _context.AssetMovementDetails
-                      where AssetId == rd.AssetId && r.AssetMovementId == rd.AssetMovementId
+                      where ischeckoutorin .TenantId== TenantId && AssetId == rd.AssetId && r.AssetMovementId == rd.AssetMovementId
                       orderby rd.AssetMovementDetailsId descending
                       select rd.AssetMovementId
                       ).FirstOrDefault();
-                        var Assetdetails = _context.Assets.Where(a => a.AssetId == AssetId && (a.AssetStatusId == 1 || a.AssetStatusId == 2)).Select(i => new
+                        var Assetdetails = _context.Assets.Where(a =>a.TenantId==TenantId&& a.AssetId == AssetId && (a.AssetStatusId == 1 || a.AssetStatusId == 2)).Select(i => new
                         {
                             i.AssetTagId,
                             i.AssetSerialNo,
@@ -1265,7 +1228,7 @@ namespace AssetProject.Controllers
                     }
                     else
                     {
-                        var Assetdetails = _context.Assets.Where(a => a.AssetId == AssetId).Select(i => new
+                        var Assetdetails = _context.Assets.Where(a =>a.TenantId==TenantId&& a.AssetId == AssetId).Select(i => new
                         {
                             i.AssetTagId,
                             i.AssetSerialNo,
@@ -1294,13 +1257,13 @@ namespace AssetProject.Controllers
             return BadRequest("Enter AssetId..");
         }
         [HttpGet]
-        public IActionResult GetAssetHistory(int? AssetId)
+        public IActionResult GetAssetHistory(int? AssetId, [FromQuery] int TenantId)
         {
             if (AssetId != null && AssetId != 0)
             {
                 try
                 {
-                    var assetlogs = _context.AssetLogs.Where(e => e.AssetId == AssetId).Select(i => new
+                    var assetlogs = _context.AssetLogs.Where(e =>e.Asset.TenantId==TenantId&& e.AssetId == AssetId).Select(i => new
                     {
                         i.ActionDate,
                         i.Remark
@@ -1353,13 +1316,13 @@ namespace AssetProject.Controllers
             return folderPath;
         }
         [HttpGet]
-        public IActionResult GetAssetPhotos(int? AssetId)
+        public IActionResult GetAssetPhotos(int? AssetId, [FromQuery] int TenantId)
         {
 
             if (AssetId != null && AssetId != 0)
             {
 
-                var ListPhotos = _context.AssetPhotos.Where(a => a.AssetId == AssetId);
+                var ListPhotos = _context.AssetPhotos.Where(a =>a.Asset.TenantId==TenantId && a.AssetId == AssetId);
                 if (ListPhotos == null)
                 {
                     return BadRequest("Asset Not Found..");
@@ -1416,13 +1379,13 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Asset Id..");
         }
         [HttpGet]
-        public IActionResult GetAssetDocuments(int? AssetId)
+        public IActionResult GetAssetDocuments(int? AssetId, [FromQuery] int TenantId)
         {
             if (AssetId != null && AssetId != 0)
             {
                 try
                 {
-                    var assetdocuments = _context.assetDocuments.Where(e => e.AssetId == AssetId).Select(i => new
+                    var assetdocuments = _context.assetDocuments.Where(e =>e.Asset.TenantId==TenantId&& e.AssetId == AssetId).Select(i => new
                     {
                         i.DocumentName,
                         i.DocumentType,
@@ -1485,7 +1448,7 @@ namespace AssetProject.Controllers
             if (AssetDocumentID != 0 && AssetDocumentID != null)
             {
 
-                AssetDocument _assetDocument = _context.assetDocuments.Find(AssetDocumentID);
+                AssetDocument _assetDocument = _context.assetDocuments.FirstOrDefault(e=>e.AssetDocumentId==AssetDocumentID);
                 if (_assetDocument != null)
                 {
                     string AssetDocName = _assetDocument.DocumentName;
@@ -1514,12 +1477,12 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Asset Document Id..");
         }
         [HttpGet]
-        public IActionResult GetAllContracts()
+        public IActionResult GetAllContracts([FromQuery] int TenantId)
         {
 
             try
             {
-                var Allcontracts = _context.Contracts.Select(i => new
+                var Allcontracts = _context.Contracts.Where(e => e.TenantId == TenantId).Select(i => new
                 {
                     i.Title,
                     i.Description,
@@ -1538,14 +1501,33 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetAssetContractById(int? AssetId)
+        public IActionResult GetAllActionType()
+        {
+
+            try
+            {
+                var AllActionType = _context.ActionTypes.Select(i => new
+                {
+                    i.ActionTypeTitle,
+                    i.ActionTypeId
+                });
+                return Ok(AllActionType);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet]
+        public IActionResult GetAssetContractById(int? AssetId, [FromQuery] int TenantId)
         {
 
             if (AssetId != null && AssetId != 0)
             {
                 try
                 {
-                    var Allcontracts = _context.AssetContracts.Where(e => e.AssetId == AssetId).Select(i => new
+                    var Allcontracts = _context.AssetContracts.Where(e => e.Asset.TenantId == TenantId&& e.AssetId == AssetId).Select(i => new
                     {
                         i.Contract.Description,
                         i.Contract.ContractNo,
@@ -1642,11 +1624,11 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Asset Id..");
         }
         [HttpGet]
-        public IActionResult GetAllInsurances()
+        public IActionResult GetAllInsurances([FromQuery] int TenantId)
         {
             try
             {
-                var insurances = _context.Insurances.Select(i => new
+                var insurances = _context.Insurances.Where(e => e.TenantId == TenantId).Select(i => new
                 {
                     i.Title,
                     i.Description,
@@ -1669,13 +1651,13 @@ namespace AssetProject.Controllers
             }
         }
         [HttpGet]
-        public IActionResult GetAssetInsuranceById(int? AssetId)
+        public IActionResult GetAssetInsuranceById(int? AssetId, [FromQuery] int TenantId)
         {
             if (AssetId != null && AssetId != 0)
             {
                 try
                 {
-                    var assetsinsurances = _context.AssetsInsurances.Where(e => e.AssetId == AssetId).Select(i => new
+                    var assetsinsurances = _context.AssetsInsurances.Where(e => e.Asset.TenantId == TenantId && e.AssetId == AssetId).Select(i => new
                     {
                         i.Insurance.Title,
                         i.Insurance.Description,
@@ -1773,13 +1755,13 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Insurance Id..");
         }
         [HttpGet]
-        public IActionResult GetAssetWarrantiesById(int? AssetId)
+        public IActionResult GetAssetWarrantiesById(int? AssetId, [FromQuery] int TenantId)
         {
             if (AssetId != null && AssetId != 0)
             {
                 try
                 {
-                    var assetwarranties = _context.AssetWarranties.Where(a => a.AssetId == AssetId).Select(i => new
+                    var assetwarranties = _context.AssetWarranties.Where(a => a.Asset.TenantId == TenantId && a.AssetId == AssetId).Select(i => new
                     {
                         i.Length,
                         i.ExpirationDate,
@@ -1830,7 +1812,7 @@ namespace AssetProject.Controllers
         {
             if (AssetWarrantyId != 0 && AssetWarrantyId != null)
             {
-                AssetWarranty _assetwarranty = _context.AssetWarranties.Find(AssetWarrantyId);
+                AssetWarranty _assetwarranty = _context.AssetWarranties.FirstOrDefault(a=>a.WarrantyId==AssetWarrantyId);
                 if (_assetwarranty == null)
                 {
                     return BadRequest("Asset Warranty Not Found..");
@@ -1857,11 +1839,11 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Asset Warranty Id..");
         }
         [HttpGet]
-        public IActionResult GetAllCategories()
+        public IActionResult GetAllCategories([FromQuery] int TenantId)
         {
             try
             {
-                var Categories = _context.Categories;
+                var Categories = _context.Categories.Where(a => a.TenantId == TenantId).ToList();
                 return Ok(Categories);
             }
             catch (Exception)
@@ -1871,11 +1853,11 @@ namespace AssetProject.Controllers
 
         }
         [HttpGet]
-        public IActionResult GetCategoryById(int? CategoryId)
+        public IActionResult GetCategoryById(int? CategoryId, [FromQuery] int TenantId)
         {
             if (CategoryId != null)
             {
-                var Category = _context.Categories.Find(CategoryId);
+                var Category = _context.Categories.Where(a => a.TenantId == TenantId).FirstOrDefault(a=>a.CategoryId==CategoryId);
                 if (Category != null)
                 {
                     return Ok(Category);
@@ -1904,13 +1886,13 @@ namespace AssetProject.Controllers
             return BadRequest("");
         }
         [HttpPut]
-        public IActionResult PutCategory(int? Categoryid, Category Category)
+        public IActionResult PutCategory(int? Categoryid, Category Category, [FromQuery] int TenantId)
         {
             if (Categoryid != null)
             {
                 if (Category.CategoryTIAR != null || Category.CategoryTIAR != "")
                 {
-                    var category = _context.Categories.Where(sup => sup.CategoryId == Categoryid).FirstOrDefault();
+                    var category = _context.Categories.Where(sup =>sup.TenantId==TenantId && sup.CategoryId == Categoryid).FirstOrDefault();
                     if (category != null)
                     {
                         category.CategoryTIAR = Category.CategoryTIAR;
@@ -1937,7 +1919,7 @@ namespace AssetProject.Controllers
         {
             try
             {
-                var category = _context.Categories.Find(Categoryid);
+                var category = _context.Categories.FirstOrDefault(a=>a.CategoryId==Categoryid);
                 _context.Categories.Remove(category);
                 _context.SaveChanges();
                 return Ok("Deleted Successfully..");
@@ -1949,11 +1931,11 @@ namespace AssetProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostAddAssetMaintainance(AssetMaintainance assetMaintainance)
+        public IActionResult PostAddAssetMaintainance(AssetMaintainance assetMaintainance, [FromQuery] int TenantId)
         {
             try
             {
-                var assetobj = _context.Assets.Where(e => e.AssetId == assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
+                var assetobj = _context.Assets.Where(e =>e.TenantId == TenantId && e.AssetId == assetMaintainance.AssetId).Include(e => e.AssetStatus).FirstOrDefault();
                 if (assetobj == null)
                 {
                     return BadRequest("Enter Correct Asset Id..");
@@ -2202,13 +2184,13 @@ namespace AssetProject.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAssetMaintainance(int? AssetId)
+        public IActionResult GetAssetMaintainance(int? AssetId, [FromQuery] int TenantId)
         {
             if (AssetId != null)
             {
                 try
                 {
-                    var assetmaintainances = _context.AssetMaintainances.Where(a => a.AssetId == AssetId).Select(i => new
+                    var assetmaintainances = _context.AssetMaintainances.Where(a =>a.Asset.TenantId==TenantId && a.AssetId == AssetId).Select(i => new
                     {
                         i.AssetMaintainanceId,
                         i.AssetMaintainanceTitle,
@@ -2243,13 +2225,13 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Asset Id..");
         }
         [HttpGet]
-        public IActionResult GetDocumentById(int? DocumentId)
+        public IActionResult GetDocumentById(int? DocumentId, [FromQuery] int TenantId)
         {
             if (DocumentId != null)
             {
                 try
                 {
-                    var Document = _context.assetDocuments.Where(a => a.AssetDocumentId == DocumentId).Select(i => new
+                    var Document = _context.assetDocuments.Where(a =>a.Asset.TenantId==TenantId && a.AssetDocumentId == DocumentId).Select(i => new
                     {
                         i.DocumentName,
                         i.DocumentType,
@@ -2272,14 +2254,14 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Document Id..");
         }
         [HttpGet]
-        public IActionResult GetContractById(int? ContractId)
+        public IActionResult GetContractById(int? ContractId,[FromQuery] int TenantId)
         {
 
             if (ContractId != null)
             {
                 try
                 {
-                    var contract = _context.AssetContracts.Where(e => e.AssetContractID == ContractId).Select(i => new
+                    var contract = _context.AssetContracts.Where(e =>e.Asset.TenantId==TenantId && e.AssetContractID == ContractId).Select(i => new
                     {
                         i.Contract.Description,
                         i.Contract.ContractNo,
@@ -2304,13 +2286,13 @@ namespace AssetProject.Controllers
             return BadRequest("Enter Contract Id.. ");
         }
         [HttpGet]
-        public IActionResult GetWarrantyById(int? WarrantyId)
+        public IActionResult GetWarrantyById(int? WarrantyId, [FromQuery] int TenantId)
         {
             if (WarrantyId != null)
             {
                 try
                 {
-                    var Warranty = _context.AssetWarranties.Where(a => a.WarrantyId == WarrantyId).Select(i => new
+                    var Warranty = _context.AssetWarranties.Where(a =>a.Asset.TenantId==TenantId && a.WarrantyId == WarrantyId).Select(i => new
                     {
                         i.Length,
                         i.ExpirationDate,
@@ -2649,6 +2631,423 @@ namespace AssetProject.Controllers
             }
             return newAssetMovement.AssetMovementId;
         }
+        public IActionResult OnPostTransferFrom([FromBody] int? LeftActionTypeId, [FromBody] int? RightActionTypeId,
+            [FromBody] int? LeftDepartmentId,[FromBody] int? RightDepartmentId, [FromBody] int? LeftEmployeeId,
+            [FromBody] int? RightEmployeeId, [FromBody] int? LeftLocationId, [FromBody] int? RightLocationId,
+             [FromBody] int? LeftStoreId, [FromBody] int? RightStoreId
+            ,[FromBody] List<Asset> SelectedLeftAssets, [FromBody] List<Asset> SelectedRightAssets,
+            [FromBody] List<Asset> RightDataSource, [FromBody] List<Asset> LeftDataSource, [FromBody] List<Asset> RightEmployeeDataSource,
+            [FromBody] List<Asset> LeftEmployeeDataSource, [FromBody] List<Asset> LeftDepartmentDataSource,
+             [FromBody] List<Asset> RightDepartmentDataSource
+            )
+        {
+
+
+            if (LeftActionTypeId == null)
+            {
+                return Ok(new {Message= "Please Select Action Type!",status=false});
+            }
+            else if (LeftActionTypeId == 1)
+            {
+                if (LeftDepartmentId == null)
+                {
+                    return Ok(new { Message = "Please Select Department!", status = false });
+                }
+                if (LeftEmployeeId == null)
+                {
+                    return Ok(new { Message = "Please Select Empolyee!", status = false });
+                }
+
+            }
+            else if (LeftActionTypeId == 2)
+            {
+                if (LeftDepartmentId == null)
+                {
+                    return Ok(new { Message = "Please Select Department!", status = false });
+                }
+
+            }
+            if (LeftLocationId == null)
+            {
+                return Ok(new { Message = "Please Select Location!", status = false });
+            }
+
+            if (LeftStoreId == null)
+            {
+                return Ok(new { Message = "Please Select Store!", status = false });
+            }
+
+            if (RightActionTypeId == null)
+            {
+                return Ok(new { Message = "Please Select Action!", status = false });
+            }
+            else if (RightActionTypeId == 1)
+            {
+                if (RightDepartmentId == null)
+                {
+                    return Ok(new { Message = "Please Select Department!", status = false });
+                }
+                if (RightEmployeeId == null)
+                {
+                    return Ok(new { Message = "Please Select Empolyee!", status = false });
+                }
+
+            }
+            else if (RightActionTypeId == 2)
+            {
+                if (RightDepartmentId == null)
+                {
+                    return Ok(new { Message = "Please Select Department!", status = false });
+                }
+
+
+            }
+
+            if (RightLocationId == null)
+            {
+                return Ok(new { Message = "Please Select Location!", status = false });
+            }
+
+            if (RightStoreId == null)
+            {
+                return Ok(new { Message = "Please Select Store!", status = false });
+            }
+
+            //Insert two movement
+            if (SelectedLeftAssets==null&& SelectedRightAssets==null && SelectedLeftAssets.Count == 0 && SelectedRightAssets.Count == 0)
+            {
+
+                return Ok(new { Message = "Please!Select at least one Asset from anySide to transfer!", status = false });
+            }
+            if (SelectedLeftAssets.Count != 0)
+            {
+                bool exist = false;
+                foreach (var item in SelectedLeftAssets)
+                {
+                    exist = RightDataSource.Any(e => e.AssetId == item.AssetId);
+                    if (!exist)
+                    {
+                        break;
+                    }
+                }
+                if (exist)
+                {
+                    if (RightActionTypeId == 1)
+                    {
+
+                        foreach (var item in RightEmployeeDataSource.Distinct())
+                        {
+                            if (SelectedLeftAssets.Any(e => e.AssetId == item.AssetId))
+                            {
+                                var removeitem = SelectedLeftAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                SelectedLeftAssets.Remove(removeitem);
+                            }
+                        }
+                    }
+                    if (RightActionTypeId == 2)
+                    {
+                        foreach (var item in RightDepartmentDataSource.Distinct())
+                        {
+                            if (SelectedLeftAssets.Any(e => e.AssetId == item.AssetId))
+                            {
+                                var removeitem = SelectedLeftAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                SelectedLeftAssets.Remove(removeitem);
+                            }
+                        }
+                    }
+                    //checkIn Left Assets To Store 
+                    AssetMovement LeftCheckInMovement = null;
+
+                    if (LeftActionTypeId == 1)
+                    {
+                        LeftCheckInMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 2,
+                            EmpolyeeID = LeftEmployeeId,
+                            ActionTypeId = 1,
+                            DepartmentId = LeftDepartmentId,
+                            LocationId = LeftLocationId,
+                            TransactionDate = DateTime.Now,
+                            StoreId = LeftStoreId,
+                        };
+                    }
+                    else if (LeftActionTypeId == 2)
+                    {
+                        LeftCheckInMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 2,
+                            DepartmentId = LeftDepartmentId,
+                            ActionTypeId = 2,
+                            LocationId = LeftLocationId,
+                            TransactionDate = DateTime.Now,
+                            StoreId = LeftStoreId,
+                        };
+                    }
+
+                    LeftCheckInMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                    string LeftCheckInDirectionTitle = "Direction Title : ";
+                    string LeftCheckInTransDate = "Transaction Date : ";
+                    AssetMovementDirection LeftCheckInDirection = _context.AssetMovementDirections.Find(LeftCheckInMovement.AssetMovementDirectionId);
+                    string TransactionDate = LeftCheckInMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    foreach (var asset in SelectedLeftAssets)
+                    {
+                        asset.AssetStatusId = 1;
+                        var UpdatedAsset = _context.Assets.Attach(asset);
+                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        LeftCheckInMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 16,
+                            AssetId = asset.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"{LeftCheckInTransDate}{TransactionDate} and {LeftCheckInDirectionTitle}{LeftCheckInDirection.AssetMovementDirectionTitle} Transfered")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                    }
+
+                    _context.AssetMovements.Add(LeftCheckInMovement);
+                    try
+                    {
+                        _context.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Ok(new {Message= "Something went Error,Try again",status=false });
+                    }
+                    //checkOut Left Assets To Store 
+
+                    AssetMovement LeftCheckOutMovement = null;
+
+                    if (RightActionTypeId == 1)
+                    {
+                        LeftCheckOutMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 1,
+                            ActionTypeId = 1,
+                            DepartmentId = RightDepartmentId,
+                            LocationId = RightLocationId,
+                            StoreId = LeftStoreId,
+                            TransactionDate = DateTime.Now,
+                            EmpolyeeID = RightEmployeeId,
+                        };
+
+                    }
+                    else if (RightActionTypeId == 2)
+                    {
+                        LeftCheckOutMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 1,
+                            ActionTypeId = 2,
+                            DepartmentId = RightDepartmentId,
+                            LocationId = RightLocationId,
+                            StoreId = LeftStoreId,
+                            TransactionDate = DateTime.Now,
+                        };
+                    }
+
+                    LeftCheckOutMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                    string ActionTitle = "Action Title : ";
+                    string LeftCheckoutTransDate = "Transaction Date : ";
+                    string LeftCheckOutDirectionTitle = "Direction Title : ";
+                    ActionType SelectedActionType = _context.ActionTypes.Find(LeftCheckOutMovement.ActionTypeId);
+                    AssetMovementDirection LeftCheckOutDirection = _context.AssetMovementDirections.Find(LeftCheckOutMovement.AssetMovementDirectionId);
+                    string CheckoutTransactionDate = LeftCheckOutMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    foreach (var asset in SelectedLeftAssets)
+                    {
+                        asset.AssetStatusId = 2;
+                        var UpdatedAsset = _context.Assets.Attach(asset);
+                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        LeftCheckOutMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 17,
+                            AssetId = asset.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"{LeftCheckoutTransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle} and {LeftCheckOutDirectionTitle}{LeftCheckOutDirection.AssetMovementDirectionTitle} Transfered")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                    }
+                    _context.AssetMovements.Add(LeftCheckOutMovement);
+                    try
+                    {
+                        _context.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Ok(new { Message = "Something went Error,Try again", status = false });
+                    }
+                    SelectedLeftAssets = new List<Asset>();
+                }
+
+            }
+
+            if (SelectedRightAssets.Count != 0)
+            {
+                bool exist = false;
+                foreach (var item in SelectedRightAssets)
+                {
+                    exist = LeftDataSource.Any(e => e.AssetId == item.AssetId);
+                    if (!exist)
+                    {
+                        break;
+                    }
+                }
+                if (exist)
+                {
+                    //checkIn Right Assets To Store 
+                    AssetMovement RightCheckInMovement = null;
+                    if (LeftActionTypeId == 1)
+                    {
+
+                        foreach (var item in LeftEmployeeDataSource.Distinct())
+                        {
+                            if (SelectedRightAssets.Any(e => e.AssetId == item.AssetId))
+                            {
+                                var removeitem = SelectedRightAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                SelectedRightAssets.Remove(removeitem);
+                            }
+                        }
+                    }
+                    if (LeftActionTypeId == 2)
+                    {
+                        foreach (var item in LeftDepartmentDataSource.Distinct())
+                        {
+                            if (SelectedRightAssets.Any(e => e.AssetId == item.AssetId))
+                            {
+                                var removeitem = SelectedRightAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                SelectedRightAssets.Remove(removeitem);
+                            }
+                        }
+                    }
+                    if (RightActionTypeId == 1)
+                    {
+                        RightCheckInMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 2,
+                            EmpolyeeID = RightEmployeeId,
+                            ActionTypeId = 1,
+                            DepartmentId = RightDepartmentId,
+                            LocationId = RightLocationId,
+                            TransactionDate = DateTime.Now,
+                            StoreId = RightStoreId,
+                        };
+                    }
+                    else if (RightActionTypeId == 2)
+                    {
+                        RightCheckInMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 2,
+                            DepartmentId = RightDepartmentId,
+                            ActionTypeId = 2,
+                            LocationId = RightLocationId,
+                            TransactionDate = DateTime.Now,
+                            StoreId = RightStoreId,
+                        };
+                    }
+
+                    RightCheckInMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                    string RightCheckInDirectionTitle = "Direction Title : ";
+                    string RightCheckInTransDate = "Transaction Date : ";
+                    AssetMovementDirection RightCheckInDirection = _context.AssetMovementDirections.Find(RightCheckInMovement.AssetMovementDirectionId);
+                    string TransactionDate = RightCheckInMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    foreach (var asset in SelectedRightAssets)
+                    {
+                        asset.AssetStatusId = 1;
+                        var UpdatedAsset = _context.Assets.Attach(asset);
+                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        RightCheckInMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 16,
+                            AssetId = asset.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"{RightCheckInTransDate}{TransactionDate} and {RightCheckInDirectionTitle}{RightCheckInDirection.AssetMovementDirectionTitle} Transfered")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                    }
+
+                    _context.AssetMovements.Add(RightCheckInMovement);
+                    try
+                    {
+                        _context.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Ok(new { Message = "Something went Error,Try again", status = false });
+                    }
+
+                    //checkOut Right Assets To Store 
+
+                    AssetMovement RightCheckOutMovement = null;
+
+                    if (LeftActionTypeId == 1)
+                    {
+                        RightCheckOutMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 1,
+                            ActionTypeId = 1,
+                            DepartmentId = LeftDepartmentId,
+                            LocationId = LeftLocationId,
+                            StoreId = RightStoreId,
+                            TransactionDate = DateTime.Now,
+                            EmpolyeeID = LeftEmployeeId,
+                        };
+
+                    }
+                    else if (LeftActionTypeId == 2)
+                    {
+                        RightCheckOutMovement = new AssetMovement()
+                        {
+                            AssetMovementDirectionId = 1,
+                            ActionTypeId = 2,
+                            DepartmentId = LeftDepartmentId,
+                            LocationId = LeftLocationId,
+                            StoreId = RightStoreId,
+                            TransactionDate = DateTime.Now,
+                        };
+                    }
+                    RightCheckOutMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                    string ActionTitle = "Action Title : ";
+                    string RightCheckoutTransDate = "Transaction Date : ";
+                    string RightCheckOutDirectionTitle = "Direction Title : ";
+                    ActionType SelectedActionType = _context.ActionTypes.Find(RightCheckOutMovement.ActionTypeId);
+                    AssetMovementDirection RightCheckOutDirection = _context.AssetMovementDirections.Find(RightCheckOutMovement.AssetMovementDirectionId);
+                    string CheckoutTransactionDate = RightCheckOutMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    foreach (var asset in SelectedRightAssets)
+                    {
+                        asset.AssetStatusId = 2;
+                        var UpdatedAsset = _context.Assets.Attach(asset);
+                        UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        RightCheckOutMovement.AssetMovementDetails.Add(new AssetMovementDetails() { AssetId = asset.AssetId, Remarks = "" });
+
+                        AssetLog assetLog = new AssetLog()
+                        {
+                            ActionLogId = 17,
+                            AssetId = asset.AssetId,
+                            ActionDate = DateTime.Now,
+                            Remark = string.Format($"{RightCheckoutTransDate}{TransactionDate} and {ActionTitle}{SelectedActionType.ActionTypeTitle} and {RightCheckOutDirectionTitle}{RightCheckOutDirection.AssetMovementDirectionTitle} Transfered")
+                        };
+                        _context.AssetLogs.Add(assetLog);
+                    }
+                    _context.AssetMovements.Add(RightCheckOutMovement);
+                    try
+                    {
+                        _context.SaveChanges();
+
+                    }
+                    catch (Exception e)
+                    {
+                        return Ok(new { Message = "Something went Error,Try again", status = false });
+                    }
+
+                }
+                SelectedRightAssets = new List<Asset>();
+
+            }
+            return Ok(new { Message = "Transaction Added Successfully", status = true });
+        }
+
     }
 }
 

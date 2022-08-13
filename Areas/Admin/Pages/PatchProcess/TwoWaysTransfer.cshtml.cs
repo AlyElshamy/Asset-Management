@@ -96,10 +96,6 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
             return new JsonResult(DataSourceLoader.Load(RightDataSource, loadOptions));
         }
 
-
- 
-
-
         public IActionResult OnPostFillRightAssetList([FromBody] List<Asset> assets)
         {
 
@@ -252,7 +248,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
         }
 
 
-        public IActionResult OnPostTransferFrom([FromBody] List<Asset> assets)
+        public IActionResult OnPostTransferFrom()
         {
 
             if (LeftActionTypeId == null)
@@ -451,7 +447,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                                 ActionTypeId = 1,
                                 DepartmentId = RightDepartmentId,
                                 LocationId = RightLocationId,
-                                StoreId = RightStoreId,
+                                StoreId = LeftStoreId,
                                 TransactionDate = DateTime.Now,
                                 EmpolyeeID = RightEmployeeId,
                             };
@@ -465,7 +461,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                                 ActionTypeId = 2,
                                 DepartmentId = RightDepartmentId,
                                 LocationId = RightLocationId,
-                                StoreId = RightStoreId,
+                                StoreId = LeftStoreId,
                                 TransactionDate = DateTime.Now,
                             };
                         }
@@ -616,7 +612,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                             ActionTypeId = 1,
                             DepartmentId = LeftDepartmentId,
                             LocationId = LeftLocationId,
-                            StoreId = LeftStoreId,
+                            StoreId = RightStoreId,
                             TransactionDate = DateTime.Now,
                             EmpolyeeID = LeftEmployeeId,
                         };
@@ -630,7 +626,7 @@ namespace AssetProject.Areas.Admin.Pages.PatchProcess
                             ActionTypeId = 2,
                             DepartmentId = LeftDepartmentId,
                             LocationId = LeftLocationId,
-                            StoreId = LeftStoreId,
+                            StoreId = RightStoreId,
                             TransactionDate = DateTime.Now,
                         };
                     }
