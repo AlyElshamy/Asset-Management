@@ -1279,6 +1279,7 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Asset Id");
         }
+
         [HttpPost]
         public IActionResult PostAddAssetPhoto(IFormFile file, AssetPhotos photos)
         {
@@ -1304,6 +1305,8 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Please Choose Image.. ");
         }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
         private string UploadImage(string folderPath, IFormFile file)
         {
 
@@ -1401,6 +1404,7 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Enter Correct Asset Id..");
         }
+
         [HttpPost]
         public IActionResult PostAddAssetDocument(AssetDocument instance, IFormFile file)
         {
@@ -2369,6 +2373,7 @@ namespace AssetProject.Controllers
             return BadRequest("Please Select at Least one Asset");
 
         }
+       
         [ApiExplorerSettings(IgnoreApi = true)]
         public int checkinAssetsfromDepartmentTostore(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
         {
@@ -2419,6 +2424,7 @@ namespace AssetProject.Controllers
             }
             return newAssetMovement.AssetMovementId;
         }
+       
         [ApiExplorerSettings(IgnoreApi = true)]
         public int checkoutAssetsToEmpolyee(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
         {
@@ -2474,6 +2480,8 @@ namespace AssetProject.Controllers
             }
             return newAssetMovement.AssetMovementId;
         }
+       
+        
         [HttpPost]
         public IActionResult PostcheckedoutassetsFromEmployee([FromBody] AssetMovement assetmovement, [FromBody] List<Asset> SelectedAssets)
         {
@@ -2524,6 +2532,7 @@ namespace AssetProject.Controllers
             }
             return BadRequest("Please Select at Least one Asset");
         }
+       
         [ApiExplorerSettings(IgnoreApi = true)]
         public int checkinAssetsfromEmpolyeeTostore(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
         {
@@ -2578,6 +2587,7 @@ namespace AssetProject.Controllers
             }
             return newAssetMovement.AssetMovementId;
         }
+       
         [ApiExplorerSettings(IgnoreApi = true)]
         public int checkoutAssetsToDepartment(AssetMovement assetMovementObj, List<Asset> selectedAssetsList)
         {
@@ -2631,7 +2641,9 @@ namespace AssetProject.Controllers
             }
             return newAssetMovement.AssetMovementId;
         }
-        public IActionResult OnPostTransferFrom([FromBody] int? LeftActionTypeId, [FromBody] int? RightActionTypeId,
+
+        [HttpPost]
+        public IActionResult TransferFrom([FromBody] int? LeftActionTypeId, [FromBody] int? RightActionTypeId,
             [FromBody] int? LeftDepartmentId,[FromBody] int? RightDepartmentId, [FromBody] int? LeftEmployeeId,
             [FromBody] int? RightEmployeeId, [FromBody] int? LeftLocationId, [FromBody] int? RightLocationId,
              [FromBody] int? LeftStoreId, [FromBody] int? RightStoreId
