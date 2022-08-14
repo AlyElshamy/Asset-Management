@@ -12,10 +12,8 @@ namespace AssetProject.Models
         public int AssetId { set; get; }
         [Required]
         public string AssetDescription { set; get; }
-        [Required]
         public string AssetTagId { set; get; }
         public double AssetCost { set; get; }
-        [Required]
         public string AssetSerialNo { set; get; }
 
         //[Column(TypeName = "date")]
@@ -25,6 +23,8 @@ namespace AssetProject.Models
         public string Photo { set; get; }
         [Required]
         public string PurchaseNo { get; set; }
+        [NotMapped]
+        public int? Quantity { set; get; }
         public bool DepreciableAsset { set; get; }
         public double? DepreciableCost { set; get; }
         public double? SalvageValue { set; get; }

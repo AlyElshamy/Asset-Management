@@ -3048,6 +3048,264 @@ namespace AssetProject.Controllers
             return Ok(new { Message = "Transaction Added Successfully", status = true });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> PatchAddAsset(Asset Asset)
+        {
+             List<Asset> Assets = new List<Asset>();
+        
+
+            if (Asset.ItemId == 0)
+            {
+                return Ok(new {Message= "Please Select Item",status=false });
+            }
+            if (Asset.StoreId == null)
+            {
+                return Ok(new { Message = "Please Select Store", status = false });
+            }
+            if (Asset.VendorId == null)
+            {
+                return Ok(new { Message = "Please Select Vendor", status = false });
+            }
+            if (Asset.DepreciableAsset)
+            {
+                if (Asset.DepreciationMethodId == null)
+                {
+                    return Ok(new { Message = "Please Select Depreciation Method", status = false });
+                }
+
+            }
+            if (!Asset.DepreciableAsset)
+            {
+                Asset.DepreciableCost = null;
+                Asset.DateAcquired = null;
+                Asset.DepreciationMethodId = null;
+                Asset.SalvageValue = null;
+                Asset.AssetLife = null;
+            }
+
+            if (ModelState.IsValid)
+            {
+                for (int i = 0; i < Asset.Quantity; i++)
+                {
+                    Asset asset = new Asset();
+                    if (Asset.Photo != string.Empty)
+                    {
+                        var bytes = Convert.FromBase64String(Asset.Photo);
+                        string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "Images/AssetPhotos");
+                        string uniqePictureName = Guid.NewGuid().ToString("N") + ".jpeg";
+                        string uploadedImagePath = Path.Combine(uploadFolder, uniqePictureName);
+                        using (var imageFile = new FileStream(uploadedImagePath, FileMode.Create))
+                        {
+                            imageFile.Write(bytes, 0, bytes.Length);
+                            imageFile.Flush();
+                        }
+                        Asset.Photo = uniqePictureName;
+                    }
+
+                    asset.AssetStatusId = 1;
+                    asset.TenantId = Asset.TenantId;
+                    asset.PurchaseNo = Asset.PurchaseNo;
+                    asset.ItemId = Asset.ItemId;
+                    asset.StoreId = Asset.StoreId;
+                    asset.VendorId = Asset.VendorId;
+                    asset.AssetDescription = Asset.AssetDescription;
+                    asset.DepreciableAsset = Asset.DepreciableAsset;
+                    asset.AssetCost = Asset.AssetCost;
+                    asset.AssetLife = Asset.AssetLife;
+                    asset.DateAcquired = Asset.DateAcquired;
+                    asset.DepreciationMethodId = Asset.DepreciationMethodId;
+                    asset.AssetPurchaseDate = Asset.AssetPurchaseDate;
+                    asset.DepreciableCost = Asset.DepreciableCost;
+                    asset.SalvageValue = Asset.SalvageValue;
+                    _context.Assets.Add(asset);
+                    Assets.Add(asset);
+
+
+                }
+
+                try
+                {
+                    _context.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    return Ok(new { Message = "Something went Error", status = false });
+                }
+                foreach (var item in Assets)
+                {
+                    string Str = "purchase Date : ";
+                    string AssetPurchaseDate = Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 1,
+                        AssetId = item.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format($"{Str}{AssetPurchaseDate}")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                }
+                try
+                {
+                    _context.SaveChanges();
+                    return Ok(new { Message = "Asset Added successfully", status = true, Assets });
+                }
+                catch (Exception e)
+                {
+                    return Ok(new { Message = "Something went Error", status = false });
+                }
+
+            }
+            return Ok(new { Message = "Data Not Valid", status = false });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAsset(Asset Asset)
+        {
+            if (Asset.ItemId == 0)
+            {
+                return Ok(new { Message = "Please Select Item", status = false });
+            }
+            if (Asset.StoreId == null)
+            {
+                return Ok(new { Message = "Please Select Store", status = false });
+            }
+            if (Asset.VendorId == null)
+            {
+                return Ok(new { Message = "Please Select Vendor", status = false });
+            }
+            if (Asset.DepreciableAsset)
+            {
+                if (Asset.DepreciationMethodId == null)
+                {
+                    return Ok(new { Message = "Please Select  Depreciation Method", status = false });
+                }
+
+            }
+            if (!Asset.DepreciableAsset)
+            {
+                Asset.DepreciableCost = null;
+                Asset.DateAcquired = null;
+                Asset.DepreciationMethodId = null;
+                Asset.SalvageValue = null;
+                Asset.AssetLife = null;
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (Asset.Photo != string.Empty)
+                {
+                    var bytes = Convert.FromBase64String(Asset.Photo);
+                    string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "Images/AssetPhotos");
+                    string uniqePictureName = Guid.NewGuid().ToString("N") + ".jpeg";
+                    string uploadedImagePath = Path.Combine(uploadFolder, uniqePictureName);
+                    using (var imageFile = new FileStream(uploadedImagePath, FileMode.Create))
+                    {
+                        imageFile.Write(bytes, 0, bytes.Length);
+                        imageFile.Flush();
+                    }
+                    Asset.Photo = uniqePictureName;
+                }
+
+                Asset.AssetStatusId = 1;
+                _context.Assets.Add(Asset);
+                string Str = "purchase Date : ";
+                string AssetPurchaseDate = Asset.AssetPurchaseDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
+
+                AssetLog assetLog = new AssetLog()
+                {
+                    ActionLogId = 1,
+                    Asset = Asset,
+                    ActionDate = DateTime.Now,
+                    Remark = string.Format($"{Str}{AssetPurchaseDate}")
+                };
+                _context.AssetLogs.Add(assetLog);
+                try
+                {
+                    _context.SaveChanges();
+                    return Ok(new { Message = "Asset Added successfully", status = true, Asset });
+
+                }
+                catch (Exception e)
+                {
+                    return Ok(new { Message = "Something went Error", status = false });
+
+                }
+
+            }
+            return Ok(new { Message = "Data Not Valid", status = false });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAsset(Asset instance)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var Asset = _context.Assets.FirstOrDefault(e => e.AssetId == instance.AssetId);
+                    if (Asset == null)
+                    {
+                        return Ok(new { Message = "Something went Error", status = false });
+                    }
+                    if (instance.Photo != string.Empty &&instance.Photo!=Asset.Photo )
+                    {
+                        var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, Asset.Photo);
+                        if (System.IO.File.Exists(ImagePath))
+                        {
+                            System.IO.File.Delete(ImagePath);
+                        }
+                        var bytes = Convert.FromBase64String(instance.Photo);
+                        string uploadFolder = Path.Combine(_hostEnvironment.WebRootPath, "Images/AssetPhotos");
+                        string uniqePictureName = Guid.NewGuid().ToString("N") + ".jpeg";
+                        string uploadedImagePath = Path.Combine(uploadFolder, uniqePictureName);
+                        using (var imageFile = new FileStream(uploadedImagePath, FileMode.Create))
+                        {
+                            imageFile.Write(bytes, 0, bytes.Length);
+                            imageFile.Flush();
+                        }
+                        instance.Photo = uniqePictureName;
+                    }
+                    
+                    if (instance.DepreciableAsset)
+                    {
+                        if (instance.DepreciationMethodId == null)
+                        {
+                            return Ok(new { Message = "Asset Not Edited,must select Depreciation Method", status = false });
+                        }
+
+                    }
+                    else
+                    {
+                        instance.DepreciableCost = null;
+                        instance.DateAcquired = null;
+                        instance.DepreciationMethodId = null;
+                        instance.SalvageValue = null;
+                        instance.AssetLife = null;
+                    }
+                    var UpdatedAsset = _context.Assets.Attach(instance);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 19,
+                        AssetId = instance.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format("Asset Edited")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                    _context.SaveChanges();
+                    return Ok(new { Message = "Asset Edited successfully", status = true, instance });
+                  
+                }
+                return Ok(new { Message = "Not Valid Data!", status = false});
+               
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Message = "Something went Error", status = false });
+            }
+        }
     }
 }
 

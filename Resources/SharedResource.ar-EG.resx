@@ -372,6 +372,12 @@
   <data name="Asset Report" xml:space="preserve">
     <value>تقرير الأصول</value>
   </data>
+  <data name="Asset RFID" xml:space="preserve">
+    <value>جرد RFID</value>
+  </data>
+  <data name="Asset RFID Report" xml:space="preserve">
+    <value>تقرير RFID</value>
+  </data>
   <data name="Asset Sell" xml:space="preserve">
     <value>بيع أصل</value>
   </data>
@@ -1029,6 +1035,9 @@
   <data name="Enter Asset Purchase Number" xml:space="preserve">
     <value>أدخل رقم الفاتورة</value>
   </data>
+  <data name="Enter Asset Quantity" xml:space="preserve">
+    <value>إدخل الكمية</value>
+  </data>
   <data name="Enter Asset Serial No" xml:space="preserve">
     <value>أدخل رقم السيريال للأاصل</value>
   </data>
@@ -1576,6 +1585,12 @@
   <data name="Password" xml:space="preserve">
     <value>الرقم السرى</value>
   </data>
+  <data name="Patch Add Asset" xml:space="preserve">
+    <value>حزمة اضافة أصل</value>
+  </data>
+  <data name="Patch Add Assets" xml:space="preserve">
+    <value>حزمة إضافة أصل</value>
+  </data>
   <data name="Patch CheckIn" xml:space="preserve">
     <value>استرجاع حزمه من الاصول</value>
   </data>
@@ -1686,6 +1701,9 @@
   </data>
   <data name="Purchase Number" xml:space="preserve">
     <value>رقم الفاتورة</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
   </data>
   <data name="Read More" xml:space="preserve">
     <value>اقرأ المزيد</value>

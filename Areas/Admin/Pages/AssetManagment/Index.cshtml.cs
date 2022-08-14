@@ -62,55 +62,63 @@ namespace AssetProject.Areas.Admin.Pages.AssetManagment
 
         public async Task<IActionResult> OnPostEditAsset(Asset instance,IFormFile file)
         {
-
-            if (ModelState.IsValid)
+            try
             {
-                if (file != null)
+                if (ModelState.IsValid)
                 {
-                    if (instance.Photo != null)
+                    if (file != null)
                     {
-                        var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, instance.Photo);
-                        if (System.IO.File.Exists(ImagePath))
+                        if (instance.Photo != null)
                         {
-                            System.IO.File.Delete(ImagePath);
+                            var ImagePath = Path.Combine(_hostEnvironment.WebRootPath, instance.Photo);
+                            if (System.IO.File.Exists(ImagePath))
+                            {
+                                System.IO.File.Delete(ImagePath);
+                            }
                         }
-                    }
 
-                    string folder = "Images/AssetPhotos/";
-                    instance.Photo = await UploadImage(folder, file);
-                }
-                if (instance.DepreciableAsset)
-                {
-                    if (instance.DepreciationMethodId == null)
+                        string folder = "Images/AssetPhotos/";
+                        instance.Photo = await UploadImage(folder, file);
+                    }
+                    if (instance.DepreciableAsset)
                     {
-                        _toastNotification.AddErrorToastMessage("Asset Not Edited,must select Depreciation Method ");
-                        return Page();
-                    }
+                        if (instance.DepreciationMethodId == null)
+                        {
+                            _toastNotification.AddErrorToastMessage("Asset Not Edited,must select Depreciation Method ");
+                            return Page();
+                        }
 
+                    }
+                    else
+                    {
+                        instance.DepreciableCost = null;
+                        instance.DateAcquired = null;
+                        instance.DepreciationMethodId = null;
+                        instance.SalvageValue = null;
+                        instance.AssetLife = null;
+                    }
+                    var UpdatedAsset = _context.Assets.Attach(instance);
+                    UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                    AssetLog assetLog = new AssetLog()
+                    {
+                        ActionLogId = 19,
+                        AssetId = instance.AssetId,
+                        ActionDate = DateTime.Now,
+                        Remark = string.Format("Asset Edited")
+                    };
+                    _context.AssetLogs.Add(assetLog);
+                    _context.SaveChanges();
+                    _toastNotification.AddSuccessToastMessage("Asset Edited successfully");
+                    return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
                 }
-               else 
-                {
-                    instance.DepreciableCost = null;
-                    instance.DateAcquired = null;
-                    instance.DepreciationMethodId = null;
-                    instance.SalvageValue = null;
-                    instance.AssetLife = null;
-                }
-                var UpdatedAsset = _context.Assets.Attach(instance);
-                UpdatedAsset.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                AssetLog assetLog = new AssetLog()
-                {
-                    ActionLogId = 19,
-                    AssetId = instance.AssetId,
-                    ActionDate = DateTime.Now,
-                    Remark = string.Format("Asset Edited")
-                };
-                _context.AssetLogs.Add(assetLog);
-                _context.SaveChanges();
-                _toastNotification.AddSuccessToastMessage("Asset Edited successfully");
-                return RedirectToPage("/AssetManagment/AssetProfile", new { AssetId = instance.AssetId });
+                _toastNotification.AddErrorToastMessage("Not Valid Data!");
+                return Page();
             }
-            return Page();
+            catch(Exception e)
+            {
+                _toastNotification.AddErrorToastMessage("Something went Error");
+                return Page();
+            }
 
             //return new JsonResult(instance);
         }
