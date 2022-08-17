@@ -12,6 +12,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Globalization;
 using Newtonsoft.Json;
+using AssetProject.ViewModel;
 
 namespace AssetProject.Controllers
 {
@@ -2643,71 +2644,62 @@ namespace AssetProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult TransferFrom([FromBody] int? LeftActionTypeId, [FromBody] int? RightActionTypeId,
-            [FromBody] int? LeftDepartmentId,[FromBody] int? RightDepartmentId, [FromBody] int? LeftEmployeeId,
-            [FromBody] int? RightEmployeeId, [FromBody] int? LeftLocationId, [FromBody] int? RightLocationId,
-             [FromBody] int? LeftStoreId, [FromBody] int? RightStoreId
-            ,[FromBody] List<Asset> SelectedLeftAssets, [FromBody] List<Asset> SelectedRightAssets,
-            [FromBody] List<Asset> RightDataSource, [FromBody] List<Asset> LeftDataSource, [FromBody] List<Asset> RightEmployeeDataSource,
-            [FromBody] List<Asset> LeftEmployeeDataSource, [FromBody] List<Asset> LeftDepartmentDataSource,
-             [FromBody] List<Asset> RightDepartmentDataSource
-            )
+        public IActionResult TransferFrom([FromBody] TwowaysTansfer twoways )
         {
 
-
-            if (LeftActionTypeId == null)
+            if (twoways.LeftActionTypeId == null)
             {
-                return Ok(new {Message= "Please Select Action Type!",status=false});
+                return Ok(new { Message = "Please Select Action Type!", status = false });
             }
-            else if (LeftActionTypeId == 1)
+            else if (twoways.LeftActionTypeId == 1)
             {
-                if (LeftDepartmentId == null)
+                if (twoways.LeftDepartmentId == null)
                 {
                     return Ok(new { Message = "Please Select Department!", status = false });
                 }
-                if (LeftEmployeeId == null)
+                if (twoways.LeftEmployeeId == null)
                 {
                     return Ok(new { Message = "Please Select Empolyee!", status = false });
                 }
 
             }
-            else if (LeftActionTypeId == 2)
+            else if (twoways.LeftActionTypeId == 2)
             {
-                if (LeftDepartmentId == null)
+                if (twoways.LeftDepartmentId == null)
                 {
                     return Ok(new { Message = "Please Select Department!", status = false });
                 }
 
             }
-            if (LeftLocationId == null)
+            if (twoways.LeftLocationId == null)
             {
                 return Ok(new { Message = "Please Select Location!", status = false });
             }
 
-            if (LeftStoreId == null)
+            if (twoways.LeftStoreId == null)
             {
                 return Ok(new { Message = "Please Select Store!", status = false });
             }
 
-            if (RightActionTypeId == null)
+            if (twoways.RightActionTypeId == null)
             {
                 return Ok(new { Message = "Please Select Action!", status = false });
             }
-            else if (RightActionTypeId == 1)
+            else if (twoways.RightActionTypeId == 1)
             {
-                if (RightDepartmentId == null)
+                if (twoways.RightDepartmentId == null)
                 {
                     return Ok(new { Message = "Please Select Department!", status = false });
                 }
-                if (RightEmployeeId == null)
+                if (twoways.RightEmployeeId == null)
                 {
                     return Ok(new { Message = "Please Select Empolyee!", status = false });
                 }
 
             }
-            else if (RightActionTypeId == 2)
+            else if (twoways.RightActionTypeId == 2)
             {
-                if (RightDepartmentId == null)
+                if (twoways.RightDepartmentId == null)
                 {
                     return Ok(new { Message = "Please Select Department!", status = false });
                 }
@@ -2715,28 +2707,28 @@ namespace AssetProject.Controllers
 
             }
 
-            if (RightLocationId == null)
+            if (twoways.RightLocationId == null)
             {
                 return Ok(new { Message = "Please Select Location!", status = false });
             }
 
-            if (RightStoreId == null)
+            if (twoways.RightStoreId == null)
             {
                 return Ok(new { Message = "Please Select Store!", status = false });
             }
 
             //Insert two movement
-            if (SelectedLeftAssets==null&& SelectedRightAssets==null && SelectedLeftAssets.Count == 0 && SelectedRightAssets.Count == 0)
+            if (twoways.SelectedLeftAssets == null && twoways.SelectedRightAssets == null && twoways.SelectedLeftAssets.Count == 0 && twoways.SelectedRightAssets.Count == 0)
             {
 
                 return Ok(new { Message = "Please!Select at least one Asset from anySide to transfer!", status = false });
             }
-            if (SelectedLeftAssets.Count != 0)
+            if (twoways.SelectedLeftAssets.Count != 0)
             {
                 bool exist = false;
-                foreach (var item in SelectedLeftAssets)
+                foreach (var item in twoways.SelectedLeftAssets)
                 {
-                    exist = RightDataSource.Any(e => e.AssetId == item.AssetId);
+                    exist = twoways.RightDataSource.Any(e => e.AssetId == item.AssetId);
                     if (!exist)
                     {
                         break;
@@ -2744,55 +2736,55 @@ namespace AssetProject.Controllers
                 }
                 if (exist)
                 {
-                    if (RightActionTypeId == 1)
+                    if (twoways.RightActionTypeId == 1)
                     {
 
-                        foreach (var item in RightEmployeeDataSource.Distinct())
+                        foreach (var item in twoways.RightEmployeeDataSource.Distinct())
                         {
-                            if (SelectedLeftAssets.Any(e => e.AssetId == item.AssetId))
+                            if (twoways.SelectedLeftAssets.Any(e => e.AssetId == item.AssetId))
                             {
-                                var removeitem = SelectedLeftAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
-                                SelectedLeftAssets.Remove(removeitem);
+                                var removeitem = twoways.SelectedLeftAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                twoways.SelectedLeftAssets.Remove(removeitem);
                             }
                         }
                     }
-                    if (RightActionTypeId == 2)
+                    if (twoways.RightActionTypeId == 2)
                     {
-                        foreach (var item in RightDepartmentDataSource.Distinct())
+                        foreach (var item in twoways.RightDepartmentDataSource.Distinct())
                         {
-                            if (SelectedLeftAssets.Any(e => e.AssetId == item.AssetId))
+                            if (twoways.SelectedLeftAssets.Any(e => e.AssetId == item.AssetId))
                             {
-                                var removeitem = SelectedLeftAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
-                                SelectedLeftAssets.Remove(removeitem);
+                                var removeitem = twoways.SelectedLeftAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                twoways.SelectedLeftAssets.Remove(removeitem);
                             }
                         }
                     }
-                    //checkIn Left Assets To Store 
+                    //checkIn Left Assets To Store
                     AssetMovement LeftCheckInMovement = null;
 
-                    if (LeftActionTypeId == 1)
+                    if (twoways.LeftActionTypeId == 1)
                     {
                         LeftCheckInMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 2,
-                            EmpolyeeID = LeftEmployeeId,
+                            EmpolyeeID = twoways.LeftEmployeeId,
                             ActionTypeId = 1,
-                            DepartmentId = LeftDepartmentId,
-                            LocationId = LeftLocationId,
+                            DepartmentId = twoways.LeftDepartmentId,
+                            LocationId = twoways.LeftLocationId,
                             TransactionDate = DateTime.Now,
-                            StoreId = LeftStoreId,
+                            StoreId = twoways.LeftStoreId,
                         };
                     }
-                    else if (LeftActionTypeId == 2)
+                    else if (twoways.LeftActionTypeId == 2)
                     {
                         LeftCheckInMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 2,
-                            DepartmentId = LeftDepartmentId,
+                            DepartmentId = twoways.LeftDepartmentId,
                             ActionTypeId = 2,
-                            LocationId = LeftLocationId,
+                            LocationId = twoways.LeftLocationId,
                             TransactionDate = DateTime.Now,
-                            StoreId = LeftStoreId,
+                            StoreId = twoways.LeftStoreId,
                         };
                     }
 
@@ -2801,7 +2793,7 @@ namespace AssetProject.Controllers
                     string LeftCheckInTransDate = "Transaction Date : ";
                     AssetMovementDirection LeftCheckInDirection = _context.AssetMovementDirections.Find(LeftCheckInMovement.AssetMovementDirectionId);
                     string TransactionDate = LeftCheckInMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                    foreach (var asset in SelectedLeftAssets)
+                    foreach (var asset in twoways.SelectedLeftAssets)
                     {
                         asset.AssetStatusId = 1;
                         var UpdatedAsset = _context.Assets.Attach(asset);
@@ -2824,35 +2816,35 @@ namespace AssetProject.Controllers
                     }
                     catch (Exception e)
                     {
-                        return Ok(new {Message= "Something went Error,Try again",status=false });
+                        return Ok(new { Message = "Something went Error,Try again", status = false });
                     }
-                    //checkOut Left Assets To Store 
+                    //checkOut Left Assets To Store
 
                     AssetMovement LeftCheckOutMovement = null;
 
-                    if (RightActionTypeId == 1)
+                    if (twoways.RightActionTypeId == 1)
                     {
                         LeftCheckOutMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 1,
                             ActionTypeId = 1,
-                            DepartmentId = RightDepartmentId,
-                            LocationId = RightLocationId,
-                            StoreId = LeftStoreId,
+                            DepartmentId = twoways.RightDepartmentId,
+                            LocationId = twoways.RightLocationId,
+                            StoreId = twoways.LeftStoreId,
                             TransactionDate = DateTime.Now,
-                            EmpolyeeID = RightEmployeeId,
+                            EmpolyeeID = twoways.RightEmployeeId,
                         };
 
                     }
-                    else if (RightActionTypeId == 2)
+                    else if (twoways.RightActionTypeId == 2)
                     {
                         LeftCheckOutMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 1,
                             ActionTypeId = 2,
-                            DepartmentId = RightDepartmentId,
-                            LocationId = RightLocationId,
-                            StoreId = LeftStoreId,
+                            DepartmentId = twoways.RightDepartmentId,
+                            LocationId = twoways.RightLocationId,
+                            StoreId = twoways.LeftStoreId,
                             TransactionDate = DateTime.Now,
                         };
                     }
@@ -2864,7 +2856,7 @@ namespace AssetProject.Controllers
                     ActionType SelectedActionType = _context.ActionTypes.Find(LeftCheckOutMovement.ActionTypeId);
                     AssetMovementDirection LeftCheckOutDirection = _context.AssetMovementDirections.Find(LeftCheckOutMovement.AssetMovementDirectionId);
                     string CheckoutTransactionDate = LeftCheckOutMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                    foreach (var asset in SelectedLeftAssets)
+                    foreach (var asset in twoways.SelectedLeftAssets)
                     {
                         asset.AssetStatusId = 2;
                         var UpdatedAsset = _context.Assets.Attach(asset);
@@ -2889,17 +2881,17 @@ namespace AssetProject.Controllers
                     {
                         return Ok(new { Message = "Something went Error,Try again", status = false });
                     }
-                    SelectedLeftAssets = new List<Asset>();
+                    twoways.SelectedLeftAssets = new List<Asset>();
                 }
 
             }
 
-            if (SelectedRightAssets.Count != 0)
+            if (twoways.SelectedRightAssets.Count != 0)
             {
                 bool exist = false;
-                foreach (var item in SelectedRightAssets)
+                foreach (var item in twoways.SelectedRightAssets)
                 {
-                    exist = LeftDataSource.Any(e => e.AssetId == item.AssetId);
+                    exist = twoways.LeftDataSource.Any(e => e.AssetId == item.AssetId);
                     if (!exist)
                     {
                         break;
@@ -2907,54 +2899,54 @@ namespace AssetProject.Controllers
                 }
                 if (exist)
                 {
-                    //checkIn Right Assets To Store 
+                    //checkIn Right Assets To Store
                     AssetMovement RightCheckInMovement = null;
-                    if (LeftActionTypeId == 1)
+                    if (twoways.LeftActionTypeId == 1)
                     {
 
-                        foreach (var item in LeftEmployeeDataSource.Distinct())
+                        foreach (var item in twoways.LeftEmployeeDataSource.Distinct())
                         {
-                            if (SelectedRightAssets.Any(e => e.AssetId == item.AssetId))
+                            if (twoways.SelectedRightAssets.Any(e => e.AssetId == item.AssetId))
                             {
-                                var removeitem = SelectedRightAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
-                                SelectedRightAssets.Remove(removeitem);
+                                var removeitem = twoways.SelectedRightAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                twoways.SelectedRightAssets.Remove(removeitem);
                             }
                         }
                     }
-                    if (LeftActionTypeId == 2)
+                    if (twoways.LeftActionTypeId == 2)
                     {
-                        foreach (var item in LeftDepartmentDataSource.Distinct())
+                        foreach (var item in twoways.LeftDepartmentDataSource.Distinct())
                         {
-                            if (SelectedRightAssets.Any(e => e.AssetId == item.AssetId))
+                            if (twoways.SelectedRightAssets.Any(e => e.AssetId == item.AssetId))
                             {
-                                var removeitem = SelectedRightAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
-                                SelectedRightAssets.Remove(removeitem);
+                                var removeitem = twoways.SelectedRightAssets.FirstOrDefault(e => e.AssetId == item.AssetId);
+                                twoways.SelectedRightAssets.Remove(removeitem);
                             }
                         }
                     }
-                    if (RightActionTypeId == 1)
+                    if (twoways.RightActionTypeId == 1)
                     {
                         RightCheckInMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 2,
-                            EmpolyeeID = RightEmployeeId,
+                            EmpolyeeID = twoways.RightEmployeeId,
                             ActionTypeId = 1,
-                            DepartmentId = RightDepartmentId,
-                            LocationId = RightLocationId,
+                            DepartmentId = twoways.RightDepartmentId,
+                            LocationId = twoways.RightLocationId,
                             TransactionDate = DateTime.Now,
-                            StoreId = RightStoreId,
+                            StoreId = twoways.RightStoreId,
                         };
                     }
-                    else if (RightActionTypeId == 2)
+                    else if (twoways.RightActionTypeId == 2)
                     {
                         RightCheckInMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 2,
-                            DepartmentId = RightDepartmentId,
+                            DepartmentId = twoways.RightDepartmentId,
                             ActionTypeId = 2,
-                            LocationId = RightLocationId,
+                            LocationId = twoways.RightLocationId,
                             TransactionDate = DateTime.Now,
-                            StoreId = RightStoreId,
+                            StoreId = twoways.RightStoreId,
                         };
                     }
 
@@ -2963,7 +2955,7 @@ namespace AssetProject.Controllers
                     string RightCheckInTransDate = "Transaction Date : ";
                     AssetMovementDirection RightCheckInDirection = _context.AssetMovementDirections.Find(RightCheckInMovement.AssetMovementDirectionId);
                     string TransactionDate = RightCheckInMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                    foreach (var asset in SelectedRightAssets)
+                    foreach (var asset in twoways.SelectedRightAssets)
                     {
                         asset.AssetStatusId = 1;
                         var UpdatedAsset = _context.Assets.Attach(asset);
@@ -2989,44 +2981,44 @@ namespace AssetProject.Controllers
                         return Ok(new { Message = "Something went Error,Try again", status = false });
                     }
 
-                    //checkOut Right Assets To Store 
+                    //checkOut Right Assets To Store
 
                     AssetMovement RightCheckOutMovement = null;
 
-                    if (LeftActionTypeId == 1)
+                    if (twoways.LeftActionTypeId == 1)
                     {
                         RightCheckOutMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 1,
                             ActionTypeId = 1,
-                            DepartmentId = LeftDepartmentId,
-                            LocationId = LeftLocationId,
-                            StoreId = RightStoreId,
+                            DepartmentId = twoways.LeftDepartmentId,
+                            LocationId = twoways.LeftLocationId,
+                            StoreId = twoways.RightStoreId,
                             TransactionDate = DateTime.Now,
-                            EmpolyeeID = LeftEmployeeId,
+                            EmpolyeeID = twoways.LeftEmployeeId,
                         };
 
                     }
-                    else if (LeftActionTypeId == 2)
+                    else if (twoways.LeftActionTypeId == 2)
                     {
                         RightCheckOutMovement = new AssetMovement()
                         {
                             AssetMovementDirectionId = 1,
                             ActionTypeId = 2,
-                            DepartmentId = LeftDepartmentId,
-                            LocationId = LeftLocationId,
-                            StoreId = RightStoreId,
+                            DepartmentId = twoways.LeftDepartmentId,
+                            LocationId = twoways.LeftLocationId,
+                            StoreId = twoways.RightStoreId,
                             TransactionDate = DateTime.Now,
                         };
                     }
-                    RightCheckOutMovement.AssetMovementDetails = new List<AssetMovementDetails>();
+                     RightCheckOutMovement.AssetMovementDetails = new List<AssetMovementDetails>();
                     string ActionTitle = "Action Title : ";
                     string RightCheckoutTransDate = "Transaction Date : ";
                     string RightCheckOutDirectionTitle = "Direction Title : ";
                     ActionType SelectedActionType = _context.ActionTypes.Find(RightCheckOutMovement.ActionTypeId);
                     AssetMovementDirection RightCheckOutDirection = _context.AssetMovementDirections.Find(RightCheckOutMovement.AssetMovementDirectionId);
                     string CheckoutTransactionDate = RightCheckOutMovement.TransactionDate.Value.ToString("dd/M/yyyy", CultureInfo.InvariantCulture);
-                    foreach (var asset in SelectedRightAssets)
+                    foreach (var asset in twoways.SelectedRightAssets)
                     {
                         asset.AssetStatusId = 2;
                         var UpdatedAsset = _context.Assets.Attach(asset);
@@ -3054,7 +3046,7 @@ namespace AssetProject.Controllers
                     }
 
                 }
-                SelectedRightAssets = new List<Asset>();
+                twoways.SelectedRightAssets = new List<Asset>();
 
             }
             return Ok(new { Message = "Transaction Added Successfully", status = true });
